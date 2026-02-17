@@ -1,0 +1,64 @@
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 28px;
+  background-color: var(--color-bg-card);
+  transition: border-color 0.3s;
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.company {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.role {
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.period {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+
+.task::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
