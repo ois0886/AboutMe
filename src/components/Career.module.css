@@ -1,3 +1,14 @@
+.totalCareer {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
 .card {
   border: 1px solid var(--color-border);
   border-radius: 12px;

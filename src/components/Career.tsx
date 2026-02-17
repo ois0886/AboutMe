@@ -1,6 +1,23 @@
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import styles from './Career.module.css'
 
+const CAREER_START = new Date(2026, 1, 9) // 2026.02.09
+
+function getTotalCareer() {
+  const now = new Date()
+  let years = now.getFullYear() - CAREER_START.getFullYear()
+  let months = now.getMonth() - CAREER_START.getMonth()
+  if (now.getDate() < CAREER_START.getDate()) months--
+  if (months < 0) {
+    years--
+    months += 12
+  }
+  if (years > 0 && months > 0) return `${years}년 ${months}개월`
+  if (years > 0) return `${years}년`
+  if (months > 0) return `${months}개월`
+  return '1개월 미만'
+}
+
 function Career() {
   const ref = useScrollReveal<HTMLElement>()
 
@@ -8,6 +25,7 @@ function Career() {
     <section id="career" className="section reveal" ref={ref} style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
       <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
         <h2 className="section__title">Career</h2>
+        <p className={styles.totalCareer}>총 경력 {getTotalCareer()}</p>
         <div className={styles.card}>
           <div className={styles.header}>
             <div>
