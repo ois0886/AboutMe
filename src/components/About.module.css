@@ -1,0 +1,6 @@
+.content {
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  max-width: 640px;
+}

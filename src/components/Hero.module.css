@@ -1,0 +1,72 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 64px;
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.greeting {
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.name {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.role {
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 480px;
+  margin-bottom: 32px;
+}
+
+.cta {
+  display: flex;
+  gap: 16px;
+}
+
+.btnPrimary {
+  padding: 12px 28px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btnPrimary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btnSecondary {
+  padding: 12px 28px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: border-color 0.2s;
+}
+
+.btnSecondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
