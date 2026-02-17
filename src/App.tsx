@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -10,8 +11,9 @@ import Blog from './components/Blog'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import ProjectDetail from './pages/ProjectDetail'
 
-function App() {
+function Home() {
   return (
     <>
       <Header />
@@ -29,6 +31,15 @@ function App() {
       </main>
       <Footer />
     </>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/projects/:id" element={<ProjectDetail />} />
+    </Routes>
   )
 }
 
