@@ -198,6 +198,15 @@
   margin-bottom: 0;
 }
 
+.psNumber {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--color-border);
+}
+
 .insightLink {
   color: var(--color-primary);
   text-decoration: underline;

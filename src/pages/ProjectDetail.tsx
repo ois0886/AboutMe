@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import kotlin from 'react-syntax-highlighter/dist/esm/languages/prism/kotlin'
@@ -11,10 +10,6 @@ import styles from './ProjectDetail.module.css'
 function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const project = projects.find((p) => p.id === id)
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [id])
 
   if (!project) {
     return (
@@ -171,6 +166,9 @@ function ProjectDetail() {
             <h2 className={styles.sectionTitle}>문제 해결</h2>
             {project.problemSolvings.map((ps, psIdx) => (
               <div key={psIdx} className={styles.psGroup}>
+                {project.problemSolvings.length > 1 && (
+                  <h3 className={styles.psNumber}>{psIdx + 1}</h3>
+                )}
                 <div className={styles.psBlock}>
                   <h3 className={styles.psLabel}>문제</h3>
                   <ul className={styles.list}>
