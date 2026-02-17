@@ -10,7 +10,7 @@ function About() {
       <div className={styles.wrapper}>
         <div className={styles.profileArea}>
           <div className={styles.profileImage}>
-            <img src="screenshot/profile.png" alt="프로필 사진" />
+            <img src="screenshot/profile.jpg" alt="프로필 사진" />
           </div>
         </div>
         <div className={styles.infoArea}>
