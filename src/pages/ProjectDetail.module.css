@@ -190,6 +190,24 @@
   background-color: var(--color-primary-dark);
 }
 
+.psGroup {
+  margin-bottom: 28px;
+}
+
+.psGroup:last-child {
+  margin-bottom: 0;
+}
+
+.insightLink {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.insightLink:hover {
+  opacity: 0.7;
+}
+
 .implBlock {
   margin-bottom: 20px;
 }
