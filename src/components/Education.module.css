@@ -58,3 +58,72 @@
   left: 0;
   color: var(--color-primary);
 }
+
+.gpa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.gpaLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: 2px 10px;
+  border-radius: 4px;
+}
+
+.gpaValue {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.courses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.courseItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: var(--color-bg);
+}
+
+.courseName {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.courseGrade {
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.gradeAPlus {
+  color: #4f46e5;
+  background-color: rgba(79, 70, 229, 0.1);
+}
+
+.gradeA {
+  color: #059669;
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.gradeBPlus {
+  color: #d97706;
+  background-color: rgba(245, 158, 11, 0.1);
+}
