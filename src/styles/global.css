@@ -20,6 +20,18 @@
   --section-padding: 100px 24px;
 }
 
+[data-theme='dark'] {
+  --color-primary: #34d399;
+  --color-primary-dark: #059669;
+  --color-primary-light: rgba(52, 211, 153, 0.1);
+  --color-bg: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-card: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -30,6 +42,7 @@ body {
   line-height: 1.6;
   color: var(--color-text);
   background-color: var(--color-bg);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 a {
@@ -80,4 +93,38 @@ img {
 .revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+/* Section alternating backgrounds with wave dividers */
+.sectionAlt {
+  background-color: var(--color-bg-secondary);
+  position: relative;
+}
+
+.sectionAlt .section {
+  position: relative;
+  z-index: 1;
+}
+
+.waveDivider {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.waveDividerTop {
+  top: -1px;
+}
+
+.waveDividerBottom {
+  bottom: -1px;
+}
+
+.waveDivider svg {
+  display: block;
+  width: 100%;
+  height: 40px;
 }

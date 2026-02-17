@@ -12,7 +12,19 @@ import Projects from './components/Projects'
 import OpenSource from './components/OpenSource'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import WaveDivider from './components/WaveDivider'
 import ProjectDetail from './pages/ProjectDetail'
+
+function Section({ alt, children }: { alt?: boolean; children: React.ReactNode }) {
+  if (!alt) return <>{children}</>
+  return (
+    <div className="sectionAlt">
+      <WaveDivider fill="var(--color-bg)" />
+      {children}
+      <WaveDivider flip fill="var(--color-bg)" />
+    </div>
+  )
+}
 
 function Home() {
   return (
@@ -21,15 +33,15 @@ function Home() {
       <main>
         <Hero />
         <About />
-        <Career />
+        <Section alt><Career /></Section>
         <Skills />
-        <Education />
+        <Section alt><Education /></Section>
         <Awards />
-        <Activity />
+        <Section alt><Activity /></Section>
         <Blog />
-        <Projects />
+        <Section alt><Projects /></Section>
         <OpenSource />
-        <Contact />
+        <Section alt><Contact /></Section>
       </main>
       <Footer />
     </>
