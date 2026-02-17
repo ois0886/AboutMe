@@ -1,4 +1,9 @@
 import { useParams, Link } from 'react-router-dom'
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+import kotlin from 'react-syntax-highlighter/dist/esm/languages/prism/kotlin'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+
+SyntaxHighlighter.registerLanguage('kotlin', kotlin)
 import projects from '../data/projects'
 import styles from './ProjectDetail.module.css'
 
@@ -148,9 +153,13 @@ function ProjectDetail() {
                       {block.description}
                     </blockquote>
                     {block.code && (
-                      <pre className={styles.codeBlock}>
-                        <code>{block.code}</code>
-                      </pre>
+                      <SyntaxHighlighter
+                        language="kotlin"
+                        style={oneDark}
+                        customStyle={{ borderRadius: '8px', fontSize: '0.85rem', margin: 0 }}
+                      >
+                        {block.code}
+                      </SyntaxHighlighter>
                     )}
                   </div>
                 ))}
