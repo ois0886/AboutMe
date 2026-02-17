@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
 import styles from './Hero.module.css'
 
 const typingTexts = [
@@ -12,8 +11,6 @@ function Hero() {
   const [textIndex, setTextIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
-  const navigate = useNavigate()
-  const location = useLocation()
 
   useEffect(() => {
     const current = typingTexts[textIndex]
@@ -37,16 +34,8 @@ function Hero() {
     return () => clearTimeout(timeout)
   }, [charIndex, isDeleting, textIndex])
 
-  const handleClick = (e: React.MouseEvent, target: string) => {
-    e.preventDefault()
-    if (location.pathname !== '/') {
-      navigate('/')
-      setTimeout(() => {
-        document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
-    } else {
-      document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
-    }
+  const scrollTo = (target: string) => {
+    document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -65,16 +54,13 @@ function Hero() {
         <p className={styles.description}>
           사용자 경험을 중심으로 생각하는 안드로이드 개발자입니다.
         </p>
-        <div className={styles.cta}>
-          <a href="#projects" className={styles.btnPrimary} onClick={(e) => handleClick(e, 'projects')}>
-            프로젝트 보기
-          </a>
-          <a href="#contact" className={styles.btnSecondary} onClick={(e) => handleClick(e, 'contact')}>
-            연락하기
-          </a>
-        </div>
       </div>
-      <a href="#about" className={styles.scrollDown} aria-label="아래로 스크롤" onClick={(e) => handleClick(e, 'about')}>
+      <a
+        href="#about"
+        className={styles.scrollDown}
+        aria-label="아래로 스크롤"
+        onClick={(e) => { e.preventDefault(); scrollTo('about') }}
+      >
         <span className={styles.scrollIcon} />
       </a>
     </section>
