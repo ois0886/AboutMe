@@ -1,11 +1,11 @@
 import Header from './components/Header'
 import Hero from './components/Hero'
 import About from './components/About'
-import Timeline from './components/Timeline'
 import Skills from './components/Skills'
 import Career from './components/Career'
 import Education from './components/Education'
 import Awards from './components/Awards'
+import Activity from './components/Activity'
 import Blog from './components/Blog'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
@@ -18,11 +18,11 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Timeline />
         <Career />
         <Skills />
         <Education />
         <Awards />
+        <Activity />
         <Blog />
         <Projects />
         <Contact />
