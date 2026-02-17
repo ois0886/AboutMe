@@ -35,6 +35,13 @@
   font-size: 2rem;
   font-weight: 800;
   color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.descriptionText {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
   margin-bottom: 24px;
 }
 
@@ -110,6 +117,20 @@
   position: absolute;
   left: 0;
   color: var(--color-primary);
+}
+
+.psBlock {
+  background-color: var(--color-bg-secondary);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.psLabel {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 10px;
 }
 
 .screenshots {
