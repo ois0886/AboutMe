@@ -2,8 +2,8 @@ import styles from './Header.module.css'
 
 const navItems = [
   { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
   { label: 'Career', href: '#career' },
+  { label: 'Skills', href: '#skills' },
   { label: 'Education', href: '#education' },
   { label: 'Blog', href: '#blog' },
   { label: 'Projects', href: '#projects' },
