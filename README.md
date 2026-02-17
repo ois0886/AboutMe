@@ -1,10 +1,10 @@
-# Oh In-Seong Portfolio
+# AboutMe
 
 > Android Developer 오인성의 개인 포트폴리오 웹사이트
 
-[![Deploy to GitHub Pages](https://github.com/ois0886/Oh-In-Seong-Portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/ois0886/Oh-In-Seong-Portfolio/actions)
+[![Deploy to GitHub Pages](https://github.com/ois0886/AboutMe/actions/workflows/deploy.yml/badge.svg)](https://github.com/ois0886/AboutMe/actions)
 
-**Live:** https://ois0886.github.io/Oh-In-Seong-Portfolio/
+**Live:** https://ois0886.github.io/AboutMe/
 
 ---
 
@@ -45,6 +45,9 @@ npm run dev
 
 # Production build
 npm run build
+
+# Run tests
+npm run test
 
 # Preview build
 npm run preview
