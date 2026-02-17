@@ -133,9 +133,25 @@
   margin-bottom: 10px;
 }
 
-.screenshots {
+.screenshotFull {
+  margin-bottom: 16px;
+}
+
+.screenshotRows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.screenshotRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.screenshots {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 

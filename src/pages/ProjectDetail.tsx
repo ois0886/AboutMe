@@ -57,13 +57,32 @@ function ProjectDetail() {
         {topScreenshots.length > 0 && (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>스크린샷</h2>
-            <div className={styles.screenshots}>
-              {topScreenshots.map((src) => (
-                <div key={src} className={styles.screenshotWrap}>
-                  <img src={src} alt={project.title} className={styles.screenshot} />
+            {topScreenshots[0] && (
+              <div className={styles.screenshotFull}>
+                <div className={styles.screenshotWrap}>
+                  <img src={topScreenshots[0]} alt={project.title} className={styles.screenshot} />
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
+            {topScreenshots.length > 1 && (
+              <div className={styles.screenshotRows}>
+                {Array.from({ length: Math.ceil((topScreenshots.length - 1) / 2) }, (_, i) => {
+                  const idx = 1 + i * 2
+                  return (
+                    <div key={idx} className={styles.screenshotRow}>
+                      <div className={styles.screenshotWrap}>
+                        <img src={topScreenshots[idx]} alt={project.title} className={styles.screenshot} />
+                      </div>
+                      {topScreenshots[idx + 1] && (
+                        <div className={styles.screenshotWrap}>
+                          <img src={topScreenshots[idx + 1]} alt={project.title} className={styles.screenshot} />
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </section>
         )}
 
