@@ -22,8 +22,8 @@ function Career() {
   const ref = useScrollReveal<HTMLElement>()
 
   return (
-    <section id="career" className="section reveal" ref={ref} style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
-      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+    <section id="career" className="section reveal" ref={ref}>
+      <div>
         <h2 className="section__title">Career</h2>
         <p className={styles.totalCareer}>총 경력 {getTotalCareer()}</p>
         <div className={styles.card}>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import styles from './Header.module.css'
 
@@ -17,6 +18,14 @@ const navItems = [
 function Header() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [dark, setDark] = useState(() => {
+    return localStorage.getItem('theme') === 'dark'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
+    localStorage.setItem('theme', dark ? 'dark' : 'light')
+  }, [dark])
 
   const handleClick = (e: React.MouseEvent, target: string) => {
     e.preventDefault()
@@ -43,7 +52,7 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <a href="#" onClick={handleLogoClick} className={styles.logo}>
-          Portfolio
+          Oh In Seong
         </a>
         <nav>
           <ul className={styles.nav}>
@@ -58,6 +67,15 @@ function Header() {
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                onClick={() => setDark((d) => !d)}
+                className={styles.themeToggle}
+                aria-label="테마 전환"
+              >
+                {dark ? '\u2600\uFE0F' : '\uD83C\uDF19'}
+              </button>
+            </li>
           </ul>
         </nav>
       </div>

@@ -8,6 +8,11 @@
   border-bottom: 1px solid var(--color-border);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
   z-index: 100;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+:global([data-theme='dark']) .header {
+  background-color: rgba(15, 23, 42, 0.85);
 }
 
 .inner {
@@ -29,6 +34,7 @@
 .nav {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
 .navLink {
@@ -42,3 +48,20 @@
 .navLink:hover {
   color: var(--color-primary);
 }
+
+.themeToggle {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+  line-height: 1;
+}
+
+.themeToggle:hover {
+  border-color: var(--color-primary);
+  transform: scale(1.1);
+}
+

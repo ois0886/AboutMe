@@ -7,16 +7,28 @@
   overflow: hidden;
 }
 
-.hero::before {
-  content: '';
+.bgOrb1 {
   position: absolute;
-  top: -50%;
-  right: -30%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.06) 0%, transparent 70%);
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.1) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+
+.bgOrb2 {
+  position: absolute;
+  bottom: -10%;
+  left: -15%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(4, 120, 87, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat 10s ease-in-out infinite reverse;
 }
 
 .inner {
@@ -29,8 +41,9 @@
 .greeting {
   font-size: 1.1rem;
   color: var(--color-primary);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 8px;
+  letter-spacing: 0.5px;
   animation: slideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -39,7 +52,7 @@
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, var(--color-text), var(--color-primary));
+  background: linear-gradient(135deg, var(--color-text) 30%, var(--color-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -48,10 +61,20 @@
 
 .role {
   font-size: 1.5rem;
-  color: var(--color-text-secondary);
   font-weight: 600;
   margin-bottom: 16px;
+  min-height: 2.2rem;
   animation: slideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.typingText {
+  color: var(--color-text-secondary);
+}
+
+.cursor {
+  color: var(--color-primary);
+  font-weight: 300;
+  animation: blink 0.8s step-end infinite;
 }
 
 .description {
@@ -79,7 +102,7 @@
 
 .btnPrimary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 24px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 6px 24px rgba(5, 150, 105, 0.3);
 }
 
 .btnSecondary {
@@ -152,12 +175,16 @@
 }
 
 @keyframes scrollBounce {
-  0%, 100% {
-    top: 8px;
-    opacity: 1;
-  }
-  50% {
-    top: 20px;
-    opacity: 0.3;
-  }
+  0%, 100% { top: 8px; opacity: 1; }
+  50% { top: 20px; opacity: 0.3; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -20px); }
 }
