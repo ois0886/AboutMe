@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import kotlin from 'react-syntax-highlighter/dist/esm/languages/prism/kotlin'
@@ -11,6 +12,10 @@ function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const project = projects.find((p) => p.id === id)
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [id])
+
   if (!project) {
     return (
       <div className={styles.notFound}>
@@ -20,6 +25,7 @@ function ProjectDetail() {
     )
   }
 
+  const cols = project.screenshotColumns || 2
   const topScreenshots = project.screenshots.slice(0, -1)
   const bottomScreenshot = project.screenshots.length > 1
     ? project.screenshots[project.screenshots.length - 1]
@@ -66,18 +72,22 @@ function ProjectDetail() {
             )}
             {topScreenshots.length > 1 && (
               <div className={styles.screenshotRows}>
-                {Array.from({ length: Math.ceil((topScreenshots.length - 1) / 2) }, (_, i) => {
-                  const idx = 1 + i * 2
+                {Array.from({ length: Math.ceil((topScreenshots.length - 1) / cols) }, (_, i) => {
+                  const startIdx = 1 + i * cols
                   return (
-                    <div key={idx} className={styles.screenshotRow}>
-                      <div className={styles.screenshotWrap}>
-                        <img src={topScreenshots[idx]} alt={project.title} className={styles.screenshot} />
-                      </div>
-                      {topScreenshots[idx + 1] && (
-                        <div className={styles.screenshotWrap}>
-                          <img src={topScreenshots[idx + 1]} alt={project.title} className={styles.screenshot} />
-                        </div>
-                      )}
+                    <div
+                      key={startIdx}
+                      className={styles.screenshotRow}
+                      style={cols !== 2 ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}
+                    >
+                      {Array.from({ length: cols }, (_, j) => {
+                        const img = topScreenshots[startIdx + j]
+                        return img ? (
+                          <div key={j} className={styles.screenshotWrap}>
+                            <img src={img} alt={project.title} className={styles.screenshot} />
+                          </div>
+                        ) : null
+                      })}
                     </div>
                   )
                 })}
@@ -125,6 +135,26 @@ function ProjectDetail() {
           </section>
         )}
 
+        {project.insights.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>Project Insights</h2>
+            <ul className={styles.list}>
+              {project.insights.map((insight) => (
+                <li key={insight.url} className={styles.listItem}>
+                  <a
+                    href={insight.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.insightLink}
+                  >
+                    {insight.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {project.contributions.length > 0 && (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>담당 역할 및 기여</h2>
@@ -136,64 +166,68 @@ function ProjectDetail() {
           </section>
         )}
 
-        {project.problemSolving && (
+        {project.problemSolvings.length > 0 && (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>문제 해결</h2>
-            <div className={styles.psBlock}>
-              <h3 className={styles.psLabel}>문제</h3>
-              <ul className={styles.list}>
-                {project.problemSolving.problem.map((item) => (
-                  <li key={item} className={styles.listItem}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className={styles.psBlock}>
-              <h3 className={styles.psLabel}>해결 방법</h3>
-              <ul className={styles.list}>
-                {project.problemSolving.solution.map((item) => (
-                  <li key={item} className={styles.listItem}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className={styles.psBlock}>
-              <h3 className={styles.psLabel}>결과</h3>
-              <ul className={styles.list}>
-                {project.problemSolving.result.map((item) => (
-                  <li key={item} className={styles.listItem}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            {project.implementation.length > 0 && (
-              <div className={styles.psBlock}>
-                <h3 className={styles.psLabel}>구체적인 구현 설명</h3>
-                {project.implementation.map((block, idx) => (
-                  <div key={idx} className={styles.implBlock}>
-                    <blockquote className={styles.implDescription}>
-                      {block.description}
-                    </blockquote>
-                    {block.code && (
-                      <SyntaxHighlighter
-                        language="kotlin"
-                        style={oneDark}
-                        customStyle={{ borderRadius: '8px', fontSize: '0.85rem', margin: 0 }}
-                      >
-                        {block.code}
-                      </SyntaxHighlighter>
-                    )}
+            {project.problemSolvings.map((ps, psIdx) => (
+              <div key={psIdx} className={styles.psGroup}>
+                <div className={styles.psBlock}>
+                  <h3 className={styles.psLabel}>문제</h3>
+                  <ul className={styles.list}>
+                    {ps.problem.map((item) => (
+                      <li key={item} className={styles.listItem}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={styles.psBlock}>
+                  <h3 className={styles.psLabel}>해결 방법</h3>
+                  <ul className={styles.list}>
+                    {ps.solution.map((item) => (
+                      <li key={item} className={styles.listItem}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={styles.psBlock}>
+                  <h3 className={styles.psLabel}>결과</h3>
+                  <ul className={styles.list}>
+                    {ps.result.map((item) => (
+                      <li key={item} className={styles.listItem}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                {ps.implementation.length > 0 && (
+                  <div className={styles.psBlock}>
+                    <h3 className={styles.psLabel}>구체적인 구현 설명</h3>
+                    {ps.implementation.map((block, idx) => (
+                      <div key={idx} className={styles.implBlock}>
+                        <blockquote className={styles.implDescription}>
+                          {block.description}
+                        </blockquote>
+                        {block.code && (
+                          <SyntaxHighlighter
+                            language="kotlin"
+                            style={oneDark}
+                            customStyle={{ borderRadius: '8px', fontSize: '0.85rem', margin: 0 }}
+                          >
+                            {block.code}
+                          </SyntaxHighlighter>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
+                {ps.alternatives.length > 0 && (
+                  <div className={styles.psBlock}>
+                    <h3 className={styles.psLabel}>대체안</h3>
+                    <ul className={styles.list}>
+                      {ps.alternatives.map((item) => (
+                        <li key={item} className={styles.listItem}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
-            )}
-            {project.alternatives.length > 0 && (
-              <div className={styles.psBlock}>
-                <h3 className={styles.psLabel}>대체안</h3>
-                <ul className={styles.list}>
-                  {project.alternatives.map((item) => (
-                    <li key={item} className={styles.listItem}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            ))}
           </section>
         )}
 
