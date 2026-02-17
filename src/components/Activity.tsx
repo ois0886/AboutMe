@@ -81,6 +81,28 @@ const activities = [
     ],
   },
   {
+    title: '한성대학교 교내 전공동아리 DC&M',
+    scope: '교내',
+    tag: '동아리',
+    period: '2022.06 ~ 2023.12',
+    image: null,
+    details: [
+      '컴퓨터공학부 전공 동아리 DC&M 소속으로 활동',
+    ],
+    links: [],
+  },
+  {
+    title: '한성대학교 교내 전공 소모임',
+    scope: '교내',
+    tag: '소모임',
+    period: '2022.06 ~ 2023.12',
+    image: null,
+    details: [
+      '전공 소모임에 소속되어 스터디 및 프로젝트 활동',
+    ],
+    links: [],
+  },
+  {
     title: '한성대학교 컴퓨터공학부 2020년 동계 프로그래밍 캠프',
     scope: '교내',
     tag: '캠프',
