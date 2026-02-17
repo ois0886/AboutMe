@@ -23,6 +23,15 @@ const skills = [
     ],
   },
   {
+    category: 'Spring Boot & Java',
+    items: [
+      'Spring Boot 기반 RESTful API 설계 및 구현 경험',
+      'JPA/Hibernate를 활용한 데이터베이스 연동 및 엔티티 설계',
+      'Spring Security, JWT를 활용한 인증·인가 흐름 이해 및 적용 경험',
+      'Gradle 빌드 환경 구성 및 프로젝트 의존성 관리',
+    ],
+  },
+  {
     category: 'Communication',
     items: [
       'JIRA와 GitHub를 활용하여 이슈 관리 및 개발 진행 현황 공유',
