@@ -86,7 +86,9 @@ const activities = [
     tag: '캠프',
     period: '2020.01',
     image: null,
-    details: [],
+    details: [
+      '5박 6일동안 교수님과 학생들이 합숙하여 다양한 알고리즘 문제를 풀며, 질의응답 및 문제 해결력을 기른 프로그래밍 캠프',
+    ],
     links: [],
   },
   {
@@ -107,7 +109,9 @@ const activities = [
     tag: '캠프',
     period: '2019.01',
     image: null,
-    details: [],
+    details: [
+      '5박 6일동안 교수님과 학생들이 합숙하여 다양한 알고리즘 문제를 풀며, 질의응답 및 문제 해결력을 기른 프로그래밍 캠프',
+    ],
     links: [],
   },
 ]
