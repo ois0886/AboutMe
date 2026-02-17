@@ -5,7 +5,12 @@ const navItems = [
   { label: 'About', target: 'about' },
   { label: 'Career', target: 'career' },
   { label: 'Skills', target: 'skills' },
+  { label: 'Education', target: 'education' },
+  { label: 'Awards', target: 'awards' },
+  { label: 'Activity', target: 'activity' },
+  { label: 'Blog', target: 'blog' },
   { label: 'Projects', target: 'projects' },
+  { label: 'Open Source', target: 'opensource' },
   { label: 'Contact', target: 'contact' },
 ]
 

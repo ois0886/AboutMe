@@ -15,6 +15,11 @@ function ProjectDetail() {
     )
   }
 
+  const topScreenshots = project.screenshots.slice(0, -1)
+  const bottomScreenshot = project.screenshots.length > 1
+    ? project.screenshots[project.screenshots.length - 1]
+    : null
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -44,6 +49,19 @@ function ProjectDetail() {
           ))}
         </div>
 
+        {topScreenshots.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>스크린샷</h2>
+            <div className={styles.screenshots}>
+              {topScreenshots.map((src) => (
+                <div key={src} className={styles.screenshotWrap}>
+                  <img src={src} alt={project.title} className={styles.screenshot} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>프로젝트 개요</h2>
           <ul className={styles.list}>
@@ -64,11 +82,59 @@ function ProjectDetail() {
           </section>
         )}
 
+        {project.links.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>링크</h2>
+            <div className={styles.links}>
+              {project.links.map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.linkBtn}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
         {project.contributions.length > 0 && (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>담당 역할 및 기여</h2>
             <ul className={styles.list}>
               {project.contributions.map((item) => (
+                <li key={item} className={styles.listItem}>{item}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {project.implementation.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>구체적인 구현 설명</h2>
+            {project.implementation.map((block, idx) => (
+              <div key={idx} className={styles.implBlock}>
+                <blockquote className={styles.implDescription}>
+                  {block.description}
+                </blockquote>
+                {block.code && (
+                  <pre className={styles.codeBlock}>
+                    <code>{block.code}</code>
+                  </pre>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
+
+        {project.alternatives.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>대체안</h2>
+            <ul className={styles.list}>
+              {project.alternatives.map((item) => (
                 <li key={item} className={styles.listItem}>{item}</li>
               ))}
             </ul>
@@ -127,34 +193,12 @@ function ProjectDetail() {
           </section>
         )}
 
-        {project.screenshots.length > 0 && (
+        {bottomScreenshot && (
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>스크린샷</h2>
             <div className={styles.screenshots}>
-              {project.screenshots.map((src) => (
-                <div key={src} className={styles.screenshotWrap}>
-                  <img src={src} alt={project.title} className={styles.screenshot} />
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {project.links.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>링크</h2>
-            <div className={styles.links}>
-              {project.links.map((link) => (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.linkBtn}
-                >
-                  {link.label}
-                </a>
-              ))}
+              <div className={styles.screenshotWrap}>
+                <img src={bottomScreenshot} alt={project.title} className={styles.screenshot} />
+              </div>
             </div>
           </section>
         )}

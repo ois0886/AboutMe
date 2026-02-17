@@ -28,11 +28,12 @@
 
 .nav {
   display: flex;
-  gap: 32px;
+  gap: 20px;
 }
 
 .navLink {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
   font-weight: 500;
   color: var(--color-text-secondary);
   transition: color 0.2s;

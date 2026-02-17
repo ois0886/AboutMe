@@ -4,6 +4,11 @@ export interface ProblemSolving {
   result: string[]
 }
 
+export interface ImplementationBlock {
+  description: string
+  code: string | null
+}
+
 export interface Project {
   id: string
   title: string
@@ -16,6 +21,8 @@ export interface Project {
   details: string[]
   features: string[]
   contributions: string[]
+  implementation: ImplementationBlock[]
+  alternatives: string[]
   problemSolving: ProblemSolving | null
   achievements: string[]
   retrospective: string[]
@@ -52,6 +59,42 @@ const projects: Project[] = [
       '부분적 XML UI를 Jetpack Compose UI 100%로 전환',
       'Compose State Hoisting 패턴 적용으로 기존 UI 컴포넌트 재사용성 향상 및 코드 중복 제거',
       '기존 레거시 패키지 구조를 기능·계층 기준으로 재구성해 의존성 방향을 정리하고 유지보수성 개선',
+    ],
+    implementation: [
+      {
+        description: 'Route 계층에서 화면 상태와 도메인 데이터를 한 번에 조합함.\n예: 언어 설정을 기반으로 폰트 크기를 결정하고, 동의 상태(체크 여부)와 테이블에 들어갈 텍스트 데이터를 Route 에서 UiState + TableData 형태로 구성 후, Screen 에 주입함.',
+        code: `val uiState = TermsOfServiceUiState(
+    acceptedPersonal = acceptedPersonal,
+    acceptedSensitive = acceptedSensitive,
+    textSize = textSize
+)
+
+val personalTable = remember {
+    TermsTableData(
+        label = StringProvider.getString(R.string.personal_info_table_label),
+        column1 = StringProvider.getString(R.string.personal_info_table_column1),
+        column2 = StringProvider.getString(R.string.personal_info_table_column2),
+        column3 = StringProvider.getString(R.string.personal_info_table_column3),
+        evenly = false
+    )
+}`,
+      },
+      {
+        description: 'Screen 계층에서는 전달받은 상태와 콜백만으로 UI를 구성함.\n스크롤 처리, 버튼 활성화, 컴포넌트 배치 등 "어떻게 보여줄지"에 집중하고, "무엇을 할지"는 콜백을 통해 상위로 위임하는 형태로 책임 분리함.',
+        code: `PrimaryButton(
+    onClick = onClickAgree,
+    enabled = state.acceptedPersonal == true && state.acceptedSensitive == true,
+    text = stringResource(R.string.button_agree),
+)`,
+      },
+      {
+        description: '공통 레이아웃 패턴과 UI 조각을 컴포넌트로 분리함.\n타이틀, 설명, 표, 체크박스 행, 기본/보조 버튼 등의 컴포넌트를 재사용 가능한 단위로 쪼개고, 여러 화면에서 동일한 빌딩 블록을 조합해서 사용하도록 구성함.\n이 구조를 약관 화면뿐 아니라 다른 설명/동의/확인 화면에도 동일하게 적용해, 화면 수가 늘어나도 복잡도 증가를 최소화함.',
+        code: null,
+      },
+    ],
+    alternatives: [
+      'ViewModel 책임만 확장하고 헬퍼 클래스로 일부 UI 로직을 분리하는 대안도 있었지만, "Route/Screen/Component" 같이 계층 자체를 명확히 나누지 않으면 결국 의존 방향과 책임 경계가 모호해질 위험이 있었을 것임.',
+      'XML 뷰 바인딩을 유지한 채 Compose 를 부분 도입하는 점진적 접근도 가능하지만, 선언적 UI·State Hoisting·프리뷰 기반 개발의 장점을 충분히 활용하기에는 현재처럼 Screen/Component 중심 구조로 정리한 쪽이 더 적합했다고 판단함.',
     ],
     problemSolving: {
       problem: [
@@ -108,6 +151,8 @@ const projects: Project[] = [
       '주요 기능 2',
     ],
     contributions: [],
+    implementation: [],
+    alternatives: [],
     problemSolving: null,
     achievements: [],
     retrospective: [],
@@ -131,30 +176,8 @@ const projects: Project[] = [
       '주요 기능 2',
     ],
     contributions: [],
-    problemSolving: null,
-    achievements: [],
-    retrospective: [],
-    links: [],
-    screenshots: [],
-  },
-  {
-    id: 'opensource',
-    title: 'Open Source UI Library',
-    description: 'Android Jetpack Compose 기반 오픈소스 UI 라이브러리 개발 및 Maven Central 배포',
-    thumbnail: null,
-    tech: ['Kotlin', 'Jetpack Compose', 'Maven Central'],
-    period: '',
-    team: '개인',
-    role: '기획 및 개발 전담',
-    details: [
-      'Jetpack Compose 기반 재사용 가능한 UI 컴포넌트 라이브러리 개발',
-      'Maven Central에 배포하여 누구나 의존성 추가로 사용 가능하도록 공개',
-    ],
-    features: [
-      '커스텀 UI 컴포넌트 제공',
-      'Maven Central 배포',
-    ],
-    contributions: [],
+    implementation: [],
+    alternatives: [],
     problemSolving: null,
     achievements: [],
     retrospective: [],

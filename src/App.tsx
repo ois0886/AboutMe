@@ -9,6 +9,7 @@ import Awards from './components/Awards'
 import Activity from './components/Activity'
 import Blog from './components/Blog'
 import Projects from './components/Projects'
+import OpenSource from './components/OpenSource'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ProjectDetail from './pages/ProjectDetail'
@@ -27,6 +28,7 @@ function Home() {
         <Activity />
         <Blog />
         <Projects />
+        <OpenSource />
         <Contact />
       </main>
       <Footer />
