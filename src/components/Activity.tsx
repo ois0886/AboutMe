@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import styles from './Activity.module.css'
 
@@ -111,6 +112,63 @@ const activities = [
   },
 ]
 
+function ActivityCard({ activity }: { activity: typeof activities[number] }) {
+  const [imageOpen, setImageOpen] = useState(false)
+
+  return (
+    <div className={styles.card}>
+      <div className={styles.cardBody}>
+        <div className={styles.cardHeader}>
+          <div className={styles.tags}>
+            <span className={`${styles.scopeBadge} ${activity.scope === '교외' ? styles.external : styles.internal}`}>
+              {activity.scope}
+            </span>
+            <span className={styles.tagBadge}>{activity.tag}</span>
+          </div>
+          <span className={styles.period}>{activity.period}</span>
+        </div>
+        <h3 className={styles.cardTitle}>{activity.title}</h3>
+        {activity.details.length > 0 && (
+          <ul className={styles.details}>
+            {activity.details.map((detail) => (
+              <li key={detail} className={styles.detail}>{detail}</li>
+            ))}
+          </ul>
+        )}
+        {activity.image && (
+          <button
+            className={styles.imageToggle}
+            onClick={() => setImageOpen(!imageOpen)}
+          >
+            {imageOpen ? '사진 접기' : '사진 보기'}
+            <span className={`${styles.arrow} ${imageOpen ? styles.arrowUp : ''}`} />
+          </button>
+        )}
+        {activity.image && imageOpen && (
+          <div className={styles.imageWrap}>
+            <img src={activity.image} alt={activity.title} className={styles.image} />
+          </div>
+        )}
+        {activity.links.length > 0 && (
+          <div className={styles.links}>
+            {activity.links.map((link) => (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function Activity() {
   const ref = useScrollReveal<HTMLElement>()
 
@@ -119,47 +177,7 @@ function Activity() {
       <h2 className="section__title">Activity</h2>
       <div className={styles.list}>
         {activities.map((activity) => (
-          <div key={activity.title} className={styles.card}>
-            {activity.image && (
-              <div className={styles.imageWrap}>
-                <img src={activity.image} alt={activity.title} className={styles.image} />
-              </div>
-            )}
-            <div className={styles.cardBody}>
-              <div className={styles.cardHeader}>
-                <div className={styles.tags}>
-                  <span className={`${styles.scopeBadge} ${activity.scope === '교외' ? styles.external : styles.internal}`}>
-                    {activity.scope}
-                  </span>
-                  <span className={styles.tagBadge}>{activity.tag}</span>
-                </div>
-                <span className={styles.period}>{activity.period}</span>
-              </div>
-              <h3 className={styles.cardTitle}>{activity.title}</h3>
-              {activity.details.length > 0 && (
-                <ul className={styles.details}>
-                  {activity.details.map((detail) => (
-                    <li key={detail} className={styles.detail}>{detail}</li>
-                  ))}
-                </ul>
-              )}
-              {activity.links.length > 0 && (
-                <div className={styles.links}>
-                  {activity.links.map((link) => (
-                    <a
-                      key={link.url}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.link}
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          <ActivityCard key={activity.title} activity={activity} />
         ))}
       </div>
     </section>
