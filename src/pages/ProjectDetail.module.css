@@ -190,21 +190,6 @@
   white-space: pre-line;
 }
 
-.codeBlock {
-  background-color: #1e1e2e;
-  color: #cdd6f4;
-  padding: 16px 20px;
-  border-radius: 8px;
-  overflow-x: auto;
-  font-size: 0.85rem;
-  line-height: 1.6;
-  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-}
-
-.codeBlock code {
-  font-family: inherit;
-}
-
 @media (max-width: 640px) {
   .title {
     font-size: 1.5rem;
