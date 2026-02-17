@@ -1,0 +1,23 @@
+.description {
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.links {
+  display: flex;
+  gap: 16px;
+}
+
+.link {
+  padding: 10px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.link:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
