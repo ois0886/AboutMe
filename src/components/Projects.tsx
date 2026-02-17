@@ -9,6 +9,7 @@ function Projects() {
   return (
     <section id="projects" className="section reveal" ref={ref}>
       <h2 className="section__title">Projects</h2>
+      <p className={styles.subtitle}>프로젝트를 클릭하면 상세페이지로 이동합니다.</p>
       <div className={styles.grid}>
         {projects.map((project) => (
           <Link
