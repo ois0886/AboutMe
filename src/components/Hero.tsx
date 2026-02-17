@@ -19,6 +19,9 @@ function Hero() {
           </a>
         </div>
       </div>
+      <a href="#about" className={styles.scrollDown} aria-label="아래로 스크롤">
+        <span className={styles.scrollIcon} />
+      </a>
     </section>
   )
 }

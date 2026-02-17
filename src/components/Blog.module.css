@@ -38,11 +38,13 @@
   border-radius: 12px;
   padding: 24px;
   background-color: var(--color-bg-card);
-  transition: border-color 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .seriesCard:hover {
   border-color: var(--color-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .seriesName {
