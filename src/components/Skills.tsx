@@ -12,6 +12,7 @@ const skills = [
       'Kotlin을 기반으로 안드로이드 앱 다수 개발 경험',
       'Coroutines, Flow, StateFlow를 활용한 비동기 처리 및 반응형 상태 관리',
       'Extension Functions, Sealed Interface, Generic 활용으로 코드 재사용',
+      '오픈소스 UI 라이브러리 개발 및 Maven Central 배포 경험',
     ],
   },
   {
