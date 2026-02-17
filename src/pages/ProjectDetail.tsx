@@ -112,35 +112,6 @@ function ProjectDetail() {
           </section>
         )}
 
-        {project.implementation.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>구체적인 구현 설명</h2>
-            {project.implementation.map((block, idx) => (
-              <div key={idx} className={styles.implBlock}>
-                <blockquote className={styles.implDescription}>
-                  {block.description}
-                </blockquote>
-                {block.code && (
-                  <pre className={styles.codeBlock}>
-                    <code>{block.code}</code>
-                  </pre>
-                )}
-              </div>
-            ))}
-          </section>
-        )}
-
-        {project.alternatives.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>대체안</h2>
-            <ul className={styles.list}>
-              {project.alternatives.map((item) => (
-                <li key={item} className={styles.listItem}>{item}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-
         {project.problemSolving && (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>문제 해결</h2>
@@ -168,6 +139,33 @@ function ProjectDetail() {
                 ))}
               </ul>
             </div>
+            {project.implementation.length > 0 && (
+              <div className={styles.psBlock}>
+                <h3 className={styles.psLabel}>구체적인 구현 설명</h3>
+                {project.implementation.map((block, idx) => (
+                  <div key={idx} className={styles.implBlock}>
+                    <blockquote className={styles.implDescription}>
+                      {block.description}
+                    </blockquote>
+                    {block.code && (
+                      <pre className={styles.codeBlock}>
+                        <code>{block.code}</code>
+                      </pre>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            {project.alternatives.length > 0 && (
+              <div className={styles.psBlock}>
+                <h3 className={styles.psLabel}>대체안</h3>
+                <ul className={styles.list}>
+                  {project.alternatives.map((item) => (
+                    <li key={item} className={styles.listItem}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </section>
         )}
 
