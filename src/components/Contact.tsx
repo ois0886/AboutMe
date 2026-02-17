@@ -6,7 +6,7 @@ function Contact() {
 
   return (
     <section id="contact" className="section reveal" ref={ref} style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
-      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto', textAlign: 'center' }}>
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
         <h2 className="section__title">Contact</h2>
         <p className={styles.description}>
           방문해주셔서 감사합니다.
