@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import styles from './Projects.module.css'
 
 const projects = [
@@ -16,8 +17,10 @@ const projects = [
 ]
 
 function Projects() {
+  const ref = useScrollReveal<HTMLElement>()
+
   return (
-    <section id="projects" className="section">
+    <section id="projects" className="section reveal" ref={ref}>
       <h2 className="section__title">Projects</h2>
       <div className={styles.grid}>
         {projects.map((project) => (

@@ -5,16 +5,18 @@
 }
 
 .card {
+  background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   display: block;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+  border-color: var(--color-primary);
 }
 
 .thumbnail {
@@ -48,7 +50,7 @@
   padding: 4px 10px;
   font-size: 0.8rem;
   font-weight: 500;
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-primary-light);
   color: var(--color-primary);
   border-radius: 4px;
 }
