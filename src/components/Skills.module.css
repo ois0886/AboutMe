@@ -1,18 +1,23 @@
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 }
 
 .card {
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 28px;
+  transition: border-color 0.3s;
+}
+
+.card:hover {
+  border-color: var(--color-primary);
 }
 
 .category {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   margin-bottom: 16px;
   color: var(--color-primary);
@@ -20,15 +25,21 @@
 
 .list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .item {
-  padding: 6px 14px;
-  background-color: var(--color-bg-secondary);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.95rem;
   color: var(--color-text-secondary);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+
+.item::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
 }
