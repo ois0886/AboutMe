@@ -21,8 +21,7 @@ function About() {
               <li><span className={styles.label}>E-MAIL.</span> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></li>
               <li><span className={styles.label}>GitHub.</span> <a href="https://github.com/ois0886" target="_blank" rel="noopener noreferrer">github.com/ois0886</a></li>
               <li><span className={styles.label}>Birth.</span> 1996.06.21</li>
-              <li><span className={styles.label}>거주지.</span> 서울시 금천구</li>
-              <li><span className={styles.label}>회사.</span> 서울시 강서구</li>
+              <li><span className={styles.label}>Address.</span> 서울시 금천구</li>
             </ul>
           </div>
           <div className={styles.infoBlock}>

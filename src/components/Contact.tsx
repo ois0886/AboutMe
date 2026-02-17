@@ -6,10 +6,10 @@ function Contact() {
 
   return (
     <section id="contact" className="section reveal" ref={ref} style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
-      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto', textAlign: 'center' }}>
         <h2 className="section__title">Contact</h2>
         <p className={styles.description}>
-          함께 일하고 싶으시다면 언제든지 연락해 주세요!
+          방문해주셔서 감사합니다.
         </p>
         <div className={styles.links}>
           <a href="mailto:superohinsung@naver.com" className={styles.link}>
