@@ -1,24 +1,6 @@
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import styles from './Activity.module.css'
 
-const selfStudy = {
-  sql: [
-    '친절한 SQL 튜닝 1회독',
-    '오라클 성능 고도화 2회독',
-    'SQL 전문가 가이드 1회독',
-    'SQLP 자격검정 핵심노트 3번 반복',
-    'SQL 자격검정 실전문제 — 1·2과목 2회독, 3과목 1회독',
-  ],
-  cs: [
-    '컴퓨터구조 섹션 1 ~ 9',
-    '운영체제 섹션 1 ~ 9',
-    '네트워크 섹션 1 ~ 9',
-    '데이터베이스 섹션 1 ~ 8',
-    '자료구조 섹션 1 ~ 9',
-    '자바와 객체지향 섹션 1 ~ 9',
-  ],
-}
-
 const activities = [
   {
     title: 'SSAFY 13기 CS, Android 스터디 주최 및 운영',
@@ -135,31 +117,6 @@ function Activity() {
   return (
     <section id="activity" className="section reveal" ref={ref}>
       <h2 className="section__title">Activity</h2>
-
-      {/* Self Study */}
-      <div className={styles.studySection}>
-        <h3 className={styles.studySectionTitle}>Self Study</h3>
-        <div className={styles.studyGrid}>
-          <div className={styles.studyCard}>
-            <h4 className={styles.studyCardTitle}>SQL / DB 서적 학습</h4>
-            <ul className={styles.studyList}>
-              {selfStudy.sql.map((item) => (
-                <li key={item} className={styles.studyItem}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className={styles.studyCard}>
-            <h4 className={styles.studyCardTitle}>CS 기술면접 준비</h4>
-            <ul className={styles.studyList}>
-              {selfStudy.cs.map((item) => (
-                <li key={item} className={styles.studyItem}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Activities */}
       <div className={styles.list}>
         {activities.map((activity) => (
           <div key={activity.title} className={styles.card}>
