@@ -3,7 +3,7 @@ import styles from './Career.module.css'
 
 const CAREER_START = new Date(2026, 1, 9) // 2026.02.09
 
-function getTotalCareer() {
+export function getTotalCareer() {
   const now = new Date()
   let years = now.getFullYear() - CAREER_START.getFullYear()
   let months = now.getMonth() - CAREER_START.getMonth()
