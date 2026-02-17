@@ -23,11 +23,13 @@
   border-radius: 12px;
   padding: 20px 28px;
   background-color: var(--color-bg-card);
-  transition: border-color 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
   border-color: var(--color-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .left {
@@ -59,7 +61,7 @@
 .id {
   font-size: 0.8rem;
   color: var(--color-text-secondary);
-  opacity: 0.7;
+  opacity: 1;
   margin-top: 2px;
 }
 
