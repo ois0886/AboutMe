@@ -538,6 +538,510 @@ dependencies {
     ],
     screenshotColumns: 3,
   },
+  {
+    id: 'glim',
+    title: 'Glim',
+    description: '글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱',
+    thumbnail: 'screenshot/Glim1.png',
+    tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'Firebase Messaging', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
+    period: '2025.07 ~ 2025.08',
+    team: '6명 (Backend 2명, Android 3명, Frontend 1명)',
+    role: 'Android 앱 개발(로그인/회원가입, 마이페이지 UI 및 기능 개발)',
+    details: [
+      '\'글귀 + 울림\', \'글귀 + film\' 또는 \'glimpse(흘낏보다)\'의 조합으로, 짧지만 깊은 인상을 남기는 글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 감성을 공유하며 글림을 통해 책에 대한 관심을 유발하는 서비스',
+      '현대인의 디지털 과부하 문제에 대한 건전한 대안 제시 — 무분별한 숏폼 콘텐츠 소비로 인한 집중력 저하 및 독서량 감소에 대응하여, 완전한 차단이 아닌 글귀 기반 디지털 디톡스 접근',
+    ],
+    features: [
+      '글귀 입력(직접 입력/OCR) 및 AI 배경 이미지 생성, 폰트·크기·색·위치·방향 커스터마이징',
+      '글귀(글림), 도서, 작가 검색 및 관심사 기반 추천, 키워드/테마별 큐레이션',
+      '글귀 숏폼 공유(이미지), 좋아요/저장/댓글',
+      '도서 상세 정보 페이지 및 알라딘 구매 페이지 연동',
+      '마이페이지(업로드/저장 글귀 관리), 잠금화면 글귀 설정',
+    ],
+    contributions: [
+      'Orbit MVI 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계',
+      'Kotlin Coroutine과 DataStore를 활용한 Session, Refresh Token 관리 시스템 구현',
+      'Channel 기반 Navigator 패턴 도입으로 Screen과 Navigation 로직 완전 분리',
+      'JUnit, MockK 기반 ViewModelTest를 130+ 케이스 구현으로 안정적인 단위 테스트 구축',
+      'GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 잔디밭 형태로 Custom Compose UI 컴포넌트 구현',
+    ],
+    problemSolvings: [
+      {
+        problem: [
+          'Session, Refresh Token 만료 및 예외 상황 처리의 복잡성으로 재시도 등 여러 케이스를 일관되게 처리하기 어려움',
+        ],
+        solution: [
+          '인증 관련 기능을 모듈화하고, Logout 및 토큰 만료 시 자동 재인증 플로우를 추가',
+          'AuthDataStore: 토큰/유저 정보 영속화, AuthManager: 메모리 캐시 + 로그아웃 이벤트 + Auto Login 여부 판단',
+          'AuthInterceptor: 매 요청에 Authorization 헤더 자동 추가, TokenAuthenticator: 401 응답 시 토큰 재발급 및 재시도 처리',
+        ],
+        result: [
+          '인증 로직이 AuthManager, AuthInterceptor, TokenAuthenticator 세 레이어로 명확히 분리되어, 뷰/도메인 레이어에서는 토큰 관리 코드를 완전히 제거',
+          '토큰 만료·재발급·만료된 Refresh Token 처리·최대 재시도 초과 등의 예외가 한 곳에서 제어되어, 새로운 API를 추가할 때 별도의 인증 예외 처리가 불필요',
+          '로그아웃 사유를 LogoutReason으로 통합해 UI에서 사용자의 이해를 돕는 메시지를 일관되게 노출',
+        ],
+        implementation: [
+          {
+            description: '인증 정보는 DataStore 위에 AuthDataStore 추상화를 두고, AuthManager에서 메모리 캐시와 함께 관리하도록 설계.\n메모리 캐시 + DataStore 동기화로, 네트워크 요청에서는 항상 메모리에서 빠르게 토큰을 읽기 가능하며, logout(reason)에 토큰·유저 정보 삭제 + 로그아웃 이벤트 emit를 모아 모든 레이어에서 일관된 로그아웃 플로우를 사용.',
+            code: `class AuthDataStore @Inject constructor(
+    private val dataStore: DataStore<Preferences>
+) {
+    companion object {
+        private val ACCESS_TOKEN = stringPreferencesKey("access_token")
+        private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+        private val USER_ID = stringPreferencesKey("user_id")
+    }
+
+    val accessTokenFlow = ACCESS_TOKEN.flowIn(dataStore)
+    // ...
+}
+
+class AuthManager @Inject constructor(
+    private val authDataStore: AuthDataStore,
+    applicationScope: CoroutineScope
+) {
+    @Volatile private var cachedAccessToken: String? = null
+    @Volatile private var cachedRefreshToken: String? = null
+    @Volatile private var cachedUserId: String? = null
+
+    init {
+        applicationScope.launch {
+            launch {
+                authDataStore.accessTokenFlow.collect { token ->
+                    cachedAccessToken = token
+                }
+            }
+            // ...
+        }
+    }
+
+    fun getAccessToken(): String? = cachedAccessToken
+    fun saveToken(accessToken: String, refreshToken: String) { /* ... */ }
+    fun logout(reason: LogoutReason, eventEmit: Boolean = true) { /* ... */ }
+}`,
+          },
+          {
+            description: '매 요청마다 토큰을 수동으로 넣는 대신, OkHttp Interceptor를 통해 Authorization 헤더를 자동으로 추가.\n네트워크 레이어는 AuthManager에서 토큰을 읽기만 하고, 저장·로그아웃 책임은 갖지 않음.',
+            code: `class AuthInterceptor @Inject constructor(
+    private val authManager: AuthManager
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = authManager.getAccessToken()
+
+        val request = chain.request().newBuilder().apply {
+            if (!token.isNullOrEmpty()) {
+                addHeader("Authorization", "Bearer $token")
+            }
+        }.build()
+
+        return chain.proceed(request)
+    }
+}`,
+          },
+          {
+            description: '401 응답이 발생하면 OkHttp Authenticator에서 자동으로 Refresh Token을 사용해 토큰을 재발급하고, 기존 요청을 새 토큰으로 재시도하도록 구현.\nisTokenAlreadyRefreshed로 이미 다른 요청에서 토큰이 갱신된 경우를 감지해, 중복 Refresh와 무한 루프를 방지.',
+            code: `class TokenAuthenticator @Inject constructor(
+    private val authManager: AuthManager,
+    private val authApi: AuthApi
+) : Authenticator {
+
+    private val retryCount = AtomicInteger(0)
+    private val maxRetryCount = 3
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        return when (val result = handleAuthentication(response)) {
+            is AuthResult.Success -> result.request
+            is AuthResult.Failure -> null
+        }
+    }
+
+    private fun handleAuthentication(response: Response): AuthResult {
+        if (retryCount.get() >= maxRetryCount) {
+            authManager.logout(LogoutReason.MaxRetryExceeded)
+            return AuthResult.Failure("Max retry exceeded")
+        }
+
+        retryCount.incrementAndGet()
+
+        return when (val tokenResult = getCurrentTokens()) {
+            is TokenResult.Success -> {
+                if (isTokenAlreadyRefreshed(response, tokenResult.tokens.accessToken)) {
+                    resetRetryCount()
+                    AuthResult.Success(
+                        createRequestWithToken(response.request, tokenResult.tokens.accessToken)
+                    )
+                } else {
+                    refreshTokenAndCreateRequest(response.request, tokenResult.tokens)
+                }
+            }
+            is TokenResult.Failure -> {
+                authManager.logout(LogoutReason.TokenNotFound)
+                AuthResult.Failure(tokenResult.reason)
+            }
+        }
+    }
+}`,
+          },
+        ],
+        alternatives: [],
+      },
+      {
+        problem: [
+          '기존 MVI 구현 시 Intent/Reducer/State 클래스가 기하급수적으로 늘어나 코드베이스가 비대해짐',
+          '단순 입력 검증·로딩 처리에도 보일러플레이트 코드 증가로 변경 비용 및 회귀 위험 증가',
+        ],
+        solution: [
+          'Orbit 기반 상태 관리 도입',
+          'ViewModel에 ContainerHost<UiState, SideEffect> 적용 및 container 하나로 State·SideEffect 통합 관리 구조 도입',
+          '화면 단위로 UiState, SideEffect를 분리 설계하여 책임 명확화 및 테스트 용이성 향상',
+        ],
+        result: [
+          '화면별로 Intent·Reducer 클래스를 개별 정의하던 구조를 제거하고, Orbit 컨테이너 기반 단일 ViewModel 구조로 전환하여 상태 관리 코드량 감소 및 가독성 향상',
+          '입력 검증·로딩·에러 처리 로직을 테스트 가능한 ViewModel 계층에 집중시켜, 단위 테스트 작성 용이성 증가',
+          'UI 코드에서 비즈니스 로직을 분리하고, 공통 패턴 정립으로 새로운 화면 추가 시 일관된 개발 플로우 확보',
+        ],
+        implementation: [
+          {
+            description: 'LoginUiState에 이메일·비밀번호·에러 메시지·로딩 여부를 모두 포함하여, 로그인 화면 상태를 단일 데이터 클래스로 관리.\nisLoginEnabled 계산 프로퍼티를 통해 뷰에서 별도 조건 분기 없이 버튼 활성화 여부를 판단 가능하게 설계.\n일회성 에러 메시지 노출을 위해 LoginSideEffect.ShowError를 정의하여 상태(State)와 사이드 이펙트를 분리.',
+            code: `data class LoginUiState(
+    val email: TextFieldValue = TextFieldValue(""),
+    val password: TextFieldValue = TextFieldValue(""),
+    @StringRes val emailError: Int? = null,
+    @StringRes val passwordError: Int? = null,
+    val isLoading: Boolean = false,
+) {
+    val isLoginEnabled: Boolean
+        get() =
+            emailError == null &&
+                passwordError == null &&
+                email.text.isNotBlank() &&
+                password.text.isNotBlank()
+}
+
+sealed interface LoginSideEffect {
+    data class ShowError(
+        @StringRes val messageRes: Int,
+    ) : LoginSideEffect
+}`,
+          },
+          {
+            description: 'LoginViewModel에 ContainerHost<LoginUiState, LoginSideEffect> 적용 및 container 초기 상태로 LoginUiState() 설정.\n이메일·비밀번호 변경 시 intent {} 블록 안에서 Validation 유틸 호출 후 reduce { state.copy(...) } 패턴으로 상태를 갱신하여, 입력값과 에러 메시지 업데이트를 ViewModel 내부로 캡슐화.',
+            code: `@HiltViewModel
+internal class LoginViewModel @Inject constructor(
+    private val navigator: Navigator,
+    private val loginUseCase: LoginUseCase
+) : ViewModel(), ContainerHost<LoginUiState, LoginSideEffect> {
+
+    override val container =
+        container<LoginUiState, LoginSideEffect>(initialState = LoginUiState())
+
+    fun onEmailChanged(email: TextFieldValue) =
+        intent {
+            val validationResult =
+                ValidationUtils.validateEmail(
+                    email = email.text,
+                    emptyErrorRes = R.string.error_email_empty,
+                    invalidErrorRes = R.string.error_email_invalid,
+                )
+
+            val error =
+                when (validationResult) {
+                    is ValidationResult.Valid -> null
+                    is ValidationResult.Invalid -> validationResult.errorMessageRes
+                }
+
+            reduce { state.copy(email = email, emailError = error) }
+        }
+
+    fun onPasswordChanged(password: TextFieldValue) =
+        intent {
+            val validationResult =
+                ValidationUtils.validatePassword(
+                    password = password.text,
+                    emptyErrorRes = R.string.error_password_empty,
+                    invalidErrorRes = R.string.error_password_invalid,
+                )
+
+            val error =
+                when (validationResult) {
+                    is ValidationResult.Valid -> null
+                    is ValidationResult.Invalid -> validationResult.errorMessageRes
+                }
+
+            reduce { state.copy(password = password, passwordError = error) }
+        }`,
+          },
+          {
+            description: '로그인 버튼 클릭 시 전체 입력 검증 → 에러 상태 반영 → 오류가 있을 경우 LoginSideEffect.ShowError 발행 → 정상일 경우 로딩 상태 On/Off 및 LoginUseCase 실행·네비게이션까지 일관된 플로우로 처리.',
+            code: `    fun onLoginClicked() = intent {
+        val emailValidation = ValidationUtils.validateEmail(
+            email = state.email.text,
+            emptyErrorRes = R.string.error_email_empty,
+            invalidErrorRes = R.string.error_email_invalid,
+        )
+
+        val passwordValidation = ValidationUtils.validatePassword(
+            password = state.password.text,
+            emptyErrorRes = R.string.error_password_empty,
+            invalidErrorRes = R.string.error_password_invalid,
+        )
+
+        val emailError = if (emailValidation is ValidationResult.Invalid) {
+            emailValidation.errorMessageRes
+        } else { null }
+
+        val passwordError = if (passwordValidation is ValidationResult.Invalid) {
+            passwordValidation.errorMessageRes
+        } else { null }
+
+        reduce { state.copy(emailError = emailError, passwordError = passwordError) }
+
+        if (emailError != null || passwordError != null) {
+            postSideEffect(LoginSideEffect.ShowError(emailError ?: passwordError!!))
+            return@intent
+        }
+
+        reduce { state.copy(isLoading = true) }
+
+        runCatching {
+            loginUseCase(
+                email = state.email.text,
+                password = state.password.text,
+            )
+        }.onSuccess {
+            reduce { state.copy(isLoading = false) }
+            navigateToHome()
+        }.onFailure { exception ->
+            reduce { state.copy(isLoading = false) }
+            Log.d("LoginViewModel", "Manual login failed: \${exception.message}")
+            postSideEffect(LoginSideEffect.ShowError(R.string.login_failed))
+        }
+    }`,
+          },
+          {
+            description: 'LoginRoute에서 container.stateFlow.collectAsState()로 상태를 구독하고, collectSideEffect로 일회성 이벤트만 처리.\nLoginScreen은 LoginUiState와 콜백만 주입받아 순수 UI 역할만 담당하도록 설계.',
+            code: `@Composable
+internal fun LoginRoute(
+    padding: PaddingValues,
+    viewModel: LoginViewModel = hiltViewModel(),
+) {
+    val uiState by viewModel.container.stateFlow.collectAsState()
+    val context = LocalContext.current
+
+    viewModel.collectSideEffect { effect ->
+        when (effect) {
+            is LoginSideEffect.ShowError ->
+                Toast.makeText(
+                    context,
+                    context.getString(effect.messageRes),
+                    Toast.LENGTH_SHORT
+                ).show()
+        }
+    }
+
+    LoginScreen(
+        state = uiState,
+        padding = padding,
+        onEmailChanged = viewModel::onEmailChanged,
+        onPasswordChanged = viewModel::onPasswordChanged,
+        onLoginClicked = viewModel::onLoginClicked,
+        navigateToSignUp = viewModel::navigateToSignUp
+    )
+}`,
+          },
+        ],
+        alternatives: [
+          '기존 MVI 스타일을 유지한 채 하나의 sealed Intent + 단일 reducer 함수로만 관리하는 방법도 있었지만, 화면이 늘어날수록 거대한 when 블록과 단일 reducer에 로직이 몰려 가독성이 더 떨어졌을 가능성이 있음',
+          'Orbit 없이 StateFlow + 확장 함수 조합으로 직접 MVI 유사 패턴을 구현하는 대안도 있었지만, 이미 검증된 컨테이너·SideEffect 처리 기능을 재구현해야 해 유지보수 비용이 커졌을 것임',
+        ],
+      },
+      {
+        problem: [
+          '복잡한 화면 전환 로직을 각 Screen에서 직접 NavBackStack에 접근해 처리하면서, UI와 네비게이션 구현 상세 간 강한 결합 발생',
+          '화면 간 이동·BackStack 초기화·뒤로 가기 처리 방식이 화면마다 제각각 구현되어, 중복 코드 증가 및 일관성 저하',
+        ],
+        solution: [
+          'Channel 기반 Navigator 패턴 도입',
+          'Navigator 인터페이스와 NavigatorImpl을 별도 모듈에 정의하고, 화면에서는 오직 이 인터페이스만 의존하도록 설계',
+          'Channel<InternalRoute>를 사용해 ViewModel에서 네비게이션 요청을 발행하고, 네비게이션 전용 ViewModel 및 Composable에서 이를 수신해 실제 NavBackStack 조작을 수행하는 간접 호출 구조 도입',
+        ],
+        result: [
+          '각 Screen에서 NavBackStack/Controller에 직접 접근하던 코드를 제거하고, Channel 기반 Navigator 한 곳으로 네비게이션 로직을 집중시켜 화면과 네비게이션 구현 간 결합도 감소',
+          'ViewModel에서는 navigator.navigate(...) 호출만으로 화면 전환을 요청하고, 실제 BackStack 조작은 네비게이션 전용 Composable이 담당하도록 역할 분리',
+          'InternalRoute·RouteSideEffect·Route/BottomTabRoute 등 타입 기반 라우팅 모델을 도입하여, 문자열 기반 Route 사용 시 발생할 수 있는 오타·런타임 오류를 컴파일 타임에 검출 가능하도록 개선',
+        ],
+        implementation: [
+          {
+            description: '공용 네비게이션 API로 Navigator 인터페이스를 정의하고, 구현체 NavigatorImpl에서는 Channel<InternalRoute>로 네비게이션 이벤트를 전파하는 구조 도입.\nHilt 모듈에서 Navigator와 InternalNavigator 둘 다 NavigatorImpl로 바인딩하여, UI·ViewModel 측에서는 외부 인터페이스만, 내부 네비게이션 ViewModel에서는 Internal 인터페이스만 사용하도록 의존성 분리.',
+            code: `interface Navigator {
+    suspend fun navigate(
+        route: NavKey,
+        saveState: Boolean = false,
+        launchSingleTop: Boolean = true
+    )
+    suspend fun navigateBack()
+    suspend fun navigateAndClearBackStack(route: NavKey)
+}
+
+@ActivityRetainedScoped
+class NavigatorImpl @Inject constructor() : Navigator, InternalNavigator {
+    override val channel = Channel<InternalRoute>(Channel.BUFFERED)
+
+    override suspend fun navigate(
+        route: NavKey, saveState: Boolean, launchSingleTop: Boolean
+    ) {
+        channel.send(
+            InternalRoute.Navigate(
+                route = route, saveState = saveState, launchSingleTop = launchSingleTop
+            ),
+        )
+    }
+
+    override suspend fun navigateBack() {
+        channel.send(InternalRoute.NavigateBack)
+    }
+
+    override suspend fun navigateAndClearBackStack(route: NavKey) {
+        channel.send(InternalRoute.NavigateAndClearBackStack(route = route))
+    }
+}`,
+          },
+          {
+            description: '실제 Channel에 흘러다니는 내부 라우트 모델로 InternalRoute를 정의하고, 이를 UI에서 소비하기 위한 RouteSideEffect로 변환하는 중간 ViewModel 설계 적용.',
+            code: `sealed interface InternalRoute {
+    data class Navigate(
+        val route: NavKey, val saveState: Boolean, val launchSingleTop: Boolean
+    ) : InternalRoute
+    data object NavigateBack : InternalRoute
+    data class NavigateAndClearBackStack(val route: NavKey) : InternalRoute
+}
+
+sealed interface RouteSideEffect {
+    data class Navigate(
+        val route: NavKey, val saveState: Boolean, val launchSingleTop: Boolean
+    ) : RouteSideEffect
+    data object NavigateBack : RouteSideEffect
+    data class NavigateAndClearBackStack(val route: NavKey) : RouteSideEffect
+}
+
+@HiltViewModel
+internal class NavigatorViewModel @Inject constructor(
+    navigator: InternalNavigator,
+) : ViewModel() {
+    val sideEffect by lazy(LazyThreadSafetyMode.NONE) {
+        navigator.channel.receiveAsFlow()
+            .map { navigator ->
+                when (navigator) {
+                    is InternalRoute.Navigate ->
+                        RouteSideEffect.Navigate(
+                            navigator.route, navigator.saveState, navigator.launchSingleTop
+                        )
+                    is InternalRoute.NavigateBack -> RouteSideEffect.NavigateBack
+                    is InternalRoute.NavigateAndClearBackStack ->
+                        RouteSideEffect.NavigateAndClearBackStack(navigator.route)
+                }
+            }
+    }
+}`,
+          },
+          {
+            description: 'LaunchedNavigator 컴포저블에서 NavigatorViewModel.sideEffect를 수집하고, 전달받은 RouteSideEffect에 따라 NavBackStack 조작을 일괄 처리함으로써, 실제 네비게이션 책임을 단일 지점으로 집중.',
+            code: `@Composable
+fun LaunchedNavigator(navBackStack: NavBackStack) {
+    InternalLaunchedNavigator(navBackStack = navBackStack)
+}
+
+@Composable
+private fun InternalLaunchedNavigator(
+    navBackStack: NavBackStack,
+    routerViewModel: NavigatorViewModel = hiltViewModel(),
+) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(routerViewModel, lifecycleOwner) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            routerViewModel.sideEffect.collectLatest { sideEffect ->
+                when (sideEffect) {
+                    is RouteSideEffect.NavigateBack -> {
+                        navBackStack.removeLastOrNull()
+                    }
+                    is RouteSideEffect.Navigate -> {
+                        navBackStack.remove(sideEffect.route)
+                        navBackStack.add(sideEffect.route)
+                    }
+                    is RouteSideEffect.NavigateAndClearBackStack -> {
+                        navBackStack.clear()
+                        navBackStack.add(sideEffect.route)
+                    }
+                }
+            }
+        }
+    }
+}`,
+          },
+          {
+            description: 'ViewModel에서 화면 전환 시 NavBackStack·NavController에 직접 접근하지 않고, 주입받은 Navigator 인터페이스만 호출하여 화면 로직과 네비게이션 구현 간 결합 제거.',
+            code: `@HiltViewModel
+internal class LoginViewModel @Inject constructor(
+    private val navigator: Navigator,
+    private val loginUseCase: LoginUseCase
+) : ViewModel(), ContainerHost<LoginUiState, LoginSideEffect> {
+
+    // ...
+
+    fun navigateToSignUp() =
+        intent {
+            navigator.navigate(Route.SignUp)
+        }
+
+    fun navigateToHome() =
+        intent {
+            navigator.navigateAndClearBackStack(BottomTabRoute.Home)
+        }
+}`,
+          },
+        ],
+        alternatives: [],
+      },
+    ],
+    insights: [
+      { title: 'Android 앱 아키텍처 가이드 정리', url: 'https://superohinsung.tistory.com/427' },
+      { title: 'Orbit Multiplatform 개요와 Core 탐구하기', url: 'https://superohinsung.tistory.com/428' },
+      { title: 'Orbit Multiplatform ViewModel, ComposeUI, Test 탐구하기', url: 'https://superohinsung.tistory.com/429' },
+      { title: 'Orbit으로 MVI 구현기', url: 'https://superohinsung.tistory.com/430' },
+      { title: 'Compose Navigation은 어떻게 하면 좋을까?', url: 'https://superohinsung.tistory.com/431' },
+      { title: '안드로이드 프로젝트에서 토큰 관리는 어떻게 했나요? feat AuthManagingSystem', url: 'https://superohinsung.tistory.com/437' },
+    ],
+    achievements: [
+      'SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상',
+      '로그인/회원가입 등 인증 구조의 안정적 구현',
+      'Compose, MVI 기반 프로젝트 적용',
+      'ViewModel Unit Test를 진행하여 안정적인 서비스 구축',
+    ],
+    retrospective: [
+      '주어진 개발 시간의 부족으로 인해 완전한 리팩토링 미흡',
+      '실제 사용자 테스트를 통한 UX 개선 포인트 발견 지연으로 개발 후반부 UI/UX 수정 집중',
+      '기능 개발과 병행한 지속적인 코드 품질 개선을 위한 점진적 리팩토링 프로세스 도입 필요성',
+      '초기 단계부터 프로토타이핑과 사용자 테스트를 통한 빠른 피드백 루프 구축 필요성',
+      'Orbit MVI 패턴 적용을 통한 코드 가독성과 테스트 용이성 향상 및 기능 확장 시 일관된 구조 유지 가능성 확인',
+      '130+ 테스트 케이스 작성을 통한 코드 품질 개선 및 리팩토링과 기능 수정 시 안정성 보장의 테스트 가치 인식',
+      'Cold Stream과 Hot Stream에 대한 명확한 차이를 이해',
+    ],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/ois0886/Glim' },
+      { label: 'Figma', url: 'https://www.figma.com/design/fXNJ4oRRJW0dowjC1GT5rm/SSAFY?node-id=16-8600&t=h9dCaxC5WPn9OK9J-1' },
+    ],
+    screenshots: [
+      'screenshot/Glim1.png',
+      'screenshot/Glim2.png',
+      'screenshot/Glim3.png',
+      'screenshot/Glim4.png',
+      'screenshot/Glim5.png',
+      'screenshot/Glim6.png',
+      'screenshot/Glim7.png',
+      'screenshot/Glim8.png',
+    ],
+    screenshotColumns: 3,
+  },
 ]
 
 export default projects
