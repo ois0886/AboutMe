@@ -59,8 +59,12 @@ function ScrollToTop() {
       const saved = sessionStorage.getItem('scrollY')
       if (saved) {
         sessionStorage.removeItem('scrollY')
+        document.documentElement.classList.add('no-transition')
         document.querySelectorAll('.reveal').forEach((el) => el.classList.add('revealed'))
         window.scrollTo({ top: Number(saved), behavior: 'instant' })
+        requestAnimationFrame(() => {
+          document.documentElement.classList.remove('no-transition')
+        })
       }
     }
   }, [pathname])
