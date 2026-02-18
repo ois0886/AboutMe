@@ -148,11 +148,15 @@ function ProjectDetail() {
                 </li>
               ))}
             </ul>
-            {project.insightImage && (
-              <div className={styles.screenshotFull} style={{ marginTop: '24px' }}>
-                <div className={styles.screenshotWrap}>
-                  <img src={project.insightImage} alt="Insight" className={styles.screenshot} />
-                </div>
+            {project.insightImages && project.insightImages.length > 0 && (
+              <div style={{ marginTop: '24px' }}>
+                {project.insightImages.map((img) => (
+                  <div key={img} className={styles.screenshotFull} style={{ marginBottom: '16px' }}>
+                    <div className={styles.screenshotWrap}>
+                      <img src={img} alt="Insight" className={styles.screenshot} />
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </section>

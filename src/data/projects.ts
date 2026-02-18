@@ -25,7 +25,7 @@ export interface Project {
   contributions: string[]
   problemSolvings: ProblemSolving[]
   insights: { title: string; url: string }[]
-  insightImage?: string
+  insightImages?: string[]
   achievements: string[]
   retrospective: string[]
   links: { label: string; url: string }[]
@@ -1723,7 +1723,7 @@ class ChattingViewModel @Inject constructor(
         url: 'https://superohinsung.tistory.com/315',
       },
     ],
-    insightImage: 'screenshot/Bong+.png',
+    insightImages: ['screenshot/Bong+.png'],
     achievements: [
       'Presentation/Domain/Data 계층 분리로 구조적 안정성 확보',
       'Hilt/UseCase/Repository/Mapper 분리로 유지보수성과 테스트 용이성 대폭 향상',
@@ -1746,6 +1746,308 @@ class ChattingViewModel @Inject constructor(
       'screenshot/Bong7.png',
       'screenshot/Bong8.jpeg',
     ],
+  },
+  {
+    id: 'pocs',
+    title: 'POCS',
+    description:
+      '한성대학교 전공 소모임 POCS 회원들을 위한 원활한 스터디 모집 및 정보 공유를 위한 커뮤니티 앱',
+    thumbnail: 'screenshot/POCS1.png',
+    tech: [
+      'Kotlin',
+      'Jetpack Compose',
+      'Hilt',
+      'MVVM',
+      'Clean Architecture',
+      'Coroutines',
+      'Paging3',
+      'Retrofit2',
+      'Glide',
+      'Markwon',
+      'JUnit4',
+      'Espresso',
+    ],
+    period: '2022.06 ~ 2022.09',
+    team: '11명 (Backend 2명, Android 2명, Frontend 5명, PM 2명)',
+    role: '안드로이드 앱 개발 (스터디·커뮤니티, 프로필 기능 개발)',
+    details: [
+      '전공 소모임 POCS 회원들이 스터디 모집과 정보 공유를 편리하게 할 수 있는 커뮤니티 앱 개발',
+      '코로나로 침체한 전공 소모임을 활성화하기 위해 스터디 모집과 정보 전달을 효율화하기 위한 전용 플랫폼 개발',
+    ],
+    features: [
+      '로그인 및 회원가입 (익명/정회원), 관리자/일반 회원 모드',
+      '스터디/커뮤니티 포스팅 및 댓글 CRUD, 카테고리별 게시글 등록 및 관리',
+      '이미지 첨부, Markdown 편집 지원',
+      '프로필 이미지 및 정보 수정, 나의 게시글·댓글 관리, 외부 링크 관리',
+      '관리자 기능: 회원 관리, 권한 부여',
+      '게시글·댓글 좋아요/저장, 검색 및 필터 기능',
+    ],
+    contributions: [
+      '안드로이드 앱 개발 (스터디·커뮤니티, 프로필 기능 개발)',
+      '기존 XML View를 Jetpack Compose로 70% 이상 전환하여 코드 재사용성과 개발 효율성 개선',
+      'Paging3 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화',
+      'GitHub Actions를 활용해 Android CI/CD (자동 빌드, 테스트, Play Store 배포) 환경 구축',
+      'Play Store 정식 배포 완료로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험',
+    ],
+    problemSolvings: [
+      {
+        problem: [
+          '대량의 JSON 데이터를 한 번에 로딩하여 리스트에 바인딩하면서, 스크롤 시 프레임 드랍·UI 끊김 현상 발생함.',
+          '페이지네이션 미적용으로 동일 데이터를 반복해서 요청하거나, 불필요한 데이터까지 메모리에 적재하는 비효율 발생함.',
+        ],
+        solution: [
+          'Android Paging3 라이브러리 도입으로 네트워크 기반 페이지네이션을 구현하고, 스크롤 위치에 따라 필요한 페이지만 순차적으로 로딩하는 구조 적용함.',
+          'PagingSource, Pager, PagingData 기반으로 Data 레이어에 페이지 단위 데이터 공급 책임을 부여하여, UI에서는 스트림만 구독하도록 역할 분리함.',
+        ],
+        result: [
+          '기존 JSON 전체 로딩 방식에서 Paging3 기반 페이지네이션으로 전환하여, 초기 로딩 시 데이터·렌더링 부담 감소 및 스크롤 시 렉 현상 완화 달성함.',
+          '네트워크 요청·페이지 키 관리·에러 처리 로직을 PostPagingSource 한 곳에 모으고, 상위 레이어에는 Flow<PagingData<Post>>만 제공함으로써, UI 레이어 변경 없이도 페이징 전략 수정·튜닝 가능성 확보함.',
+        ],
+        implementation: [
+          {
+            description:
+              'PostPagingSource를 도입하여, JSON 응답을 페이지 단위로 로딩하고, 응답을 Domain 모델 Post로 매핑하여 UI에 공급하는 책임을 분리함.',
+            code: `class PostPagingSource @Inject constructor(
+    private val api: PostApi,
+    private val filterType: PostFilterType
+) : PagingSource<Int, Post>() {
+
+    companion object {
+        private const val START_PAGE = 1
+        const val PAGE_SIZE = 15
+    }
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Post> {
+        val page = params.key ?: START_PAGE
+        return try {
+            val response = api.getAll(filterType.toDto(), pageSize = PAGE_SIZE, page = page)
+            if (response.isSuccessful) {
+                val posts = response.body()!!.data.posts.map { it.toEntity() }
+                val isEnd = posts.isEmpty()
+
+                LoadResult.Page(
+                    data = posts,
+                    prevKey = if (page == START_PAGE) null else page - 1,
+                    nextKey = if (isEnd) null else page + 1
+                )
+            } else {
+                throw Exception(response.errorMessage)
+            }
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Post>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
+}`,
+          },
+          {
+            description:
+              'PostRepositoryImpl에서 Pager를 생성해 PagingData<Post> 스트림을 반환함으로써, UI·ViewModel에서 Paging3 상세 구현을 몰라도 되도록 추상화 계층 구성함.',
+            code: `class PostRepositoryImpl @Inject constructor(
+    private val dataSource: PostRemoteDataSource,
+    private val api: PostApi
+) : PostRepository {
+
+    override fun getAll(filterType: PostFilterType): Flow<PagingData<Post>> {
+        return Pager(
+            config = PagingConfig(PAGE_SIZE),
+            pagingSourceFactory = { PostPagingSource(api = api, filterType = filterType) }
+        ).flow
+    }
+}`,
+          },
+        ],
+        alternatives: [
+          '클라이언트에서만 in-memory paging(배열 슬라이싱)이나 LazyColumn의 item/itemsIndexed 조합으로 가상 페이징을 구현하는 방법도 있었을 것임.',
+          'RecyclerView + ListAdapter로 전환하고 DiffUtil 최적화, 이미지 썸네일/placeholder 적용 등 렌더링 쪽만 튜닝하는 접근도 가능했지만, 한 번에 내려받는 데이터 양 자체를 줄이지 못해 근본적인 메모리·네트워크 부담은 남았을 것임.',
+          '자체 커스텀 페이징 로직을 구현하는 방법도 있었지만, 이미 검증된 Paging3를 활용하는 쪽이 중복 코드와 버그 가능성을 줄이고 라이프사이클·캐싱 지원을 그대로 가져올 수 있다는 점에서 더 현실적인 선택이었음.',
+        ],
+      },
+      {
+        problem: [
+          '기능 개발 외에 반복적인 수동 빌드·테스트·배포 작업으로 인한 시간 소모 및 에러 발생 부담 증가함.',
+          '브랜치 전략에 따른 품질 검증(빌드/테스트/Lint)과 Play Store 배포가 일관된 프로세스 없이 수동으로 진행되어, 배포 속도 및 신뢰도 저하 현상 발생함.',
+        ],
+        solution: [
+          'GitHub Actions 워크플로를 도입하여 main 브랜치에 대한 빌드·Lint·UI 테스트를 자동화하고, release 브랜치에서 Play Store Internal Track까지 자동 배포되는 CI/CD 파이프라인 설계 및 구축함.',
+          '서버 URL, 서명 키, 서비스 계정 키 등 민감 정보를 GitHub Secrets로 관리하고, 워크플로 실행 시 환경 변수 및 파일로 주입하는 보안 중심 구성 적용함.',
+        ],
+        result: [
+          'main 브랜치에 대한 빌드·Lint·UI 테스트가 자동으로 실행되어, 코드 병합 전 품질 검증을 일관된 파이프라인으로 수행함으로써 수동 검증 부담 감소 및 신뢰도 향상 달성함.',
+          'release 브랜치 push만으로 서명된 AAB 빌드부터 Play Store Internal Track 배포까지 자동화하여, 배포 속도 향상과 함께 서명/업로드 과정에서의 에러 발생 가능성 감소 효과 확보함.',
+        ],
+        implementation: [
+          {
+            description:
+              'Android CI 워크플로를 정의하여 main 브랜치 push/pull request 시 자동으로 빌드, ktlint 체크를 수행함. SERVER_URL을 GitHub Secrets에서 읽어 apikey.properties 파일로 생성하여 환경 구성 자동화 수행함.',
+            code: `name: Android CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/README.md'
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Development build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Access SERVER_URL
+        env:
+          SERVER_URL: \${{ secrets.SERVER_URL }}
+        run: echo '\${{ secrets.SERVER_URL }}' > ./apikey.properties
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Check Lint
+        run: ./gradlew ktlintCheck`,
+          },
+          {
+            description:
+              'matrix.api-level 전략으로 23·30·31 버전 에뮬레이터에서 connectedCheck를 실행함으로써, 다양한 OS 버전에서 UI 회귀 테스트 자동화 환경 구축함.',
+            code: `  ui-test:
+    name: UI tests on Android (API level \${{ matrix.api-level }})
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [ 23, 30, 31 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Run UI test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: \${{ matrix.api-level }}
+          disable-animations: true
+          arch: x86_64
+          script: ./gradlew connectedCheck`,
+          },
+          {
+            description:
+              'release 브랜치 push 시 Play Store Internal Track까지 자동 배포하는 CD 워크플로. Gradle로 Release AAB를 빌드하고, GitHub Secrets 기반 서명 후 Google Play Console에 업로드함.',
+            code: `name: Build and Publish to Play Store
+on:
+  push:
+    branches:
+      - release/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - name: Build Release AAB
+        run: ./gradlew bundleRelease
+
+      - name: Sign AAB
+        id: sign
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: \${{ secrets.KEY_STORE_BASE_64 }}
+          alias: \${{ secrets.ALIAS }}
+          keyStorePassword: \${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: \${{ secrets.KEY_PASSWORD }}
+
+      - name: Deploy to Play Store (Internal)
+        uses: r0adkll/upload-google-play@v1.0.16
+        with:
+          track: internal
+          serviceAccountJson: service_account.json
+          packageName: com.pocs.blog
+          status: completed
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab`,
+          },
+        ],
+        alternatives: [
+          'Jenkins, GitLab CI 같은 사내 CI 서버를 구축해 파이프라인을 운영하는 방법도 있었지만, 별도 인프라 관리 비용과 초기 설정 부담이 커서 GitHub 저장소와 밀접하게 연동되는 현재 구조보다 효율이 떨어졌을 가능성이 있음.',
+          '로컬 Git 훅(pre-push, pre-commit)과 IDE 플러그인만으로 빌드·Lint 검사를 강제하는 방식도 가능했지만, 개발자 환경마다 설정 편차가 생기고, Pull Request 단위로 일관된 품질 검증을 보장하기 어려웠을 것임.',
+          'Play Store 배포만 별도 수동 스크립트(예: fastlane)로 처리하고 나머지 검증은 수동으로 남겨두는 절충안도 있었지만, 사람이 개입하는 구간이 많은 만큼 릴리스 속도와 신뢰도를 끌어올리기에는 한계가 있었을 것임.',
+        ],
+      },
+    ],
+    insights: [
+      {
+        title: 'MVVM 패턴 이란?',
+        url: 'https://superohinsung.tistory.com/66',
+      },
+      {
+        title: 'Clean Architecture(클린 아키텍처) 란',
+        url: 'https://superohinsung.tistory.com/74',
+      },
+      {
+        title: 'Context 란?',
+        url: 'https://superohinsung.tistory.com/99',
+      },
+      {
+        title: 'Glide 간단 정리',
+        url: 'https://superohinsung.tistory.com/194',
+      },
+      {
+        title: 'android Github Actions CI/CD를 사용기',
+        url: 'https://superohinsung.tistory.com/353',
+      },
+      {
+        title: 'MVP 패턴이란?',
+        url: 'https://superohinsung.tistory.com/65',
+      },
+    ],
+    insightImages: [
+      'screenshot/POCS+1.png',
+      'screenshot/POCS+2.png',
+    ],
+    achievements: [
+      'Paging3 기반 커뮤니티 기능으로 1,000건 이상 데이터도 스크롤 렉 없이 제공',
+      'Play Store 배포 경험',
+      'CI/CD로 빌드·릴리즈·배포 자동화 및 코드 품질 보장',
+    ],
+    retrospective: [
+      'MVP에 집중하다 보니 초반 UI/UX 세부 설계가 부족함, UI/UX 설계 초기부터 더 많은 리소스와 시간 투자 필요성 인식',
+      '유지보수와 확장성 있는 개발의 중요성, 팀원과 코드 리뷰/지식 공유의 소중함, 사용자 피드백을 통한 서비스 개선의 보람 깨달음',
+    ],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/hansung-pocs/blog-android' },
+      { label: 'Play Store', url: 'https://play.google.com/store/apps/details?id=com.pocs.blog' },
+      { label: 'Figma', url: 'https://www.figma.com/design/4PaubSvRI5ki5RfO0UN5Sk/POCS-BLOG?node-id=0-1&t=BvC0aFS94RqVUgBP-1' },
+    ],
+    screenshots: [
+      'screenshot/POCS1.png',
+      'screenshot/POCS2.png',
+      'screenshot/POCS3.png',
+      'screenshot/POCS4.png',
+    ],
+    screenshotColumns: 3,
   },
 ]
 
