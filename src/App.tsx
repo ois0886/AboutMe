@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -51,9 +51,17 @@ function Home() {
 
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (pathname.startsWith('/projects/')) {
+      sessionStorage.setItem('scrollY', String(window.scrollY))
       window.scrollTo({ top: 0, behavior: 'instant' })
+    } else if (pathname === '/') {
+      const saved = sessionStorage.getItem('scrollY')
+      if (saved) {
+        sessionStorage.removeItem('scrollY')
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('revealed'))
+        window.scrollTo({ top: Number(saved), behavior: 'instant' })
+      }
     }
   }, [pathname])
   return null
