@@ -1042,6 +1042,354 @@ internal class LoginViewModel @Inject constructor(
     ],
     screenshotColumns: 3,
   },
+  {
+    id: 'quiz-cafe',
+    title: 'Quiz Cafe',
+    description:
+      '다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼.',
+    thumbnail: 'screenshot/QuizCafe1.png',
+    tech: [
+      'Kotlin',
+      'Jetpack Compose',
+      'Hilt',
+      'MVI',
+      'Coroutine',
+      'Retrofit2',
+      'Room',
+      'DataStore',
+      'Google Auth',
+      'Navigation',
+      'Ktlint',
+    ],
+    period: '2025.04 ~ 2025.06',
+    team: '6명 (Backend 2명, Android 4명)',
+    role: 'Android 앱 개발 (메인 및 마이페이지 개발)',
+    details: [
+      'Computer Science와 다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼',
+    ],
+    features: [
+      '퀴즈 CRUD 및 퀴즈 풀기 기능',
+      '문제집별 퀴즈 풀기 및 좋아요 기능',
+      '카테고리 생성/분류 및 개수 제한 (3~5개)',
+      '문제집 실행/진행, 학습 결과 저장, 완료 후 피드백 제공 (점수, 정답률)',
+      '마이페이지 (내 문제집/퀴즈 관리) 및 학습 기록/진척 관리 (잔디밭 형식)',
+    ],
+    contributions: [
+      'Android 앱 개발 (메인 및 마이페이지 개발) 및 1차 MVP 개발 완료',
+      '모든 화면의 구성요소를 재사용 가능한 Jetpack Compose UI 디자인 시스템 구축',
+      'Compose UI로 100% 화면 구현',
+      'UiState–Intent–SideEffect MVI 구조를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축',
+      'DataStore 활용 자동로그인 및 보안 세션 관리 구현, Retrofit + Coroutine 기반 비동기 통신 및 예외 처리 구조 설계',
+    ],
+    problemSolvings: [
+      {
+        problem: [
+          'JWT 토큰·이메일 등 사용자 세션 정보를 SharedPreferences에 저장하면서, 동기식 I/O로 인한 ANR 위험, 타입 세이프티 부족, 데이터 일관성 보장 한계 발생함.',
+          '비동기·스트림 기반으로 세션 상태를 관찰하기 어려워, 토큰 변경에 따른 전역 상태 반영 및 로그아웃 처리 흐름이 복잡해지는 문제 발생함.',
+        ],
+        solution: [
+          '세션 저장소를 SharedPreferences에서 Preferences DataStore로 전환하여, 코루틴·Flow 기반 완전 비동기 I/O 및 트랜잭션 단위 업데이트를 지원하도록 개선함.',
+          'AuthDataStore + AuthManager + AuthInterceptor 조합으로, 영속 저장소·메모리 캐시·네트워크 헤더 삽입을 역할별로 분리해 타입 세이프하고 일관된 인증 상태 관리 구조 도입함.',
+        ],
+        result: [
+          'SharedPreferences 기반 세션 관리에서 DataStore + StateFlow 기반 구조로 전환하여, 디스크 I/O의 완전 비동기 처리, 타입 세이프한 키 관리, 반응형 세션 상태 구독 등을 통해 안정성과 확장성 향상 달성함.',
+          'AuthDataStore(영속 저장소)–AuthManager(메모리 캐시/로그아웃 이벤트)–AuthInterceptor(헤더 주입)로 책임을 분리함으로써, 인증/세션 관련 코드 중복을 제거하고, 토큰 저장·로딩·삭제·로그아웃 플로우를 단일 진입점에서 관리하는 구조 확립함.',
+        ],
+        implementation: [
+          {
+            description:
+              'DataStore 접근을 확장 함수로 감싸 재사용성을 높이고, Access Token, Refresh Token, 사용자 이메일을 stringPreferencesKey로 정의해 키 관리 및 타입 세이프티를 확보함.',
+            code: `private fun Preferences.Key<String>.flowIn(store: DataStore<Preferences>) =
+    store.data.map { it[this] }
+
+private suspend fun Preferences.Key<String>.saveTo(store: DataStore<Preferences>, value: String) =
+    store.edit { it[this] = value }
+
+private suspend fun Preferences.Key<String>.deleteFrom(store: DataStore<Preferences>) =
+    store.edit { it.remove(this) }
+
+class AuthDataStore @Inject constructor(
+    private val dataStore: DataStore<Preferences>
+) {
+    companion object {
+        private val ACCESS_TOKEN = stringPreferencesKey("access_token")
+        private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+        private val USER_EMAIL = stringPreferencesKey("user_email")
+    }
+
+    val accessTokenFlow = ACCESS_TOKEN.flowIn(dataStore)
+    val refreshTokenFlow = REFRESH_TOKEN.flowIn(dataStore)
+    val userEmailFlow = USER_EMAIL.flowIn(dataStore)
+
+    suspend fun saveAccessToken(token: String) = ACCESS_TOKEN.saveTo(dataStore, token)
+    suspend fun deleteAccessToken() = ACCESS_TOKEN.deleteFrom(dataStore)
+
+    suspend fun saveRefreshToken(token: String) = REFRESH_TOKEN.saveTo(dataStore, token)
+    suspend fun deleteRefreshToken() = REFRESH_TOKEN.deleteFrom(dataStore)
+
+    suspend fun saveUserEmail(email: String) = USER_EMAIL.saveTo(dataStore, email)
+    suspend fun deleteUserEmail() = USER_EMAIL.deleteFrom(dataStore)
+}`,
+          },
+          {
+            description:
+              '앱 전역 applicationScope에서 DataStore Flow를 수집해, 최신 토큰·이메일을 @Volatile 메모리 캐시에 유지하고 동기 접근자를 제공함으로써, 네트워크 계층에서 빠른 조회 가능 구조 설계함.',
+            code: `class AuthManager @Inject constructor(
+    private val authDataStore: AuthDataStore,
+    private val googleAuthManager: GoogleAuthManager,
+    @ApplicationScope private val applicationScope: CoroutineScope
+) {
+    @Volatile
+    private var cachedAccessToken: String? = null
+
+    @Volatile
+    private var cachedRefreshToken: String? = null
+
+    @Volatile
+    private var cachedUserEmail: String? = null
+
+    private val _logoutEvent = MutableSharedFlow<LogoutReason>(extraBufferCapacity = 1)
+    val logoutEvent: SharedFlow<LogoutReason> = _logoutEvent
+
+    init {
+        applicationScope.launch {
+            launch {
+                authDataStore.accessTokenFlow.collect { token ->
+                    cachedAccessToken = token
+                }
+            }
+            launch {
+                authDataStore.refreshTokenFlow.collect { token ->
+                    cachedRefreshToken = token
+                }
+            }
+            launch {
+                authDataStore.userEmailFlow.collect { email ->
+                    cachedUserEmail = email
+                }
+            }
+        }
+    }
+
+    fun getAccessToken(): String? = cachedAccessToken
+    fun getRefreshToken(): String? = cachedRefreshToken
+    fun getUserEmail(): String? = cachedUserEmail
+
+    fun saveToken(accessToken: String, refreshToken: String) {
+        cachedAccessToken = accessToken
+        cachedRefreshToken = refreshToken
+
+        CoroutineScope(Dispatchers.IO).launch {
+            authDataStore.saveAccessToken(accessToken)
+            authDataStore.saveRefreshToken(refreshToken)
+        }
+    }
+
+    fun saveUserEmail(email: String) {
+        cachedUserEmail = email
+
+        CoroutineScope(Dispatchers.IO).launch {
+            authDataStore.saveUserEmail(email)
+        }
+    }
+
+    fun logout(reason: LogoutReason) {
+        cachedAccessToken = null
+        cachedRefreshToken = null
+
+        CoroutineScope(Dispatchers.IO).launch {
+            authDataStore.deleteAccessToken()
+            authDataStore.deleteRefreshToken()
+            authDataStore.deleteUserEmail()
+
+            _logoutEvent.emit(reason)
+        }
+    }
+
+    suspend fun signInWithGoogle(): String? {
+        return googleAuthManager.signInWithGoogle()
+    }
+
+    suspend fun googleLogout() {
+        googleAuthManager.googleLogout()
+    }
+}`,
+          },
+          {
+            description:
+              'OkHttp Interceptor에서 AuthManager의 메모리 캐시를 통해 Access Token을 읽고, 유효한 경우에만 Authorization: Bearer 헤더를 추가하여 토큰 기반 인증을 통합 관리함.',
+            code: `class AuthInterceptor @Inject constructor(
+    private val authManager: AuthManager
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = authManager.getAccessToken()
+
+        val request = chain.request().newBuilder()
+            .apply {
+                if (!token.isNullOrEmpty()) {
+                    addHeader("Authorization", "Bearer \$token")
+                }
+            }
+            .build()
+        return chain.proceed(request)
+    }
+}`,
+          },
+        ],
+        alternatives: [
+          '기존 SharedPreferences를 그대로 유지하면서 코루틴 디스패처로만 I/O 스레드를 분리하는 방법도 있었지만, 트랜잭션 보장·타입 세이프티·Flow 기반 관찰 같은 기능을 직접 구현해야 해 장기적인 유지보수 비용이 더 컸을 것임.',
+          '토큰을 DataStore가 아닌 Room 또는 자체 파일 저장소에 보관하는 대안도 가능하지만, 설정·세션 수준의 소량 키-값 데이터에는 DataStore가 더 단순하고, 네트워크 인터셉터와 연계하기에도 적합한 선택이었을 것임.',
+        ],
+      },
+      {
+        problem: [
+          '기존 MVVM 구조에서 ViewModel·View·UseCase 간 의존이 느슨하지 못해, 입력 검증·로딩 플래그·네비게이션 코드가 View와 ViewModel 곳곳에 흩어지며 상태 관리 일관성 저하 발생함.',
+          '비즈니스 로직과 UI 로직이 섞여 있어, 어떤 사용자 액션이 어떤 상태 변화와 화면 전환을 일으키는지 추적 및 테스트가 어려운 상황 발생함.',
+        ],
+        solution: [
+          '화면 단위로 UiState, Intent, SideEffect를 정의하는 MVI 구조를 도입해, 모든 상태 변화를 "이벤트 → 상태 감소(reduce) → 새로운 UiState/Effect" 경로로만 흐르도록 제한함.',
+          'Compose UI는 UiState 렌더링과 Intent 전파만 담당하고, 비즈니스 로직·에러 매핑·네비게이션 트리거는 ViewModel 한 곳에서 처리하도록 단방향 데이터 플로우를 설계함.',
+        ],
+        result: [
+          '기존 MVVM에서 화면마다 달랐던 상태 관리·이벤트 처리 패턴을 MVI(UiState-Intent-SideEffect)로 통일해, 화면 수가 증가해도 구조적 복잡도 증가를 억제함.',
+          '상태 변화·사이드 이펙트가 모두 Intent/Effect 기준으로 정의되어, 로딩/성공/실패·에러 메시지·네비게이션에 대한 단위 테스트와 리팩터링이 용이해지고, Compose UI와 상태 간 동기화 신뢰성이 향상됨.',
+        ],
+        implementation: [
+          {
+            description:
+              '이메일, 비밀번호, 로딩 여부, 필드별 에러 메시지를 LoginUiState에 담고, 버튼 활성 조건은 isLoginEnabled 계산 프로퍼티로 캡슐화해 View에서 조건식을 제거함.',
+            code: `data class LoginUiState(
+    val email: String = "",
+    val password: String = "",
+    val isLoading: Boolean = false,
+    val emailErrorMessage: String? = null,
+    val passwordErrorMessage: String? = null,
+) {
+    val isLoginEnabled: Boolean
+        get() = email.isNotBlank() &&
+                password.isNotBlank() &&
+                emailErrorMessage == null &&
+                passwordErrorMessage == null
+}`,
+          },
+          {
+            description:
+              '텍스트 변경, 버튼 클릭, 외부 로그인 성공/실패, 검증 실패 등은 모두 Intent로 정의해, 이벤트 종류와 파라미터를 한곳에서 관리함.',
+            code: `sealed class LoginIntent {
+    data class UpdatedEmail(val email: String) : LoginIntent()
+    data class UpdatedPassword(val password: String) : LoginIntent()
+    data object ClickLogin : LoginIntent()
+    data object ClickSignUp : LoginIntent()
+    data class FailLogin(
+        val errorMessage: String? = null,
+        val targetField: ErrorTargetField
+    ) : LoginIntent()
+}
+
+sealed class LoginEffect {
+    data class ShowErrorDialog(val message: String) : LoginEffect()
+    data object NavigateToHome : LoginEffect()
+    data object NavigateToSignUp : LoginEffect()
+}`,
+          },
+          {
+            description:
+              'handleIntent에서는 UseCase 호출·외부 로그인·에러 매핑·Effect 발행을 담당하고, reduce에서는 전달받은 Intent를 기반으로 새로운 LoginUiState를 생성함.',
+            code: `override suspend fun handleIntent(intent: LoginIntent) {
+    when (intent) {
+        LoginIntent.ClickLogin -> {
+            loginUseCase(/* ... */).collect { result ->
+                when (result) {
+                    is Resource.Success -> sendIntent(LoginIntent.SuccessLogin)
+                    is Resource.Failure -> sendIntent(
+                        LoginIntent.FailLogin(
+                            errorMessage = "다시 시도해 주세요.",
+                            targetField = ErrorTargetField.PASSWORD
+                        )
+                    )
+                    else -> Unit
+                }
+            }
+        }
+        LoginIntent.ClickSignUp -> emitEffect(LoginEffect.NavigateToSignUp)
+        else -> Unit
+    }
+}
+
+override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiState =
+    when (intent) {
+        is LoginIntent.UpdatedEmail -> currentState.copy(
+            email = intent.email,
+            emailErrorMessage = null,
+            passwordErrorMessage = null
+        )
+        LoginIntent.ClickLogin -> currentState.copy(isLoading = true)
+        is LoginIntent.FailLogin -> currentState.copy(
+            isLoading = false,
+            emailErrorMessage =
+                if (intent.targetField == ErrorTargetField.EMAIL) intent.errorMessage else null,
+            passwordErrorMessage =
+                if (intent.targetField == ErrorTargetField.PASSWORD) intent.errorMessage else null
+        )
+        else -> currentState
+    }`,
+          },
+          {
+            description:
+              'Route에서 state와 effect를 수집하고, Effect에 따라 네비게이션·Toast를 처리하며, Screen은 UiState 렌더링과 sendIntent 호출만 담당해 View가 비즈니스 로직을 알지 않도록 유지함.',
+            code: null,
+          },
+        ],
+        alternatives: [
+          '기존 MVVM 구조를 유지한 채 ViewModel 내부에서만 "이벤트 → 상태 갱신" 패턴을 자율적으로 맞추고, 팀 규칙으로 일관성을 강제하는 방법도 있었겠지만, 화면이 늘어날수록 규칙 위반·예외 케이스가 생기기 쉬웠을 것임.',
+          'sealed 클래스 Intent 대신 단순 콜백 함수(onEmailChanged, onLoginClicked 등)만으로 흐름을 구성하는 방식도 가능하지만, 어떤 이벤트가 어떤 상태/네비게이션을 유발하는지 명시적으로 추적·테스트하기는 지금보다 더 어려웠을 것임.',
+        ],
+      },
+    ],
+    insights: [
+      {
+        title: 'Retrofit의 내부구조와 동작 알아보기',
+        url: 'https://superohinsung.tistory.com/398',
+      },
+      {
+        title: '코루틴 정리 feat. suspend 키워드까지',
+        url: 'https://superohinsung.tistory.com/132',
+      },
+      {
+        title: 'ViewModel이란 무엇이고 그리고 LifeCycle 까지',
+        url: 'https://superohinsung.tistory.com/393',
+      },
+      {
+        title: 'UiState–Intent–SideEffect MVI 구조를 자체 설계·적용해보자',
+        url: 'https://superohinsung.tistory.com/432',
+      },
+      {
+        title: 'DataStore를 왜 쓸까? feat. 내부 데이터 저장하기',
+        url: 'https://superohinsung.tistory.com/433',
+      },
+      {
+        title: 'Retrofit 네트워크 Mapper와 Utility 아키텍처 설계를 어떻게 하였을까?',
+        url: 'https://superohinsung.tistory.com/435',
+      },
+    ],
+    achievements: [
+      '퀴즈 기반 학습 플랫폼 MVP 버전 구현 및 내부 활용',
+      '재사용 가능한 Compose UI 컴포넌트 라이브러리 구축으로 개발 효율성 향상',
+      'MVI 아키텍처 도입으로 단방향 상태 관리 경험',
+    ],
+    retrospective: [
+      'MVI 구조 설계 과정에서 OrbitMVI 등 검증된 라이브러리 활용 기회 부족, 다음 버전에서는 OrbitMVI, ReduxKotlin 등 검증된 MVI 프레임워크 도입 검토 필요성 인식',
+      '개발 초기 멀티모듈 구조 미적용으로 인한 기능 확장 시 의존성 관리 복잡성 발생, 프로젝트 시작 단계부터 feature, data, domain 모듈 분리를 통한 확장성 있는 아키텍처 구성 필요성 인식',
+      'MVI 패턴 적용을 통한 코드 가독성과 테스트 용이성 향상 및 기능 확장 시 일관된 구조 유지 가능성 확인, 완벽한 아키텍처를 한 번에 구축하려 하기보다 지속적인 리팩토링과 개선을 통한 코드 품질 향상의 점진적 개선 효과성 깨달음',
+    ],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android' },
+      { label: 'Figma', url: 'https://www.figma.com/design/sWI7Mxpn5l3AvbEmWnAyFi/QuizCafe?node-id=0-1&t=oHhumuctG9hTnuxB-1' },
+    ],
+    screenshots: [
+      'screenshot/QuizCafe1.png',
+    ],
+  },
 ]
 
 export default projects
