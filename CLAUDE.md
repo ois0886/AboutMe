@@ -76,13 +76,13 @@ Header → Hero → About → Career(alt) → Skills → Education(alt) → Awar
 
 ## 프로젝트 데이터 구조 (projects.ts)
 
-- `Project` 인터페이스: id, title, description, thumbnail, tech, period, team, role, details, features, contributions, problemSolvings[], insights[], insightImage?, achievements, retrospective, links, screenshots, screenshotColumns?
+- `Project` 인터페이스: id, title, description, thumbnail, tech, period, team, role, details, features, contributions, problemSolvings[], insights[], insightImages?[], achievements, retrospective, links, screenshots, screenshotColumns?
 - `ProblemSolving` 인터페이스: problem[], solution[], result[], implementation[], alternatives[] — 각 문제해결 블록이 독립적
 - `ImplementationBlock` 인터페이스: description, code (Kotlin 코드 또는 null)
 - 여러 개의 문제해결 블록 지원 (2개 이상일 경우 번호 표시)
 - `screenshotColumns`: 스크린샷 그리드 열 수 (기본 2, 3열도 지원)
 - `insights`: 프로젝트 관련 블로그 포스트 링크 목록
-- `insightImage`: Insights 섹션 아래에 표시할 추가 이미지 (선택)
+- `insightImages`: Insights 섹션 아래에 표시할 추가 이미지 배열 (선택)
 
 ## 프로젝트 상세 페이지 구조
 
@@ -95,7 +95,8 @@ Header → Hero → About → Career(alt) → Skills → Education(alt) → Awar
 - **Glim** (glim): 스크린샷 8장(3열), 문제해결 3개, Insights 6개
 - **Quiz Cafe** (quiz-cafe): 스크린샷 1장, 문제해결 2개, Insights 6개
 - **Didimdol** (didimdol): 스크린샷 2장, 문제해결 1개, Insights 5개
-- **Bong #** (bong): 스크린샷 8장(2열), 문제해결 1개, Insights 8개, insightImage 포함
+- **Bong #** (bong): 스크린샷 8장(2열), 문제해결 1개, Insights 8개, insightImages 1장
+- **POCS** (pocs): 스크린샷 4장(3열), 문제해결 2개, Insights 6개, insightImages 2장, Play Store 배포
 
 ## 등록된 오픈소스
 
