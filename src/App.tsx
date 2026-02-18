@@ -52,7 +52,9 @@ function Home() {
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    if (pathname.startsWith('/projects/')) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
   }, [pathname])
   return null
 }

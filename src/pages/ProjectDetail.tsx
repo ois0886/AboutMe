@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import kotlin from 'react-syntax-highlighter/dist/esm/languages/prism/kotlin'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -9,6 +9,7 @@ import styles from './ProjectDetail.module.css'
 
 function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const project = projects.find((p) => p.id === id)
 
   if (!project) {
@@ -29,7 +30,7 @@ function ProjectDetail() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <Link to="/#projects" className={styles.backLink}>← 돌아가기</Link>
+        <a href="#" onClick={(e) => { e.preventDefault(); navigate(-1) }} className={styles.backLink}>← 돌아가기</a>
 
         <h1 className={styles.title}>{project.title}</h1>
         <p className={styles.descriptionText}>{project.description}</p>
