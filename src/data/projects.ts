@@ -1038,7 +1038,7 @@ internal class LoginViewModel @Inject constructor(
       'screenshot/Glim5.png',
       'screenshot/Glim6.png',
       'screenshot/Glim7.png',
-      'screenshot/Glim8.png',
+      'screenshot/Glim8.jpeg',
     ],
     screenshotColumns: 3,
   },
