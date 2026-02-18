@@ -3,18 +3,31 @@ import styles from './OpenSource.module.css'
 
 interface OpenSourceProject {
   title: string
+  period: string
   description: string
+  image: string
   tech: string[]
-  links: { label: string; url: string }[]
+  github: string
 }
 
 const openSourceProjects: OpenSourceProject[] = [
   {
     title: 'Open Source UI Library',
+    period: '2025.04 (Android 1인)',
     description:
       'Android Jetpack Compose 기반 재사용 가능한 UI 컴포넌트 라이브러리를 개발하고, Maven Central에 배포하여 누구나 의존성 추가로 사용 가능하도록 공개',
+    image: '',
     tech: ['Kotlin', 'Jetpack Compose', 'Maven Central'],
-    links: [],
+    github: '',
+  },
+  {
+    title: 'Compose-Git-Grass',
+    period: '2026.02 (Android 1인)',
+    description:
+      'GitHub 잔디(contribution graph)를 Compose에서 바로 사용할 수 있는 오픈소스 UI 라이브러리',
+    image: 'screenshot/Grass1.png',
+    tech: ['Kotlin', 'Jetpack Compose'],
+    github: 'https://github.com/ois0886/compose-git-grass',
   },
 ]
 
@@ -24,33 +37,45 @@ function OpenSource() {
   return (
     <section id="opensource" className="section reveal" ref={ref}>
       <h2 className="section__title">Open Source</h2>
+      <p className={styles.subtitle}>라이브러리를 클릭하면 Github로 이동합니다.</p>
       <div className={styles.grid}>
-        {openSourceProjects.map((project) => (
-          <div key={project.title} className={styles.card}>
-            <h3 className={styles.title}>{project.title}</h3>
-            <p className={styles.description}>{project.description}</p>
-            <ul className={styles.tech}>
-              {project.tech.map((t) => (
-                <li key={t} className={styles.tag}>{t}</li>
-              ))}
-            </ul>
-            {project.links.length > 0 && (
-              <div className={styles.links}>
-                {project.links.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.linkBtn}
-                  >
-                    {link.label}
-                  </a>
-                ))}
+        {openSourceProjects.map((project) => {
+          const content = (
+            <>
+              {project.image && (
+                <div className={styles.imageWrap}>
+                  <img src={project.image} alt={project.title} className={styles.image} />
+                </div>
+              )}
+              <div className={styles.body}>
+                <h3 className={styles.title}>{project.title}</h3>
+                <span className={styles.period}>{project.period}</span>
+                <p className={styles.description}>{project.description}</p>
+                <ul className={styles.tech}>
+                  {project.tech.map((t) => (
+                    <li key={t} className={styles.tag}>{t}</li>
+                  ))}
+                </ul>
               </div>
-            )}
-          </div>
-        ))}
+            </>
+          )
+
+          return project.github ? (
+            <a
+              key={project.title}
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.cardLink}
+            >
+              {content}
+            </a>
+          ) : (
+            <div key={project.title} className={styles.card}>
+              {content}
+            </div>
+          )
+        })}
       </div>
     </section>
   )
