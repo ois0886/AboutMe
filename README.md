@@ -1,6 +1,6 @@
 # AboutMe
 
-> Android Developer 오인성의 개인 포트폴리오 웹사이트
+> Android Developer Portfolio Website
 
 [![Deploy to GitHub Pages](https://github.com/ois0886/AboutMe/actions/workflows/deploy.yml/badge.svg)](https://github.com/ois0886/AboutMe/actions)
 
@@ -14,25 +14,37 @@
 |----------|-----------|
 | Framework | React 19 |
 | Language | TypeScript |
-| Build Tool | Vite |
+| Build Tool | Vite 7 |
 | Styling | CSS Modules |
-| Routing | React Router (HashRouter) |
+| Routing | React Router v7 (HashRouter) |
+| Code Highlight | react-syntax-highlighter |
+| Testing | Vitest + React Testing Library |
 | Deploy | GitHub Pages (GitHub Actions) |
 
 ## Sections
 
 | Section | Description |
 |---------|-------------|
-| Hero | 인트로 애니메이션 및 CTA |
-| About | 프로필, 기본 정보, 자기소개 |
-| Career | 경력 사항 |
-| Skills | Android & Kotlin, React Native, Spring Boot, Communication |
-| Education | 교육 이력, GPA, 주요 과목 성적 |
-| Awards & Certificates | 수상 내역 및 자격증 (이미지 토글) |
-| Activity | 스터디, 발표, 멘토링 등 활동 (사진 토글) |
-| Blog | 기술 블로그 소개 및 시리즈 |
-| Projects | 프로젝트 카드 (클릭 시 상세 페이지) |
-| Contact | 연락처 |
+| Hero | Typing animation intro |
+| About | Profile & introduction |
+| Career | Work experience timeline |
+| Skills | Tech stack overview |
+| Education | Education history |
+| Awards & Certificates | Awards & certifications (image toggle) |
+| Activity | Studies, presentations, mentoring (photo toggle) |
+| Blog | Tech blog posts & series |
+| Projects | Project cards with detail pages |
+| Open Source | Open source libraries (GitHub link) |
+| Contact | Contact information |
+
+## Features
+
+- Light / Dark mode toggle
+- Scroll reveal animations (IntersectionObserver)
+- Scroll position restore on back navigation
+- Wave divider section transitions
+- Project detail pages with problem-solving, code snippets, insights
+- Responsive design
 
 ## Getting Started
 
@@ -49,6 +61,9 @@ npm run build
 # Run tests
 npm run test
 
+# Lint
+npm run lint
+
 # Preview build
 npm run preview
 ```
@@ -57,21 +72,19 @@ npm run preview
 
 ```
 src/
-  components/    # Section components (.tsx + .module.css)
-  data/          # Shared data (projects)
-  hooks/         # Custom hooks (useScrollReveal)
-  pages/         # Route pages (ProjectDetail)
-  styles/        # Global styles
-  App.tsx        # Route configuration
-  main.tsx       # Entry point
+├── components/       # Section components (.tsx + .module.css)
+│   └── __tests__/    # Component tests
+├── data/             # Shared data (projects.ts)
+├── hooks/            # Custom hooks (useScrollReveal)
+├── pages/            # Route pages (ProjectDetail)
+│   └── __tests__/    # Page tests
+├── styles/           # Global styles (global.css)
+├── App.tsx           # Route configuration & scroll restore
+└── main.tsx          # Entry point
 public/
-  screenshot/    # Images (profile, awards, certificates, activities)
+└── screenshot/       # Project screenshots & images
 ```
 
 ## Deploy
 
-`main` 브랜치에 push하면 GitHub Actions를 통해 자동으로 빌드 및 배포됩니다.
-
----
-
-Made by **Oh In-Seong**
+`main` branch에 push하면 GitHub Actions를 통해 자동으로 빌드 및 GitHub Pages에 배포됩니다.
