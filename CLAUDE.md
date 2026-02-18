@@ -76,26 +76,36 @@ Header → Hero → About → Career(alt) → Skills → Education(alt) → Awar
 
 ## 프로젝트 데이터 구조 (projects.ts)
 
-- `Project` 인터페이스: id, title, description, thumbnail, tech, period, team, role, details, features, contributions, problemSolvings[], insights[], achievements, retrospective, links, screenshots, screenshotColumns?
+- `Project` 인터페이스: id, title, description, thumbnail, tech, period, team, role, details, features, contributions, problemSolvings[], insights[], insightImage?, achievements, retrospective, links, screenshots, screenshotColumns?
 - `ProblemSolving` 인터페이스: problem[], solution[], result[], implementation[], alternatives[] — 각 문제해결 블록이 독립적
 - `ImplementationBlock` 인터페이스: description, code (Kotlin 코드 또는 null)
 - 여러 개의 문제해결 블록 지원 (2개 이상일 경우 번호 표시)
 - `screenshotColumns`: 스크린샷 그리드 열 수 (기본 2, 3열도 지원)
 - `insights`: 프로젝트 관련 블로그 포스트 링크 목록
+- `insightImage`: Insights 섹션 아래에 표시할 추가 이미지 (선택)
 
 ## 프로젝트 상세 페이지 구조
 
-스크린샷(앞 N-1장) → 프로젝트 개요 → 주요 요구사항 → 링크 → Project Insights → 담당 역할 및 기여 → 문제 해결(문제/해결/결과/구현 설명/대체안, 복수 블록 시 번호 구분) → 성과 및 결과 → 프로젝트 회고 → 스크린샷(마지막 1장)
+스크린샷(앞 N-1장) → 프로젝트 개요 → 주요 요구사항 → 링크 → Project Insights(+ insightImage) → 담당 역할 및 기여 → 문제 해결(문제/해결/결과/구현 설명/대체안, 복수 블록 시 번호 구분) → 성과 및 결과 → 프로젝트 회고 → 스크린샷(마지막 1장)
 
 ## 등록된 프로젝트
 
 - **내눈 키오스크** (naenun-kiosk): 스크린샷 8장(2열), 문제해결 1개
 - **모리, Mo-Re** (mo-re): 스크린샷 14장(3열), 문제해결 2개, Insights 7개
+- **Glim** (glim): 스크린샷 8장(3열), 문제해결 3개, Insights 6개
+- **Quiz Cafe** (quiz-cafe): 스크린샷 1장, 문제해결 2개, Insights 6개
+- **Didimdol** (didimdol): 스크린샷 2장, 문제해결 1개, Insights 5개
+- **Bong #** (bong): 스크린샷 8장(2열), 문제해결 1개, Insights 8개, insightImage 포함
+
+## 등록된 오픈소스
+
+- **Compose-Git-Grass**: GitHub 잔디 Compose UI 라이브러리 (카드 클릭 → GitHub 이동)
 
 ## 개발 명령어
 
 - `npm run dev` — 개발 서버 실행
 - `npm run build` — 프로덕션 빌드 (tsc + vite build)
+- `npm run test` — Vitest 테스트 실행
 - `npm run lint` — ESLint 실행
 - `npm run preview` — 빌드 결과 미리보기
 

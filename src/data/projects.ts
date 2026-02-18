@@ -25,6 +25,7 @@ export interface Project {
   contributions: string[]
   problemSolvings: ProblemSolving[]
   insights: { title: string; url: string }[]
+  insightImage?: string
   achievements: string[]
   retrospective: string[]
   links: { label: string; url: string }[]
@@ -1388,6 +1389,362 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     ],
     screenshots: [
       'screenshot/QuizCafe1.png',
+    ],
+  },
+  {
+    id: 'didimdol',
+    title: 'Didimdol',
+    description:
+      '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트',
+    thumbnail: 'screenshot/didim1.png',
+    tech: [
+      'Kotlin',
+      'Hilt',
+      'MVVM',
+      'Coroutines',
+      'Retrofit2',
+      'Room',
+      'Naver Maps API',
+      'Direction5 API',
+    ],
+    period: '2023.01 ~ 2023.06',
+    team: '3명 (Android 3명)',
+    role: 'Android 팀 리드 개발자 (전체 기여도 80%)',
+    details: [
+      '위치 기반 서비스 업체의 온라인 예약 시스템 구축을 통한 고객 편의성 향상 및 업체 운영 효율성 증대',
+      '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트로, 기존 오프라인 중심의 예약 시스템을 디지털화하여 언제 어디서나 접근 가능한 통합 예약 플랫폼 구축',
+    ],
+    features: [
+      '위치 기반 서비스 업체 검색 및 정보 제공, 실시간 거리/소요시간 계산 (Direction5 API 연동)',
+      '네이버 지도 연동 길찾기 서비스 및 거리순 정렬/최적 경로 안내',
+      '웹뷰 기반 온라인 예약/취소 및 예약 내역 조회/관리',
+      'SMS 인증을 통한 본인 확인, 업체별 예약 상태 실시간 확인',
+      '네이버 지도 기반 업체 위치 표시, 마커 클러스터링 및 상세 정보 제공',
+      '현재 위치 기반 주변 업체 탐색',
+    ],
+    contributions: [
+      'Android 팀 리드 개발자 (3인 팀 중 Android 전담, 전체 기여도 80%)',
+      'Room 캐싱 전략 도입으로 반복 API 호출 최소화 및 응답시간 85% 단축',
+      '전국 업체 위치정보 실시간 검색: SearchView + RecyclerView + 거리순 정렬로 사용자 경험 최적화',
+      'ViewBinding 확장 함수와 추상 베이스 클래스 활용해 코드 재사용성 강화',
+    ],
+    problemSolvings: [
+      {
+        problem: [
+          '매 검색 시 Direction5 API 실시간 호출로 인한 성능 이슈 (평균 응답시간 3-5초)',
+          '동일 업체에 대한 반복 계산으로 인한 불필요한 리소스 소모',
+        ],
+        solution: [
+          '사용자 경험 개선 및 API 호출 비용 절감을 위한 캐싱 시스템 도입',
+          '앱 최초 실행 시 모든 업체 데이터를 Room DB 저장, 검색 시 로컬 우선/API 보조 전략 적용',
+        ],
+        result: [
+          '검색 시 네트워크 왕복 없이도 업체 리스트를 즉시 응답하고, 거리/시간 계산만 비동기로 처리함으로써 평균 응답 시간 단축 및 검색 UX 개선 효과 달성함.',
+          'Room DB를 단일 소스 오브 트루스로 활용하고, Direction5 API는 보조 계산 용도로만 사용하는 캐싱 전략을 통해 동일 업체에 대한 반복 계산·중복 호출을 제거하여 서버 비용 절감 및 전체 시스템 부하 감소 효과 확보함.',
+        ],
+        implementation: [
+          {
+            description:
+              '검색 요청이 들어오면 먼저 companyDao.searchQuery(query)를 통해 Room DB에서 업체 리스트를 가져오고, 각 업체에 대해 Direction5 API를 호출해 거리·소요 시간을 계산한 뒤, 결과를 복사·갱신하는 단계적 처리 플로우 구성함.',
+            code: `// 1단계: 로컬 DB에서 회사 정보 조회 후 2단계: Direction5 API로 실시간 거리/시간 계산
+suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<List<CompanyEntity>> {
+    return runCatching {
+        val companies = companyDao.searchQuery(query)
+        companies.map { company ->
+            val direction = getDistanceAndDuration(myLocation, "\${company.longitude},\${company.latitude}")
+            company.copy(distance = direction.distance.toString(), duration = direction.duration.toString())
+        }
+    }
+}`,
+          },
+          {
+            description:
+              'searchCompanyListByQuery에서 runCatching을 활용해 네트워크 예외를 캡슐화하고, 호출 측에는 Result<List<CompanyEntity>> 형태로 성공/실패를 명시적으로 전달함. 회사 위치 정보는 이미 Room에 저장된 longitude, latitude를 사용하고, Direction5 API는 거리·시간 계산에만 사용함으로써 API 호출 횟수를 검색 결과 수만큼으로 제한함.',
+            code: null,
+          },
+        ],
+        alternatives: [
+          '서버 아키텍처와 로직을 변경할 수 없는 제약이 있어, 거리·시간 계산 방식을 서버 측에서 미리 계산하는 구조로 바꾸는 대안은 현실적으로 선택할 수 없었음.',
+          '모든 업체에 대해 선계산하지 않고, 최근 검색어·인기 업체 위주로만 로컬에 캐싱하는 LRU 기반 부분 캐싱 전략도 대안이지만, 구현 복잡도 대비 일관된 응답 성능을 보장하기 어렵다는 trade-off가 있었을 것임.',
+        ],
+      },
+    ],
+    insights: [
+      {
+        title: 'ViewBinding(뷰 바인딩) 정리',
+        url: 'https://superohinsung.tistory.com/239',
+      },
+      {
+        title: 'View가 그려지는 순서',
+        url: 'https://superohinsung.tistory.com/298',
+      },
+      {
+        title: 'abstract class를 이용하여 ViewBinding을 쉽게 사용하기',
+        url: 'https://superohinsung.tistory.com/316',
+      },
+      {
+        title: 'Room이란',
+        url: 'https://superohinsung.tistory.com/325',
+      },
+      {
+        title: 'SharedPreferences & 자동 로그인 구현',
+        url: 'https://superohinsung.tistory.com/346',
+      },
+    ],
+    achievements: [
+      'API 호출 최적화로 평균 응답시간 85% 단축 (3-5초 → 0.5초 이하)',
+      'Extension Functions 활용으로 코드 중복 50% 이상 감소 및 생산성 향상',
+    ],
+    retrospective: [
+      '단위 테스트 및 UI 테스트 코드 부재로 품질 검증 프로세스 부족, JUnit/Mockito 기반 단위 테스트 및 Espresso UI 테스트 도입 계획 수립',
+      '졸업 작품과 병행하여 절대적 시간이 부족, 한번에 하나의 프로젝트만 집중하는 것이 가장 좋다는 깨달음',
+      '사용자 경험 우선 개발, 현업 멘토링의 중요성, 초기 설계에서의 확장성 고려가 장기적 유지보수에 미치는 임팩트 실감',
+    ],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
+    ],
+    screenshots: [
+      'screenshot/didim1.png',
+      'screenshot/didim2.png',
+    ],
+  },
+  {
+    id: 'bong',
+    title: 'Bong #',
+    description:
+      '한성대학교 캡스톤디자인(졸업작품) 출품 프로젝트. 기존에 재능과 재화를 교환하던 방식에서 벗어나 재능과 재능을 교환하는 앱 서비스',
+    thumbnail: 'screenshot/Bong1.png',
+    tech: [
+      'Kotlin',
+      'Hilt',
+      'MVVM',
+      'Clean Architecture',
+      'Coroutines',
+      'Paging3',
+      'Retrofit2',
+      'Glide',
+      'WebSocket',
+    ],
+    period: '2022.12 ~ 2023.06',
+    team: '4명 (Backend 2명, Android 1명, iOS 1명)',
+    role: '팀장, 안드로이드 개발 전담 (1인)',
+    details: [
+      '기존의 재화 중심 교환이 아닌, 재능과 재능을 교환할 수 있는 모바일 앱 서비스 개발',
+      '한성대학교 캡스톤디자인(졸업작품) 프로젝트로, 대학생들이 재화 부족 때문에 원하는 재능을 배우기 어려운 현실을 개선하고자 기획함',
+    ],
+    features: [
+      '재능 등록 및 신청 (게시글 CRUD), 관심 거래/거래 진행 현황 관리',
+      '채팅 (1:1 거래 및 실시간 문의)',
+      '자유게시판/질문답변 게시판 (익명 지원), 댓글·좋아요·태그 기능',
+      '프로필 및 제공/받은 재능 관리, 거래/커뮤니티 활동 내역 조회',
+      '회원 정보, 자동 로그인, 외부 링크 관리',
+    ],
+    contributions: [
+      '팀장, 안드로이드 개발 전담 (1인)',
+      'WebSocket 라이브러리를 활용한 실시간 1:1 채팅 기능 구현 및 HTTP 폴링 대비 네트워크 트래픽·지연 시간 개선',
+      'MVVM + Clean Architecture 적용으로 Presentation/Domain/Data 계층 완전 분리 및 테스트 용이성 개선',
+      'RecyclerView multiple item types 활용한 채팅 UI로 상대 구분 표시 및 사용자 경험 최적화',
+      'SharedPreference 기반 자동로그인 구현으로 세션 관리 체계 구축',
+    ],
+    problemSolvings: [
+      {
+        problem: [
+          'HTTP polling 기반 채팅은 요청/응답마다 HTTP 연결을 반복하며 네트워크 오버헤드 및 서버 리소스 낭비 발생함.',
+          '클라이언트가 주기적으로 서버를 조회하는 구조로 인해 실시간성이 떨어지고, 채팅 메시지·연결 상태를 여러 레이어에서 중복 관리해야 하는 복잡성 증가함.',
+        ],
+        solution: [
+          'WebSocket 기반 전이중 통신 채널을 도입해 서버와의 연결을 유지하고, 메시지 수신·전송을 단일 연결에서 처리하는 실시간 채팅 아키텍처 적용함.',
+          'WebSocket 연결/해제·메시지 전송은 Data 레이어(WebSocketDataSource → ChattingRepository)에서 처리하고, 메시지 리스트·로딩 상태 등 UI 상태는 ChattingViewModel의 StateFlow에서 일괄 관리하는 구조 도입함.',
+        ],
+        result: [
+          'WebSocket 기반 상시 연결 구조로 구현하여, 연결 재생성·헤더 오버헤드를 제거하고 네트워크 사용량 감소 및 실시간성 향상 효과 달성함.',
+          'WebSocket 연결·메시지 전송은 Data 레이어, 메시지 리스트·로딩 상태 등은 ViewModel StateFlow에서 관리하는 구조로 분리하여, 채팅 기능의 데이터 흐름과 상태 관리 복잡성 완화 및 테스트·확장 용이성 확보함.',
+        ],
+        implementation: [
+          {
+            description:
+              'OkHttp WebSocket 생성·해제·메시지 전송을 전담하는 WebSocketDataSourceImpl을 두어, 네트워크 상세 구현을 인프라스트럭처 계층에 캡슐화함.',
+            code: `class WebSocketDataSourceImpl @Inject constructor(
+    private val client: OkHttpClient
+) : WebSocketDataSource {
+
+    private var webSocket: WebSocket? = null
+
+    override fun connect(url: String, listener: WebSocketListener) {
+        val request = Request.Builder()
+            .url(url)
+            .build()
+        webSocket = client.newWebSocket(request, listener)
+    }
+
+    override fun disconnect() {
+        webSocket?.cancel()
+        webSocket = null
+    }
+
+    override fun sendMessage(roomId: Int, senderId: String, message: String) {
+        val messageJson = JSONObject().apply {
+            put("roomId", roomId)
+            put("senderId", senderId)
+            put("message", message)
+        }
+
+        webSocket?.send(messageJson.toString())
+    }
+}`,
+          },
+          {
+            description:
+              '도메인 레이어에서는 ChattingRepository 인터페이스만 바라보도록 하고, 실제 구현체 ChattingRepositoryImpl에서 WebSocket DataSource를 위임 호출하는 구조 설계함.',
+            code: `class ChattingRepositoryImpl @Inject constructor(
+    private val webSocketDataSource: WebSocketDataSource
+) : ChattingRepository {
+
+    override fun connect(url: String, listener: WebSocketListener) =
+        webSocketDataSource.connect(url = url, listener = listener)
+
+    override fun disconnect() = webSocketDataSource.disconnect()
+
+    override fun sendMessage(roomId: Int, senderId: String, message: String) =
+        webSocketDataSource.sendMessage(roomId = roomId, senderId = senderId, message = message)
+}`,
+          },
+          {
+            description:
+              'ChattingViewModel에 MutableStateFlow(ChattingUiState())를 두고, WebSocket 이벤트를 수신할 때마다 UI 상태(로딩 여부, 채팅 리스트)를 직접 갱신하는 구조 도입함.',
+            code: `@HiltViewModel
+class ChattingViewModel @Inject constructor(
+    private val successMatchingUseCase: SuccessMatchingUseCase,
+    private val applyScoreUseCase: ApplyScoreUseCase,
+    private val getUserUseCase: GetUserUseCase,
+    private val chattingRepository: ChattingRepository
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(ChattingUiState())
+    val uiState = _uiState.asStateFlow()
+
+    private var fetchJob: Job? = null
+
+    fun connectToWebSocket(roomId: Int) {
+        val listener = object : WebSocketListener() {
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                super.onMessage(webSocket, text)
+                try {
+                    _uiState.update { it.copy(isLoading = true) }
+                    val jsonArray = JSONArray(text)
+                    val chatMessages = ArrayList<ChatMessage>()
+
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        chatMessages.add(
+                            ChatMessage(
+                                roomId = jsonObject.getInt("roomId"),
+                                senderId = jsonObject.getString("senderId"),
+                                message = jsonObject.getString("message"),
+                            )
+                        )
+                    }
+                    bindChatting(chatMessages)
+                    _uiState.update { it.copy(isLoading = false) }
+                } catch (e: Exception) {
+                    // 단일 메시지 수신 처리
+                    val json = JSONObject(text)
+                    val chatMessage = ChatMessage(
+                        roomId = json.getInt("roomId"),
+                        senderId = json.getString("senderId"),
+                        message = json.getString("message")
+                    )
+                    uiState.value.chatting.add(chatMessage)
+                    _uiState.update {
+                        it.copy(chatting = uiState.value.chatting, isLoading = false)
+                    }
+                }
+            }
+        }
+        chattingRepository.connect("URL", listener)
+    }
+
+    fun disconnectFromWebSocket() {
+        chattingRepository.disconnect()
+    }
+
+    fun sendMessage() {
+        val senderId = uiState.value.senderId
+        val roomId = uiState.value.roomId!!
+        val message = uiState.value.myChatMessage
+        viewModelScope.launch {
+            chattingRepository.sendMessage(
+                roomId = roomId,
+                senderId = senderId,
+                message = message
+            )
+        }
+    }
+}`,
+          },
+        ],
+        alternatives: [
+          'HTTP 롱 폴링 대신 Server-Sent Events(SSE)를 사용하는 방법도 있었지만, 단방향 스트림 특성상 클라이언트→서버 메시지 전송을 별도 채널로 유지해야 해서 구조가 더 복잡해졌을 것임.',
+          'MQTT 같은 메시지 브로커 기반 프로토콜로 전환하는 방안도 있지만, 현재 요구사항(앱 내 1:1/소규모 채팅) 대비 인프라 구성·운영 복잡도가 커져 WebSocket 대비 과한 선택이 되었을 가능성이 큼.',
+        ],
+      },
+    ],
+    insights: [
+      {
+        title: 'WebSocket를 통해서 채팅 기능 구현 feat. Clean Architecture, Hilt',
+        url: 'https://superohinsung.tistory.com/354',
+      },
+      {
+        title: 'RecyclerView LayoutManager에 대해서 공부하자',
+        url: 'https://superohinsung.tistory.com/349',
+      },
+      {
+        title: 'RecyclerView에서 onCreateViewHolder와 onBindViewHolder의 차이',
+        url: 'https://superohinsung.tistory.com/314',
+      },
+      {
+        title: 'A RecyclerView with multiple item types in Kotlin에 대해서 공부하자',
+        url: 'https://superohinsung.tistory.com/347',
+      },
+      {
+        title: 'SharedPreferences & 자동 로그인 구현',
+        url: 'https://superohinsung.tistory.com/346',
+      },
+      {
+        title: 'android에서 multipart로 image 전송 및 받아오기',
+        url: 'https://superohinsung.tistory.com/301',
+      },
+      {
+        title: '의존성 주입(Dependency Injection)',
+        url: 'https://superohinsung.tistory.com/135',
+      },
+      {
+        title: 'ListAdapter에서 DiffCallBack 정리',
+        url: 'https://superohinsung.tistory.com/315',
+      },
+    ],
+    insightImage: 'screenshot/Bong+.png',
+    achievements: [
+      'Presentation/Domain/Data 계층 분리로 구조적 안정성 확보',
+      'Hilt/UseCase/Repository/Mapper 분리로 유지보수성과 테스트 용이성 대폭 향상',
+      'WebSocket을 사용하여 실시간 채팅 직접 구현, MVVM에 맞춘 상태 관리',
+    ],
+    retrospective: [
+      '개발 일정에 집중하다 보니 UI/UX 세부 튜닝, 접근성 지원 등은 미흡, 상태 관리 체계 강화(State 도입 필요성 인식)',
+      '"잘 만든 구조가 좋은 코드보다 유지보수에 더 큰 가치를 준다"는 점, 테스트/유지보수/실사용자 피드백의 중요성 체감',
+    ],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/GrapeBongBong/Android' },
+    ],
+    screenshots: [
+      'screenshot/Bong1.png',
+      'screenshot/Bong2.png',
+      'screenshot/Bong3.png',
+      'screenshot/Bong4.png',
+      'screenshot/Bong5.png',
+      'screenshot/Bong6.png',
+      'screenshot/Bong7.png',
+      'screenshot/Bong8.jpeg',
     ],
   },
 ]

@@ -148,6 +148,13 @@ function ProjectDetail() {
                 </li>
               ))}
             </ul>
+            {project.insightImage && (
+              <div className={styles.screenshotFull} style={{ marginTop: '24px' }}>
+                <div className={styles.screenshotWrap}>
+                  <img src={project.insightImage} alt="Insight" className={styles.screenshot} />
+                </div>
+              </div>
+            )}
           </section>
         )}
 
