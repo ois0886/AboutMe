@@ -31,6 +31,7 @@ export interface Project {
   links: { label: string; url: string }[]
   screenshots: string[]
   screenshotColumns?: number
+  hasBottomScreenshot?: boolean
 }
 
 const projects: Project[] = [
@@ -1507,6 +1508,7 @@ suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<
       'screenshot/didim1.png',
       'screenshot/didim2.png',
     ],
+    hasBottomScreenshot: false,
   },
   {
     id: 'bong',
@@ -2048,6 +2050,7 @@ jobs:
       'screenshot/POCS4.png',
     ],
     screenshotColumns: 3,
+    hasBottomScreenshot: false,
   },
 ]
 
