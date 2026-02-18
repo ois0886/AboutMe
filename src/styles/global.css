@@ -82,6 +82,13 @@ img {
   border-radius: 2px;
 }
 
+/* Disable transitions during scroll restore */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
 /* Scroll reveal animation */
 .reveal {
   opacity: 0;
