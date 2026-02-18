@@ -22,8 +22,9 @@ function ProjectDetail() {
   }
 
   const cols = project.screenshotColumns || 2
-  const topScreenshots = project.screenshots.slice(0, -1)
-  const bottomScreenshot = project.screenshots.length > 1
+  const showBottom = project.hasBottomScreenshot !== false && project.screenshots.length > 1
+  const topScreenshots = showBottom ? project.screenshots.slice(0, -1) : project.screenshots
+  const bottomScreenshot = showBottom
     ? project.screenshots[project.screenshots.length - 1]
     : null
 
