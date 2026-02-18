@@ -12,15 +12,6 @@ interface OpenSourceProject {
 
 const openSourceProjects: OpenSourceProject[] = [
   {
-    title: 'Open Source UI Library',
-    period: '2025.04 (Android 1인)',
-    description:
-      'Android Jetpack Compose 기반 재사용 가능한 UI 컴포넌트 라이브러리를 개발하고, Maven Central에 배포하여 누구나 의존성 추가로 사용 가능하도록 공개',
-    image: '',
-    tech: ['Kotlin', 'Jetpack Compose', 'Maven Central'],
-    github: '',
-  },
-  {
     title: 'Compose-Git-Grass',
     period: '2026.02 (Android 1인)',
     description:
