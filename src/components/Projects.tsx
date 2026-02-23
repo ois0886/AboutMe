@@ -23,6 +23,7 @@ function Projects() {
             />
             <div className={styles.info}>
               <h3 className={styles.title}>{project.title}</h3>
+              <p className={styles.period}>{project.period}</p>
               <p className={styles.description}>{project.description}</p>
               <ul className={styles.tech}>
                 {project.tech.map((t) => (
