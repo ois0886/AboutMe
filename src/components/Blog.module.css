@@ -12,7 +12,8 @@
 }
 
 .blogLink:hover {
-  opacity: 0.7;
+  text-decoration: underline;
+  opacity: 0.85;
 }
 
 .blogName {
@@ -36,7 +37,7 @@
 .seriesCard {
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 24px;
+  padding: var(--space-lg);
   background-color: var(--color-bg-card);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -48,14 +49,14 @@
 }
 
 .seriesName {
-  font-size: 1rem;
+  font-size: var(--font-size-subtitle);
   font-weight: 700;
   color: var(--color-primary);
   margin-bottom: 8px;
 }
 
 .seriesDesc {
-  font-size: 0.9rem;
+  font-size: var(--font-size-body);
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: var(--line-height-body);
 }

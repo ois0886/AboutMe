@@ -21,6 +21,7 @@ function Header() {
   const [dark, setDark] = useState(() => {
     return localStorage.getItem('theme') === 'dark'
   })
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
@@ -29,6 +30,7 @@ function Header() {
 
   const handleClick = (e: React.MouseEvent, target: string) => {
     e.preventDefault()
+    setMenuOpen(false)
     if (location.pathname !== '/') {
       navigate('/')
       setTimeout(() => {
@@ -54,7 +56,14 @@ function Header() {
         <a href="#" onClick={handleLogoClick} className={styles.logo}>
           Oh In Seong
         </a>
-        <nav>
+        <button
+          className={styles.hamburger}
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="메뉴 열기"
+        >
+          <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerOpen : ''}`} />
+        </button>
+        <nav className={`${styles.navWrapper} ${menuOpen ? styles.navOpen : ''}`}>
           <ul className={styles.nav}>
             {navItems.map((item) => (
               <li key={item.target}>

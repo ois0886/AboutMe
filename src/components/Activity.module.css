@@ -98,8 +98,12 @@
 }
 
 .internal {
-  background-color: rgba(16, 185, 129, 0.1);
+  background-color: rgba(16, 185, 129, 0.15);
   color: #059669;
+}
+
+:global([data-theme='dark']) .internal {
+  color: #34d399;
 }
 
 .tagBadge {
@@ -118,7 +122,7 @@
 }
 
 .cardTitle {
-  font-size: 1.05rem;
+  font-size: var(--font-size-subtitle);
   font-weight: 700;
   line-height: 1.4;
   margin-bottom: 12px;
@@ -127,14 +131,14 @@
 .details {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-sm);
   margin-bottom: 12px;
 }
 
 .detail {
-  font-size: 0.9rem;
+  font-size: var(--font-size-body);
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: var(--line-height-relaxed);
   padding-left: 16px;
   position: relative;
 }
