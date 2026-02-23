@@ -7,7 +7,7 @@
 .card {
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 28px;
+  padding: var(--space-lg);
   background-color: var(--color-bg-card);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -23,7 +23,7 @@
 }
 
 .title {
-  font-size: 1.1rem;
+  font-size: var(--font-size-subtitle);
   font-weight: 700;
 }
 
@@ -45,9 +45,9 @@
 }
 
 .detail {
-  font-size: 0.95rem;
+  font-size: var(--font-size-body);
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: var(--line-height-relaxed);
   padding-left: 16px;
   position: relative;
 }
