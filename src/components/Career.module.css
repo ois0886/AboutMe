@@ -75,6 +75,29 @@
   color: var(--color-primary);
 }
 
+.subTasks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  padding-left: 12px;
+}
+
+.subTask {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  padding-left: 14px;
+  position: relative;
+}
+
+.subTask::before {
+  content: '◦';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
+
 @media (max-width: 640px) {
   .header {
     flex-direction: column;
