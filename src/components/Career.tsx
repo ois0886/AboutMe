@@ -36,8 +36,9 @@ function Career() {
             <span className={styles.period}>2026.02.09 ~ 재직중</span>
           </div>
           <ul className={styles.tasks}>
-            <li className={styles.task}>MTS 차트 시스템 인터페이스, UI, 데이터 컨트롤러 개발</li>
-            <li className={styles.task}>Android 네이티브 UI/UX 개선 및 안정화</li>
+            <li className={styles.task}>MTS 차트 시스템 인터페이스, UI, 데이터 컨트롤러 개발 및 유지보수</li>
+            <li className={styles.task}>PowerChart 3.0 LS증권 제품 유지보수</li>
+            <li className={styles.task}>PowerChart Easy Version 1.0 개발</li>
             <li className={styles.task}>고객사 업무소통 및 기타 회사 관련 업무</li>
           </ul>
         </div>
