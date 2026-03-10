@@ -41,7 +41,7 @@ function Career() {
               PowerChart 3.0 LS증권 제품 유지보수
               <ul className={styles.subTasks}>
                 <li className={styles.subTask}>다크모드 대응 — 고정 색상을 테마 참조로 전환하고, 구분선·입력란·아이콘 등이 다크/라이트 모드에서 정상 표시되도록 수정</li>
-                <li className={styles.subTask}>UI 일관성 확보 (iOS-Android 동일성 포함) — 설정화면·비교차트 설정화면·드로어 간 텍스트 크기, 간격, 구분선, 버튼 스타일을 통일하고, iOS와 동일한 디자인 스펙으로 작업 수행</li>
+                <li className={styles.subTask}>UI 일관성 확보 — 설정화면·비교차트 설정화면·드로어 간 텍스트 크기, 간격, 구분선, 버튼 스타일을 통일하고, iOS와 동일한 디자인 스펙으로 작업 수행</li>
               </ul>
             </li>
             <li className={styles.task}>PowerChart Easy Version 1.0 개발</li>
