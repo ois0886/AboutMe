@@ -3,8 +3,8 @@ import styles from './Hero.module.css'
 
 const typingTexts = [
   'Software Engineer',
-  'Jetpack Compose',
-  'Kotlin Lover',
+  'Problem Solver',
+  'Continuous Learner',
 ]
 
 function Hero() {
