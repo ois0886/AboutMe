@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from './Hero.module.css'
 
 const typingTexts = [
-  'Android Developer',
+  'Software Engineer',
   'Jetpack Compose',
   'Kotlin Lover',
 ]
@@ -52,7 +52,7 @@ function Hero() {
           <span className={styles.cursor}>|</span>
         </p>
         <p className={styles.description}>
-          사용자 경험을 중심으로 생각하는 안드로이드 개발자입니다.
+          문제를 정의하고, 코드로 해결하는 소프트웨어 엔지니어입니다.
         </p>
       </div>
       <a
