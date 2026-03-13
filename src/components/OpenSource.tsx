@@ -20,6 +20,15 @@ const openSourceProjects: OpenSourceProject[] = [
     tech: ['Kotlin', 'Jetpack Compose'],
     github: 'https://github.com/ois0886/compose-git-grass',
   },
+  {
+    title: 'Compose-Chart',
+    period: '2026.02 ~ 2026.03 (Android 1인)',
+    description:
+      'Compose Foundation의 Canvas API만으로 구현한 6종 차트 UI 오픈소스 라이브러리',
+    image: 'screenshot/chart.png',
+    tech: ['Kotlin', 'Jetpack Compose', 'Canvas API'],
+    github: 'https://github.com/ois0886/compose-chart',
+  },
 ]
 
 function OpenSource() {
