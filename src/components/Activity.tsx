@@ -51,6 +51,19 @@ const activities = [
     ],
   },
   {
+    title: '(주)픽넘버 산학협력 프로젝트',
+    scope: '교내',
+    tag: '산학협력',
+    period: '2023.01 ~ 2023.06',
+    image: null,
+    details: [
+      '(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱',
+    ],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
+    ],
+  },
+  {
     title: '한성대학교 새싹 SW교육 캠프 조교',
     scope: '교내',
     tag: '조교',
