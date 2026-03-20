@@ -15,15 +15,7 @@ const skills = [
       '오픈소스 UI 라이브러리 개발 및 Maven Central 배포 경험',
     ],
   },
-  {
-    category: 'Spring Boot & Java',
-    items: [
-      'Spring Boot 기반 RESTful API 설계 및 구현 경험',
-      'MVC 패턴 기반의 서버 사이드 로직 구현',
-      'Gradle 빌드 환경 구성 및 프로젝트 의존성 관리',
-    ],
-  },
-  {
+{
     category: 'Communication',
     items: [
       'JIRA와 GitHub를 활용하여 이슈 관리 및 개발 진행 현황 공유',
