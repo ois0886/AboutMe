@@ -28,6 +28,13 @@ const awards = [
 
 const certificates = [
   {
+    title: 'SQLD',
+    date: '2026.03.27',
+    org: '한국데이터산업진흥원',
+    id: '',
+    image: '',
+  },
+  {
     title: '정보처리기사',
     date: '2024.12.11',
     org: '한국산업인력공단',
