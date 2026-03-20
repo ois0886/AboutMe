@@ -31,7 +31,7 @@ const openSourceProjects: OpenSourceProject[] = [
   },
   {
     title: 'Naru',
-    period: '',
+    period: '2026.03 (Android 1인)',
     description:
       'Naru — Kotlin MVI 상태 관리 오픈소스 라이브러리',
     image: 'screenshot/Naru.png',
