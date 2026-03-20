@@ -16,14 +16,6 @@ const skills = [
     ],
   },
   {
-    category: 'React Native & TypeScript',
-    items: [
-      'TypeScript 기반 크로스 플랫폼 모바일 앱 개발 가능',
-      'Interface와 Type을 활용한 타입 안전성 확보 및 코드 가독성 개선',
-      'React Hooks를 활용한 상태 관리 및 컴포넌트 설계',
-    ],
-  },
-  {
     category: 'Spring Boot & Java',
     items: [
       'Spring Boot 기반 RESTful API 설계 및 구현 경험',
