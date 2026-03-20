@@ -12,13 +12,13 @@ interface OpenSourceProject {
 
 const openSourceProjects: OpenSourceProject[] = [
   {
-    title: 'Compose-Git-Grass',
-    period: '2026.02 (Android 1인)',
+    title: 'Naru',
+    period: '2026.03 (Android 1인)',
     description:
-      'GitHub 잔디(contribution graph)를 Compose에서 바로 사용할 수 있는 오픈소스 UI 라이브러리',
-    image: 'screenshot/Grass1.png',
-    tech: ['Kotlin', 'Jetpack Compose'],
-    github: 'https://github.com/ois0886/compose-git-grass',
+      'Naru — Kotlin MVI 상태 관리 오픈소스 라이브러리',
+    image: 'screenshot/Naru.png',
+    tech: ['Kotlin', 'MVI'],
+    github: 'https://github.com/ois0886/Naru',
   },
   {
     title: 'Compose-Chart',
@@ -30,13 +30,13 @@ const openSourceProjects: OpenSourceProject[] = [
     github: 'https://github.com/ois0886/compose-chart',
   },
   {
-    title: 'Naru',
-    period: '2026.03 (Android 1인)',
+    title: 'Compose-Git-Grass',
+    period: '2026.02 (Android 1인)',
     description:
-      'Naru — Kotlin MVI 상태 관리 오픈소스 라이브러리',
-    image: 'screenshot/Naru.png',
-    tech: ['Kotlin', 'MVI'],
-    github: 'https://github.com/ois0886/Naru',
+      'GitHub 잔디(contribution graph)를 Compose에서 바로 사용할 수 있는 오픈소스 UI 라이브러리',
+    image: 'screenshot/Grass1.png',
+    tech: ['Kotlin', 'Jetpack Compose'],
+    github: 'https://github.com/ois0886/compose-git-grass',
   },
 ]
 
