@@ -29,6 +29,15 @@ const openSourceProjects: OpenSourceProject[] = [
     tech: ['Kotlin', 'Jetpack Compose', 'Canvas API'],
     github: 'https://github.com/ois0886/compose-chart',
   },
+  {
+    title: 'Naru',
+    period: '',
+    description:
+      'Naru — Kotlin MVI 상태 관리 오픈소스 라이브러리',
+    image: 'screenshot/Naru.png',
+    tech: ['Kotlin', 'MVI'],
+    github: 'https://github.com/ois0886/Naru',
+  },
 ]
 
 function OpenSource() {
