@@ -1,7 +1,6 @@
 import { useLayoutEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
-import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
 import Career from './components/Career'
@@ -32,8 +31,7 @@ function Home() {
     <>
       <Header />
       <main>
-        <Hero />
-        <About />
+<About />
         <Section alt><Career /></Section>
         <Skills />
         <Section alt><Education /></Section>
