@@ -25,7 +25,6 @@
 
 | Section | Description |
 |---------|-------------|
-| Hero | Typing animation intro |
 | About | Profile & introduction |
 | Career | Work experience timeline |
 | Skills | Tech stack overview |
@@ -44,6 +43,7 @@
 - Scroll position restore on back navigation
 - Wave divider section transitions
 - Project detail pages with problem-solving, code snippets, insights
+- Mobile responsive hamburger menu
 - Responsive design
 
 ## Getting Started
