@@ -4,7 +4,7 @@
 
 ## 프로젝트 개요
 
-오인성(Android Developer)의 개인 포트폴리오 웹사이트
+오인성(Software Engineer)의 개인 포트폴리오 웹사이트
 
 ## 기술 스택
 
@@ -20,11 +20,10 @@
 ```
 src/
   components/       # 페이지 섹션 컴포넌트 (각 컴포넌트별 .tsx + .module.css)
-    Header          # 고정 헤더 (10개 섹션 네비게이션 + 다크모드 토글)
-    Hero            # 타이핑 애니메이션 + 그라데이션 텍스트 + 배경 오브
+    Header          # 고정 헤더 (섹션 네비게이션 + 다크모드 토글)
     About           # 프로필 사진 + 기본 정보 + 자기소개
     Career          # 경력 (차트연구소) + 총 경력 자동 계산
-    Skills          # 기술 스택 (Android & Kotlin, React Native, Spring Boot, Communication)
+    Skills          # 기술 스택 (Android & Kotlin, Communication)
     Education       # 교육 이력 (SSAFY, 코드프레소, 한성대) + GPA + 주요 과목 성적
     Awards          # 수상 및 자격증 (이미지 토글)
     Activity        # 활동 이력 (스터디, 발표, 멘토링 등 — 사진 토글)
@@ -55,7 +54,7 @@ public/
 
 ## 섹션 순서 (홈)
 
-Header → Hero → About → Career(alt) → Skills → Education(alt) → Awards → Activity(alt) → Blog → Projects(alt) → OpenSource → Contact(alt) → Footer
+Header → About → Career(alt) → Skills → Education(alt) → Awards → Activity(alt) → Blog → Projects(alt) → OpenSource → Contact(alt) → Footer
 
 (alt) = 교차 배경 + 웨이브 구분선 적용 섹션
 
@@ -69,8 +68,6 @@ Header → Hero → About → Career(alt) → Skills → Education(alt) → Awar
 
 ## 차별화 요소
 
-- **타이핑 애니메이션**: Hero에서 "Android Developer", "Jetpack Compose", "Kotlin Lover" 순환
-- **배경 오브**: 부유하는 그라데이션 원형 배경 (orbFloat 애니메이션)
 - **웨이브 구분선**: 섹션 간 물결 모양 SVG 전환
 - **Kotlin 구문 강조**: 프로젝트 상세의 구현 설명에 PrismLight 코드 하이라이팅
 
@@ -100,6 +97,8 @@ Header → Hero → About → Career(alt) → Skills → Education(alt) → Awar
 
 ## 등록된 오픈소스
 
+- **Naru**: Kotlin MVI 상태 관리 오픈소스 라이브러리 (카드 클릭 → GitHub 이동)
+- **Compose-Chart**: Compose Canvas API 기반 6종 차트 UI 라이브러리 (카드 클릭 → GitHub 이동)
 - **Compose-Git-Grass**: GitHub 잔디 Compose UI 라이브러리 (카드 클릭 → GitHub 이동)
 
 ## 개발 명령어
