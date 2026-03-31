@@ -97,7 +97,6 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 
 ## 등록된 오픈소스
 
-- **Naru**: Kotlin MVI 상태 관리 오픈소스 라이브러리 (카드 클릭 → GitHub 이동)
 - **Compose-Chart**: Compose Canvas API 기반 6종 차트 UI 라이브러리 (카드 클릭 → GitHub 이동)
 - **Compose-Git-Grass**: GitHub 잔디 Compose UI 라이브러리 (카드 클릭 → GitHub 이동)
 
