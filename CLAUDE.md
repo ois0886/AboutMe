@@ -22,7 +22,7 @@ src/
   components/       # 페이지 섹션 컴포넌트 (각 컴포넌트별 .tsx + .module.css)
     Header          # 고정 헤더 (섹션 네비게이션 + 다크모드 토글)
     About           # 프로필 사진 + 기본 정보 + 자기소개
-    Career          # 경력 (차트연구소) + 총 경력 자동 계산
+    Career          # 경력 (ChartLab) + 총 경력 자동 계산
     Skills          # 기술 스택 (Android & Kotlin, Communication)
     Education       # 교육 이력 (SSAFY, 코드프레소, 한성대) + GPA + 주요 과목 성적
     Awards          # 수상 및 자격증 (이미지 토글)

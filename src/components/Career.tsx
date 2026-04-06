@@ -30,7 +30,7 @@ function Career() {
           <div className={styles.header}>
             <div>
               <h3 className={styles.company}>ChartLab</h3>
-              <p className={styles.role}>Android Developer · 연구원 정규직으로 근무</p>
+              <p className={styles.role}>Software Engineer · 연구원 정규직으로 근무</p>
               <p className={styles.location}>서울시 강서구</p>
             </div>
             <span className={styles.period}>2026.02.09 ~ 재직중</span>
