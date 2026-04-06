@@ -29,5 +29,6 @@ pnpm-debug.log*
 *.sw?
 
 # Claude
+AGENTS.md
 CLAUDE.md
 Debate.md
