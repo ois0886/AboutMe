@@ -17,6 +17,12 @@ describe('Career', () => {
     const githubLink = screen.getByRole('link', { name: 'GitHub' })
     expect(githubLink).toHaveAttribute('href', 'https://github.com/HSU-Didimdol/Android_PickNumber')
   })
+
+  it('PickNumber 기간이 정확한 날짜로 표시된다', () => {
+    render(<Career />)
+
+    expect(screen.getByText('2023.01.16 ~ 2023.06.15')).toBeInTheDocument()
+  })
 })
 
 describe('Activity', () => {
@@ -37,23 +43,23 @@ describe('getTotalCareer', () => {
   })
 
   it('종료된 경력과 재직중 경력을 합산해 개월 수를 반환한다', () => {
-    vi.setSystemTime(new Date(2026, 1, 9)) // PickNumber 5개월 + ChartLab 1개월 미만
-    expect(getTotalCareer()).toBe('5개월')
+    vi.setSystemTime(new Date(2026, 1, 9)) // PickNumber 4개월 + ChartLab 1개월 미만
+    expect(getTotalCareer()).toBe('4개월')
   })
 
   it('재직중 경력 개월 수가 늘어나면 누적 개월 수가 증가한다', () => {
-    vi.setSystemTime(new Date(2026, 4, 15)) // PickNumber 5개월 + ChartLab 3개월
-    expect(getTotalCareer()).toBe('8개월')
+    vi.setSystemTime(new Date(2026, 4, 15)) // PickNumber 4개월 + ChartLab 3개월
+    expect(getTotalCareer()).toBe('7개월')
   })
 
   it('누적 경력이 정확히 1년이면 "1년"을 반환한다', () => {
-    vi.setSystemTime(new Date(2026, 8, 10)) // PickNumber 5개월 + ChartLab 7개월
+    vi.setSystemTime(new Date(2026, 9, 10)) // PickNumber 4개월 + ChartLab 8개월
     expect(getTotalCareer()).toBe('1년')
   })
 
   it('1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 7, 15)) // PickNumber 5개월 + ChartLab 18개월
-    expect(getTotalCareer()).toBe('1년 11개월')
+    vi.setSystemTime(new Date(2027, 7, 15)) // PickNumber 4개월 + ChartLab 18개월
+    expect(getTotalCareer()).toBe('1년 10개월')
   })
 
   it('Career 데이터에 최신 경력부터 정렬되어 있다', () => {

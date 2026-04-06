@@ -27,9 +27,9 @@ export const careers: CareerEntry[] = [
   {
     company: 'PickNumber',
     role: 'Android Developer, 참여 연구원 / 프리랜서형태로 비대면 근무',
-    periodLabel: '2023.01 ~ 2023.06',
-    start: new Date(2023, 0, 1),
-    end: new Date(2023, 5, 30),
+    periodLabel: '2023.01.16 ~ 2023.06.15',
+    start: new Date(2023, 0, 16),
+    end: new Date(2023, 5, 15),
     tasks: [
       '(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱',
       'Android 팀 리드 개발자 (3인 팀 중 Android 전담, 전체 기여도 80%)',
