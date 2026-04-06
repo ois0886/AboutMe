@@ -18,7 +18,9 @@ describe('ProjectDetail', () => {
 
   it('유효한 프로젝트 ID로 접근하면 제목이 렌더링된다', () => {
     renderProjectDetail(firstProject.id)
-    expect(screen.getByText(firstProject.title)).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 1, name: firstProject.title }),
+    ).toBeInTheDocument()
   })
 
   it('유효한 프로젝트 ID로 접근하면 설명이 렌더링된다', () => {
@@ -53,5 +55,16 @@ describe('ProjectDetail', () => {
   it('돌아가기 링크가 존재한다', () => {
     renderProjectDetail(firstProject.id)
     expect(screen.getByText('← 돌아가기')).toBeInTheDocument()
+  })
+
+  it('강조 세그먼트가 포함된 프로젝트 상세도 정상 렌더링된다', () => {
+    const { container } = renderProjectDetail('mo-re')
+
+    expect(screen.getByText('데이터 로딩 시간 56% 단축')).toBeInTheDocument()
+    expect(
+      Array.from(container.querySelectorAll('strong')).some(
+        (element) => element.textContent === '데이터 로딩 시간 56% 단축',
+      ),
+    ).toBe(true)
   })
 })

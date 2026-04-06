@@ -75,6 +75,11 @@
   color: var(--color-primary);
 }
 
+.emphasis {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
 .subTasks {
   display: flex;
   flex-direction: column;

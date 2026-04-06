@@ -1,22 +1,6 @@
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { getTotalCareer } from './careerUtils'
 import styles from './Career.module.css'
-
-const CAREER_START = new Date(2026, 1, 9) // 2026.02.09
-
-export function getTotalCareer() {
-  const now = new Date()
-  let years = now.getFullYear() - CAREER_START.getFullYear()
-  let months = now.getMonth() - CAREER_START.getMonth()
-  if (now.getDate() < CAREER_START.getDate()) months--
-  if (months < 0) {
-    years--
-    months += 12
-  }
-  if (years > 0 && months > 0) return `${years}년 ${months}개월`
-  if (years > 0) return `${years}년`
-  if (months > 0) return `${months}개월`
-  return '1개월 미만'
-}
 
 function Career() {
   const ref = useScrollReveal<HTMLElement>()
@@ -36,8 +20,8 @@ function Career() {
             <span className={styles.period}>2026.02.09 ~ 재직중</span>
           </div>
           <ul className={styles.tasks}>
-            <li className={styles.task}>MTS 차트 시스템 인터페이스, UI, 데이터 컨트롤러 개발 및 유지보수</li>
-            <li className={styles.task}>PowerChart 3.0 LS증권 제품 유지보수 및 간편 차트 개발</li>
+            <li className={styles.task}><strong className={styles.emphasis}>MTS 차트 시스템</strong>의 인터페이스, UI, 데이터 컨트롤러 개발 및 유지보수</li>
+            <li className={styles.task}><strong className={styles.emphasis}>PowerChart 3.0 LS증권 제품</strong> 유지보수 및 <strong className={styles.emphasis}>간편 차트 개발</strong></li>
           </ul>
         </div>
       </div>

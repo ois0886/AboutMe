@@ -28,6 +28,11 @@
   line-height: 1.7;
 }
 
+.emphasis {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
 .seriesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

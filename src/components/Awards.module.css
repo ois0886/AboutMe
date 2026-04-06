@@ -44,6 +44,11 @@
   font-weight: 700;
 }
 
+.emphasis {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
 .org {
   font-size: 0.85rem;
   color: var(--color-primary);

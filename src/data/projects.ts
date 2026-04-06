@@ -3,10 +3,17 @@ export interface ImplementationBlock {
   code: string | null
 }
 
+export interface TextSegment {
+  text: string
+  strong?: boolean
+}
+
+export type RichText = string | TextSegment[]
+
 export interface ProblemSolving {
   problem: string[]
   solution: string[]
-  result: string[]
+  result: RichText[]
   implementation: ImplementationBlock[]
   alternatives: string[]
 }
@@ -20,19 +27,26 @@ export interface Project {
   period: string
   team: string
   role: string
-  details: string[]
-  features: string[]
-  contributions: string[]
+  details: RichText[]
+  features: RichText[]
+  contributions: RichText[]
   problemSolvings: ProblemSolving[]
   insights: { title: string; url: string }[]
   insightImages?: string[]
-  achievements: string[]
-  retrospective: string[]
+  achievements: RichText[]
+  retrospective: RichText[]
   links: { label: string; url: string }[]
   screenshots: string[]
   screenshotColumns?: number
   hasBottomScreenshot?: boolean
 }
+
+const strong = (text: string): TextSegment => ({ text, strong: true })
+
+const rich = (...segments: Array<string | TextSegment>): RichText =>
+  segments.map((segment) =>
+    typeof segment === 'string' ? { text: segment } : segment,
+  )
 
 const projects: Project[] = [
   {
@@ -45,7 +59,7 @@ const projects: Project[] = [
     team: '6명 (IoT 1명, Android 5명)',
     role: 'Android 키오스크 코드 개선 및 리팩토링',
     details: [
-      '(주)픽셀로의 서비스 내눈 키오스크 서비스를 실사용 환경에 맞게 리팩토링 및 요구사항 개선',
+      rich('(주)픽셀로의 서비스 ', strong('내눈 키오스크'), '를 실사용 환경에 맞게 리팩토링 및 요구사항 개선'),
       'SSAFY 13기 기업연계 프로젝트에 선정되어 프로젝트 진행',
     ],
     features: [
@@ -60,7 +74,7 @@ const projects: Project[] = [
       '설치·운영 매뉴얼 — 텍스트 및 영상 가이드 제공',
     ],
     contributions: [
-      '부분적 XML UI를 Jetpack Compose UI 100%로 전환',
+      rich('부분적 XML UI를 ', strong('Jetpack Compose UI 100%'), '로 전환'),
       'Compose State Hoisting 패턴 적용으로 기존 UI 컴포넌트 재사용성 향상 및 코드 중복 제거',
       '기존 레거시 패키지 구조를 기능·계층 기준으로 재구성해 의존성 방향을 정리하고 유지보수성 개선',
     ],
@@ -76,7 +90,7 @@ const projects: Project[] = [
           '화면을 기능 단위(feature 단위) 패키지 구조로 재편하고, 각 기능 내부를 Route/Screen/Component로 나누어 새로운 기능 추가 시에도 동일한 구조를 확장할 수 있도록 정리',
         ],
         result: [
-          '키오스크 앱 전반의 화면이 "Route(상태·의미 결정) → Screen(레이아웃) → Component(공통 UI 조각)" 계층 구조를 따르게 되어, 텍스트 교체·레이아웃 변경·버튼 추가 같은 요구사항에 대해 수정 범위 감소 및 재사용성 향상 달성',
+          rich('키오스크 앱 전반의 화면이 ', strong('"Route(상태·의미 결정) → Screen(레이아웃) → Component(공통 UI 조각)" 계층 구조'), '를 따르게 되어, 텍스트 교체·레이아웃 변경·버튼 추가 같은 요구사항에 대해 수정 범위 감소 및 재사용성 향상 달성'),
           '다국어 지원, 폰트 크기 정책, 버튼 스타일 변경 등 공통 UI 정책을 상위 계층 또는 공용 컴포넌트에서 한 번만 수정하면 전체 화면에 반영되는 구조가 마련되어, 기능 확장과 유지보수 시 안정성과 일관성 확보',
         ],
         implementation: [
@@ -120,12 +134,12 @@ val personalTable = remember {
     insights: [],
     achievements: [
       'SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상',
-      '상용 환경에 설치된 키오스크 앱을 대상으로 리팩토링을 수행하여, 앱 크래시 감소 및 UI 수정·기능 추가 시 개발 공수를 줄이는 등 운영 관점의 안정성 확보',
+      rich(strong('상용 환경에 설치된 키오스크 앱'), '을 대상으로 리팩토링을 수행하여, 앱 크래시 감소 및 UI 수정·기능 추가 시 개발 공수를 줄이는 등 운영 관점의 안정성 확보'),
     ],
     retrospective: [
       '기업·팀 간 초반 이해도가 맞지 않아 설계를 두 번 이상 수정하는 비효율이 발생했던 점이 아쉬움',
       '레거시 인벤토리화와 사전 설계 단계를 정식 프로세스로 두어, 범위·우선순위를 먼저 합의해야 한다는 필요성을 깨달음',
-      '리팩토링은 단순히 화면을 예쁘게 바꾸는 작업이 아니라, 상태 관리·디자인 시스템·운영 관점까지 함께 재설계해야 효과가 크다는 점을 깨달음',
+      rich(strong('리팩토링은 단순히 화면을 예쁘게 바꾸는 작업이 아니라'), ', 상태 관리·디자인 시스템·운영 관점까지 함께 재설계해야 효과가 크다는 점을 깨달음'),
     ],
     links: [
       { label: 'Figma', url: 'https://www.figma.com/design/A8UNusvo5ANwq4rgU9aLXv/%EC%8B%B8%ED%94%BC-%EC%9E%90%EC%9C%A8-%EC%8A%A4%EB%A7%88%ED%8A%B8-%EA%B2%BD%EB%A1%9C%EB%8B%B9-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC?node-id=0-1&t=iH3kiLCnJjtKTm2p-1' },
@@ -164,7 +178,7 @@ val personalTable = remember {
     contributions: [
       '멀티 모듈 아키텍처 설계 및 Convention Plugin 기반 Build-logic 구축',
       'Custom Compose UI로 시계열 차트(LineChart) 구현',
-      'Coroutines의 async/await를 활용한 6개 API 비동기 처리로 데이터 로딩 시간 56% 단축',
+      rich('Coroutines의 async/await를 활용한 6개 API 비동기 처리로 ', strong('데이터 로딩 시간 56% 단축')),
     ],
     problemSolvings: [
       {
@@ -177,7 +191,7 @@ val personalTable = remember {
           '각 비동기 블록 내부에서 runCatching과 개별 로그 출력으로 실패한 메트릭 종류와 원인을 명시적으로 기록',
         ],
         result: [
-          '메트릭 API를 병렬 호출하는 구조로 변경하여, 전체 로딩 시간을 약 56% 단축',
+          rich('메트릭 API를 병렬 호출하는 구조로 변경하여, ', strong('전체 로딩 시간을 약 56% 단축')),
           'CPU/메모리/네트워크/이벤트/AI 리포트 각각에 대해 실패 로그를 남김으로써, 특정 메트릭만 실패하는 상황에서도 전체 화면은 부분 데이터로 표시하면서 디버깅 용이성 확보',
         ],
         implementation: [
@@ -507,14 +521,14 @@ dependencies {
     ],
     achievements: [
       '멀티 모듈 아키텍처 도입으로 기능별 모듈 분리 및 재사용성 향상',
-      'async/await를 활용한 API 병렬 처리로 데이터 로딩 시간 56% 개선, 약 156ms로 단축',
-      '10개 이상의 Feature 모듈과 재사용 가능한 Design System 컴포넌트 구현',
+      rich('async/await를 활용한 API 병렬 처리로 ', strong('데이터 로딩 시간 56% 개선'), ', 약 156ms로 단축'),
+      rich(strong('10개 이상의 Feature 모듈'), '과 재사용 가능한 Design System 컴포넌트 구현'),
     ],
     retrospective: [
       '팀원들의 예비군 일정으로 인해 초반 일정 관리가 원활하지 않았고, 프로젝트에 대한 이해도가 팀원 간 싱크가 맞지 않았던 점이 아쉬움',
       '시간 제약으로 인해 Unit Test 및 UI Test를 작성하지 못한 점이 아쉬움',
       '주 3회 정기 프로젝트 리뷰 및 회의를 도입하여 팀 내 커뮤니케이션과 프로젝트 이해도를 동기화할 필요성 인식',
-      '향후 프로젝트에서는 TDD 방식을 적용하여 초기부터 테스트 코드 작성 예정',
+      rich('향후 프로젝트에서는 ', strong('TDD 방식'), '을 적용하여 초기부터 테스트 코드 작성 예정'),
       '팀 프로젝트에서는 정기적인 커뮤니케이션과 명확한 역할 분담이 프로젝트 성공의 핵심임을 깨달음',
       '멀티 모듈 아키텍처는 초기 설정 비용이 있지만 장기적으로 유지보수성과 확장성에 큰 이점이 있음을 확인',
       '테스트 코드의 중요성을 인지하고 다음 프로젝트에서는 반드시 적용할 필요성을 느낌',
@@ -564,8 +578,8 @@ dependencies {
       'Orbit MVI 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계',
       'Kotlin Coroutine과 DataStore를 활용한 Session, Refresh Token 관리 시스템 구현',
       'Channel 기반 Navigator 패턴 도입으로 Screen과 Navigation 로직 완전 분리',
-      'JUnit, MockK 기반 ViewModelTest를 130+ 케이스 구현으로 안정적인 단위 테스트 구축',
-      'GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 잔디밭 형태로 Custom Compose UI 컴포넌트 구현',
+      rich('JUnit, MockK 기반 ViewModelTest를 ', strong('130+ 케이스'), ' 구현으로 안정적인 단위 테스트 구축'),
+      rich('GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 ', strong('잔디밭 형태의 Custom Compose UI 컴포넌트'), '로 구현'),
     ],
     problemSolvings: [
       {
@@ -1017,7 +1031,7 @@ internal class LoginViewModel @Inject constructor(
       'SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상',
       '로그인/회원가입 등 인증 구조의 안정적 구현',
       'Compose, MVI 기반 프로젝트 적용',
-      'ViewModel Unit Test를 진행하여 안정적인 서비스 구축',
+      rich(strong('ViewModel Unit Test'), '를 진행하여 안정적인 서비스 구축'),
     ],
     retrospective: [
       '주어진 개발 시간의 부족으로 인해 완전한 리팩토링 미흡',
@@ -1025,7 +1039,7 @@ internal class LoginViewModel @Inject constructor(
       '기능 개발과 병행한 지속적인 코드 품질 개선을 위한 점진적 리팩토링 프로세스 도입 필요성',
       '초기 단계부터 프로토타이핑과 사용자 테스트를 통한 빠른 피드백 루프 구축 필요성',
       'Orbit MVI 패턴 적용을 통한 코드 가독성과 테스트 용이성 향상 및 기능 확장 시 일관된 구조 유지 가능성 확인',
-      '130+ 테스트 케이스 작성을 통한 코드 품질 개선 및 리팩토링과 기능 수정 시 안정성 보장의 테스트 가치 인식',
+      rich(strong('130+ 테스트 케이스 작성'), '을 통한 코드 품질 개선 및 리팩토링과 기능 수정 시 안정성 보장의 테스트 가치 인식'),
       'Cold Stream과 Hot Stream에 대한 명확한 차이를 이해',
     ],
     links: [
@@ -1079,7 +1093,7 @@ internal class LoginViewModel @Inject constructor(
     contributions: [
       'Android 앱 개발 (메인 및 마이페이지 개발) 및 1차 MVP 개발 완료',
       '모든 화면의 구성요소를 재사용 가능한 Jetpack Compose UI 디자인 시스템 구축',
-      'Compose UI로 100% 화면 구현',
+      rich(strong('Compose UI 100%'), '로 화면 구현'),
       'UiState–Intent–SideEffect MVI 구조를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축',
       'DataStore 활용 자동로그인 및 보안 세션 관리 구현, Retrofit + Coroutine 기반 비동기 통신 및 예외 처리 구조 설계',
     ],
@@ -1229,7 +1243,7 @@ class AuthDataStore @Inject constructor(
         val request = chain.request().newBuilder()
             .apply {
                 if (!token.isNullOrEmpty()) {
-                    addHeader("Authorization", "Bearer \$token")
+                    addHeader("Authorization", "Bearer $token")
                 }
             }
             .build()
@@ -1493,8 +1507,8 @@ suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<
       },
     ],
     achievements: [
-      'API 호출 최적화로 평균 응답시간 85% 단축 (3-5초 → 0.5초 이하)',
-      'Extension Functions 활용으로 코드 중복 50% 이상 감소 및 생산성 향상',
+      rich('API 호출 최적화로 ', strong('평균 응답시간 85% 단축'), ' (3-5초 → 0.5초 이하)'),
+      rich('Extension Functions 활용으로 ', strong('코드 중복 50% 이상 감소'), ' 및 생산성 향상'),
     ],
     retrospective: [
       '단위 테스트 및 UI 테스트 코드 부재로 품질 검증 프로세스 부족, JUnit/Mockito 기반 단위 테스트 및 Espresso UI 테스트 도입 계획 수립',
@@ -1542,7 +1556,7 @@ suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<
       '회원 정보, 자동 로그인, 외부 링크 관리',
     ],
     contributions: [
-      '팀장, 안드로이드 개발 전담 (1인)',
+      rich(strong('팀장'), ', 안드로이드 개발 전담 (1인)'),
       'WebSocket 라이브러리를 활용한 실시간 1:1 채팅 기능 구현 및 HTTP 폴링 대비 네트워크 트래픽·지연 시간 개선',
       'MVVM + Clean Architecture 적용으로 Presentation/Domain/Data 계층 완전 분리 및 테스트 용이성 개선',
       'RecyclerView multiple item types 활용한 채팅 UI로 상대 구분 표시 및 사용자 경험 최적화',
@@ -1786,10 +1800,10 @@ class ChattingViewModel @Inject constructor(
     ],
     contributions: [
       '안드로이드 앱 개발 (스터디·커뮤니티, 프로필 기능 개발)',
-      '기존 XML View를 Jetpack Compose로 70% 이상 전환하여 코드 재사용성과 개발 효율성 개선',
+      rich('기존 XML View를 Jetpack Compose로 ', strong('70% 이상 전환'), '하여 코드 재사용성과 개발 효율성 개선'),
       'Paging3 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화',
       'GitHub Actions를 활용해 Android CI/CD (자동 빌드, 테스트, Play Store 배포) 환경 구축',
-      'Play Store 정식 배포 완료로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험',
+      rich(strong('Play Store 정식 배포 완료'), '로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험'),
     ],
     problemSolvings: [
       {
@@ -2030,8 +2044,8 @@ jobs:
       'screenshot/POCS+2.png',
     ],
     achievements: [
-      'Paging3 기반 커뮤니티 기능으로 1,000건 이상 데이터도 스크롤 렉 없이 제공',
-      'Play Store 배포 경험',
+      rich('Paging3 기반 커뮤니티 기능으로 ', strong('1,000건 이상 데이터'), '도 스크롤 렉 없이 제공'),
+      rich(strong('Play Store 배포 경험')),
       'CI/CD로 빌드·릴리즈·배포 자동화 및 코드 품질 보장',
     ],
     retrospective: [

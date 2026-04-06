@@ -33,10 +33,10 @@ function Blog() {
         </a>
         <p className={styles.blogName}>인성의 개발 공부 노트</p>
         <p className={styles.blogDesc}>
-          2021년부터 5년동안 Kotlin, Android, CS, Algorithm 등 현재 370+개의 포스팅을 작성
+          <strong className={styles.emphasis}>2021년부터 5년동안</strong> Kotlin, Android, CS, Algorithm 등 <strong className={styles.emphasis}>현재 370+개의 포스팅</strong>을 작성
         </p>
         <p className={styles.blogDesc}>
-          Jetpack Compose 렌더링/Recomposition, 안드로이드 아키텍처(MVVM, MVI), 네트워크/직렬화 라이브러리 비교 학습 내용을 정리
+          <strong className={styles.emphasis}>Jetpack Compose 렌더링/Recomposition</strong>, <strong className={styles.emphasis}>안드로이드 아키텍처(MVVM, MVI)</strong>, 네트워크/직렬화 라이브러리 비교 학습 내용을 정리
         </p>
       </div>
       <div className={styles.seriesGrid}>

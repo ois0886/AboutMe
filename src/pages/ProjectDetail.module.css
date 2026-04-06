@@ -119,6 +119,11 @@
   color: var(--color-primary);
 }
 
+.emphasis {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
 .psBlock {
   background-color: var(--color-bg-secondary);
   border-radius: 8px;

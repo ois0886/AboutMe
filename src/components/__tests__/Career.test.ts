@@ -1,4 +1,4 @@
-import { getTotalCareer } from '../Career'
+import { getTotalCareer } from '../careerUtils'
 
 describe('getTotalCareer', () => {
   beforeEach(() => {

@@ -166,7 +166,7 @@ function ActivityCard({ activity }: { activity: typeof activities[number] }) {
           </div>
           <span className={styles.period}>{activity.period}</span>
         </div>
-        <h3 className={styles.cardTitle}>{activity.title}</h3>
+        <h3 className={styles.cardTitle}><strong className={styles.emphasis}>{activity.title}</strong></h3>
         {activity.details.length > 0 && (
           <ul className={styles.details}>
             {activity.details.map((detail) => (

@@ -57,7 +57,7 @@ function AwardCard({ item, toggleLabel }: { item: typeof awards[number]; toggleL
     <div className={styles.card}>
       <div className={styles.cardInner}>
         <div className={styles.left}>
-          <h3 className={styles.title}>{item.title}</h3>
+          <h3 className={styles.title}><strong className={styles.emphasis}>{item.title}</strong></h3>
           <p className={styles.org}>{item.org}</p>
         </div>
         <div className={styles.right}>

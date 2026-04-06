@@ -27,9 +27,9 @@ function About() {
           <div className={styles.infoBlock}>
             <h3 className={styles.subtitle}>Introduction</h3>
             <ul className={styles.introList}>
-              <li>팀 성장에 기여하기 위해 코드 리뷰를 적극적으로 활용하고, 테스트 가능한 코드 작성에 노력합니다.</li>
-              <li>제 미숙한 부분을 블로그 기록을 통해서 보완하고 강점으로 발전시키는 데 힘쓰고 있습니다.</li>
-              <li>의견을 제시할 때 근거를 들어 말하도록 노력합니다.</li>
+              <li>팀 성장에 기여하기 위해 <strong className={styles.emphasis}>코드 리뷰</strong>를 적극적으로 활용하고, <strong className={styles.emphasis}>테스트 가능한 코드 작성</strong>에 노력합니다.</li>
+              <li>제 미숙한 부분을 <strong className={styles.emphasis}>블로그 기록</strong>을 통해서 보완하고 강점으로 발전시키는 데 힘쓰고 있습니다.</li>
+              <li>의견을 제시할 때 <strong className={styles.emphasis}>근거를 들어 말하는 소통</strong>을 지향합니다.</li>
             </ul>
           </div>
         </div>

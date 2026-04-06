@@ -45,4 +45,24 @@ describe('projects 데이터 무결성', () => {
       })
     })
   })
+
+  it('강조 세그먼트를 사용하는 항목은 텍스트를 유지한다', () => {
+    const highlightedItems = projects.flatMap((project) => [
+      ...project.details,
+      ...project.features,
+      ...project.contributions,
+      ...project.achievements,
+      ...project.retrospective,
+      ...project.problemSolvings.flatMap((ps) => ps.result),
+    ])
+
+    highlightedItems.forEach((item) => {
+      if (typeof item === 'string') return
+
+      expect(item.length).toBeGreaterThan(0)
+      item.forEach((segment) => {
+        expect(segment.text).toBeTruthy()
+      })
+    })
+  })
 })
