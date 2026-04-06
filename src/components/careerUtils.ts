@@ -26,7 +26,7 @@ export const careers: CareerEntry[] = [
   },
   {
     company: 'PickNumber',
-    role: 'Android Developer, 참여 연구원 / 프리랜서형태로 비대면 근무',
+    role: 'Android Developer, 참여 연구원 / 프리랜서 형태로 비대면 근무',
     periodLabel: '2023.01.16 ~ 2023.06.15',
     start: new Date(2023, 0, 16),
     end: new Date(2023, 5, 15),
