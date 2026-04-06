@@ -1,3 +1,9 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .totalCareer {
   font-size: 0.9rem;
   font-weight: 700;
@@ -80,27 +86,26 @@
   font-weight: 700;
 }
 
-.subTasks {
+.links {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 6px;
-  padding-left: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
 }
 
-.subTask {
-  font-size: var(--font-size-small);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
-  padding-left: 14px;
-  position: relative;
-}
-
-.subTask::before {
-  content: '◦';
-  position: absolute;
-  left: 0;
+.link {
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--color-primary);
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.link:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
 }
 
 @media (max-width: 640px) {
