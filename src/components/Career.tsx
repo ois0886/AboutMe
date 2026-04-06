@@ -29,7 +29,7 @@ function Career() {
         <div className={styles.card}>
           <div className={styles.header}>
             <div>
-              <h3 className={styles.company}>차트연구소</h3>
+              <h3 className={styles.company}>ChartLab</h3>
               <p className={styles.role}>Android Developer · 연구원 정규직으로 근무</p>
               <p className={styles.location}>서울시 강서구</p>
             </div>
