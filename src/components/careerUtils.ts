@@ -46,11 +46,9 @@ export const careers: CareerEntry[] = [
 function getCareerMonths(start: Date, end: Date) {
   const years = end.getFullYear() - start.getFullYear()
   const months = end.getMonth() - start.getMonth()
-  let totalMonths = years * 12 + months
+  const totalMonths = years * 12 + months + 1
 
-  if (end.getDate() < start.getDate()) totalMonths--
-
-  return Math.max(totalMonths, 0)
+  return Math.max(totalMonths, 1)
 }
 
 export function getTotalCareer() {
