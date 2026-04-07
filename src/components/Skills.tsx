@@ -3,6 +3,15 @@ import styles from './Skills.module.css'
 
 const skills = [
   {
+    category: 'React & TypeScript',
+    items: [
+      'React 기반 컴포넌트 설계 및 상태 관리',
+      'TypeScript를 활용한 타입 안전성 확보 및 코드 가독성 개선',
+      'HTML/CSS 기반 웹 레이아웃 구성 및 반응형 디자인 적용',
+      'JavaScript ES6+ 문법 활용',
+    ],
+  },
+  {
     category: 'Android & Kotlin',
     items: [
       'Jetpack Compose 기반 선언형 UI 개발 및 시계열 차트, GitHub 잔디밭 등 복잡한 컴포넌트 직접 구현',

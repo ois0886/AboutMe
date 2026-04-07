@@ -22,6 +22,7 @@ export const careers: CareerEntry[] = [
     tasks: [
       'MTS 차트 시스템의 인터페이스, UI, 데이터 컨트롤러 개발 및 유지보수',
       'PowerChart 3.0 LS증권 제품 유지보수 및 간편 차트 개발',
+      '회사 홈페이지 리팩토링 및 유지보수',
     ],
   },
   {
