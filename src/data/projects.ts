@@ -51,7 +51,7 @@ const rich = (...segments: Array<string | TextSegment>): RichText =>
 const projects: Project[] = [
   {
     id: 'naenun-kiosk',
-    title: '내눈 키오스크',
+    title: '내눈 키오스크 - Android',
     description: '생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스',
     thumbnail: 'screenshot/nanoon1.png',
     tech: ['Kotlin', 'Android Jetpack', 'Jetpack Compose', 'ViewModel', 'Coroutine', 'Flow'],
@@ -157,7 +157,7 @@ val personalTable = remember {
   },
   {
     id: 'mo-re',
-    title: '모리, Mo-Re',
+    title: '모리, Mo-Re - Android',
     description: '누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리·운영 효율성을 높이는 앱 서비스',
     thumbnail: 'screenshot/more1.jpg',
     tech: ['Kotlin', 'Jetpack Compose', 'Orbit MVI', 'Hilt', 'Retrofit2', 'OkHttp3', 'Navigation3', 'DataStore', 'Coroutines', 'Flow'],
@@ -1060,7 +1060,7 @@ internal class LoginViewModel @Inject constructor(
   },
   {
     id: 'quiz-cafe',
-    title: 'Quiz Cafe',
+    title: 'Quiz Cafe - Android',
     description:
       '다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼.',
     thumbnail: 'screenshot/QuizCafe1.png',
@@ -1408,7 +1408,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
   },
   {
     id: 'didimdol',
-    title: 'Didimdol',
+    title: 'Didimdol - Android',
     description:
       '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트',
     thumbnail: 'screenshot/didim1.png',
@@ -1526,7 +1526,7 @@ suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<
   },
   {
     id: 'bong',
-    title: 'Bong #',
+    title: 'Bong # - Android',
     description:
       '한성대학교 캡스톤디자인(졸업작품) 출품 프로젝트. 기존에 재능과 재화를 교환하던 방식에서 벗어나 재능과 재능을 교환하는 앱 서비스',
     thumbnail: 'screenshot/Bong1.png',
@@ -1765,7 +1765,7 @@ class ChattingViewModel @Inject constructor(
   },
   {
     id: 'pocs',
-    title: 'POCS',
+    title: 'POCS - Android',
     description:
       '한성대학교 전공 소모임 POCS 회원들을 위한 원활한 스터디 모집 및 정보 공유를 위한 커뮤니티 앱',
     thumbnail: 'screenshot/POCS1.png',
