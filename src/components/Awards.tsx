@@ -17,13 +17,6 @@ const awards = [
     id: '2025-23-050065',
     image: 'screenshot/공통프로젝트우수상.png',
   },
-  {
-    title: '사회복무요원 표창장',
-    date: '2021.07.28',
-    org: '서울지방병무청장',
-    id: '제2021-43호',
-    image: 'screenshot/사회복무표창장.jpeg',
-  },
 ]
 
 const certificates = [
