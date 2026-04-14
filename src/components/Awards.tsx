@@ -21,7 +21,7 @@ const awards = [
 
 const languages = [
   {
-    title: 'OPIc IH',
+    title: 'OPIc IH (English)',
     date: '2024.05 ~ 2026.04',
     org: 'ACTFL',
     id: '',
