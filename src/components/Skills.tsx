@@ -17,7 +17,14 @@ const skills = [
   },
   {
     category: 'SpringBoot & Java & PostgreSQL',
-    items: [],
+    items: [
+      'Spring Boot 기반 REST API 설계 및 JWT Stateless 인증/인가 구현',
+      'OAuth2 소셜 로그인 연동 (카카오), 인터페이스 기반 설계로 확장 가능한 구조 구현',
+      'PostgreSQL + JPA/Hibernate 기반 데이터 모델링 및 연관관계 설계',
+      'Redis를 활용한 Refresh Token Rotation 및 공유 링크 TTL 캐싱',
+      'JUnit5·Mockito 기반 단위 테스트 및 MockMvc 컨트롤러 슬라이스 테스트 작성',
+      '환경변수 기반 dev/prod 프로파일 분리',
+    ],
   },
   {
     category: 'React & TypeScript',
