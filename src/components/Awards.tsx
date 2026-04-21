@@ -19,16 +19,6 @@ const awards = [
   },
 ]
 
-const languages = [
-  {
-    title: 'OPIc IH (English)',
-    date: '2024.05 ~ 2026.04',
-    org: 'ACTFL',
-    id: '',
-    image: '',
-  },
-]
-
 const certificates = [
   {
     title: 'SQLD',
@@ -106,13 +96,6 @@ function Awards() {
       <div className={styles.list}>
         {certificates.map((cert) => (
           <AwardCard key={cert.id} item={cert} toggleLabel={['자격증보기', '자격증접기']} />
-        ))}
-      </div>
-
-      <h3 className={`${styles.groupTitle} ${styles.groupTitleMargin}`}>Languages</h3>
-      <div className={styles.list}>
-        {languages.map((lang) => (
-          <AwardCard key={lang.org + lang.title} item={lang} toggleLabel={['이미지보기', '이미지접기']} />
         ))}
       </div>
     </section>
