@@ -4,32 +4,36 @@ import Career from '../Career'
 import { careers, getTotalCareer } from '../careerUtils'
 
 describe('Career', () => {
-  it('ChartLab과 PickNumber 경력이 모두 렌더링된다', () => {
+  it('ChartLab 경력이 렌더링된다', () => {
     render(<Career />)
 
     expect(screen.getByRole('heading', { level: 3, name: 'ChartLab' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 3, name: 'PickNumber' })).toBeInTheDocument()
   })
 
-  it('PickNumber GitHub 링크가 올바른 URL을 가진다', () => {
+  it('PickNumber는 Career에 렌더링되지 않는다', () => {
     render(<Career />)
 
-    const githubLink = screen.getByRole('link', { name: 'GitHub' })
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/HSU-Didimdol/Android_PickNumber')
-  })
-
-  it('PickNumber 기간이 정확한 날짜로 표시된다', () => {
-    render(<Career />)
-
-    expect(screen.getByText('2023.01.16 ~ 2023.06.15')).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { level: 3, name: 'PickNumber' })).not.toBeInTheDocument()
   })
 })
 
 describe('Activity', () => {
-  it('PickNumber 활동 항목이 더 이상 렌더링되지 않는다', () => {
+  it('한성대학교 산학 협력 프로젝트가 Activity에 렌더링된다', () => {
     render(<Activity />)
 
-    expect(screen.queryByText('(주)픽넘버 산학협력 프로젝트')).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 3, name: '한성대학교 산학 협력 프로젝트' }),
+    ).toBeInTheDocument()
+  })
+
+  it('PickNumber GitHub 링크가 Activity에 올바른 URL로 표시된다', () => {
+    render(<Activity />)
+
+    const githubLinks = screen.getAllByRole('link', { name: 'GitHub' })
+    const pickNumberLink = githubLinks.find(
+      (link) => link.getAttribute('href') === 'https://github.com/HSU-Didimdol/Android_PickNumber',
+    )
+    expect(pickNumberLink).toBeDefined()
   })
 })
 
@@ -42,27 +46,27 @@ describe('getTotalCareer', () => {
     vi.useRealTimers()
   })
 
-  it('종료된 경력과 재직중 경력을 합산해 개월 수를 반환한다', () => {
-    vi.setSystemTime(new Date(2026, 1, 9)) // PickNumber 6개월 + ChartLab 1개월
-    expect(getTotalCareer()).toBe('7개월')
+  it('재직 시작일이면 1개월을 반환한다', () => {
+    vi.setSystemTime(new Date(2026, 1, 9))
+    expect(getTotalCareer()).toBe('1개월')
   })
 
-  it('재직중 경력 개월 수가 늘어나면 누적 개월 수가 증가한다', () => {
-    vi.setSystemTime(new Date(2026, 4, 15)) // PickNumber 6개월 + ChartLab 4개월
-    expect(getTotalCareer()).toBe('10개월')
+  it('재직 개월 수가 늘어나면 누적 개월 수가 증가한다', () => {
+    vi.setSystemTime(new Date(2026, 4, 15)) // ChartLab 4개월
+    expect(getTotalCareer()).toBe('4개월')
   })
 
   it('누적 경력이 정확히 1년이면 "1년"을 반환한다', () => {
-    vi.setSystemTime(new Date(2026, 6, 10)) // PickNumber 6개월 + ChartLab 6개월
+    vi.setSystemTime(new Date(2027, 0, 9)) // ChartLab 12개월
     expect(getTotalCareer()).toBe('1년')
   })
 
   it('1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 7, 15)) // PickNumber 6개월 + ChartLab 19개월
-    expect(getTotalCareer()).toBe('2년 1개월')
+    vi.setSystemTime(new Date(2027, 7, 15)) // ChartLab 1년 7개월
+    expect(getTotalCareer()).toBe('1년 7개월')
   })
 
-  it('Career 데이터에 최신 경력부터 정렬되어 있다', () => {
-    expect(careers.map((career) => career.company)).toEqual(['ChartLab', 'PickNumber'])
+  it('Career 데이터에 ChartLab만 등록되어 있다', () => {
+    expect(careers.map((career) => career.company)).toEqual(['ChartLab'])
   })
 })
