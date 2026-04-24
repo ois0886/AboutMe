@@ -21,6 +21,13 @@ const awards = [
 
 const certificates = [
   {
+    title: 'Claude Code in Action',
+    date: '2026.04',
+    org: 'Anthropic',
+    id: 'po6dwyvk5zs7',
+    image: 'screenshot/claude in action.png',
+  },
+  {
     title: 'SQLD',
     date: '2026.03.27 ~ 2028.03.27',
     org: '한국데이터산업진흥원',
