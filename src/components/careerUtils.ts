@@ -15,7 +15,7 @@ type CareerEntry = {
 export const careers: CareerEntry[] = [
   {
     company: 'ChartLab',
-    role: 'Software Engineer · 연구원 정규직으로 근무',
+    role: 'Android Developer · 연구원 정규직으로 근무',
     location: '서울시 강서구',
     periodLabel: '2026.02.09 ~ 재직중',
     start: new Date(2026, 1, 9),
