@@ -27,8 +27,8 @@ const skills = [
   {
     category: 'Claude Code',
     items: [
-      'Claude Code 기반 페어 프로그래밍으로 Android/Kotlin·프론트엔드·백엔드 전반에서 기능 구현 및 리팩토링 생산성 향상',
-      '프로젝트별 CLAUDE.md 작성으로 컨텍스트·컨벤션을 명문화하여 일관된 산출물 확보',
+      'Claude Code 기반 페어 프로그래밍으로 안드로이드·프론트엔드·백엔드 전반에서 기능 구현 및 리팩토링 생산성 향상',
+      '프로젝트별 .claude 디렉토리에 CLAUDE.md·슬래시 커맨드·서브에이전트 등 다수의 마크다운을 작성하여 컨텍스트·컨벤션·워크플로우 명문화',
       '서브에이전트·슬래시 커맨드·훅을 활용한 코드 리뷰·테스트 생성 등 반복 작업 자동화',
       '"Claude Code in Action" (Anthropic) 수료',
     ],
