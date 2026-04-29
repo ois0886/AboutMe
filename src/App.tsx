@@ -50,19 +50,31 @@ function Home() {
 function ScrollToTop() {
   const { pathname } = useLocation()
   useLayoutEffect(() => {
+    const scrollWithoutAnimation = (top: number) => {
+      const root = document.documentElement
+      const previousScrollBehavior = root.style.scrollBehavior
+
+      root.classList.add('no-transition')
+      root.style.scrollBehavior = 'auto'
+      window.scrollTo(0, top)
+
+      requestAnimationFrame(() => {
+        window.scrollTo(0, top)
+        requestAnimationFrame(() => {
+          root.style.scrollBehavior = previousScrollBehavior
+          root.classList.remove('no-transition')
+        })
+      })
+    }
+
     if (pathname.startsWith('/projects/')) {
-      sessionStorage.setItem('scrollY', String(window.scrollY))
-      window.scrollTo({ top: 0, behavior: 'instant' })
+      scrollWithoutAnimation(0)
     } else if (pathname === '/') {
       const saved = sessionStorage.getItem('scrollY')
       if (saved) {
         sessionStorage.removeItem('scrollY')
-        document.documentElement.classList.add('no-transition')
         document.querySelectorAll('.reveal').forEach((el) => el.classList.add('revealed'))
-        window.scrollTo({ top: Number(saved), behavior: 'instant' })
-        requestAnimationFrame(() => {
-          document.documentElement.classList.remove('no-transition')
-        })
+        scrollWithoutAnimation(Number(saved))
       }
     }
   }, [pathname])

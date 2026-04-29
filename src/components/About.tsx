@@ -17,11 +17,10 @@ function About() {
           <div className={styles.infoBlock}>
             <h3 className={styles.subtitle}>Info</h3>
             <ul className={styles.infoList}>
-              <li><span className={styles.label}>TEL.</span> 010-5905-9620</li>
-              <li><span className={styles.label}>E-MAIL.</span> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></li>
+              <li><span className={styles.label}>Email.</span> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></li>
               <li><span className={styles.label}>GitHub.</span> <a href="https://github.com/ois0886" target="_blank" rel="noopener noreferrer">github.com/ois0886</a></li>
-              <li><span className={styles.label}>Birth.</span> 1996.06.21</li>
-              <li><span className={styles.label}>Address.</span> 서울시 금천구</li>
+              <li><span className={styles.label}>Blog.</span> <a href="https://superohinsung.tistory.com" target="_blank" rel="noopener noreferrer">superohinsung.tistory.com</a></li>
+              <li><span className={styles.label}>LinkedIn.</span> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/인성-오</a></li>
             </ul>
           </div>
           <div className={styles.infoBlock}>

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import kotlin from 'react-syntax-highlighter/dist/esm/languages/prism/kotlin'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -25,6 +25,7 @@ function renderRichText(content: RichText): ReactNode {
 function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const location = useLocation()
   const project = projects.find((p) => p.id === id)
 
   if (!project) {
@@ -42,11 +43,25 @@ function ProjectDetail() {
   const bottomScreenshot = showBottom
     ? project.screenshots[project.screenshots.length - 1]
     : null
+  const fromPortfolio = (location.state as { fromPortfolio?: boolean } | null)?.fromPortfolio
+
+  const handleBack = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    if (fromPortfolio) {
+      navigate(-1)
+      return
+    }
+    if (window.history.length > 1) {
+      navigate(-1)
+      return
+    }
+    navigate('/')
+  }
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <a href="#" onClick={(e) => { e.preventDefault(); navigate(-1) }} className={styles.backLink}>← 돌아가기</a>
+        <a href="#" onClick={handleBack} className={styles.backLink}>← 돌아가기</a>
 
         <h1 className={styles.title}>{project.title}</h1>
         <p className={styles.descriptionText}>{project.description}</p>
@@ -72,39 +87,35 @@ function ProjectDetail() {
           ))}
         </div>
 
-        {topScreenshots.length > 0 && (
+        {project.achievements.length > 0 && (
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>스크린샷</h2>
-            {topScreenshots[0] && (
-              <div className={styles.screenshotFull}>
-                <div className={styles.screenshotWrap}>
-                  <img src={topScreenshots[0]} alt={project.title} className={styles.screenshot} />
-                </div>
-              </div>
-            )}
-            {topScreenshots.length > 1 && (
-              <div className={styles.screenshotRows}>
-                {Array.from({ length: Math.ceil((topScreenshots.length - 1) / cols) }, (_, i) => {
-                  const startIdx = 1 + i * cols
-                  return (
-                    <div
-                      key={startIdx}
-                      className={styles.screenshotRow}
-                      style={cols !== 2 ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}
-                    >
-                      {Array.from({ length: cols }, (_, j) => {
-                        const img = topScreenshots[startIdx + j]
-                        return img ? (
-                          <div key={j} className={styles.screenshotWrap}>
-                            <img src={img} alt={project.title} className={styles.screenshot} />
-                          </div>
-                        ) : null
-                      })}
-                    </div>
-                  )
-                })}
-              </div>
-            )}
+            <h2 className={styles.sectionTitle}>성과 및 결과</h2>
+            <ul className={styles.list}>
+              {project.achievements.map((item) => (
+                <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
+                  {renderRichText(item)}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {project.links.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>링크</h2>
+            <div className={styles.links}>
+              {project.links.map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.linkBtn}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </section>
         )}
 
@@ -129,25 +140,6 @@ function ProjectDetail() {
                 </li>
               ))}
             </ul>
-          </section>
-        )}
-
-        {project.links.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>링크</h2>
-            <div className={styles.links}>
-              {project.links.map((link) => (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.linkBtn}
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
           </section>
         )}
 
@@ -265,16 +257,46 @@ function ProjectDetail() {
           </section>
         )}
 
-        {project.achievements.length > 0 && (
+        {topScreenshots.length > 0 && (
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>성과 및 결과</h2>
-            <ul className={styles.list}>
-              {project.achievements.map((item) => (
-                <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(item)}
-                </li>
-              ))}
-            </ul>
+            <h2 className={styles.sectionTitle}>스크린샷</h2>
+            {topScreenshots[0] && (
+              <div className={styles.screenshotFull}>
+                <div className={styles.screenshotWrap}>
+                  <img src={topScreenshots[0]} alt={project.title} className={styles.screenshot} />
+                </div>
+              </div>
+            )}
+            {topScreenshots.length > 1 && (
+              <div className={styles.screenshotRows}>
+                {Array.from({ length: Math.ceil((topScreenshots.length - 1) / cols) }, (_, i) => {
+                  const startIdx = 1 + i * cols
+                  return (
+                    <div
+                      key={startIdx}
+                      className={styles.screenshotRow}
+                      style={cols !== 2 ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}
+                    >
+                      {Array.from({ length: cols }, (_, j) => {
+                        const img = topScreenshots[startIdx + j]
+                        return img ? (
+                          <div key={j} className={styles.screenshotWrap}>
+                            <img src={img} alt={project.title} className={styles.screenshot} />
+                          </div>
+                        ) : null
+                      })}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+            {bottomScreenshot && (
+              <div className={styles.screenshots}>
+                <div className={styles.screenshotWrap}>
+                  <img src={bottomScreenshot} alt={project.title} className={styles.screenshot} />
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -291,15 +313,6 @@ function ProjectDetail() {
           </section>
         )}
 
-        {bottomScreenshot && (
-          <section className={styles.section}>
-            <div className={styles.screenshots}>
-              <div className={styles.screenshotWrap}>
-                <img src={bottomScreenshot} alt={project.title} className={styles.screenshot} />
-              </div>
-            </div>
-          </section>
-        )}
       </div>
     </div>
   )

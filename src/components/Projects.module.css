@@ -53,6 +53,33 @@
   margin-bottom: 16px;
 }
 
+.highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.highlight {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+
+.highlight::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
+
+.emphasis {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
 .tech {
   display: flex;
   flex-wrap: wrap;
