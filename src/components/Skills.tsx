@@ -16,15 +16,6 @@ const skills = [
     ],
   },
   {
-    category: 'React & TypeScript',
-    items: [
-      'React 기반 컴포넌트 설계 및 상태 관리',
-      'TypeScript를 활용한 타입 안전성 확보 및 코드 가독성 개선',
-      'HTML/CSS 기반 웹 레이아웃 구성 및 반응형 적용',
-      'JavaScript ES6+ 문법 활용',
-    ],
-  },
-  {
     category: 'Claude & Codex',
     items: [
       'Claude·Codex 기반 페어 프로그래밍으로 안드로이드·프론트엔드·백엔드 전반에서 기능 구현 및 리팩토링 생산성 향상',
