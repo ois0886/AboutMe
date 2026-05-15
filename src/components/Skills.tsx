@@ -16,7 +16,7 @@ const skills = [
     ],
   },
   {
-    category: 'Claude & Codex',
+    category: 'Agent',
     items: [
       'Claude·Codex 기반 페어 프로그래밍으로 안드로이드·프론트엔드·백엔드 전반에서 기능 구현 및 리팩토링 생산성 향상',
       '프로젝트별 .claude 디렉토리에 CLAUDE.md·슬래시 커맨드·서브에이전트 등 다수의 마크다운을 작성하여 컨텍스트·컨벤션·워크플로우 명문화',

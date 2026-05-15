@@ -4,10 +4,10 @@ import Career from '../Career'
 import { careers, getTotalCareer } from '../careerUtils'
 
 describe('Career', () => {
-  it('ChartLab 경력이 렌더링된다', () => {
+  it('(주)차트연구소 경력이 렌더링된다', () => {
     render(<Career />)
 
-    expect(screen.getByRole('heading', { level: 3, name: 'ChartLab' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: '(주)차트연구소' })).toBeInTheDocument()
   })
 
   it('PickNumber는 Career에 렌더링되지 않는다', () => {
@@ -52,21 +52,21 @@ describe('getTotalCareer', () => {
   })
 
   it('재직 개월 수가 늘어나면 누적 개월 수가 증가한다', () => {
-    vi.setSystemTime(new Date(2026, 4, 15)) // ChartLab 4개월
+    vi.setSystemTime(new Date(2026, 4, 15)) // (주)차트연구소 4개월
     expect(getTotalCareer()).toBe('4개월')
   })
 
   it('누적 경력이 정확히 1년이면 "1년"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 0, 9)) // ChartLab 12개월
+    vi.setSystemTime(new Date(2027, 0, 9)) // (주)차트연구소 12개월
     expect(getTotalCareer()).toBe('1년')
   })
 
   it('1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 7, 15)) // ChartLab 1년 7개월
+    vi.setSystemTime(new Date(2027, 7, 15)) // (주)차트연구소 1년 7개월
     expect(getTotalCareer()).toBe('1년 7개월')
   })
 
-  it('Career 데이터에 ChartLab만 등록되어 있다', () => {
-    expect(careers.map((career) => career.company)).toEqual(['ChartLab'])
+  it('Career 데이터에 (주)차트연구소만 등록되어 있다', () => {
+    expect(careers.map((career) => career.company)).toEqual(['(주)차트연구소'])
   })
 })
