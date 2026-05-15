@@ -28,6 +28,23 @@ export const careers: CareerEntry[] = [
       '인사, 고객관리, 문서관리, 사무 보조, 기획안 작성, 문의 전화 응대, 비품 주문 업무 수행',
     ],
   },
+  {
+    company: '(주)PickNumber',
+    role: 'Android Developer 산학협력/프리랜서',
+    location: '재택근무',
+    periodLabel: '2023.01.16 ~ 2023.06.15',
+    start: new Date(2023, 0, 16),
+    end: new Date(2023, 5, 15),
+    tasks: [
+      'Didimdol 프로젝트 Android 팀 리드 개발자 (3인 팀 중 Android 전담, 전체 기여도 80%)',
+      'Room 캐싱 전략 도입으로 반복 API 호출 최소화 및 응답시간 85% 단축',
+      '전국 업체 위치정보 실시간 검색: SearchView + RecyclerView + 거리순 정렬로 사용자 경험 최적화',
+      'ViewBinding 확장 함수와 추상 베이스 클래스 활용해 코드 재사용성 강화',
+    ],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
+    ],
+  },
 ]
 
 function getCareerMonths(start: Date, end: Date) {
