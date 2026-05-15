@@ -29,7 +29,7 @@ const certificates = [
   },
   {
     title: 'SQLD',
-    date: '2026.03.27 ~ 2028.03.27',
+    date: '2026.03.27',
     org: '한국데이터산업진흥원',
     id: 'SQLD-060003832',
     image: 'screenshot/sqld.png',
