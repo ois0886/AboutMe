@@ -111,6 +111,17 @@
       list-style: none;
     }
 
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 24px;
+      row-gap: 3px;
+    }
+
+    .contact-item {
+      min-width: 0;
+    }
+
     ul {
       padding-left: 15px;
     }
@@ -184,14 +195,14 @@
 
     <section>
       <div class="section-heading">
-        <h2>Info</h2>
+        <h2>Contact</h2>
       </div>
-      <ul class="line-list">
-        <li><strong>Email.</strong> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></li>
-        <li><strong>GitHub.</strong> <a href="https://github.com/ois0886">github.com/ois0886</a></li>
-        <li><strong>Blog.</strong> <a href="https://superohinsung.tistory.com">superohinsung.tistory.com</a></li>
-        <li><strong>LinkedIn.</strong> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">www.linkedin.com/in/인성-오</a></li>
-      </ul>
+      <div class="contact-grid">
+        <div class="contact-item"><strong>Blog.</strong> <a href="https://superohinsung.tistory.com">superohinsung.tistory.com</a></div>
+        <div class="contact-item"><strong>LinkedIn.</strong> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">www.linkedin.com/in/인성-오</a></div>
+        <div class="contact-item"><strong>Email.</strong> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></div>
+        <div class="contact-item"><strong>GitHub.</strong> <a href="https://github.com/ois0886">github.com/ois0886</a></div>
+      </div>
     </section>
 
     <section>
@@ -266,7 +277,6 @@
           <li>프로젝트별 .claude 디렉토리에 CLAUDE.md·슬래시 커맨드·서브에이전트 등 다수의 마크다운을 작성하여 컨텍스트·컨벤션·워크플로우 명문화</li>
           <li>서브에이전트·슬래시 커맨드·훅을 활용한 코드 리뷰·테스트 생성 등 반복 작업 자동화</li>
           <li>하네스 엔지니어링(Harness Engineering): 제어 구조(권한·서브에이전트), 검증 게이트(훅·자동 테스트), 피드백 루프(실패 분석 → 재수정 → 컨벤션 반영)를 설계해 AI 에이전트 자율 업무 수행을 안정화</li>
-          <li>"Claude Code in Action" (Anthropic) 수료</li>
         </ul>
       </div>
       <div class="group">
