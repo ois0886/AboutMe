@@ -1,0 +1,1802 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <style>
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      background: #f6f0e5;
+      color: #10243f;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    body {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    ul {
+      margin: 0;
+    }
+
+    a {
+      color: #1d4ed8;
+      text-decoration: none;
+    }
+
+    strong {
+      color: #07182d;
+      font-weight: 800;
+    }
+
+    .slide {
+      position: relative;
+      width: 16in;
+      height: 9in;
+      overflow: hidden;
+      padding: 0.64in 0.78in;
+      background:
+        linear-gradient(90deg, rgba(9, 34, 65, 0.045) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(9, 34, 65, 0.04) 0 1px, transparent 1px 100%),
+        #f6f0e5;
+      background-size: 0.5in 0.5in;
+      page-break-after: always;
+    }
+
+    .slide:last-child {
+      page-break-after: auto;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0.28in;
+      border: 2px solid #0e2b4c;
+      pointer-events: none;
+    }
+
+    .slide-no {
+      position: absolute;
+      right: 0.84in;
+      bottom: 0.42in;
+      color: #0e2b4c;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .eyebrow {
+      color: #49617d;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .title-xl {
+      margin-top: 0.18in;
+      color: #07182d;
+      font-size: 68px;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .title-lg {
+      color: #07182d;
+      font-size: 42px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .title-md {
+      color: #07182d;
+      font-size: 30px;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin-top: 0.18in;
+      color: #203b5a;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .meta {
+      color: #405873;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.52;
+    }
+
+    .small {
+      color: #435b76;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 0.32in;
+      color: #0e2b4c;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-label::after {
+      content: "";
+      display: block;
+      width: 1.4in;
+      height: 2px;
+      background: #0e2b4c;
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 0.55in;
+      height: 100%;
+      align-items: center;
+    }
+
+    .cover-contact {
+      display: grid;
+      gap: 14px;
+      padding: 0.38in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.52);
+    }
+
+    .contact-line {
+      display: grid;
+      grid-template-columns: 0.92in 1fr;
+      gap: 14px;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .contact-line span:first-child {
+      color: #0e2b4c;
+      font-weight: 900;
+    }
+
+    .toc-list {
+      display: grid;
+      gap: 0.3in;
+      margin-top: 0.4in;
+    }
+
+    .toc-item {
+      display: grid;
+      grid-template-columns: 1.55in 1fr 1.1in;
+      gap: 0.28in;
+      align-items: center;
+      padding: 0.22in 0.26in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.55);
+    }
+
+    .toc-index {
+      color: #0e2b4c;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .toc-name {
+      color: #07182d;
+      font-size: 29px;
+      font-weight: 900;
+    }
+
+    .toc-desc {
+      margin-top: 6px;
+      color: #405873;
+      font-size: 16px;
+      line-height: 1.42;
+    }
+
+    .toc-pages {
+      color: #0e2b4c;
+      font-size: 16px;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 0.42in;
+      align-items: stretch;
+    }
+
+    .shot-panel {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-content: center;
+      align-items: center;
+      min-height: 5.35in;
+      padding: 18px;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.54);
+    }
+
+    .phone-shot {
+      width: 100%;
+      height: auto;
+      max-height: 4.9in;
+      min-height: 0;
+      object-fit: contain;
+      padding: 8px;
+      border: 2px solid #0e2b4c;
+      background: #f8f1e3;
+    }
+
+    .phone-shot:nth-child(n + 2) {
+      display: none;
+    }
+
+    .info-panel {
+      display: grid;
+      gap: 0.18in;
+    }
+
+    .info-card {
+      padding: 0.22in 0.24in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.58);
+    }
+
+    .info-card h3 {
+      margin-bottom: 8px;
+      color: #0e2b4c;
+      font-size: 17px;
+    }
+
+    .info-card p,
+    .info-card li {
+      color: #243f5e;
+      font-size: 15px;
+      line-height: 1.48;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      padding: 5px 10px;
+      border: 1px solid #0e2b4c;
+      color: #0e2b4c;
+      background: #f7f0e2;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .problem-layout {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 0.42in;
+      align-items: stretch;
+    }
+
+    .diagram-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 5.72in;
+      padding: 0.24in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.56);
+    }
+
+    .flow-diagram {
+      display: grid;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .flow-column {
+      display: grid;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .flow-node {
+      min-width: 112px;
+      padding: 14px 16px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      color: #07182d;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .flow-node small {
+      display: block;
+      margin-top: 4px;
+      color: #405873;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .flow-node.is-accent {
+      background: #0e2b4c;
+      color: #f7f0e2;
+    }
+
+    .flow-node.is-accent small {
+      color: #dbe7f4;
+    }
+
+    .flow-arrow {
+      color: #0e2b4c;
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .flow-caption {
+      padding: 12px 16px;
+      background: #0e2b4c;
+      color: #f7f0e2;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .flow-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .flow-group {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border: 2px solid #0e2b4c;
+      background: rgba(247, 240, 226, 0.72);
+    }
+
+    .flow-group-title {
+      color: #0e2b4c;
+      font-size: 17px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .layer-diagram {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .layer-grid {
+      display: grid;
+      grid-template-columns: 0.88fr 0.18fr 0.94fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .layer-box {
+      display: grid;
+      gap: 10px;
+      min-height: 3.72in;
+      padding: 18px;
+      border: 2px solid #0e2b4c;
+      background: rgba(247, 240, 226, 0.7);
+    }
+
+    .layer-title,
+    .diagram-title {
+      color: #0e2b4c;
+      font-size: 18px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .messy-item,
+    .clean-layer {
+      padding: 13px 14px;
+      border: 2px solid #0e2b4c;
+      color: #07182d;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .messy-item:nth-child(2) {
+      transform: translateX(-9px);
+    }
+
+    .messy-item:nth-child(3) {
+      transform: translateX(10px);
+      background: #f3ead7;
+    }
+
+    .messy-item:nth-child(4) {
+      transform: translateX(-4px);
+    }
+
+    .clean-layer {
+      background: #f7f0e2;
+    }
+
+    .clean-layer.is-core {
+      background: #0e2b4c;
+      color: #f7f0e2;
+    }
+
+    .clean-layer small,
+    .nav-chip small {
+      display: block;
+      margin-top: 4px;
+      color: #405873;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .clean-layer.is-core small,
+    .nav-chip.is-core small {
+      color: #dbe7f4;
+    }
+
+    .layer-arrow {
+      color: #0e2b4c;
+      font-size: 42px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .package-diagram,
+    .leak-diagram {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .package-compare {
+      display: grid;
+      grid-template-columns: 0.9fr 0.16fr 0.94fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .package-box {
+      min-height: 3.88in;
+      padding: 16px;
+      border: 2px solid #0e2b4c;
+      background: rgba(247, 240, 226, 0.7);
+    }
+
+    .legacy-map {
+      position: relative;
+      height: 3.15in;
+      margin-top: 14px;
+    }
+
+    .legacy-chip {
+      position: absolute;
+      min-width: 105px;
+      padding: 11px 12px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      color: #07182d;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .feature-stack {
+      display: grid;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .feature-layer {
+      padding: 11px 10px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      color: #07182d;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.32;
+      text-align: center;
+    }
+
+    .feature-layer small {
+      display: block;
+      margin-top: 4px;
+      color: #405873;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .feature-layer.is-core,
+    .leak-step.is-core {
+      background: #0e2b4c;
+      color: #f7f0e2;
+    }
+
+    .feature-layer.is-core small {
+      color: #dbe7f4;
+    }
+
+    .leak-flow {
+      display: grid;
+      grid-template-columns: 1fr 0.16fr 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .leak-column {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border: 2px solid #0e2b4c;
+      background: rgba(247, 240, 226, 0.7);
+    }
+
+    .leak-step {
+      padding: 12px 14px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      color: #07182d;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .leak-step small {
+      display: block;
+      margin-top: 4px;
+      color: #405873;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .leak-step.is-core small {
+      color: #dbe7f4;
+    }
+
+    .timeline-diagram {
+      display: grid;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .timeline-panel {
+      padding: 16px;
+      border: 2px solid #0e2b4c;
+      background: rgba(247, 240, 226, 0.68);
+    }
+
+    .timeline-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: #0e2b4c;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .timeline-track {
+      display: grid;
+      gap: 8px;
+    }
+
+    .timeline-lane {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .lane-label {
+      color: #304b69;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .lane-line {
+      position: relative;
+      height: 22px;
+      border-bottom: 2px solid rgba(14, 43, 76, 0.28);
+    }
+
+    .time-bar {
+      position: absolute;
+      top: 0;
+      height: 20px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+    }
+
+    .time-bar.is-active {
+      background: #0e2b4c;
+    }
+
+    .timeline-result {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #0e2b4c;
+      color: #f7f0e2;
+      font-size: 16px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .build-diagram {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .build-core {
+      padding: 20px;
+      background: #0e2b4c;
+      color: #f7f0e2;
+      font-size: 24px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .build-core small {
+      display: block;
+      margin-top: 6px;
+      color: #dbe7f4;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .plugin-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .plugin-tile {
+      min-height: 74px;
+      padding: 13px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      color: #07182d;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .plugin-tile small {
+      display: block;
+      margin-top: 4px;
+      color: #405873;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .module-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .module-pill {
+      padding: 10px 8px;
+      border: 2px solid #0e2b4c;
+      color: #0e2b4c;
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .mvi-diagram {
+      position: relative;
+      width: 100%;
+      min-height: 4.95in;
+    }
+
+    .mvi-node {
+      position: absolute;
+      width: 148px;
+      padding: 14px 12px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      color: #07182d;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .mvi-node small {
+      display: block;
+      margin-top: 4px;
+      color: #405873;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .mvi-node.is-core {
+      background: #0e2b4c;
+      color: #f7f0e2;
+    }
+
+    .mvi-node.is-core small {
+      color: #dbe7f4;
+    }
+
+    .mvi-arrow {
+      position: absolute;
+      color: #0e2b4c;
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .mvi-branch {
+      position: absolute;
+      right: 22px;
+      bottom: 28px;
+      width: 250px;
+      padding: 14px;
+      background: #0e2b4c;
+      color: #f7f0e2;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .navigator-diagram {
+      display: grid;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .nav-lane {
+      display: grid;
+      grid-template-columns: 1.1in 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .nav-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #0e2b4c;
+      color: #0e2b4c;
+      font-size: 14px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .nav-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 76px;
+      padding: 12px;
+      border: 2px solid #0e2b4c;
+      background: rgba(247, 240, 226, 0.72);
+    }
+
+    .nav-chip {
+      padding: 12px 14px;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      color: #07182d;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .nav-chip.is-core {
+      background: #0e2b4c;
+      color: #f7f0e2;
+    }
+
+    .nav-divider {
+      padding: 10px 14px;
+      border: 2px dashed #0e2b4c;
+      color: #0e2b4c;
+      font-size: 14px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      max-height: 5.3in;
+    }
+
+    .content-stack {
+      display: grid;
+      gap: 0.16in;
+    }
+
+    .compact-card {
+      padding: 0.15in 0.18in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.58);
+    }
+
+    .compact-card h3 {
+      margin-bottom: 7px;
+      color: #0e2b4c;
+      font-size: 16px;
+    }
+
+    .compact-card p,
+    .compact-card li {
+      color: #243f5e;
+      font-size: 13.1px;
+      line-height: 1.38;
+    }
+
+    .compact-card ul,
+    .info-card ul {
+      display: grid;
+      gap: 4px;
+      padding-left: 18px;
+    }
+
+    .closing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.36in;
+      align-items: stretch;
+    }
+
+    .closing-grid.with-image {
+      grid-template-columns: 1.36fr 0.84fr;
+      gap: 0.28in;
+    }
+
+    .closing-card {
+      min-height: 5.5in;
+      padding: 0.28in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.58);
+    }
+
+    .closing-card h3 {
+      margin-bottom: 0.16in;
+      color: #0e2b4c;
+      font-size: 22px;
+    }
+
+    .closing-card ul {
+      display: grid;
+      gap: 12px;
+      padding-left: 20px;
+    }
+
+    .closing-card li {
+      color: #243f5e;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .with-image .closing-card {
+      padding: 0.22in;
+    }
+
+    .with-image .closing-card h3 {
+      font-size: 19px;
+    }
+
+    .with-image .closing-card li {
+      font-size: 15.2px;
+      line-height: 1.42;
+    }
+
+    .result-block {
+      margin-bottom: 0.24in;
+    }
+
+    .result-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .result-block h4 {
+      margin-bottom: 0.12in;
+      color: #0e2b4c;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .closing-image-card {
+      height: 5.5in;
+      padding: 0.18in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.5);
+    }
+
+    .closing-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border: 2px solid #0e2b4c;
+      background: #fbf7ef;
+    }
+
+    .footer-title {
+      position: absolute;
+      left: 0.84in;
+      bottom: 0.42in;
+      color: #49617d;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .svg-label {
+      fill: #07182d;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .svg-small {
+      fill: #304b69;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .svg-box {
+      fill: #f7f0e2;
+      stroke: #0e2b4c;
+      stroke-width: 3;
+    }
+
+    .svg-accent {
+      fill: #0e2b4c;
+    }
+
+    .svg-line {
+      stroke: #0e2b4c;
+      stroke-width: 4;
+      fill: none;
+      marker-end: url(#arrow);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section id="slide-01" class="slide">
+      <div class="cover-grid">
+        <div>
+          <p class="eyebrow">Portfolio</p>
+          <h1 class="title-xl">Oh InSeong<br />(오인성)</h1>
+          <p class="subtitle">Android Developer</p>
+        </div>
+        <div class="cover-contact">
+          <div class="contact-line"><span>Email</span><a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></div>
+          <div class="contact-line"><span>GitHub</span><a href="https://github.com/ois0886">github.com/ois0886</a></div>
+          <div class="contact-line"><span>Blog</span><a href="https://superohinsung.tistory.com">superohinsung.tistory.com</a></div>
+          <div class="contact-line"><span>LinkedIn</span><a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">www.linkedin.com/in/인성-오</a></div>
+        </div>
+      </div>
+      <span class="footer-title">Android Portfolio</span>
+      <span class="slide-no">01</span>
+    </section>
+
+    <section id="slide-02" class="slide">
+      <p class="section-label">Projects</p>
+      <h2 class="title-lg">프로젝트 목차</h2>
+      <div class="toc-list">
+        <div class="toc-item">
+          <div class="toc-index">Project. 1</div>
+          <div>
+            <div class="toc-name">내눈 키오스크</div>
+            <p class="toc-desc">스마트 헬스케어 키오스크 서비스 Android 앱</p>
+          </div>
+          <div class="toc-pages">03p ~ 07p</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-index">Project. 2</div>
+          <div>
+            <div class="toc-name">모리, Mo-Re</div>
+            <p class="toc-desc">서버 상태와 성능을 시각화하는 Android 모니터링 앱</p>
+          </div>
+          <div class="toc-pages">08p ~ 11p</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-index">Project. 3</div>
+          <div>
+            <div class="toc-name">Glim</div>
+            <p class="toc-desc">글귀를 공유하며 숏츠 폼으로 감성을 공유하는 Android 앱</p>
+          </div>
+          <div class="toc-pages">12p ~ 16p</div>
+        </div>
+      </div>
+      <span class="footer-title">Table of Contents</span>
+      <span class="slide-no">02</span>
+    </section>
+
+    <section id="slide-03" class="slide">
+      <p class="section-label">Projects. 1</p>
+      <h2 class="title-lg">내눈 키오스크</h2>
+      <p class="meta">2025.10 ~ 2025.11 · 6명(IoT 1명, Android 5명) · Android 키오스크 코드 개선 및 리팩토링</p>
+      <div class="overview-grid" style="margin-top: 0.28in;">
+        <div class="shot-panel">
+          <img class="phone-shot" src="public/screenshot/nanoon1.png" alt="내눈 키오스크 화면 1" />
+          <img class="phone-shot" src="public/screenshot/nanoon2.png" alt="내눈 키오스크 화면 2" />
+          <img class="phone-shot" src="public/screenshot/nanoon3.png" alt="내눈 키오스크 화면 3" />
+        </div>
+        <div class="info-panel">
+          <div class="info-card">
+            <h3>간단 소개</h3>
+            <p>생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스</p>
+          </div>
+          <div class="info-card">
+            <h3>배경</h3>
+            <p>(주)픽셀로의 서비스 <strong>내눈 키오스크</strong>를 실사용 환경에 맞게 리팩토링 및 요구사항 개선. SSAFY 13기 기업연계 프로젝트로 진행.</p>
+          </div>
+          <div class="info-card">
+            <h3>핵심 기여</h3>
+            <ul>
+              <li>부분적 XML UI를 <strong>Jetpack Compose UI 100%</strong>로 전환</li>
+              <li>Compose State Hoisting 패턴 적용으로 UI 컴포넌트 재사용성 향상 및 코드 중복 제거</li>
+              <li>레거시 패키지 구조를 기능·계층 기준으로 재구성해 의존성 방향과 유지보수성 개선</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3>기술 스택</h3>
+            <div class="tag-list">
+              <span class="tag">Kotlin</span><span class="tag">Android Jetpack</span><span class="tag">Jetpack Compose</span><span class="tag">ViewModel</span><span class="tag">Coroutine</span><span class="tag">Flow</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Naenun Kiosk Overview</span>
+      <span class="slide-no">03</span>
+    </section>
+
+    <section id="slide-04" class="slide">
+      <p class="section-label">Problem Solving 1</p>
+      <h2 class="title-md">XML·Compose 혼용 UI 개선 / State Hoisting 구조화</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="layer-diagram">
+            <div class="layer-grid">
+              <div class="layer-box">
+                <div class="layer-title">기존 화면</div>
+                <div class="messy-item">XML View</div>
+                <div class="messy-item">Compose UI</div>
+                <div class="messy-item">ViewModel / Navigation</div>
+                <div class="messy-item">텍스트·버튼·상태 처리</div>
+              </div>
+              <div class="layer-arrow">→</div>
+              <div class="layer-box">
+                <div class="layer-title">재구성한 화면</div>
+                <div class="clean-layer is-core">Route<small>상태 생성 · 의미 결정</small></div>
+                <div class="clean-layer">Screen<small>레이아웃 조립</small></div>
+                <div class="clean-layer">Component<small>재사용 UI 조각</small></div>
+              </div>
+            </div>
+            <div class="flow-caption">화면별 혼재 로직을 계층으로 분리해 수정 범위와 중복을 줄임</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <ul>
+              <li>데이터 로딩, 상태 관리, 텍스트 구성, 버튼 클릭 처리가 하나의 화면 컴포넌트에 뒤섞여 유지보수 비용 증가</li>
+              <li>XML View와 Compose 코드, ViewModel·비즈니스 로직·네비게이션 로직이 섞여 공통 정책 변경 시 중복 수정 발생</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>화면별로 XML, Compose, ViewModel, 네비게이션 책임이 섞여 공통 UI 정책과 상태 처리 기준이 통일되지 않음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>Compose State Hoisting을 도입해 상태 생성·비즈니스 로직·네비게이션 의사결정을 Route/ViewModel 계층으로 이동</li>
+              <li>타이틀, 설명, 표/리스트, 버튼, 체크 영역을 재사용 가능한 컴포넌트로 분리</li>
+              <li>기능 단위 패키지 구조와 Route/Screen/Component 구조로 확장 가능한 화면 구조 정리</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li><strong>Route → Screen → Component</strong> 계층 구조로 텍스트 교체, 레이아웃 변경, 버튼 추가 시 수정 범위 감소</li>
+              <li>다국어, 폰트 크기, 버튼 스타일 같은 공통 UI 정책을 한 번에 반영할 수 있는 구조 확보</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>ViewModel 책임 확장이나 XML 유지 + 부분 Compose 도입도 가능했지만, 선언적 UI·프리뷰·State Hoisting 장점을 살리기 위해 Screen/Component 중심 구조를 선택. XML과 Compose 혼용은 장기적으로 일관성과 생산성을 떨어뜨릴 수 있음을 확인.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Naenun Kiosk</span>
+      <span class="slide-no">04</span>
+    </section>
+
+    <section id="slide-05" class="slide">
+      <p class="section-label">Problem Solving 2</p>
+      <h2 class="title-md">레거시 패키지 구조 재편</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="package-diagram">
+            <div class="package-compare">
+              <div class="package-box">
+                <div class="diagram-title">기존 구조</div>
+                <div class="legacy-map">
+                  <div class="legacy-chip" style="left: 12px; top: 18px;">AppActivity</div>
+                  <div class="legacy-chip" style="right: 20px; top: 36px;">Screen</div>
+                  <div class="legacy-chip" style="left: 64px; top: 112px;">Navigation</div>
+                  <div class="legacy-chip" style="right: 38px; top: 138px;">Manager</div>
+                  <div class="legacy-chip" style="left: 22px; bottom: 44px;">ViewModel</div>
+                  <div class="legacy-chip" style="right: 10px; bottom: 22px;">UI Model</div>
+                </div>
+              </div>
+              <div class="layer-arrow">→</div>
+              <div class="package-box">
+                <div class="diagram-title">기능·계층 기준 재구성</div>
+                <div class="feature-stack">
+                  <div class="feature-layer is-core">Feature<small>기능 단위 분리</small></div>
+                  <div class="feature-row">
+                    <div class="feature-layer">Route</div>
+                    <div class="feature-layer">Screen</div>
+                  </div>
+                  <div class="feature-row">
+                    <div class="feature-layer">Component</div>
+                    <div class="feature-layer">ViewModel</div>
+                  </div>
+                  <div class="feature-row">
+                    <div class="feature-layer">Domain</div>
+                    <div class="feature-layer">Model</div>
+                  </div>
+                  <div class="feature-layer is-core">Core<small>공통 로직 분리</small></div>
+                </div>
+              </div>
+            </div>
+            <div class="flow-caption">뒤섞인 화면·로직·데이터를 기능 단위로 나누고 의존성 방향을 명확히 정리</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <p>패키지 구조가 뒤섞이고 의존성이 순환 참조되어 코드 파악이 어렵고, 신규 기능 추가 시 사이드 이펙트가 예측 불가능해 개발 진행이 어려웠음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>단일 패키지에 모든 화면·로직·데이터가 몰려 있고, ViewModel·Repository·UI가 서로 참조하며 의존성 방향이 불명확했음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>기능 단위(feature)로 패키지를 재편</li>
+              <li>각 feature를 Route, Screen, Component, ViewModel로 계층화해 의존성 방향 정리</li>
+              <li>공통 로직은 core 영역으로 분리해 중복과 순환 참조 가능성 축소</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>기존 레거시 패키지 구조를 기능·계층 기준으로 재구성해 유지보수성 개선</li>
+              <li>신규 화면 추가 시 필요한 수정 위치가 명확해지고 사이드 이펙트 추적이 쉬워짐</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>기존 패키지 유지 + 공통 유틸 분리도 가능했으나, 구조 자체가 바뀌지 않으면 의존성 문제가 재발할 것이라 feature 단위 재설계를 선택.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Naenun Kiosk</span>
+      <span class="slide-no">05</span>
+    </section>
+
+    <section id="slide-06" class="slide">
+      <p class="section-label">Problem Solving 3</p>
+      <h2 class="title-md">메모리 누수 개선</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="leak-diagram">
+            <div class="leak-flow">
+              <div class="leak-column">
+                <div class="diagram-title">누수 원인</div>
+                <div class="leak-step">Singleton 남용<small>긴 생명주기 객체</small></div>
+                <div class="leak-step">Activity Context 참조<small>짧은 생명주기 보유</small></div>
+                <div class="leak-step">Listener 미해제<small>Callback 참조 유지</small></div>
+                <div class="leak-step">순환 참조<small>객체 해제 지연</small></div>
+              </div>
+              <div class="layer-arrow">→</div>
+              <div class="leak-column">
+                <div class="diagram-title">정리한 구조</div>
+                <div class="leak-step is-core">Application Context<small>Context 보유 범위 조정</small></div>
+                <div class="leak-step">Hilt DI<small>Singleton 사용 최소화</small></div>
+                <div class="leak-step">onDispose / onCleared<small>Listener·리소스 해제</small></div>
+                <div class="leak-step">WeakReference<small>순환 참조 완화</small></div>
+              </div>
+            </div>
+            <div class="flow-caption">생명주기보다 오래 남는 참조를 제거해 성능 저하와 크래시 반복 가능성을 낮춤</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <p>Singleton 남용, Context 참조 오류, Listener 미해제 등으로 메모리 누수가 발생해 앱 성능 저하와 크래시가 반복됨.</p>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <ul>
+              <li>Singleton에서 Activity Context를 직접 참조하거나 생명주기가 긴 객체가 짧은 생명주기 Context를 보유</li>
+              <li>Callback·Listener를 등록 후 해제하지 않아 참조가 유지됨</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>Activity Context를 Application Context로 전환하고 Hilt 의존성 주입으로 Singleton 사용 최소화</li>
+              <li>onDispose·onCleared에서 Listener와 리소스를 명시적으로 해제</li>
+              <li>Compose에서 remember + DisposableEffect로 생명주기 관리</li>
+              <li>순환 참조 구조 제거 및 WeakReference 활용</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>생명주기보다 오래 유지되던 Context·Listener 참조를 줄여 메모리 누수 가능성 개선</li>
+              <li>패키지 구조 정리와 의존성 개선이 앱 성능 안정성 개선으로 이어짐</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>회고</h3>
+            <p>구조적 문제 해결이 성능 개선으로 이어질 수 있음을 경험. 메모리 누수는 단일 코드 문제가 아니라 참조 방향과 생명주기 설계 문제로 바라봐야 함을 확인.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Naenun Kiosk</span>
+      <span class="slide-no">06</span>
+    </section>
+
+    <section id="slide-07" class="slide">
+      <p class="section-label">Result</p>
+      <h2 class="title-md">내눈 키오스크 성과 및 회고</h2>
+      <div class="closing-grid with-image" style="margin-top: 0.35in;">
+        <div class="closing-card">
+          <div class="result-block">
+            <h4>성과 및 결과</h4>
+            <ul>
+              <li>SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상</li>
+              <li><strong>상용 환경에 설치된 키오스크 앱</strong>을 대상으로 리팩토링을 수행하여 앱 크래시 감소 및 UI 수정·기능 추가 시 개발 공수 감소</li>
+              <li>기존 레거시 패키지 구조를 기능·계층 기준으로 재구성해 의존성 방향과 유지보수성 개선</li>
+            </ul>
+          </div>
+          <div class="result-block">
+            <h4>회고</h4>
+            <ul>
+              <li>기업·팀 간 초반 이해도가 맞지 않아 설계를 두 번 이상 수정하는 비효율 발생</li>
+              <li>레거시 인벤토리화와 사전 설계 단계를 정식 프로세스로 두어 범위·우선순위를 먼저 합의해야 한다는 필요성 인식</li>
+              <li><strong>리팩토링은 화면 변경이 아니라</strong> 상태 관리·디자인 시스템·운영 관점까지 함께 재설계해야 효과가 크다는 점을 확인</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing-image-card">
+          <img class="closing-image" src="public/screenshot/nanoon8.jpeg" alt="내눈 키오스크 마지막 화면" />
+        </div>
+      </div>
+      <span class="footer-title">Naenun Kiosk Retrospective</span>
+      <span class="slide-no">07</span>
+    </section>
+
+    <section id="slide-08" class="slide">
+      <p class="section-label">Projects. 2</p>
+      <h2 class="title-lg">모리, Mo-Re</h2>
+      <p class="meta">2025.08 ~ 2025.09 · 6명(Backend 4명, Android 2명) · Android 개발(기여도 80%)</p>
+      <div class="overview-grid" style="margin-top: 0.28in;">
+        <div class="shot-panel">
+          <img class="phone-shot" src="public/screenshot/more1.jpg" alt="모리 화면 1" />
+          <img class="phone-shot" src="public/screenshot/more2.png" alt="모리 화면 2" />
+          <img class="phone-shot" src="public/screenshot/more3.png" alt="모리 화면 3" />
+        </div>
+        <div class="info-panel">
+          <div class="info-card">
+            <h3>간단 소개</h3>
+            <p>누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리·운영 효율성을 높이는 앱 서비스</p>
+          </div>
+          <div class="info-card">
+            <h3>배경</h3>
+            <p>모바일 환경에서도 손쉽게 인프라 상태를 확인할 수 있는 모니터링 도구의 필요성에 따라 프로젝트 기획.</p>
+          </div>
+          <div class="info-card">
+            <h3>핵심 기여</h3>
+            <ul>
+              <li>멀티 모듈 아키텍처 설계 및 Convention Plugin 기반 Build-logic 구축</li>
+              <li>Custom Compose UI로 시계열 차트(LineChart) 구현</li>
+              <li>Coroutines의 async/await를 활용한 6개 API 비동기 처리로 <strong>데이터 로딩 시간 56% 단축</strong></li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3>기술 스택</h3>
+            <div class="tag-list">
+              <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Orbit MVI</span><span class="tag">Hilt</span><span class="tag">Retrofit2</span><span class="tag">OkHttp3</span><span class="tag">Navigation3</span><span class="tag">DataStore</span><span class="tag">Coroutines</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Mo-Re Overview</span>
+      <span class="slide-no">08</span>
+    </section>
+
+    <section id="slide-09" class="slide">
+      <p class="section-label">Problem Solving 1</p>
+      <h2 class="title-md">6개 API 병렬 처리와 부분 실패 대응</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="timeline-diagram">
+            <div class="timeline-panel">
+              <div class="timeline-head"><span>Before · 순차 호출</span><span>약 356ms</span></div>
+              <div class="timeline-track">
+                <div class="timeline-lane"><span class="lane-label">CPU</span><span class="lane-line"><span class="time-bar" style="left: 0%; width: 16%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Memory</span><span class="lane-line"><span class="time-bar" style="left: 17%; width: 16%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Network R</span><span class="lane-line"><span class="time-bar" style="left: 34%; width: 16%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Network T</span><span class="lane-line"><span class="time-bar" style="left: 51%; width: 16%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Event</span><span class="lane-line"><span class="time-bar" style="left: 68%; width: 15%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">AI</span><span class="lane-line"><span class="time-bar" style="left: 84%; width: 16%;"></span></span></div>
+              </div>
+            </div>
+            <div class="timeline-panel">
+              <div class="timeline-head"><span>After · supervisorScope + async</span><span>약 156ms</span></div>
+              <div class="timeline-track">
+                <div class="timeline-lane"><span class="lane-label">CPU</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 40%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Memory</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 38%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Network R</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 36%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Network T</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 37%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">Event</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 34%;"></span></span></div>
+                <div class="timeline-lane"><span class="lane-label">AI</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 40%;"></span></span></div>
+              </div>
+              <div class="timeline-result">동시에 시작 · 부분 실패 허용 · 가장 늦은 작업 기준 완료 · 56% 단축</div>
+            </div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <ul>
+              <li>CPU, 메모리, 네트워크 수신/송신, 이벤트 요약, AI 리포트 6개 API를 순차 호출해 약 356ms 로딩 발생</li>
+              <li>한 메트릭 API 실패가 전체 리포트 실패로 이어질 수 있고, 어떤 API가 실패했는지 추적하기 어려움</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>API를 하나씩 await하는 직렬 구조로 네트워크 지연이 누적되고, 실패 전파 범위와 부분 데이터 표시 기준이 명확하지 않았음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>supervisorScope와 async를 사용해 6개의 메트릭 API를 독립 코루틴으로 병렬 실행</li>
+              <li>한 API 실패가 전체 코루틴 취소로 전파되지 않도록 각 비동기 블록 내부에서 runCatching 처리</li>
+              <li>실패한 메트릭 종류와 원인을 개별 로그로 기록하고, 성공한 메트릭은 부분 데이터로 화면에 반영</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>메트릭 API 병렬 호출 구조로 <strong>전체 로딩 시간 약 56% 단축</strong></li>
+              <li>특정 메트릭만 실패해도 나머지 데이터로 리포트 화면을 유지하는 장애 허용 UI 구조 확보</li>
+              <li>실패 API가 명확히 남아 디버깅과 장애 원인 추적이 쉬워짐</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>서버 단일 집계 응답도 가능했지만, 부분 실패 처리와 클라이언트 전용 UI 계산 유연성에 제약이 있어 클라이언트 병렬 처리를 선택. API 병렬 처리는 속도뿐 아니라 부분 실패 상황에서도 UX를 유지하는 구조를 만드는 작업임을 확인.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Mo-Re</span>
+      <span class="slide-no">09</span>
+    </section>
+
+    <section id="slide-10" class="slide">
+      <p class="section-label">Problem Solving 2</p>
+      <h2 class="title-md">Convention Plugin 기반 멀티 모듈 빌드 표준화</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="build-diagram">
+            <div class="build-core">build-logic<small>공통 빌드 설정과 의존성을 모듈 밖에서 중앙 관리</small></div>
+            <div class="plugin-grid">
+              <div class="plugin-tile">mori.android.feature<small>Compose · Hilt · Orbit · Test</small></div>
+              <div class="plugin-tile">mori.android.core<small>Android/Kotlin 기본 설정</small></div>
+              <div class="plugin-tile">mori.android.network<small>Retrofit · OkHttp · MockWebServer</small></div>
+              <div class="plugin-tile">mori.android.datastore<small>DataStore · Serialization</small></div>
+            </div>
+            <div class="module-strip">
+              <div class="module-pill">feature-dashboard</div>
+              <div class="module-pill">feature-instance</div>
+              <div class="module-pill">core-domain</div>
+              <div class="module-pill">core-network</div>
+            </div>
+            <div class="flow-caption">모듈은 플러그인 한 줄만 적용하고, 설정 변경은 build-logic 한 곳에서 반영</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <p>멀티 모듈 프로젝트에서 Compose, Hilt, Test, Network 설정이 모듈마다 흩어져 중복되고 일관성 유지가 어려움.</p>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>공통 빌드 설정을 각 모듈에서 수동 작성하면서 신규 모듈 생성 시 설정 누락, 버전 불일치, 옵션 차이가 반복될 수 있는 구조였음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>build-logic 모듈에 Convention Plugin을 정의해 공통 빌드 설정과 의존성을 중앙 관리</li>
+              <li>Feature, Core, Network, Datastore, Hilt, Compose, Test, Quality 등 기능별 Gradle 플러그인을 분리 설계</li>
+              <li>각 기능 모듈에서는 id("mori.android.feature") 같은 단일 플러그인 적용만으로 일관된 설정 자동 적용</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>빌드 설정 수정 시 build-logic 한 곳만 변경하면 전체 모듈에 반영</li>
+              <li>새 Feature/Core 모듈 추가 시 Convention Plugin 한 줄 적용으로 네이밍 규칙, Compose/Hilt 설정, 공통 의존성 자동 구성</li>
+              <li>모듈 생성 비용과 Gradle 설정 오류 가능성을 줄이고 멀티 모듈 확장 기준을 표준화</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>루트 build.gradle.kts, apply(from), Version Catalog만 쓰는 방식도 고려했지만 플러그인·설정·의존성 묶음 적용에는 Convention Plugin이 더 적합하다고 판단. 초기 비용은 있지만 버전 정합성과 확장성을 중앙에서 제어할 수 있어 유지보수성이 향상됨.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Mo-Re</span>
+      <span class="slide-no">10</span>
+    </section>
+
+    <section id="slide-11" class="slide">
+      <p class="section-label">Result</p>
+      <h2 class="title-md">모리, Mo-Re 성과 및 회고</h2>
+      <div class="closing-grid with-image" style="margin-top: 0.35in;">
+        <div class="closing-card">
+          <div class="result-block">
+            <h4>성과 및 결과</h4>
+            <ul>
+              <li>멀티 모듈 아키텍처 도입으로 기능별 모듈 분리 및 재사용성 향상</li>
+              <li>async/await를 활용한 API 병렬 처리로 <strong>데이터 로딩 시간 56% 개선</strong>, 약 156ms로 단축</li>
+              <li><strong>10개 이상의 Feature 모듈</strong>과 재사용 가능한 Design System 컴포넌트 구현</li>
+              <li>Convention Plugin 기반 build-logic 구축으로 모듈별 Gradle 설정 중복 제거 및 빌드 설정 일관성 확보</li>
+            </ul>
+          </div>
+          <div class="result-block">
+            <h4>회고</h4>
+            <ul>
+              <li>팀원들의 예비군 일정으로 초반 일정 관리와 프로젝트 이해도 싱크가 원활하지 않았던 점이 아쉬움</li>
+              <li>주 3회 정기 프로젝트 리뷰 및 회의를 통해 커뮤니케이션과 프로젝트 이해도를 동기화할 필요성 인식</li>
+              <li>멀티 모듈 아키텍처는 초기 설정 비용이 있지만 장기적으로 유지보수성과 확장성에 큰 이점이 있음을 확인</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing-image-card">
+          <img class="closing-image" src="public/screenshot/more14.jpeg" alt="모리 마지막 화면" />
+        </div>
+      </div>
+      <span class="footer-title">Mo-Re Retrospective</span>
+      <span class="slide-no">11</span>
+    </section>
+
+    <section id="slide-12" class="slide">
+      <p class="section-label">Projects. 3</p>
+      <h2 class="title-lg">Glim</h2>
+      <p class="meta">2025.07 ~ 2025.08 · 6명(Backend 2명, Android 2명, Frontend 1명, Backend & Android 1명) · Android 앱 개발</p>
+      <div class="overview-grid" style="margin-top: 0.28in;">
+        <div class="shot-panel">
+          <img class="phone-shot" src="public/screenshot/Glim1.png" alt="Glim 화면 1" />
+          <img class="phone-shot" src="public/screenshot/Glim2.png" alt="Glim 화면 2" />
+          <img class="phone-shot" src="public/screenshot/Glim3.png" alt="Glim 화면 3" />
+        </div>
+        <div class="info-panel">
+          <div class="info-card">
+            <h3>간단 소개</h3>
+            <p>글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱</p>
+          </div>
+          <div class="info-card">
+            <h3>배경</h3>
+            <p>무분별한 숏폼 콘텐츠 소비로 인한 집중력 저하 및 독서량 감소에 대응하여, 글귀 기반 디지털 디톡스 접근을 제시.</p>
+          </div>
+          <div class="info-card">
+            <h3>핵심 기여</h3>
+            <ul>
+              <li>Orbit MVI 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계</li>
+              <li>Kotlin Coroutine과 DataStore를 활용한 Session, Refresh Token 관리 시스템 구현</li>
+              <li>Channel 기반 Navigator 패턴 도입으로 Screen과 Navigation 로직 완전 분리</li>
+              <li>JUnit, MockK 기반 ViewModelTest를 <strong>130+ 케이스</strong> 구현</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3>기술 스택</h3>
+            <div class="tag-list">
+              <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Hilt</span><span class="tag">Orbit MVI</span><span class="tag">Coroutine</span><span class="tag">Retrofit3</span><span class="tag">DataStore</span><span class="tag">MockK</span><span class="tag">Turbine</span><span class="tag">JUnit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Glim Overview</span>
+      <span class="slide-no">12</span>
+    </section>
+
+    <section id="slide-13" class="slide">
+      <p class="section-label">Problem Solving 1</p>
+      <h2 class="title-md">Token 재발급과 인증 예외 처리 구조화</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="flow-diagram">
+            <div class="flow-row">
+              <div class="flow-node">UI / Domain</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node is-accent">AuthManager<small>메모리 캐시·로그아웃 이벤트</small></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node">API</div>
+            </div>
+            <div class="flow-row"><div class="flow-arrow">↓</div></div>
+            <div class="flow-node">AuthDataStore<small>토큰·유저 정보 영속화</small></div>
+            <div class="flow-compare">
+              <div class="flow-node">AuthInterceptor<small>Authorization 헤더 자동 추가</small></div>
+              <div class="flow-node">TokenAuthenticator<small>401 응답 시 재발급·재시도</small></div>
+            </div>
+            <div class="flow-caption">토큰 저장, 헤더 주입, 401 재시도, 재발급 실패, 로그아웃 사유 전달을 계층별로 분리</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <p>Access Token 만료, Refresh Token 만료, 401 응답 재시도, 최대 재시도 초과, 로그아웃 사유 전달을 일관되게 처리하기 어려움.</p>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>각 화면과 네트워크 레이어에서 인증 정보를 직접 다루면 헤더 주입, 재발급 타이밍, 재시도 정책, 로그아웃 처리가 분산될 수 있음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>인증 관련 기능을 모듈화하고 Logout 및 토큰 만료 시 자동 재인증 플로우 추가</li>
+              <li>AuthDataStore는 토큰·유저 정보 영속화, AuthManager는 메모리 캐시와 로그아웃 이벤트 담당</li>
+              <li>AuthInterceptor는 Authorization 헤더 자동 추가, TokenAuthenticator는 401 응답 시 토큰 재발급 및 재시도 처리</li>
+              <li>Refresh Token 만료와 최대 재시도 초과 상황은 LogoutReason으로 분기해 UI에 전달</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>인증 로직이 세 레이어로 분리되어 뷰/도메인 레이어에서 토큰 관리 코드 제거</li>
+              <li>토큰 만료·재발급·Refresh Token 만료·최대 재시도 초과 예외를 한 곳에서 제어</li>
+              <li>LogoutReason으로 로그아웃 사유를 통합해 UI 메시지를 일관되게 노출</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>회고</h3>
+            <p>AuthManager 중심 설계로 각 기능별 토큰 코드가 제거됐고, Coroutine + DataStore가 메모리 캐시와 영속화를 함께 해결해 안정적인 인증 시스템을 구축.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Glim</span>
+      <span class="slide-no">13</span>
+    </section>
+
+    <section id="slide-14" class="slide">
+      <p class="section-label">Problem Solving 2</p>
+      <h2 class="title-md">Orbit MVI 기반 상태 관리와 테스트 가능성 확보</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="mvi-diagram">
+            <div class="mvi-node" style="left: 22px; top: 34px;">User Input<small>이메일·비밀번호 변경</small></div>
+            <div class="mvi-arrow" style="left: 194px; top: 70px;">→</div>
+            <div class="mvi-node is-core" style="left: 242px; top: 34px;">Intent<small>ViewModel 진입점</small></div>
+            <div class="mvi-arrow" style="left: 416px; top: 70px;">→</div>
+            <div class="mvi-node" style="left: 464px; top: 34px;">Reduce<small>상태 변경</small></div>
+            <div class="mvi-arrow" style="left: 520px; top: 142px;">↓</div>
+            <div class="mvi-node" style="left: 464px; top: 206px;">UiState<small>검증·로딩·에러</small></div>
+            <div class="mvi-arrow" style="left: 416px; top: 242px;">←</div>
+            <div class="mvi-node is-core" style="left: 242px; top: 206px;">ContainerHost<small>State + SideEffect</small></div>
+            <div class="mvi-arrow" style="left: 194px; top: 242px;">←</div>
+            <div class="mvi-node" style="left: 22px; top: 206px;">Screen<small>상태 구독·렌더링</small></div>
+            <div class="mvi-branch">SideEffect는 Toast / Navigation 같은 일회성 이벤트로 분리</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <ul>
+              <li>기존 MVI 구현 시 Intent/Reducer/State 클래스가 기하급수적으로 늘어나 코드베이스가 비대해짐</li>
+              <li>단순 입력 검증·로딩·에러 처리에도 보일러플레이트 코드가 증가하고 UI 테스트 범위가 불명확해짐</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>화면별 Intent·Reducer 클래스를 개별 정의하면서 상태 관리 로직이 분산되고 UI에서 비즈니스 로직을 직접 처리함.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>Orbit 기반 상태 관리 도입</li>
+              <li>ContainerHost&lt;UiState, SideEffect&gt;와 container 하나로 State·SideEffect 통합 관리</li>
+              <li>화면 단위로 UiState, SideEffect를 분리 설계하여 책임 명확화 및 테스트 용이성 향상</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>Intent·Reducer 클래스를 개별 정의하던 구조를 제거하고 Orbit 컨테이너 기반 단일 ViewModel 구조로 전환</li>
+              <li>입력 검증·로딩·에러 처리 로직을 테스트 가능한 ViewModel 계층에 집중</li>
+              <li>State와 SideEffect를 분리해 화면 렌더링과 Toast/Navigation 같은 일회성 이벤트의 테스트 기준을 명확화</li>
+              <li>UI 코드에서 비즈니스 로직을 분리하고 새로운 화면 추가 시 일관된 개발 플로우 확보</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>sealed Intent + 단일 reducer, StateFlow + 확장 함수 조합도 가능했지만 검증된 컨테이너·SideEffect 처리를 활용하기 위해 Orbit을 선택. Intent·Reducer 클래스가 줄고 로직이 ViewModel로 집중되어 테스트 케이스 작성이 쉬워짐.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Glim</span>
+      <span class="slide-no">14</span>
+    </section>
+
+    <section id="slide-15" class="slide">
+      <p class="section-label">Problem Solving 3</p>
+      <h2 class="title-md">Channel 기반 Navigator로 화면-네비게이션 결합 분리</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="navigator-diagram">
+            <div class="nav-lane">
+              <div class="nav-label">Feature</div>
+              <div class="nav-body">
+                <div class="nav-chip">Screen</div>
+                <div class="flow-arrow">→</div>
+                <div class="nav-chip">ViewModel<small>navigate 호출</small></div>
+              </div>
+            </div>
+            <div class="nav-divider">Screen / ViewModel은 NavBackStack을 직접 모름</div>
+            <div class="nav-lane">
+              <div class="nav-label">Navigation Core</div>
+              <div class="nav-body">
+                <div class="nav-chip is-core">Navigator</div>
+                <div class="flow-arrow">→</div>
+                <div class="nav-chip is-core">Channel&lt;InternalRoute&gt;</div>
+                <div class="flow-arrow">→</div>
+                <div class="nav-chip">NavigatorVM</div>
+              </div>
+            </div>
+            <div class="nav-lane">
+              <div class="nav-label">App Shell</div>
+              <div class="nav-body">
+                <div class="nav-chip">LaunchedNavigator</div>
+                <div class="flow-arrow">→</div>
+                <div class="nav-chip">NavBackStack 조작</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <ul>
+              <li>각 Screen에서 NavBackStack에 직접 접근해 UI와 네비게이션 구현 상세 간 강한 결합 발생</li>
+              <li>화면 전환, BackStack 초기화, 뒤로 가기 처리 방식이 화면마다 달라 중복 코드와 일관성 저하 발생</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>네비게이션 로직이 화면에 분산되어 전환 방식 변경 시 여러 화면을 수정해야 하고 문자열 기반 Route 오류 위험이 있었음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>Navigator 인터페이스와 NavigatorImpl을 별도 모듈에 정의하고 화면에서는 인터페이스만 의존</li>
+              <li>Channel&lt;InternalRoute&gt;로 ViewModel에서 네비게이션 요청을 발행</li>
+              <li>네비게이션 전용 ViewModel 및 Composable에서 이벤트를 수신해 실제 NavBackStack 조작 수행</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>Screen에서 NavBackStack/Controller 직접 접근 제거, 화면과 네비게이션 구현 간 결합도 감소</li>
+              <li>ViewModel은 navigator.navigate 호출만 수행하고 BackStack 조작은 전용 Composable이 담당</li>
+              <li>타입 기반 라우팅 모델 도입으로 문자열 기반 Route의 오타·런타임 오류 위험 감소</li>
+              <li>네비게이션 구현 변경 시 Feature 화면 수정 범위를 최소화</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>NavController를 ViewModel에 주입하는 방법도 있었지만 UI와 네비게이션 결합이 남아 Channel 기반 패턴을 선택. 화면에서 네비게이션 코드가 제거되어 변경 시 한 곳만 수정하면 되는 구조가 됨.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Glim</span>
+      <span class="slide-no">15</span>
+    </section>
+
+    <section id="slide-16" class="slide">
+      <p class="section-label">Result</p>
+      <h2 class="title-md">Glim 성과 및 회고</h2>
+      <div class="closing-grid with-image" style="margin-top: 0.35in;">
+        <div class="closing-card">
+          <div class="result-block">
+            <h4>성과 및 결과</h4>
+            <ul>
+              <li>SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상</li>
+              <li>AuthDataStore, AuthManager, AuthInterceptor, TokenAuthenticator 기반 인증 구조 안정적 구현</li>
+              <li>Compose, Orbit MVI 기반 프로젝트 적용 및 화면 상태·SideEffect 처리 흐름 정리</li>
+              <li><strong>ViewModel Unit Test</strong>를 진행하여 안정적인 서비스 구축</li>
+            </ul>
+          </div>
+          <div class="result-block">
+            <h4>회고</h4>
+            <ul>
+              <li>주어진 개발 시간의 부족으로 완전한 리팩토링이 미흡했던 점이 아쉬움</li>
+              <li>초기 단계부터 프로토타이핑과 사용자 테스트를 통한 빠른 피드백 루프 구축 필요성 인식</li>
+              <li>Orbit MVI 패턴 적용으로 코드 가독성, 테스트 용이성, 기능 확장 시 일관된 구조 유지 가능성 확인</li>
+              <li><strong>130+ 테스트 케이스 작성</strong>을 통해 리팩토링과 기능 수정 시 안정성을 보장하는 테스트의 가치 인식</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing-image-card">
+          <img class="closing-image" src="public/screenshot/Glim8.jpeg" alt="Glim 마지막 화면" />
+        </div>
+      </div>
+      <span class="footer-title">Glim Retrospective</span>
+      <span class="slide-no">16</span>
+    </section>
+  </main>
+</body>
+</html>
