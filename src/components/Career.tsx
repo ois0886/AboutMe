@@ -16,8 +16,10 @@ function Career() {
               <div className={styles.header}>
                 <div>
                   <h3 className={styles.company}>{career.company}</h3>
-                  <p className={styles.role}>{career.role}</p>
-                  {career.location && <p className={styles.location}>{career.location}</p>}
+                  <p className={styles.role}>
+                    {career.role}
+                    {career.location && ` | ${career.location}`}
+                  </p>
                 </div>
                 <span className={styles.period}>{career.periodLabel}</span>
               </div>

@@ -15,7 +15,7 @@ type CareerEntry = {
 export const careers: CareerEntry[] = [
   {
     company: '(주)차트연구소',
-    role: 'Android Developer · 연구원 정규직으로 근무',
+    role: 'Android Developer · 연구원/정규직',
     location: '서울시 강서구',
     periodLabel: '2026.02.09 ~ 재직중',
     start: new Date(2026, 1, 9),
@@ -30,7 +30,7 @@ export const careers: CareerEntry[] = [
   },
   {
     company: '(주)PickNumber',
-    role: 'Android Developer 산학협력/프리랜서',
+    role: 'Android Developer · 산학협력 학부 연구원/프리랜서',
     location: '재택근무',
     periodLabel: '2023.01.16 ~ 2023.06.15',
     start: new Date(2023, 0, 16),
@@ -40,9 +40,6 @@ export const careers: CareerEntry[] = [
       'Room 캐싱 전략 도입으로 반복 API 호출 최소화 및 응답시간 85% 단축',
       '전국 업체 위치정보 실시간 검색: SearchView + RecyclerView + 거리순 정렬로 사용자 경험 최적화',
       'ViewBinding 확장 함수와 추상 베이스 클래스 활용해 코드 재사용성 강화',
-    ],
-    links: [
-      { label: 'GitHub', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
     ],
   },
 ]
