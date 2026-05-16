@@ -109,7 +109,7 @@ const activities = [
     links: [],
   },
   {
-    title: '한성대학교 교내 전공 소모임',
+    title: '한성대학교 교내 전공 소모임 POCS',
     scope: '교내',
     tag: '소모임',
     period: '2022.06 ~ 2023.12',
