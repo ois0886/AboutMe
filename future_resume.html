@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Future Resume</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 14mm 13mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #111827;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      font-size: 10.8px;
+      line-height: 1.52;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    main {
+      width: 100%;
+    }
+
+    section {
+      margin-bottom: 16px;
+    }
+
+    .project {
+      break-inside: avoid;
+      margin-bottom: 18px;
+      padding-top: 2px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    ul {
+      margin: 0;
+    }
+
+    .resume-header {
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #111827;
+    }
+
+    h1 {
+      color: #0f172a;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .headline {
+      margin-top: 4px;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 7px;
+      padding-bottom: 3px;
+      border-bottom: 1px solid #d1d5db;
+      break-after: avoid;
+    }
+
+    h2 {
+      color: #0f172a;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 7px 0 4px;
+      color: #111827;
+      font-size: 12.4px;
+      line-height: 1.3;
+    }
+
+    .subhead {
+      margin-bottom: 3px;
+      color: #374151;
+      font-weight: 700;
+    }
+
+    .meta {
+      margin-bottom: 4px;
+      color: #374151;
+      font-size: 10.2px;
+      font-weight: 600;
+    }
+
+    .line-list {
+      display: grid;
+      gap: 2px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 24px;
+      row-gap: 3px;
+    }
+
+    .contact-item {
+      min-width: 0;
+    }
+
+    ul {
+      padding-left: 15px;
+    }
+
+    li {
+      margin-bottom: 2px;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .row-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 7px 0 4px;
+    }
+
+    .row-title h3 {
+      margin: 0;
+    }
+
+    .right-meta {
+      flex: 0 0 auto;
+      color: #374151;
+      font-size: 10.2px;
+      font-weight: 700;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .link-row {
+      margin: 2px 0 5px;
+      color: #374151;
+      font-size: 10.2px;
+      font-weight: 700;
+    }
+
+    strong {
+      font-weight: 800;
+    }
+
+    .compact {
+      margin-bottom: 8px;
+    }
+
+    .education-item,
+    .career-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+    }
+
+    .one-line {
+      margin-bottom: 3px;
+    }
+
+    .group {
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="resume-header">
+      <h1>Oh InSeong(오인성)</h1>
+      <p class="headline">Android Developer</p>
+    </header>
+
+    <section>
+      <div class="section-heading">
+        <h2>Contact</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-item"><strong>Blog.</strong> <a href="https://superohinsung.tistory.com">superohinsung.tistory.com</a></div>
+        <div class="contact-item"><strong>LinkedIn.</strong> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">www.linkedin.com/in/인성-오</a></div>
+        <div class="contact-item"><strong>Email.</strong> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></div>
+        <div class="contact-item"><strong>GitHub.</strong> <a href="https://github.com/ois0886">github.com/ois0886</a></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Introduction</h2>
+      </div>
+      <ul>
+        <li><strong>Android/Kotlin</strong>을 중심으로 <strong>사용자 경험과 유지보수성</strong>을 함께 고민하는 모바일 개발자입니다.</li>
+        <li>러닝 서비스 <strong>달리런</strong>에서 Android 앱과 Spring Boot 백엔드를 함께 개발하며, 앱·API·DB·캐시·배포 흐름을 연결해 경험했습니다.</li>
+        <li>팀의 성장에 기여하기 위해 <strong>코드 리뷰</strong>를 적극적으로 활용하고, <strong>테스트 가능한 구조와 읽기 쉬운 코드</strong>를 작성하려 노력합니다.</li>
+        <li>학습한 내용과 문제 해결 과정을 <strong>블로그</strong>에 기록하며, 부족했던 부분을 <strong>재현 가능한 지식</strong>으로 정리해 강점으로 발전시키고 있습니다.</li>
+        <li>의견을 제시할 때는 <strong>감이 아닌 근거</strong>를 바탕으로 소통하며, 더 나은 방향을 함께 찾는 <strong>협업</strong>을 지향합니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Career</h2>
+        <span class="right-meta">총 경력 약 13개월</span>
+      </div>
+      <div class="career-item">
+        <div class="row-title">
+          <h3>(주)차트연구소</h3>
+          <span class="right-meta">2026.02.09 ~ 2026.09</span>
+        </div>
+        <p class="meta">Android Developer · 연구원/정규직 | 서울시 강서구</p>
+        <ul>
+          <li>금융 및 증권 B2B Android 차트 SDK의 레거시 엔진 연동 UI 및 설정/제어 레이어 개발</li>
+          <li>이지차트(간편차트) 모듈 신규 구축 및 차트 화면, 데이터 갱신, 설정 플로우 구현</li>
+          <li>지표 정의 데이터 기반의 지표 설정 목록, 상세 설정 화면, 엔진 반영 구조 구현</li>
+          <li>기존 이동평균선, Signal 지표, 분석 도구 UI, GMT 시간대 등 차트 표시/설정 오류 개선</li>
+          <li>개인 실험 브랜치에서 차트 렌더링 병목과 레거시 의존 구조를 분석하고 성능·아키텍처 개선안 검증</li>
+          <li>회사 홈페이지 리팩토링 진행</li>
+          <li>인사, 고객관리, 문서관리, 사무 보조, 기획안 작성, 문의 전화 응대, 비품 주문 업무 수행</li>
+        </ul>
+      </div>
+      <div class="career-item">
+        <div class="row-title">
+          <h3>(주)PickNumber</h3>
+          <span class="right-meta">2023.01.16 ~ 2023.06.15</span>
+        </div>
+        <p class="meta">Android Developer · 산학협력 학부 연구원/프리랜서 | 재택근무</p>
+        <ul>
+          <li>Didimdol 프로젝트 Android 팀 리드 개발자 (3인 팀 중 Android 전담, 전체 기여도 80%)</li>
+          <li>Room 캐싱 전략 도입으로 반복 API 호출 최소화 및 응답시간 85% 단축</li>
+          <li>전국 업체 위치정보 실시간 검색: SearchView + RecyclerView + 거리순 정렬로 사용자 경험 최적화</li>
+          <li>ViewBinding 확장 함수와 추상 베이스 클래스 활용해 코드 재사용성 강화</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Skills</h2>
+      </div>
+      <div class="group">
+        <h3>Android & Kotlin</h3>
+        <ul>
+          <li>Jetpack Compose 기반 선언형 UI 개발 및 시계열 차트, GitHub 잔디밭 등 복잡한 컴포넌트 직접 구현</li>
+          <li>멀티 모듈 아키텍처, Clean Architecture, MVVM, MVI 패턴을 활용한 확장 가능한 앱 구조를 설계 경험</li>
+          <li>async/await 비동기 처리(56% 개선), Room 캐싱(85% 개선), Paging3 도입을 통한 성능 개선 경험</li>
+          <li>JUnit5·MockK 기반 단위 테스트로 ViewModel 비즈니스 로직 검증 경험</li>
+          <li>Kotlin을 기반으로 안드로이드 앱 다수 개발 경험</li>
+          <li>Coroutines, Flow, StateFlow를 활용한 비동기 처리 및 반응형 상태 관리</li>
+          <li>Extension Functions, Sealed Interface, Generic 활용으로 코드 재사용</li>
+          <li>오픈소스 UI 라이브러리 개발 및 Maven Central 배포 경험</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Backend & Infra</h3>
+        <ul>
+          <li>Java·Kotlin, Spring Boot, JPA 기반 REST API 개발 및 Android 앱 연동 경험</li>
+          <li>PostgreSQL을 활용한 도메인 모델링과 조회 쿼리 설계, Redis 기반 랭킹·통계 캐싱 경험</li>
+          <li>Docker Compose로 API 서버, PostgreSQL, Redis 실행 환경 구성 및 홈서버 배포 환경 구축</li>
+          <li>Linux, Nginx, GitHub Actions를 활용한 배포 자동화와 기본 운영 지식 학습 및 적용</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Agent</h3>
+        <ul>
+          <li>Claude·Codex 기반 페어 프로그래밍으로 안드로이드·프론트엔드·백엔드 전반에서 기능 구현 및 리팩토링 생산성 향상</li>
+          <li>프로젝트별 .claude 디렉토리에 CLAUDE.md·슬래시 커맨드·서브에이전트 등 다수의 마크다운을 작성하여 컨텍스트·컨벤션·워크플로우 명문화</li>
+          <li>서브에이전트·슬래시 커맨드·훅을 활용한 코드 리뷰·테스트 생성 등 반복 작업 자동화</li>
+          <li>하네스 엔지니어링(Harness Engineering): 제어 구조(권한·서브에이전트), 검증 게이트(훅·자동 테스트), 피드백 루프(실패 분석 → 재수정 → 컨벤션 반영)를 설계해 AI 에이전트 자율 업무 수행을 안정화</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Communication</h3>
+        <ul>
+          <li>JIRA와 GitHub를 활용하여 이슈 관리 및 개발 진행 현황 공유</li>
+          <li>코드 리뷰를 통한 아키텍처 일관성 유지 및 팀 이해도 동기화</li>
+          <li>Ktlint를 도입하여 코드리뷰에서 발생할 수 있는 불필요한 비용 제거</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Education</h2>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>삼성 청년 AI·SW 아카데미 13기 <span class="meta">Mobile Track</span></h3>
+          <span class="right-meta">2025.01 ~ 2025.12</span>
+        </div>
+        <ul>
+          <li>삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램</li>
+          <li>Mobile Track 전공 심화 과정: Android 네이티브 앱 개발 전문화</li>
+          <li>전현직 개발자 멘토링 및 프로젝트 프로세스 경험</li>
+        </ul>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>주식회사 코드프레소 웹 개발 기초완성</h3>
+          <span class="right-meta">2023.10 ~ 2023.11</span>
+        </div>
+        <ul>
+          <li>Java, SQL, Spring Boot, Git 등 기초적인 백엔드 비대면 교육 프로그램 이수</li>
+        </ul>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>한성대학교 컴퓨터공학과 졸업</h3>
+          <span class="right-meta">2018.03 ~ 2024.02</span>
+        </div>
+        <ul>
+          <li>모바일소프트웨어 트랙 / 빅데이터 트랙</li>
+          <li>GPA 3.18 / 4.5</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Project</h2>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>달리런 - Android & Backend</h3>
+          <span class="right-meta">2026.04 ~ 2026.07</span>
+        </div>
+        <p class="meta">러닝 기록, 챌린지, 랭킹, 운동 통계를 제공하는 러닝 서비스. Android 앱과 Spring Boot 백엔드를 함께 개발</p>
+        <ul>
+          <li><strong>Android 앱 개발</strong>: 러닝 기록 생성·조회·상세, 챌린지, 랭킹, 마이페이지 주요 플로우 구현</li>
+          <li><strong>Java 기반 Spring Boot 서버를 Kotlin으로 점진 전환</strong>하며 null 안정성, DTO 변환, 예외 응답 구조 정리</li>
+          <li>사용자, 러닝 기록, 챌린지, 참가, 랭킹 도메인 설계 및 PostgreSQL 스키마·JPA 엔티티 구현</li>
+          <li><strong>Redis 캐싱</strong>으로 러닝 통계와 랭킹 조회 부하를 줄이고, 기록 생성·수정 시 캐시 갱신 기준 정리</li>
+          <li><strong>Docker Compose</strong> 기반 API 서버, PostgreSQL, Redis 실행 환경 구성 및 홈서버 배포 환경 구축</li>
+          <li>Nginx 리버스 프록시, 환경 변수 분리, 로그 보관 정책을 적용해 개인 서버에서도 재배포 가능한 운영 흐름 설계</li>
+          <li>7월 포트폴리오 정리를 위해 핵심 문제 해결 사례, 인프라 구축 과정, Android-Backend 연동 과정을 문서화</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>내눈 키오스크 - Android</h3>
+          <span class="right-meta">2025.10 ~ 2025.11</span>
+        </div>
+        <p class="meta">생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스</p>
+        <ul>
+          <li>부분적 XML UI를 <strong>Jetpack Compose UI 100%</strong>로 전환</li>
+          <li><strong>Compose State Hoisting</strong> 패턴 적용으로 기존 UI 컴포넌트 재사용성 향상 및 코드 중복 제거</li>
+          <li>기존 레거시 패키지 구조를 <strong>기능·계층 기준</strong>으로 재구성해 의존성 방향을 정리하고 유지보수성 개선</li>
+          <li><strong>SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상</strong></li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>모리, Mo-Re - Android</h3>
+          <span class="right-meta">2025.08 ~ 2025.09</span>
+        </div>
+        <p class="meta">누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리·운영 효율성을 높이는 앱 서비스</p>
+        <ul>
+          <li><strong>멀티 모듈 아키텍처</strong> 설계 및 <strong>Convention Plugin 기반 Build-logic</strong> 구축</li>
+          <li><strong>Custom Compose UI</strong>로 시계열 차트(LineChart) 구현</li>
+          <li><strong>Coroutines의 async/await</strong>를 활용한 6개 API 비동기 처리로 <strong>데이터 로딩 시간 56% 단축</strong></li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Glim - Android</h3>
+          <span class="right-meta">2025.07 ~ 2025.08</span>
+        </div>
+        <p class="meta">글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱</p>
+        <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
+        <ul>
+          <li><strong>Orbit MVI</strong> 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계</li>
+          <li><strong>Kotlin Coroutine</strong>과 <strong>DataStore</strong>를 활용한 Session, Refresh Token 관리 시스템 구현</li>
+          <li><strong>Channel 기반 Navigator</strong> 패턴 도입으로 Screen과 Navigation 로직 완전 분리</li>
+          <li><strong>JUnit, MockK 기반 ViewModelTest</strong>를 <strong>130+ 케이스</strong> 구현으로 안정적인 단위 테스트 구축</li>
+          <li>GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 <strong>잔디밭 형태의 Custom Compose UI 컴포넌트</strong>로 구현</li>
+          <li><strong>SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상</strong></li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Quiz Cafe - Android</h3>
+          <span class="right-meta">2025.04 ~ 2025.06</span>
+        </div>
+        <p class="meta">다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼.</p>
+        <p class="link-row">GitHub. <a href="https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android">https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android</a></p>
+        <ul>
+          <li><strong>Android 앱 개발</strong> (메인 및 마이페이지 개발) 및 <strong>1차 MVP 개발 완료</strong></li>
+          <li>모든 화면의 구성요소를 재사용 가능한 <strong>Jetpack Compose UI 디자인 시스템</strong> 구축</li>
+          <li><strong>Compose UI 100%</strong>로 화면 구현</li>
+          <li><strong>UiState–Intent–SideEffect MVI 구조</strong>를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축</li>
+          <li><strong>DataStore</strong> 활용 자동로그인 및 보안 세션 관리 구현, <strong>Retrofit + Coroutine</strong> 기반 비동기 통신 및 예외 처리 구조 설계</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Didimdol - Android</h3>
+          <span class="right-meta">2023.01 ~ 2023.06</span>
+        </div>
+        <p class="meta">사용자 주변 업체 정보를 검색하고 상세 정보를 확인할 수 있는 위치 기반 산학협력 프로젝트</p>
+        <ul>
+          <li><strong>Android 팀 리드 개발자</strong>로 검색, 업체 상세, 사용자 입력, 즐겨찾기 주요 플로우 구현</li>
+          <li><strong>Room 캐싱 전략</strong>을 도입해 반복 API 호출을 최소화하고 네트워크 의존 화면의 응답성 개선</li>
+          <li><strong>SearchView + RecyclerView + 거리순 정렬</strong>을 활용해 위치 기반 업체 검색 UX 최적화</li>
+          <li>ViewBinding 확장 함수와 추상 베이스 클래스를 활용해 반복되는 화면 초기화 로직과 어댑터 코드를 재사용 가능하게 정리</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Bong # - Android</h3>
+          <span class="right-meta">2022.12 ~ 2023.06</span>
+        </div>
+        <p class="meta">한성대학교 캡스톤디자인(졸업작품) 출품 프로젝트. 기존에 재능과 재화를 교환하던 방식에서 벗어나 재능과 재능을 교환하는 앱 서비스</p>
+        <p class="link-row">GitHub. <a href="https://github.com/GrapeBongBong/Android">https://github.com/GrapeBongBong/Android</a></p>
+        <ul>
+          <li><strong>팀장</strong>, 안드로이드 개발 전담 (1인)</li>
+          <li><strong>WebSocket</strong> 라이브러리를 활용한 실시간 1:1 채팅 기능 구현 및 HTTP 폴링 대비 네트워크 트래픽·지연 시간 개선</li>
+          <li><strong>MVVM + Clean Architecture</strong> 적용으로 <strong>Presentation/Domain/Data 계층</strong> 완전 분리 및 테스트 용이성 개선</li>
+          <li><strong>RecyclerView multiple item types</strong> 활용한 채팅 UI로 상대 구분 표시 및 사용자 경험 최적화</li>
+          <li><strong>SharedPreference 기반 자동로그인</strong> 구현으로 세션 관리 체계 구축</li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>POCS - Android</h3>
+          <span class="right-meta">2022.06 ~ 2022.09</span>
+        </div>
+        <p class="meta">한성대학교 전공 소모임 POCS 회원들을 위한 원활한 스터디 모집 및 정보 공유를 위한 커뮤니티 앱</p>
+        <p class="link-row">GitHub. <a href="https://github.com/hansung-pocs/blog-android">https://github.com/hansung-pocs/blog-android</a></p>
+        <ul>
+          <li><strong>안드로이드 앱 개발</strong> (스터디·커뮤니티, 프로필 기능 개발)</li>
+          <li>기존 XML View를 Jetpack Compose로 <strong>70% 이상 전환</strong>하여 코드 재사용성과 개발 효율성 개선</li>
+          <li><strong>Paging3</strong> 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화</li>
+          <li><strong>GitHub Actions</strong>를 활용해 <strong>Android CI/CD</strong> (자동 빌드, 테스트, Play Store 배포) 환경 구축</li>
+          <li><strong>Play Store 정식 배포 완료</strong>로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Open Source</h2>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Compose-Chart</h3>
+          <span class="right-meta">2026.02 ~ 2026.03</span>
+        </div>
+        <p class="meta">외부 의존 없이 Canvas API만으로 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar)를 구현한 Jetpack Compose 라이브러리 · Maven Central 배포 (v1.3.0)</p>
+        <p class="link-row">GitHub. <a href="https://github.com/ois0886/compose-chart">https://github.com/ois0886/compose-chart</a></p>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Compose-Git-Grass</h3>
+          <span class="right-meta">2026.02</span>
+        </div>
+        <p class="meta">Compose 기본 요소만으로 구현한 GitHub 잔디(contribution graph) 범용 UI 라이브러리 · Maven Central 배포 (v1.1.0)</p>
+        <p class="link-row">GitHub. <a href="https://github.com/ois0886/compose-git-grass">https://github.com/ois0886/compose-git-grass</a></p>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Android Library Contributions</h3>
+          <span class="right-meta">2026.07 ~ 2026.09</span>
+        </div>
+        <p class="meta">Android 오픈소스 라이브러리 기여 PR 2건. 문서 보강, 샘플 코드 개선, Compose API 사용성 개선 중심의 기여</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Awards</h2>
+      </div>
+      <div class="row-title"><p class="one-line">SSAFY 자율 프로젝트 우수상 | 삼성전자 | 2025-23-050154</p><span class="right-meta">2025.11.20</span></div>
+      <div class="row-title"><p class="one-line">SSAFY 공통 프로젝트 우수상 | 삼성전자 | 2025-23-050065</p><span class="right-meta">2025.08.18</span></div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Certificates</h2>
+      </div>
+      <div class="row-title"><p class="one-line">AWS Certified Developer - Associate | Amazon Web Services</p><span class="right-meta">2026.09</span></div>
+      <div class="row-title"><p class="one-line">AWS Certified Solutions Architect - Associate | Amazon Web Services</p><span class="right-meta">2026.08</span></div>
+      <div class="row-title"><p class="one-line">AWS Certified Cloud Practitioner | Amazon Web Services</p><span class="right-meta">2026.07</span></div>
+      <div class="row-title"><p class="one-line">PCCP Lv.5 | 프로그래머스</p><span class="right-meta">2026.07</span></div>
+      <div class="row-title"><p class="one-line">PCSQL Lv.4 | 프로그래머스</p><span class="right-meta">2026.07</span></div>
+      <div class="row-title"><p class="one-line">네트워크관리사 2급 | 한국정보통신자격협회</p><span class="right-meta">2026.06</span></div>
+      <div class="row-title"><p class="one-line">리눅스마스터 2급 | 한국정보통신진흥협회</p><span class="right-meta">2026.06</span></div>
+      <div class="row-title"><p class="one-line">Claude Code in Action | Anthropic | po6dwyvk5zs7</p><span class="right-meta">2026.04.23</span></div>
+      <div class="row-title"><p class="one-line">SQLD | 한국데이터산업진흥원 | SQLD-060003832</p><span class="right-meta">2026.03.27</span></div>
+      <div class="row-title"><p class="one-line">정보처리기사 | 한국산업인력공단 | 24203011265G</p><span class="right-meta">2024.12.11</span></div>
+      <div class="row-title"><p class="one-line">ADsP | 한국데이터산업진흥원 | ADsP-043007180</p><span class="right-meta">2024.11.29</span></div>
+      <div class="row-title"><p class="one-line">한국사능력검정시험 1급 | 국사편찬위원회</p><span class="right-meta">취득</span></div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Language</h2>
+      </div>
+      <div class="row-title"><p class="one-line">OPIc IH</p><span class="right-meta">취득</span></div>
+      <div class="row-title"><p class="one-line">TOEIC Speaking AL</p><span class="right-meta">취득</span></div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Activity</h2>
+      </div>
+      <div class="row-title"><p class="one-line">SSAFY 13기 CS, Android 스터디 주최 및 운영</p><span class="right-meta">2025.02 ~ 2025.06</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 LBT 지식 나눔 프로젝트 — "알고리즘을 공부하는 방법" 발표</p><span class="right-meta">2023.07</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 교내 전공 동아리 알고리즘 스터디 주최</p><span class="right-meta">2023.06 ~ 2023.12</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 산학 협력 프로젝트</p><span class="right-meta">2023.01.16 ~ 2023.06.15</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 새싹 SW교육 캠프 조교</p><span class="right-meta">2023.01 ~ 2023.02</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 전공 소모임 안드로이드 멘토</p><span class="right-meta">2022.09 ~ 2023.09</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 교내 전공동아리 DC&M</p><span class="right-meta">2022.06 ~ 2023.12</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 교내 전공 소모임 POCS</p><span class="right-meta">2022.06 ~ 2023.12</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 컴퓨터공학부 2020년 동계 프로그래밍 캠프</p><span class="right-meta">2020.01</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 교내 PIG 사진동아리 부회장 활동</p><span class="right-meta">2019.03 ~ 2019.12</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 컴퓨터공학부 2019년 동계 프로그래밍 캠프</p><span class="right-meta">2019.01</span></div>
+    </section>
+  </main>
+</body>
+</html>
