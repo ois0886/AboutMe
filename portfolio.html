@@ -17,7 +17,7 @@
     html,
     body {
       margin: 0;
-      background: #f6f0e5;
+      background: #fbfaf7;
       color: #10243f;
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
       word-break: keep-all;
@@ -54,11 +54,7 @@
       height: 9in;
       overflow: hidden;
       padding: 0.64in 0.78in;
-      background:
-        linear-gradient(90deg, rgba(9, 34, 65, 0.045) 0 1px, transparent 1px 100%),
-        linear-gradient(180deg, rgba(9, 34, 65, 0.04) 0 1px, transparent 1px 100%),
-        #f6f0e5;
-      background-size: 0.5in 0.5in;
+      background: #fbfaf7;
       page-break-after: always;
     }
 
@@ -155,24 +151,68 @@
     }
 
     .cover-grid {
-      display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
-      gap: 0.55in;
+      display: flex;
       height: 100%;
       align-items: center;
+      justify-content: center;
+    }
+
+    .cover-card {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: 100%;
+      height: 100%;
+      padding: 0.18in 0.16in 0.34in;
+    }
+
+    .cover-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.3in;
+      color: #49617d;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .cover-identity {
+      align-self: center;
+    }
+
+    .cover-name {
+      color: #07182d;
+      font-size: 82px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .cover-role {
+      margin-top: 0.18in;
+      color: #203b5a;
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .cover-divider {
+      width: 2.2in;
+      height: 3px;
+      margin-top: 0.34in;
+      background: #0e2b4c;
     }
 
     .cover-contact {
       display: grid;
-      gap: 14px;
-      padding: 0.38in;
-      border: 2px solid #0e2b4c;
-      background: rgba(255, 252, 244, 0.52);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 0.62in;
+      padding-top: 0.28in;
+      border-top: 2px solid #0e2b4c;
     }
 
     .contact-line {
       display: grid;
-      grid-template-columns: 0.92in 1fr;
+      grid-template-columns: 0.98in 1fr;
       gap: 14px;
       font-size: 16px;
       line-height: 1.45;
@@ -239,20 +279,14 @@
       align-content: center;
       align-items: center;
       min-height: 5.35in;
-      padding: 18px;
-      border: 2px solid #0e2b4c;
-      background: rgba(255, 252, 244, 0.54);
     }
 
     .phone-shot {
       width: 100%;
       height: auto;
-      max-height: 4.9in;
+      max-height: 5.35in;
       min-height: 0;
       object-fit: contain;
-      padding: 8px;
-      border: 2px solid #0e2b4c;
-      background: #f8f1e3;
     }
 
     .phone-shot:nth-child(n + 2) {
@@ -262,17 +296,44 @@
     .screenshot-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.22in;
-      height: 5.82in;
-      margin-top: 0.34in;
+      gap: 0.16in;
+      height: 6.32in;
+      margin-top: 0.12in;
       align-items: center;
     }
 
     .screenshot-grid.is-two {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      max-width: 10.9in;
+      max-width: 12.6in;
       margin-right: auto;
       margin-left: auto;
+    }
+
+    .screenshot-grid.is-naenun {
+      max-width: 14.25in;
+      height: 6.58in;
+      gap: 0.12in;
+      margin-top: 0.02in;
+    }
+
+    .screenshot-grid.is-naenun .app-shot {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .screenshot-grid.is-four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.14in;
+    }
+
+    .screenshot-grid.is-mori .screenshot-frame:nth-child(1) .app-shot,
+    .screenshot-grid.is-mori .screenshot-frame:nth-child(4) .app-shot {
+      max-height: 88%;
+    }
+
+    .screenshot-grid.is-mori .screenshot-frame:nth-child(2),
+    .screenshot-grid.is-mori .screenshot-frame:nth-child(3) {
+      z-index: 1;
     }
 
     .screenshot-frame {
@@ -282,9 +343,6 @@
       height: 100%;
       min-height: 0;
       overflow: hidden;
-      padding: 0.18in;
-      border: 2px solid #0e2b4c;
-      background: rgba(255, 252, 244, 0.54);
     }
 
     .app-shot {
@@ -294,8 +352,6 @@
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      border: 2px solid #0e2b4c;
-      background: #fbf7ef;
     }
 
     .info-panel {
@@ -1058,16 +1114,22 @@
   <main>
     <section id="slide-01" class="slide">
       <div class="cover-grid">
-        <div>
-          <p class="eyebrow">Portfolio</p>
-          <h1 class="title-xl">Oh InSeong<br />(오인성)</h1>
-          <p class="subtitle">Android Developer</p>
-        </div>
-        <div class="cover-contact">
-          <div class="contact-line"><span>Email</span><a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></div>
-          <div class="contact-line"><span>GitHub</span><a href="https://github.com/ois0886">github.com/ois0886</a></div>
-          <div class="contact-line"><span>Blog</span><a href="https://superohinsung.tistory.com">superohinsung.tistory.com</a></div>
-          <div class="contact-line"><span>LinkedIn</span><a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">www.linkedin.com/in/인성-오</a></div>
+        <div class="cover-card">
+          <div class="cover-card-top">
+            <span>Portfolio</span>
+            <span>Android Developer</span>
+          </div>
+          <div class="cover-identity">
+            <h1 class="cover-name">Oh InSeong(오인성)</h1>
+            <p class="cover-role">Android Developer</p>
+            <div class="cover-divider"></div>
+          </div>
+          <div class="cover-contact">
+            <div class="contact-line"><span>Email</span><a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></div>
+            <div class="contact-line"><span>GitHub</span><a href="https://github.com/ois0886">github.com/ois0886</a></div>
+            <div class="contact-line"><span>Blog</span><a href="https://superohinsung.tistory.com">superohinsung.tistory.com</a></div>
+            <div class="contact-line"><span>LinkedIn</span><a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">www.linkedin.com/in/인성-오</a></div>
+          </div>
         </div>
       </div>
       <span class="footer-title">Android Portfolio</span>
@@ -1148,7 +1210,7 @@
 
     <section id="slide-04" class="slide">
       <p class="section-label">App ScreenShot</p>
-      <div class="screenshot-grid is-two">
+      <div class="screenshot-grid is-two is-naenun">
         <div class="screenshot-frame">
           <img class="app-shot" src="public/screenshot/nanoon4.png" alt="내눈 키오스크 앱 화면 4" />
         </div>
@@ -1433,12 +1495,15 @@
 
     <section id="slide-10" class="slide">
       <p class="section-label">App ScreenShot</p>
-      <div class="screenshot-grid">
+      <div class="screenshot-grid is-four is-mori">
         <div class="screenshot-frame">
           <img class="app-shot" src="public/screenshot/more10.png" alt="모리 앱 화면 10" />
         </div>
         <div class="screenshot-frame">
           <img class="app-shot" src="public/screenshot/more11.png" alt="모리 앱 화면 11" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/more12.png" alt="모리 앱 화면 12" />
         </div>
         <div class="screenshot-frame">
           <img class="app-shot" src="public/screenshot/more13.png" alt="모리 앱 화면 13" />
@@ -1647,7 +1712,7 @@
 
     <section id="slide-15" class="slide">
       <p class="section-label">App ScreenShot</p>
-      <div class="screenshot-grid">
+      <div class="screenshot-grid is-four">
         <div class="screenshot-frame">
           <img class="app-shot" src="public/screenshot/Glim4.png" alt="Glim 앱 화면 4" />
         </div>
@@ -1656,6 +1721,9 @@
         </div>
         <div class="screenshot-frame">
           <img class="app-shot" src="public/screenshot/Glim6.png" alt="Glim 앱 화면 6" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/Glim7.png" alt="Glim 앱 화면 7" />
         </div>
       </div>
       <span class="footer-title">Glim App ScreenShot</span>
