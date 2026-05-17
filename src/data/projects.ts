@@ -1633,7 +1633,6 @@ fun provideEncryptedSharedPreferences(
     details: [
       '기존의 재화 중심 교환이 아닌, 재능과 재능을 교환할 수 있는 모바일 앱 서비스 개발',
       '한성대학교 캡스톤디자인(졸업작품) 프로젝트로, 대학생들이 재화 부족 때문에 원하는 재능을 배우기 어려운 현실을 개선하고자 기획함',
-      'Android 저장소에서 presentation/domain/data 멀티 모듈과 33개 UseCase를 구성하고, Android 1인 전담으로 앱 전체 화면·API 연동·상태 관리 구현',
     ],
     features: [
       '재능 등록 및 신청 (게시글 CRUD), 관심 거래/거래 진행 현황 관리',
