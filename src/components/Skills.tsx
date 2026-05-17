@@ -25,6 +25,14 @@ const skills = [
     ],
   },
   {
+    category: 'Backend',
+    items: [
+      'Java/Spring Boot 기반 REST API 구조와 Android 클라이언트 연동 흐름 이해',
+      'PostgreSQL, Redis를 활용한 데이터 저장·조회·캐싱 구조 학습 및 프로젝트 적용',
+      'Docker, Linux 기반 개발·배포 환경 구성과 홈서버 운영 경험',
+    ],
+  },
+  {
     category: 'Communication',
     items: [
       'JIRA와 GitHub를 활용하여 이슈 관리 및 개발 진행 현황 공유',

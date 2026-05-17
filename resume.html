@@ -409,10 +409,11 @@
         <p class="meta">(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱</p>
         <p class="link-row">GitHub. <a href="https://github.com/HSU-Didimdol/Android_PickNumber">https://github.com/HSU-Didimdol/Android_PickNumber</a></p>
         <ul>
-          <li><strong>Android 팀 리드 개발자</strong> (3인 팀 중 Android 전담)</li>
-          <li>업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 <strong>검색 응답시간 85% 단축</strong></li>
-          <li>Direction5 API로 조회된 업체의 거리·소요시간만 보강하고 RecyclerView에 거리순 정렬 결과 표시</li>
-          <li>Hilt로 Room DB/DAO, Repository, Remote/Local DataSource, EncryptedSharedPreferences 의존성 구성</li>
+          <li>Android 팀 리드 개발자 (3인 팀 중 Android 전담)</li>
+          <li>업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 검색 응답시간 85% 단축 (3~5초 → 0.5초 이하)</li>
+          <li>조회된 업체에 대해서만 Direction5 API로 거리·소요시간을 계산하고 RecyclerView에 거리순 정렬 결과 표시</li>
+          <li>Naver Map 마커, SearchView, 예약 WebView를 연결해 검색 → 위치 확인 → 예약 흐름 구현</li>
+          <li>ViewBinding 추상 베이스 클래스와 Extension Function으로 Activity/Fragment 반복 코드 축소</li>
         </ul>
       </div>
 
