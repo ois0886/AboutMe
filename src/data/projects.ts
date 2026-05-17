@@ -59,8 +59,9 @@ const projects: Project[] = [
     team: '6명 (IoT 1명, Android 5명)',
     role: 'Android 키오스크 코드 개선 및 리팩토링',
     details: [
-      rich('(주)픽셀로의 서비스 ', strong('내눈 키오스크'), '를 실사용 환경에 맞게 리팩토링 및 요구사항 개선'),
+      rich('(주)픽셀로의 서비스 ', strong('내눈 키오스크'), '를 운영 환경에 맞게 리팩토링 및 요구사항 개선'),
       'SSAFY 13기 기업연계 프로젝트에 선정되어 프로젝트 진행',
+      '기업연계 프로젝트 특성상 코드 반출이 허용되지 않아 구현 구조와 문제 해결 과정 중심으로 정리',
     ],
     features: [
       'APK 인스톨 암호화 — 무단 설치 방지 및 보안 강화',
@@ -134,7 +135,9 @@ val personalTable = remember {
     insights: [],
     achievements: [
       'SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상',
-      rich(strong('상용 환경에 설치된 키오스크 앱'), '을 대상으로 리팩토링을 수행하여, 앱 크래시 감소 및 UI 수정·기능 추가 시 개발 공수를 줄이는 등 운영 관점의 안정성 확보'),
+      rich(strong('상용 키오스크 앱'), '의 XML·Compose 혼용 UI를 Compose 중심 구조로 정리하고 Route-Screen-Component 책임 분리'),
+      'Activity Context 참조, Listener 미해제, Singleton 참조 구조를 개선해 장시간 실행 환경의 메모리 누수 위험 요소 제거',
+      '기능·계층 기준 패키지 재편과 공통 UI 컴포넌트 분리로 수정 영향 범위와 중복 수정 비용 감소',
     ],
     retrospective: [
       '기업·팀 간 초반 이해도가 맞지 않아 설계를 두 번 이상 수정하는 비효율이 발생했던 점이 아쉬움',
@@ -167,6 +170,7 @@ val personalTable = remember {
     details: [
       'Spring Boot 기반 백엔드 서버와 인스턴스의 실시간 시스템 리소스 및 애플리케이션 메트릭을 모니터링하고, AI 분석을 통해 시스템 상태를 한눈에 파악할 수 있는 Android 모니터링 애플리케이션 개발',
       '서버 운영 시 시스템 장애나 성능 저하를 사전에 감지하고 대응하기 위해, 모바일 환경에서도 손쉽게 인프라 상태를 확인할 수 있는 모니터링 도구의 필요성이 대두됨에 따라 프로젝트를 기획',
+      '팀 프로젝트 특성상 코드 반출이 허용되지 않아 구현 구조와 문제 해결 과정 중심으로 정리',
     ],
     features: [
       '인스턴스 및 서버 등록/관리 기능',
@@ -178,7 +182,7 @@ val personalTable = remember {
     contributions: [
       '멀티 모듈 아키텍처 설계 및 Convention Plugin 기반 Build-logic 구축',
       'Custom Compose UI로 시계열 차트(LineChart) 구현',
-      rich('Coroutines의 async/await를 활용한 6개 API 비동기 처리로 ', strong('데이터 로딩 시간 56% 단축')),
+      rich('Kotlin Coroutine async/await를 활용한 6개 API 비동기 처리로 ', strong('데이터 로딩 시간 56% 단축')),
     ],
     problemSolvings: [
       {
@@ -1747,7 +1751,7 @@ class ChattingViewModel @Inject constructor(
     ],
     retrospective: [
       '개발 일정에 집중하다 보니 UI/UX 세부 튜닝, 접근성 지원 등은 미흡, 상태 관리 체계 강화(State 도입 필요성 인식)',
-      '"잘 만든 구조가 좋은 코드보다 유지보수에 더 큰 가치를 준다"는 점, 테스트/유지보수/실사용자 피드백의 중요성 체감',
+      '"잘 만든 구조가 좋은 코드보다 유지보수에 더 큰 가치를 준다"는 점, 테스트/유지보수/사용자 피드백의 중요성 체감',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/GrapeBongBong/Android' },

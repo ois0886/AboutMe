@@ -17,7 +17,7 @@ export const careers: CareerEntry[] = [
     company: '(주)차트연구소',
     role: 'Android Developer · 연구원/정규직',
     location: '서울시 강서구',
-    periodLabel: '2026.02.09 ~ 재직중',
+    periodLabel: '2026.02.09 ~ 재직 중',
     start: new Date(2026, 1, 9),
     tasks: [
       '금융 및 증권 B2B Android 차트 SDK의 레거시 엔진 연동 UI 및 설정/제어 레이어 개발',

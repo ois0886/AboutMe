@@ -6,10 +6,10 @@ const skills = [
     category: 'Android & Kotlin',
     items: [
       'Jetpack Compose 기반 선언형 UI 개발 및 시계열 차트, GitHub 잔디밭 등 복잡한 컴포넌트 직접 구현',
-      '멀티 모듈 아키텍처, Clean Architecture, MVVM, MVI 패턴을 활용한 확장 가능한 앱 구조를 설계 경험',
+      '멀티 모듈 아키텍처, Clean Architecture, MVVM, MVI 패턴을 활용한 확장 가능한 앱 구조 설계 및 적용 경험',
       'async/await 비동기 처리(56% 개선), Room 캐싱(85% 개선), Paging3 도입을 통한 성능 개선 경험',
       'JUnit5·MockK 기반 단위 테스트로 ViewModel 비즈니스 로직 검증 경험',
-      'Kotlin을 기반으로 안드로이드 앱 다수 개발 경험',
+      'Kotlin 기반 안드로이드 앱 다수 개발 경험',
       'Coroutines, Flow, StateFlow를 활용한 비동기 처리 및 반응형 상태 관리',
       'Extension Functions, Sealed Interface, Generic 활용으로 코드 재사용',
       '오픈소스 UI 라이브러리 개발 및 Maven Central 배포 경험',
@@ -18,8 +18,8 @@ const skills = [
   {
     category: 'Agent',
     items: [
-      'Claude·Codex 기반 페어 프로그래밍으로 안드로이드·프론트엔드·백엔드 전반에서 기능 구현 및 리팩토링 생산성 향상',
-      '프로젝트별 .claude 디렉토리에 CLAUDE.md·슬래시 커맨드·서브에이전트 등 다수의 마크다운을 작성하여 컨텍스트·컨벤션·워크플로우 명문화',
+      'Agent 기반 페어 프로그래밍으로 안드로이드·프론트엔드·백엔드 전반에서 기능 구현 및 리팩토링 생산성 향상',
+      '프로젝트별 에이전트 설정 문서와 슬래시 커맨드·서브에이전트 문서를 작성하여 컨텍스트·컨벤션·워크플로우 명문화',
       '서브에이전트·슬래시 커맨드·훅을 활용한 코드 리뷰·테스트 생성 등 반복 작업 자동화',
       '하네스 엔지니어링(Harness Engineering): 제어 구조(권한·서브에이전트), 검증 게이트(훅·자동 테스트), 피드백 루프(실패 분석 → 재수정 → 컨벤션 반영)를 설계해 AI 에이전트 자율 업무 수행을 안정화',
     ],
@@ -29,7 +29,7 @@ const skills = [
     items: [
       'JIRA와 GitHub를 활용하여 이슈 관리 및 개발 진행 현황 공유',
       '코드 리뷰를 통한 아키텍처 일관성 유지 및 팀 이해도 동기화',
-      'Ktlint를 도입하여 코드리뷰에서 발생할 수 있는 불필요한 비용 제거',
+      'Ktlint를 도입하여 코드 리뷰에서 발생할 수 있는 불필요한 비용 제거',
     ],
   },
 ]
