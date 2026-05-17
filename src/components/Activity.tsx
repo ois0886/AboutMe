@@ -35,6 +35,17 @@ const activities = [
     links: [],
   },
   {
+    title: '한성대학교 산학 협력 프로젝트',
+    scope: '교내',
+    tag: '산학협력',
+    period: '2023.01 ~ 2023.06',
+    image: null,
+    details: [
+      '(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱',
+    ],
+    links: [],
+  },
+  {
     title: '한성대학교 교내 전공 동아리 알고리즘 스터디 주최',
     scope: '교내',
     tag: '스터디',

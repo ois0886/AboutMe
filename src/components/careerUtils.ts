@@ -28,20 +28,6 @@ export const careers: CareerEntry[] = [
       '고객 문의, 운영 문서, 기획안을 개발 이슈로 정리하며 요구사항 커뮤니케이션 지원',
     ],
   },
-  {
-    company: '(주)PickNumber',
-    role: 'Android Developer · 산학협력 학부 연구원/프리랜서',
-    location: '재택근무',
-    periodLabel: '2023.01.16 ~ 2023.06.15',
-    start: new Date(2023, 0, 16),
-    end: new Date(2023, 5, 15),
-    tasks: [
-      'Didimdol 프로젝트 Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
-      '업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 검색 응답시간 85% 단축',
-      'Direction5 API로 조회된 업체의 거리·소요시간만 보강하고 RecyclerView에 거리순 정렬 결과 표시',
-      'Hilt로 Room DB/DAO, Repository, Remote/Local DataSource, EncryptedSharedPreferences 의존성 구성',
-    ],
-  },
 ]
 
 function getCareerMonths(start: Date, end: Date) {
