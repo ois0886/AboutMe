@@ -36,6 +36,17 @@
 | Open Source | Open source libraries (GitHub link) |
 | Contact | Contact information |
 
+## Content Sync Rule
+
+이 저장소의 콘텐츠 기준은 웹 포트폴리오입니다.
+
+- Parent: React 기반 웹 포트폴리오 (`src/`, `public/`)
+- Children: 정적 포트폴리오 문서 (`portfolio.html`, `portfolio.pdf`)와 이력서 (`resume.html`, `resume.pdf`)
+- Parent에 있는 내용이 Children에 없는 것은 허용합니다. 웹 포트폴리오가 더 넓은 원천 콘텐츠를 담을 수 있기 때문입니다.
+- Children에 있는 내용이 Parent에 없는 것은 허용하지 않습니다. 이력서나 정적 포트폴리오에 새 내용이 들어가면 먼저 웹 포트폴리오에 반영해야 합니다.
+- 이 규칙은 경력, 프로젝트, 스킬, 교육, 수상, 자격증, 활동 같은 콘텐츠 내용 기준입니다. 디자인, 레이아웃, 시각 표현 방식, 문서 길이 차이는 싱크 검사 대상에서 제외합니다.
+- HTML 문서를 수정했다면 대응되는 PDF도 함께 재생성해 싱크를 유지합니다.
+
 ## Features
 
 - Light / Dark mode toggle

@@ -131,6 +131,68 @@ val personalTable = remember {
           'XML 뷰 바인딩을 유지한 채 Compose 를 부분 도입하는 점진적 접근도 가능하지만, 선언적 UI·State Hoisting·프리뷰 기반 개발의 장점을 충분히 활용하기에는 현재처럼 Screen/Component 중심 구조로 정리한 쪽이 더 적합했다고 판단함.',
         ],
       },
+      {
+        problem: [
+          '기존 패키지 구조가 화면, 네비게이션, 상태 관리, 매니저, UI 모델 중심으로 뒤섞여 있어 코드 파악이 어렵고 신규 기능 추가 시 사이드 이펙트 예측이 어려웠음',
+          'ViewModel, Repository, UI 계층 간 참조 방향이 명확하지 않아 공통 로직을 분리하거나 기능별 수정 범위를 좁히기 어려운 구조였음',
+        ],
+        solution: [
+          '기능 단위(feature)로 패키지를 재편하고, 각 feature 내부를 Route, Screen, Component, ViewModel 계층으로 나누어 화면 책임과 상태 처리 책임을 분리',
+          '공통으로 사용되는 로직과 UI 조각은 core 영역으로 분리해 기능별 중복 구현과 순환 참조 가능성을 줄임',
+          '신규 화면을 추가할 때 동일한 패키지 구조와 의존 방향을 따르도록 정리해 기능 확장 시 수정 위치를 예측 가능하게 만듦',
+        ],
+        result: [
+          '기존 레거시 패키지 구조를 기능·계층 기준으로 재구성해 유지보수성을 개선',
+          '신규 화면 추가 시 필요한 수정 위치가 명확해지고 사이드 이펙트 추적이 쉬워짐',
+        ],
+        implementation: [
+          {
+            description:
+              '코드 반출이 불가능한 기업연계 프로젝트였기 때문에 실제 코드는 공개하지 않고, 패키지 재편 방향을 구조 중심으로 정리함. 기존에는 화면, 네비게이션, 상태 처리, 공통 매니저가 한 흐름에 섞여 있었고, 개선 후에는 feature 내부에서 Route가 상태와 이벤트 연결을 담당하고 Screen/Component가 렌더링 책임을 맡는 방식으로 역할을 나눔.',
+            code: null,
+          },
+          {
+            description:
+              '반복되는 UI 조각과 공통 로직은 core 영역으로 분리해 여러 feature가 같은 규칙으로 재사용하도록 구성함. 이를 통해 기능별 코드가 서로 직접 참조하는 상황을 줄이고, 수정 범위를 해당 feature 또는 core 공통 모듈로 좁힐 수 있도록 정리함.',
+            code: null,
+          },
+        ],
+        alternatives: [
+          '기존 패키지 구조를 유지한 채 공통 유틸만 분리하는 방법도 가능했지만, 구조 자체의 의존 방향이 정리되지 않으면 신규 기능 추가 시 같은 문제가 반복될 위험이 있었음.',
+          '화면 단위 파일 정리만으로도 단기적인 가독성은 좋아질 수 있지만, feature/core 기준의 책임 분리가 없으면 운영 요구사항 변경 시 수정 범위가 다시 넓어질 수 있다고 판단함.',
+        ],
+      },
+      {
+        problem: [
+          'Singleton 남용, Activity Context 참조, Listener 미해제 등으로 장시간 실행되는 키오스크 환경에서 메모리 누수와 성능 저하 위험이 존재함',
+          '생명주기가 긴 객체가 짧은 생명주기 객체를 보유하거나 Callback·Listener가 해제되지 않으면 화면 전환과 장시간 사용 과정에서 불필요한 참조가 남을 수 있었음',
+        ],
+        solution: [
+          'Activity Context를 직접 보유하던 구조를 Application Context 기준으로 전환하고, Hilt 의존성 주입으로 Singleton 사용 범위를 최소화',
+          'onDispose, onCleared 등 생명주기 종료 지점에서 Listener와 리소스를 명시적으로 해제하도록 정리',
+          'Compose에서는 remember와 DisposableEffect를 활용해 등록과 해제 시점을 한곳에서 관리하고, 순환 참조 가능성이 있는 구조는 WeakReference 활용을 검토해 참조 유지 위험을 낮춤',
+        ],
+        result: [
+          '생명주기보다 오래 유지되던 Context·Listener 참조를 줄여 메모리 누수 가능성을 개선',
+          '패키지 구조 정리와 의존성 개선이 장시간 실행 환경의 안정성 개선으로 이어짐',
+        ],
+        implementation: [
+          {
+            description:
+              '코드 반출이 불가능해 실제 구현 코드는 포함하지 않음. 점검 대상은 생명주기가 긴 객체가 Activity Context, Callback, Listener 같은 짧은 생명주기 자원을 보유하는 지점이었고, 해당 참조를 Application Context 또는 생명주기 종료 시점의 명시적 해제로 전환하는 방식으로 정리함.',
+            code: null,
+          },
+          {
+            description:
+              'Compose 화면에서는 remember로 유지되는 객체와 외부 Listener 등록 지점을 함께 점검하고, DisposableEffect의 dispose 단계나 ViewModel의 onCleared에서 해제 책임을 명확히 두는 방식으로 장시간 실행 환경의 누수 위험을 낮춤.',
+            code: null,
+          },
+        ],
+        alternatives: [
+          '문제가 발생한 객체만 개별적으로 null 처리하는 방식도 가능했지만, 참조 방향과 생명주기 경계를 정리하지 않으면 유사한 누수가 재발할 수 있었음.',
+          'Singleton을 모두 제거하는 극단적인 방식보다는, 실제로 앱 전역 생명주기가 필요한 객체와 화면 생명주기에 묶여야 하는 객체를 구분해 보유 범위를 조정하는 방향이 더 현실적이라고 판단함.',
+        ],
+      },
     ],
     insights: [],
     achievements: [
