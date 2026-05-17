@@ -1444,7 +1444,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
       '현재 위치 기반 주변 업체 탐색',
     ],
     contributions: [
-      rich('Android 팀 리드 개발자 (3인 팀 중 Android 전담, ', strong('Android 저장소 기준 163/187커밋 작성'), ')'),
+      'Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
       rich('업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
       '조회된 업체에 대해서만 Direction5 API로 거리·소요시간을 계산하고 RecyclerView에 거리순 정렬 결과 표시',
       'Naver Map 마커, SearchView, 예약 WebView를 연결해 검색 → 위치 확인 → 예약 흐름 구현',
@@ -1612,7 +1612,7 @@ fun provideEncryptedSharedPreferences(
     ],
     achievements: [
       rich('업체 목록 조회를 Room 기반 로컬 검색으로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
-      rich('Android 저장소 기준 ', strong('전체 187커밋 중 163커밋 작성'), '으로 검색·지도·예약·인증 흐름 주도'),
+      'Android 앱에서 검색·지도·예약·인증 흐름을 연결해 핵심 사용자 여정 구현',
       'Hilt, Room, EncryptedSharedPreferences, Naver Map, Direction5 API를 조합해 위치 기반 예약 앱의 핵심 흐름 구현',
     ],
     retrospective: [
@@ -1664,7 +1664,7 @@ fun provideEncryptedSharedPreferences(
     ],
     contributions: [
       rich(strong('팀장'), ', 안드로이드 개발 전담 (1인)'),
-      rich('Android 저장소 기준 ', strong('137커밋 전체 작성'), ' 및 앱 전체 화면·API 연동·상태 관리 구현'),
+      '앱 전체 화면·API 연동·상태 관리 구현',
       'presentation/domain/data 멀티 모듈 구조와 MVVM + Clean Architecture 적용',
       'Repository, DataSource, UseCase, Mapper를 분리해 계층별 책임과 의존 방향 명확화',
       'OkHttp WebSocket 기반 1:1 실시간 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리',
@@ -1919,7 +1919,7 @@ class ChattingViewModel @Inject constructor(
     ],
     insightImages: ['screenshot/Bong+.png'],
     achievements: [
-      rich('Android 1인 전담으로 ', strong('137커밋 전체 작성'), ' 및 앱 주요 기능 전반 구현'),
+      rich('Android 1인 전담으로 ', strong('앱 주요 기능 전반 구현')),
       'presentation/domain/data 3모듈과 33개 UseCase 기반으로 기능별 책임 분리',
       'OkHttp WebSocket, StateFlow, ListAdapter/DiffUtil을 조합해 실시간 채팅과 리스트 상태 관리 구현',
     ],
@@ -2186,7 +2186,7 @@ jobs:
         ],
         alternatives: [
           'Jenkins, GitLab CI 같은 사내 CI 서버를 구축해 파이프라인을 운영하는 방법도 있었지만, 별도 인프라 관리 비용과 초기 설정 부담이 커서 GitHub 저장소와 밀접하게 연동되는 현재 구조보다 효율이 떨어졌을 가능성이 있음.',
-          '로컬 Git 훅(pre-push, pre-commit)과 IDE 플러그인만으로 빌드·Lint 검사를 강제하는 방식도 가능했지만, 개발자 환경마다 설정 편차가 생기고, Pull Request 단위로 일관된 품질 검증을 보장하기 어려웠을 것임.',
+          '로컬 Git 훅(pre-push 등)과 IDE 플러그인만으로 빌드·Lint 검사를 강제하는 방식도 가능했지만, 개발자 환경마다 설정 편차가 생기고, Pull Request 단위로 일관된 품질 검증을 보장하기 어려웠을 것임.',
           'Play Store 배포만 별도 수동 스크립트(예: fastlane)로 처리하고 나머지 검증은 수동으로 남겨두는 절충안도 있었지만, 사람이 개입하는 구간이 많은 만큼 릴리스 속도와 신뢰도를 끌어올리기에는 한계가 있었을 것임.',
         ],
       },
