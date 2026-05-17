@@ -170,7 +170,7 @@ val personalTable = remember {
     details: [
       'Spring Boot 기반 백엔드 서버와 인스턴스의 실시간 시스템 리소스 및 애플리케이션 메트릭을 모니터링하고, AI 분석을 통해 시스템 상태를 한눈에 파악할 수 있는 Android 모니터링 애플리케이션 개발',
       '서버 운영 시 시스템 장애나 성능 저하를 사전에 감지하고 대응하기 위해, 모바일 환경에서도 손쉽게 서버 상태를 확인할 수 있는 모니터링 도구의 필요성이 대두됨에 따라 프로젝트를 기획',
-      '팀 프로젝트 특성상 코드 반출이 허용되지 않아 구현 구조와 문제 해결 과정 중심으로 정리',
+      '코드 반출 불가로 구현 구조와 문제 해결 과정 중심으로 정리',
     ],
     features: [
       '인스턴스 및 서버 등록/관리 기능',
@@ -1685,7 +1685,7 @@ fun provideEncryptedSharedPreferences(
         ],
         result: [
           '게시글·댓글·좋아요·프로필·채팅 등 주요 기능을 동일한 계층 구조로 확장할 수 있는 기반 확보',
-          'presentation/domain/data 3모듈과 33개 UseCase 기반으로 기능별 책임을 나누어 수정 범위 예측 가능성 향상',
+          'presentation/domain/data 모듈 구성과 33개 UseCase 기반으로 기능별 책임을 나누어 수정 범위 예측 가능성 향상',
           'API DTO 변경, 데이터 소스 변경, 화면 상태 변경이 서로 다른 계층에 머물도록 하여 앱 전체 유지보수성을 개선',
         ],
         implementation: [
@@ -1920,7 +1920,7 @@ class ChattingViewModel @Inject constructor(
     insightImages: ['screenshot/Bong+.png'],
     achievements: [
       rich('Android 1인 전담으로 ', strong('앱 주요 기능 전반 구현')),
-      'presentation/domain/data 3모듈과 33개 UseCase 기반으로 기능별 책임 분리',
+      'presentation/domain/data 모듈 구성과 33개 UseCase 기반으로 기능별 책임 분리',
       'OkHttp WebSocket, StateFlow, ListAdapter/DiffUtil을 조합해 실시간 채팅과 리스트 상태 관리 구현',
     ],
     retrospective: [
