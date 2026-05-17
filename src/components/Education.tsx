@@ -8,7 +8,8 @@ const educations = [
     period: '2025.01 ~ 2025.12',
     details: [
       '삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램',
-      'Mobile Track 전공 심화 과정: Android 네이티브 앱 개발 전문화',
+      '1학기 공통 과정에서 Java, Spring Boot, Vue.js, HTML, CSS, JavaScript 학습',
+      '2학기 Mobile Track에서 Flutter, Kotlin, Android 학습',
       '전현직 개발자 멘토링 및 프로젝트 프로세스 경험',
     ],
     gpa: '',
