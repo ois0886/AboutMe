@@ -1466,7 +1466,6 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
         result: [
           rich('업체 목록 검색 응답시간을 ', strong('3~5초에서 0.5초 이하로 줄여 약 85% 단축'), '하고, 사용자가 검색 결과를 기다리는 체감 시간을 크게 줄임'),
           '업체 목록 조회와 거리 계산 책임을 분리해 검색 흐름을 단순화하고, 외부 API 지연이 전체 검색 UX에 미치는 영향을 줄임',
-          '로컬 DB, 외부 경로 API, UI 상태 갱신을 Repository/ViewModel 경계로 나누어 이후 예약·지도 흐름과 연결하기 쉬운 구조 확보',
         ],
         implementation: [
           {
@@ -1520,6 +1519,28 @@ interface CompanyDao {
     }
 }`,
           },
+        ],
+        alternatives: [
+          '서버 아키텍처와 로직을 변경할 수 없는 제약이 있어, 거리·시간 계산 방식을 서버 측에서 미리 계산하는 구조로 바꾸는 대안은 현실적으로 선택할 수 없었음.',
+          '최근 검색어·인기 업체 위주의 부분 캐싱도 대안이지만, 전국 업체 검색이라는 요구사항에서 일관된 응답성을 보장하기 어렵고 캐시 무효화 정책이 복잡해지는 trade-off가 있었을 것임.',
+        ],
+      },
+      {
+        problem: [
+          '검색, 지도, 예약, 인증 화면이 각각 DB·인증 저장소·네트워크 결과 처리를 직접 다루면 화면 책임이 커지고 동일 흐름을 재사용하기 어려운 구조가 될 수 있었음',
+          '로그인 정보를 일반 SharedPreferences에 저장하면 로컬 데이터 보호 측면에서 취약하고, 자동 로그인 흐름이 화면 로직과 강하게 결합될 위험이 있었음',
+        ],
+        solution: [
+          'Hilt 모듈에서 Room DB/DAO, Repository, Remote/Local DataSource, EncryptedSharedPreferences 의존성을 구성',
+          '인증 데이터 읽기/쓰기는 AuthLocalDataSource로 캡슐화하고, 화면은 ViewModel을 통해 Repository 결과만 구독하도록 분리',
+          'ViewModel에서는 Repository가 반환한 Result를 기준으로 StateFlow UI 상태를 갱신해 로딩, 검색 결과, 사용자 메시지를 한 곳에서 관리',
+        ],
+        result: [
+          'Fragment와 Activity는 렌더링과 사용자 이벤트 전달에 집중하고, 데이터 접근·인증 저장·예외 처리는 하위 계층으로 분리함',
+          '검색, 지도, 예약 화면에서 동일한 Repository/DataSource 흐름을 재사용할 수 있는 구조 확보',
+          'EncryptedSharedPreferences 기반 저장으로 자동 로그인에 필요한 로컬 인증 데이터 관리 방식을 명확히 함',
+        ],
+        implementation: [
           {
             description:
               'ViewModel에서는 Repository가 반환한 Result를 기준으로 StateFlow UI 상태를 갱신함. 로딩 상태, 검색 결과, 사용자 메시지를 한 곳에서 관리해 Fragment의 책임을 렌더링 중심으로 줄임.',
@@ -1562,8 +1583,8 @@ fun provideEncryptedSharedPreferences(
           },
         ],
         alternatives: [
-          '서버 아키텍처와 로직을 변경할 수 없는 제약이 있어, 거리·시간 계산 방식을 서버 측에서 미리 계산하는 구조로 바꾸는 대안은 현실적으로 선택할 수 없었음.',
-          '최근 검색어·인기 업체 위주의 부분 캐싱도 대안이지만, 전국 업체 검색이라는 요구사항에서 일관된 응답성을 보장하기 어렵고 캐시 무효화 정책이 복잡해지는 trade-off가 있었을 것임.',
+          'Activity/Fragment에서 DB와 인증 저장소를 직접 생성해 사용할 수도 있었지만, 화면 생명주기와 데이터 접근 책임이 섞여 수정 범위가 커질 위험이 있었음.',
+          '일반 SharedPreferences로 자동 로그인을 구현할 수도 있었지만, 인증 데이터를 다루는 기능 특성상 EncryptedSharedPreferences를 사용하는 쪽이 더 적합하다고 판단함.',
         ],
       },
     ],
@@ -1597,7 +1618,7 @@ fun provideEncryptedSharedPreferences(
     retrospective: [
       '단위 테스트 및 UI 테스트 코드 부재로 품질 검증 프로세스 부족, JUnit/Mockito 기반 단위 테스트 및 Espresso UI 테스트 도입 계획 수립',
       '졸업 작품과 병행하여 절대적 시간이 부족, 한번에 하나의 프로젝트만 집중하는 것이 가장 좋다는 깨달음',
-      '사용자 경험 우선 개발, 현업 멘토링의 중요성, 초기 설계에서의 확장성 고려가 장기적 유지보수에 미치는 임팩트 실감',
+      '사용자 경험 우선 개발, 산학협력 멘토링의 중요성, 초기 설계에서의 확장성 고려가 장기적 유지보수에 미치는 임팩트 실감',
     ],
     links: [
       { label: 'Android', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
@@ -1654,8 +1675,48 @@ fun provideEncryptedSharedPreferences(
     problemSolvings: [
       {
         problem: [
-          '재능 교환 과정에서 사용자 간 실시간 대화가 필요했지만, 채팅 메시지 송수신·기존 메시지 조회·연결 상태·UI 상태가 한 화면에 섞이면 유지보수가 어려워지는 구조적 위험이 있었음.',
-          'Android 1인 전담 상황에서 채팅, 게시글, 댓글, 좋아요, 프로필, 평점 등 기능 범위가 넓어 네트워크 구현 세부사항과 화면 상태 관리를 분리할 필요가 있었음.',
+          'Android 1인 전담 상황에서 채팅, 게시글, 댓글, 좋아요, 프로필, 평점 등 기능 범위가 넓어 화면·도메인 규칙·데이터 접근 코드가 한 모듈에 섞일 위험이 있었음',
+          'ViewModel이 Retrofit API, DTO, 로컬 인증 저장소를 직접 다루면 기능 추가 시 화면 코드까지 연쇄 수정되는 구조가 될 수 있었음',
+        ],
+        solution: [
+          'Android 저장소를 presentation/domain/data 3모듈로 나누고, UI·도메인 규칙·데이터 접근 구현의 책임을 모듈 단위로 분리',
+          'domain 모듈에 Repository 인터페이스와 UseCase를 두고, data 모듈에서 RepositoryImpl/DataSource/Mapper를 구현하는 구조 적용',
+          'presentation 모듈은 ViewModel과 UiState 중심으로 화면 상태를 관리하고, 세부 네트워크 구현은 하위 계층으로 위임',
+        ],
+        result: [
+          '게시글·댓글·좋아요·프로필·채팅 등 주요 기능을 동일한 계층 구조로 확장할 수 있는 기반 확보',
+          'presentation/domain/data 3모듈과 33개 UseCase 기반으로 기능별 책임을 나누어 수정 범위 예측 가능성 향상',
+          'API DTO 변경, 데이터 소스 변경, 화면 상태 변경이 서로 다른 계층에 머물도록 하여 앱 전체 유지보수성을 개선',
+        ],
+        implementation: [
+          {
+            description:
+              'Android 저장소는 presentation/domain/data 3모듈로 구성함. UI, 도메인 규칙, 데이터 접근 구현을 모듈 단위로 나누어 의존 방향을 명확히 함.',
+            code: `rootProject.name = "Android_Bong"
+include ':presentation'
+include ':domain'
+include ':data'`,
+          },
+          {
+            description:
+              'domain 모듈에는 기능별 UseCase를 두고, ViewModel은 Repository 세부 구현이 아니라 UseCase를 호출하는 방식으로 동작하도록 구성함.',
+            code: `class LoginUseCase @Inject constructor(
+    private val authRepository: AuthRepository
+) {
+    suspend operator fun invoke(id: String, password: String) =
+        authRepository.login(id = id, password = password)
+}`,
+          },
+        ],
+        alternatives: [
+          '단일 app 모듈 안에서 패키지만 나누는 방식도 가능했지만, 컴파일 경계가 약해 UI·도메인·데이터 코드가 쉽게 섞일 수 있다고 판단함.',
+          'ViewModel에서 Retrofit API와 DTO를 직접 다루는 방식은 초기 구현은 빠르지만, 기능 수가 늘수록 화면 코드가 데이터 구조 변경에 직접 영향받는 문제가 생길 수 있었음.',
+        ],
+      },
+      {
+        problem: [
+          '재능 교환 과정에서 사용자 간 실시간 대화가 필요했지만, 채팅 메시지 송수신·기존 메시지 조회·연결 상태·UI 상태가 한 화면에 섞이면 유지보수가 어려워지는 구조적 위험이 있었음',
+          '채팅은 연결 유지, 메시지 파싱, 메시지 전송, 내 메시지/상대 메시지 UI 분리까지 한 번에 다뤄야 해 화면 상태 관리가 복잡해질 수 있었음',
         ],
         solution: [
           'OkHttp WebSocket으로 채팅방별 연결을 유지하고, 메시지 수신·전송을 단일 연결에서 처리하는 실시간 채팅 구조 적용',
@@ -1668,14 +1729,6 @@ fun provideEncryptedSharedPreferences(
           'ListAdapter와 DiffUtil 기반 채팅 리스트 갱신으로 메시지 타입별 UI를 안정적으로 분리하고 불필요한 RecyclerView 갱신 비용을 줄임',
         ],
         implementation: [
-          {
-            description:
-              'Android 저장소는 presentation/domain/data 3모듈로 구성함. UI, 도메인 규칙, 데이터 접근 구현을 모듈 단위로 나누어 의존 방향을 명확히 함.',
-            code: `rootProject.name = "Android_Bong"
-include ':presentation'
-include ':domain'
-include ':data'`,
-          },
           {
             description:
               'OkHttp WebSocket 생성·해제·메시지 전송을 전담하는 WebSocketDataSourceImpl을 두어, 네트워크 상세 구현을 인프라스트럭처 계층에 캡슐화함.',
