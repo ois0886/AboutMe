@@ -169,7 +169,7 @@ val personalTable = remember {
     role: 'Android 개발(기여도 80%)',
     details: [
       'Spring Boot 기반 백엔드 서버와 인스턴스의 실시간 시스템 리소스 및 애플리케이션 메트릭을 모니터링하고, AI 분석을 통해 시스템 상태를 한눈에 파악할 수 있는 Android 모니터링 애플리케이션 개발',
-      '서버 운영 시 시스템 장애나 성능 저하를 사전에 감지하고 대응하기 위해, 모바일 환경에서도 손쉽게 인프라 상태를 확인할 수 있는 모니터링 도구의 필요성이 대두됨에 따라 프로젝트를 기획',
+      '서버 운영 시 시스템 장애나 성능 저하를 사전에 감지하고 대응하기 위해, 모바일 환경에서도 손쉽게 서버 상태를 확인할 수 있는 모니터링 도구의 필요성이 대두됨에 따라 프로젝트를 기획',
       '팀 프로젝트 특성상 코드 반출이 허용되지 않아 구현 구조와 문제 해결 과정 중심으로 정리',
     ],
     features: [
@@ -1731,7 +1731,7 @@ include ':data'`,
         implementation: [
           {
             description:
-              'OkHttp WebSocket 생성·해제·메시지 전송을 전담하는 WebSocketDataSourceImpl을 두어, 네트워크 상세 구현을 인프라스트럭처 계층에 캡슐화함.',
+              'OkHttp WebSocket 생성·해제·메시지 전송을 전담하는 WebSocketDataSourceImpl을 두어, 네트워크 상세 구현을 네트워크 구현 계층에 캡슐화함.',
             code: `class WebSocketDataSourceImpl @Inject constructor(
     private val client: OkHttpClient
 ) : WebSocketDataSource {
@@ -1879,7 +1879,7 @@ class ChattingViewModel @Inject constructor(
         alternatives: [
           'HTTP polling으로 주기 조회하는 방식도 가능했지만, 채팅방 입장 중 지속적인 양방향 대화가 필요한 요구사항에는 연결 유지형 WebSocket이 더 단순하고 자연스러운 선택이라고 판단함.',
           'Server-Sent Events(SSE)를 사용하는 방법도 있었지만, 단방향 스트림 특성상 클라이언트→서버 메시지 전송을 별도 채널로 유지해야 해서 구조가 더 복잡해졌을 것임.',
-          'MQTT 같은 메시지 브로커 기반 프로토콜로 전환하는 방안도 있지만, 현재 요구사항(앱 내 1:1/소규모 채팅) 대비 인프라 구성·운영 복잡도가 커져 WebSocket 대비 과한 선택이 되었을 가능성이 큼.',
+          'MQTT 같은 메시지 브로커 기반 프로토콜로 전환하는 방안도 있지만, 현재 요구사항(앱 내 1:1/소규모 채팅) 대비 운영 구성 복잡도가 커져 WebSocket 대비 과한 선택이 되었을 가능성이 큼.',
         ],
       },
     ],
@@ -2185,7 +2185,7 @@ jobs:
           },
         ],
         alternatives: [
-          'Jenkins, GitLab CI 같은 사내 CI 서버를 구축해 파이프라인을 운영하는 방법도 있었지만, 별도 인프라 관리 비용과 초기 설정 부담이 커서 GitHub 저장소와 밀접하게 연동되는 현재 구조보다 효율이 떨어졌을 가능성이 있음.',
+          'Jenkins, GitLab CI 같은 사내 CI 서버를 구축해 파이프라인을 운영하는 방법도 있었지만, 별도 서버 관리 비용과 초기 설정 부담이 커서 GitHub 저장소와 밀접하게 연동되는 현재 구조보다 효율이 떨어졌을 가능성이 있음.',
           '로컬 Git 훅(pre-push 등)과 IDE 플러그인만으로 빌드·Lint 검사를 강제하는 방식도 가능했지만, 개발자 환경마다 설정 편차가 생기고, Pull Request 단위로 일관된 품질 검증을 보장하기 어려웠을 것임.',
           'Play Store 배포만 별도 수동 스크립트(예: fastlane)로 처리하고 나머지 검증은 수동으로 남겨두는 절충안도 있었지만, 사람이 개입하는 구간이 많은 만큼 릴리스 속도와 신뢰도를 끌어올리기에는 한계가 있었을 것임.',
         ],
