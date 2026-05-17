@@ -1434,7 +1434,6 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     details: [
       '위치 기반 서비스 업체의 온라인 예약 시스템 구축을 통한 고객 편의성 향상 및 업체 운영 효율성 증대',
       '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트로, 기존 오프라인 중심의 예약 시스템을 디지털화하여 언제 어디서나 접근 가능한 통합 예약 플랫폼 구축',
-      '코드베이스·Git 기록 기준 Android 저장소 전체 187커밋 중 163커밋을 작성하며 검색, 지도, 예약, 인증, 로컬 캐싱 흐름을 주도적으로 구현',
     ],
     features: [
       '위치 기반 서비스 업체 검색 및 정보 제공, 실시간 거리/소요시간 계산 (Direction5 API 연동)',
