@@ -1423,8 +1423,10 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
       'Coroutines',
       'Retrofit2',
       'Room',
+      'StateFlow',
       'Naver Maps API',
       'Direction5 API',
+      'EncryptedSharedPreferences',
     ],
     period: '2023.01 ~ 2023.06',
     team: '3명 (Android 3명)',
@@ -1432,59 +1434,105 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     details: [
       '위치 기반 서비스 업체의 온라인 예약 시스템 구축을 통한 고객 편의성 향상 및 업체 운영 효율성 증대',
       '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트로, 기존 오프라인 중심의 예약 시스템을 디지털화하여 언제 어디서나 접근 가능한 통합 예약 플랫폼 구축',
+      'GitHub 기록 기준 Android 저장소 전체 187커밋 중 163커밋을 작성하며 검색, 지도, 예약, 인증, 로컬 캐싱 흐름을 주도적으로 구현',
     ],
     features: [
       '위치 기반 서비스 업체 검색 및 정보 제공, 실시간 거리/소요시간 계산 (Direction5 API 연동)',
       '네이버 지도 연동 길찾기 서비스 및 거리순 정렬/최적 경로 안내',
       '웹뷰 기반 온라인 예약/취소 및 예약 내역 조회/관리',
       'SMS 인증을 통한 본인 확인, 업체별 예약 상태 실시간 확인',
-      '네이버 지도 기반 업체 위치 표시, 마커 클러스터링 및 상세 정보 제공',
+      '네이버 지도 기반 업체 위치 표시, 마커 선택 및 상세 정보 제공',
       '현재 위치 기반 주변 업체 탐색',
     ],
     contributions: [
-      'Android 팀 리드 개발자 (3인 팀 중 Android 전담, 전체 기여도 80%)',
-      'Room 캐싱 전략 도입으로 반복 API 호출 최소화 및 응답시간 85% 단축',
-      '전국 업체 위치정보 실시간 검색: SearchView + RecyclerView + 거리순 정렬로 사용자 경험 최적화',
-      'ViewBinding 확장 함수와 추상 베이스 클래스 활용해 코드 재사용성 강화',
+      rich('Android 팀 리드 개발자 (3인 팀 중 Android 전담, ', strong('GitHub 기록 기준 163/187커밋 작성'), ')'),
+      rich('업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
+      '조회된 업체에 대해서만 Direction5 API로 거리·소요시간을 계산하고 RecyclerView에 거리순 정렬 결과 표시',
+      'Naver Map 마커, SearchView, 예약 WebView를 연결해 검색 → 위치 확인 → 예약 흐름 구현',
+      'Hilt로 DB, DAO, Repository, Remote/Local DataSource 의존성 구성',
+      'EncryptedSharedPreferences 기반 로그인 정보 저장 및 자동 로그인 흐름 구현',
+      'ViewBinding 추상 베이스 클래스와 Extension Function으로 Activity/Fragment 반복 코드 축소',
     ],
     problemSolvings: [
       {
         problem: [
-          '매 검색 시 Direction5 API 실시간 호출로 인한 성능 이슈 (평균 응답시간 3-5초)',
-          '동일 업체에 대한 반복 계산으로 인한 불필요한 리소스 소모',
+          '업체 검색 시 서버 API와 외부 API 의존도가 높아 결과 표시까지 평균 3~5초가 걸리는 성능 이슈 발생',
+          '업체 정보 조회와 거리·소요시간 계산이 하나의 검색 흐름에 묶여 있어, 외부 API 지연이 전체 검색 UX를 직접 늦추는 구조 발생',
         ],
         solution: [
-          '사용자 경험 개선 및 API 호출 비용 절감을 위한 캐싱 시스템 도입',
-          '앱 최초 실행 시 모든 업체 데이터를 Room DB 저장, 검색 시 로컬 우선/API 보조 전략 적용',
+          '앱 시작 시 업체 마스터 데이터를 Room DB에 동기화하고, SearchView 검색은 Room 기반 로컬 DB 조회로 전환',
+          '로컬 DB에서 조회된 업체에 대해서만 Direction5 API를 호출해 거리·소요시간을 보강하고, RecyclerView에 거리순으로 정렬해 표시',
+          'CompanyRepository에서 업체 목록 조회, 거리 계산, 예외 처리를 Result 기반으로 캡슐화하여 ViewModel의 UI 상태 갱신 흐름 단순화',
         ],
         result: [
-          '검색 시 네트워크 왕복 없이도 업체 리스트를 즉시 응답하고, 거리/시간 계산만 비동기로 처리함으로써 평균 응답 시간 단축 및 검색 UX 개선 효과 달성함.',
-          'Room DB를 단일 소스 오브 트루스로 활용하고, Direction5 API는 보조 계산 용도로만 사용하는 캐싱 전략을 통해 동일 업체에 대한 반복 계산·중복 호출을 제거하여 서버 비용 절감 및 전체 시스템 부하 감소 효과 확보함.',
+          rich('업체 목록 검색 응답시간을 ', strong('3~5초에서 0.5초 이하로 줄여 약 85% 단축'), '하고, 사용자가 검색 결과를 기다리는 체감 시간을 크게 줄임'),
+          '업체 목록 조회와 거리 계산 책임을 분리해 검색 흐름을 단순화하고, 외부 API 지연이 전체 검색 UX에 미치는 영향을 줄임',
+          '로컬 DB, 외부 경로 API, UI 상태 갱신을 Repository/ViewModel 경계로 나누어 이후 예약·지도 흐름과 연결하기 쉬운 구조 확보',
         ],
         implementation: [
           {
             description:
-              '검색 요청이 들어오면 먼저 companyDao.searchQuery(query)를 통해 Room DB에서 업체 리스트를 가져오고, 각 업체에 대해 Direction5 API를 호출해 거리·소요 시간을 계산한 뒤, 결과를 복사·갱신하는 단계적 처리 플로우 구성함.',
-            code: `// 1단계: 로컬 DB에서 회사 정보 조회 후 2단계: Direction5 API로 실시간 거리/시간 계산
-suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<List<CompanyEntity>> {
+              '앱 시작 시 서버에서 업체 마스터 데이터를 한 번 받아 Room DB에 저장함. 이후 검색 화면은 서버 목록 API를 매번 호출하지 않고 로컬 DB를 우선 조회하는 구조로 전환함.',
+            code: `override suspend fun getAllCompanyEntityList(): Result<Unit> {
     return runCatching {
-        val companies = companyDao.searchQuery(query)
-        companies.map { company ->
-            val direction = getDistanceAndDuration(myLocation, "\${company.longitude},\${company.latitude}")
-            company.copy(distance = direction.distance.toString(), duration = direction.duration.toString())
-        }
+        val response = companyRemoteDataSource.getCompanyList()
+        val companyList = response.body()!!.results.map { it.toEntity() }
+        companyDao.insertAll(companyList)
     }
 }`,
           },
           {
             description:
-              'searchCompanyListByQuery에서 runCatching을 활용해 네트워크 예외를 캡슐화하고, 호출 측에는 Result<List<CompanyEntity>> 형태로 성공/실패를 명시적으로 전달함. 회사 위치 정보는 이미 Room에 저장된 longitude, latitude를 사용하고, Direction5 API는 거리·시간 계산에만 사용함으로써 API 호출 횟수를 검색 결과 수만큼으로 제한함.',
+              '검색 요청이 들어오면 먼저 companyDao.searchQuery(query)를 통해 Room DB에서 업체 리스트를 가져오고, 각 업체에 대해서만 Direction5 API로 거리·소요시간을 계산해 결과를 복사·갱신함.',
+            code: `override suspend fun searchCompanyListByQuery(
+    query: String,
+    myLocation: String
+): Result<List<CompanyEntity>> {
+    return runCatching {
+        val companyList = companyDao.searchQuery(query = query)
+        val companyListDirections = companyList.map {
+            val goal = "\${it.longitude},\${it.latitude}"
+            val directionEntity = getDistanceAndDuration(start = myLocation, goal = goal)
+            if (directionEntity.isSuccess) {
+                it.copy(
+                    duration = directionEntity.getOrNull()!!.duration.toString(),
+                    distance = directionEntity.getOrNull()!!.distance.toString()
+                )
+            } else {
+                it.copy(duration = "0", distance = "0")
+            }
+        }
+        companyListDirections
+    }
+}`,
+          },
+          {
+            description:
+              'ViewModel에서는 Repository가 반환한 Result를 기준으로 StateFlow UI 상태를 갱신함. 로딩 상태, 검색 결과, 사용자 메시지를 한 곳에서 관리해 Fragment의 책임을 렌더링 중심으로 줄임.',
+            code: `fun bind(query: String, myLocation: String) {
+    viewModelScope.launch {
+        _uiState.update { it.copy(isLoading = true) }
+        val result = companyRepository.searchCompanyListByQuery("%$query%", myLocation)
+        if (result.isSuccess) {
+            _uiState.update { it.copy(companyListData = result.getOrThrow()) }
+        } else {
+            _uiState.update {
+                it.copy(userMessage = result.exceptionOrNull()!!.localizedMessage!!.toInt())
+            }
+        }
+        _uiState.update { it.copy(isLoading = false) }
+    }
+}`,
+          },
+          {
+            description:
+              '인증 정보는 EncryptedSharedPreferences로 저장하고, Hilt 모듈에서 DB/DAO/Repository/DataSource 의존성을 주입해 검색·지도·예약 화면에서 동일한 데이터 흐름을 재사용함.',
             code: null,
           },
         ],
         alternatives: [
           '서버 아키텍처와 로직을 변경할 수 없는 제약이 있어, 거리·시간 계산 방식을 서버 측에서 미리 계산하는 구조로 바꾸는 대안은 현실적으로 선택할 수 없었음.',
-          '모든 업체에 대해 선계산하지 않고, 최근 검색어·인기 업체 위주로만 로컬에 캐싱하는 LRU 기반 부분 캐싱 전략도 대안이지만, 구현 복잡도 대비 일관된 응답 성능을 보장하기 어렵다는 trade-off가 있었을 것임.',
+          '최근 검색어·인기 업체 위주의 부분 캐싱도 대안이지만, 전국 업체 검색이라는 요구사항에서 일관된 응답성을 보장하기 어렵고 캐시 무효화 정책이 복잡해지는 trade-off가 있었을 것임.',
         ],
       },
     ],
@@ -1511,8 +1559,9 @@ suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<
       },
     ],
     achievements: [
-      rich('API 호출 최적화로 ', strong('평균 응답시간 85% 단축'), ' (3-5초 → 0.5초 이하)'),
-      rich('Extension Functions 활용으로 ', strong('코드 중복 50% 이상 감소'), ' 및 생산성 향상'),
+      rich('업체 목록 조회를 Room 기반 로컬 검색으로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
+      rich('GitHub 기록 기준 ', strong('전체 187커밋 중 163커밋 작성'), '으로 검색·지도·예약·인증 흐름 주도'),
+      'Hilt, Room, EncryptedSharedPreferences, Naver Map, Direction5 API를 조합해 위치 기반 예약 앱의 핵심 흐름 구현',
     ],
     retrospective: [
       '단위 테스트 및 UI 테스트 코드 부재로 품질 검증 프로세스 부족, JUnit/Mockito 기반 단위 테스트 및 Espresso UI 테스트 도입 계획 수립',
@@ -1544,6 +1593,8 @@ suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<
       'Retrofit2',
       'Glide',
       'WebSocket',
+      'StateFlow',
+      'ListAdapter',
     ],
     period: '2022.12 ~ 2023.06',
     team: '4명 (Backend 2명, Android 1명, iOS 1명)',
@@ -1551,34 +1602,40 @@ suspend fun searchCompanyListByQuery(query: String, myLocation: String): Result<
     details: [
       '기존의 재화 중심 교환이 아닌, 재능과 재능을 교환할 수 있는 모바일 앱 서비스 개발',
       '한성대학교 캡스톤디자인(졸업작품) 프로젝트로, 대학생들이 재화 부족 때문에 원하는 재능을 배우기 어려운 현실을 개선하고자 기획함',
+      'Android 1인 전담으로 presentation/domain/data 멀티 모듈 구조를 설계하고, 앱 전체 화면·API 연동·상태 관리 구현',
     ],
     features: [
       '재능 등록 및 신청 (게시글 CRUD), 관심 거래/거래 진행 현황 관리',
-      '채팅 (1:1 거래 및 실시간 문의)',
+      'OkHttp WebSocket 기반 1:1 거래 채팅 및 채팅방 목록 관리',
       '자유게시판/질문답변 게시판 (익명 지원), 댓글·좋아요·태그 기능',
-      '프로필 및 제공/받은 재능 관리, 거래/커뮤니티 활동 내역 조회',
-      '회원 정보, 자동 로그인, 외부 링크 관리',
+      '이미지 업로드, 프로필 수정, 제공/받은 재능 관리, 거래/커뮤니티 활동 내역 조회',
+      '거래 성사, 평점 등록, 회원 정보, 자동 로그인, 외부 링크 관리',
     ],
     contributions: [
       rich(strong('팀장'), ', 안드로이드 개발 전담 (1인)'),
-      'WebSocket 라이브러리를 활용한 실시간 1:1 채팅 기능 구현 및 HTTP 폴링 대비 네트워크 트래픽·지연 시간 개선',
-      'MVVM + Clean Architecture 적용으로 Presentation/Domain/Data 계층 완전 분리 및 테스트 용이성 개선',
-      'RecyclerView multiple item types 활용한 채팅 UI로 상대 구분 표시 및 사용자 경험 최적화',
-      'SharedPreference 기반 자동로그인 구현으로 세션 관리 체계 구축',
+      rich('Android repo ', strong('137커밋 전체 작성'), ' 및 앱 전체 화면·API 연동·상태 관리 구현'),
+      'presentation/domain/data 멀티 모듈 구조와 MVVM + Clean Architecture 적용',
+      'Repository, DataSource, UseCase, Mapper를 분리해 계층별 책임과 의존 방향 명확화',
+      'OkHttp WebSocket 기반 1:1 실시간 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리',
+      'ChattingViewModel에서 StateFlow로 채팅 메시지, 로딩 상태, 평점 등록 상태 관리',
+      'RecyclerView multiple view type, ListAdapter, DiffUtil을 활용해 내 메시지/상대 메시지 UI와 리스트 갱신 처리',
+      'EncryptedSharedPreferences 기반 인증 토큰 저장 및 OkHttp Interceptor를 통한 Authorization 헤더 주입',
     ],
     problemSolvings: [
       {
         problem: [
-          'HTTP polling 기반 채팅은 요청/응답마다 HTTP 연결을 반복하며 네트워크 오버헤드 및 서버 리소스 낭비 발생함.',
-          '클라이언트가 주기적으로 서버를 조회하는 구조로 인해 실시간성이 떨어지고, 채팅 메시지·연결 상태를 여러 레이어에서 중복 관리해야 하는 복잡성 증가함.',
+          '재능 교환 과정에서 사용자 간 실시간 대화가 필요했지만, 채팅 메시지 송수신·기존 메시지 조회·연결 상태·UI 상태가 한 화면에 섞이면 유지보수가 어려워지는 구조적 위험이 있었음.',
+          'Android 1인 전담 상황에서 채팅, 게시글, 댓글, 좋아요, 프로필, 평점 등 기능 범위가 넓어 네트워크 구현 세부사항과 화면 상태 관리를 분리할 필요가 있었음.',
         ],
         solution: [
-          'WebSocket 기반 전이중 통신 채널을 도입해 서버와의 연결을 유지하고, 메시지 수신·전송을 단일 연결에서 처리하는 실시간 채팅 아키텍처 적용함.',
-          'WebSocket 연결/해제·메시지 전송은 Data 레이어(WebSocketDataSource → ChattingRepository)에서 처리하고, 메시지 리스트·로딩 상태 등 UI 상태는 ChattingViewModel의 StateFlow에서 일괄 관리하는 구조 도입함.',
+          'OkHttp WebSocket으로 채팅방별 연결을 유지하고, 메시지 수신·전송을 단일 연결에서 처리하는 실시간 채팅 구조 적용',
+          'WebSocket 연결/해제·메시지 전송은 Data 레이어(WebSocketDataSource → ChattingRepository)에서 담당하고, ViewModel은 Repository 인터페이스에만 의존하도록 분리',
+          'ChattingViewModel에서 StateFlow로 메시지 목록, 입력 메시지, 로딩 여부, 평점 등록 상태를 관리하고, RecyclerView multiple view type으로 내 메시지/상대 메시지 UI 분리',
         ],
         result: [
-          'WebSocket 기반 상시 연결 구조로 구현하여, 연결 재생성·헤더 오버헤드를 제거하고 네트워크 사용량 감소 및 실시간성 향상 효과 달성함.',
-          'WebSocket 연결·메시지 전송은 Data 레이어, 메시지 리스트·로딩 상태 등은 ViewModel StateFlow에서 관리하는 구조로 분리하여, 채팅 기능의 데이터 흐름과 상태 관리 복잡성 완화 및 테스트·확장 용이성 확보함.',
+          '실시간 채팅 기능을 앱 구조 안에 통합하고, 네트워크 통신·도메인 인터페이스·UI 상태 관리 책임을 분리함',
+          '채팅 화면이 WebSocket 구현체에 직접 의존하지 않도록 만들어 추후 통신 방식 변경, 메시지 파싱 정책 변경, 테스트 대역 추가가 쉬운 구조 확보',
+          'ListAdapter와 DiffUtil 기반 채팅 리스트 갱신으로 메시지 타입별 UI를 안정적으로 분리하고 불필요한 RecyclerView 갱신 비용을 줄임',
         ],
         implementation: [
           {
@@ -1702,9 +1759,35 @@ class ChattingViewModel @Inject constructor(
     }
 }`,
           },
+          {
+            description:
+              '채팅 리스트는 ListAdapter와 multiple view type을 활용해 내 메시지와 상대 메시지를 서로 다른 레이아웃으로 분리함. 메시지 소유자 판단은 senderId 기준으로 처리함.',
+            code: `class ChattingAdapter(private val myUsrId: String) :
+    ListAdapter<ChatMessage, RecyclerView.ViewHolder>(diffCallback) {
+
+    override fun getItemViewType(position: Int): Int {
+        return if (myUsrId == currentList[position].senderId) MY_CHAT
+        else OTHER_CHAT
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return if (viewType == MY_CHAT) {
+            MyChatItemViewHolder(
+                ItemMyChatMessageBinding.inflate(layoutInflater, parent, false)
+            )
+        } else {
+            OtherChatItemViewHolder(
+                ItemOtherChatMessageBinding.inflate(layoutInflater, parent, false)
+            )
+        }
+    }
+}`,
+          },
         ],
         alternatives: [
-          'HTTP 롱 폴링 대신 Server-Sent Events(SSE)를 사용하는 방법도 있었지만, 단방향 스트림 특성상 클라이언트→서버 메시지 전송을 별도 채널로 유지해야 해서 구조가 더 복잡해졌을 것임.',
+          'HTTP polling으로 주기 조회하는 방식도 가능했지만, 채팅방 입장 중 지속적인 양방향 대화가 필요한 요구사항에는 연결 유지형 WebSocket이 더 단순하고 자연스러운 선택이라고 판단함.',
+          'Server-Sent Events(SSE)를 사용하는 방법도 있었지만, 단방향 스트림 특성상 클라이언트→서버 메시지 전송을 별도 채널로 유지해야 해서 구조가 더 복잡해졌을 것임.',
           'MQTT 같은 메시지 브로커 기반 프로토콜로 전환하는 방안도 있지만, 현재 요구사항(앱 내 1:1/소규모 채팅) 대비 인프라 구성·운영 복잡도가 커져 WebSocket 대비 과한 선택이 되었을 가능성이 큼.',
         ],
       },
@@ -1745,9 +1828,9 @@ class ChattingViewModel @Inject constructor(
     ],
     insightImages: ['screenshot/Bong+.png'],
     achievements: [
-      'Presentation/Domain/Data 계층 분리로 구조적 안정성 확보',
-      'Hilt/UseCase/Repository/Mapper 분리로 유지보수성과 테스트 용이성 대폭 향상',
-      'WebSocket을 사용하여 실시간 채팅 직접 구현, MVVM에 맞춘 상태 관리',
+      rich('Android 1인 전담으로 ', strong('137커밋 전체 작성'), ' 및 앱 주요 기능 전반 구현'),
+      'presentation/domain/data 3모듈과 33개 UseCase 기반으로 기능별 책임 분리',
+      'OkHttp WebSocket, StateFlow, ListAdapter/DiffUtil을 조합해 실시간 채팅과 리스트 상태 관리 구현',
     ],
     retrospective: [
       '개발 일정에 집중하다 보니 UI/UX 세부 튜닝, 접근성 지원 등은 미흡, 상태 관리 체계 강화(State 도입 필요성 인식)',
