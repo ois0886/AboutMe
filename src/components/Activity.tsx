@@ -51,23 +51,6 @@ const activities = [
     ],
   },
   {
-    title: '한성대학교 산학 협력 프로젝트',
-    scope: '교내',
-    tag: '산학협력',
-    period: '2023.01.16 ~ 2023.06.15',
-    image: null,
-    details: [
-      '(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱',
-      'Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
-      '업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 검색 응답시간 85% 단축',
-      'Direction5 API로 조회된 업체의 거리·소요시간만 보강하고 RecyclerView에 거리순 정렬 결과 표시',
-      'Hilt로 Room DB/DAO, Repository, Remote/Local DataSource, EncryptedSharedPreferences 의존성 구성',
-    ],
-    links: [
-      { label: 'GitHub', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
-    ],
-  },
-  {
     title: '한성대학교 새싹 SW교육 캠프 조교',
     scope: '교내',
     tag: '조교',

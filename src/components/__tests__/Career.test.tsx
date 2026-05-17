@@ -18,23 +18,17 @@ describe('Career', () => {
 })
 
 describe('Activity', () => {
-  it('한성대학교 산학 협력 프로젝트가 Activity에 렌더링된다', () => {
+  it('한성대학교 LBT 지식 나눔 프로젝트가 Activity에 렌더링된다', () => {
     render(<Activity />)
 
     expect(
-      screen.getByRole('heading', { level: 3, name: '한성대학교 산학 협력 프로젝트' }),
+      screen.getByRole('heading', {
+        level: 3,
+        name: '한성대학교 LBT 지식 나눔 프로젝트 — "알고리즘을 공부하는 방법" 발표',
+      }),
     ).toBeInTheDocument()
   })
 
-  it('PickNumber GitHub 링크가 Activity에 올바른 URL로 표시된다', () => {
-    render(<Activity />)
-
-    const githubLinks = screen.getAllByRole('link', { name: 'GitHub' })
-    const pickNumberLink = githubLinks.find(
-      (link) => link.getAttribute('href') === 'https://github.com/HSU-Didimdol/Android_PickNumber',
-    )
-    expect(pickNumberLink).toBeDefined()
-  })
 })
 
 describe('getTotalCareer', () => {
