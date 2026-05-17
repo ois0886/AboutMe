@@ -259,6 +259,38 @@
       display: none;
     }
 
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.22in;
+      height: 5.82in;
+      margin-top: 0.34in;
+      align-items: center;
+    }
+
+    .screenshot-frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+      padding: 0.18in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.54);
+    }
+
+    .app-shot {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border: 2px solid #0e2b4c;
+      background: #fbf7ef;
+    }
+
     .info-panel {
       display: grid;
       gap: 0.18in;
@@ -1045,7 +1077,7 @@
             <div class="toc-name">내눈 키오스크</div>
             <p class="toc-desc">스마트 헬스케어 키오스크 서비스 Android 앱</p>
           </div>
-          <div class="toc-pages">03p ~ 07p</div>
+          <div class="toc-pages">03p ~ 08p</div>
         </div>
         <div class="toc-item">
           <div class="toc-index">Project. 2</div>
@@ -1053,7 +1085,7 @@
             <div class="toc-name">모리, Mo-Re</div>
             <p class="toc-desc">서버 상태와 성능을 시각화하는 Android 모니터링 앱</p>
           </div>
-          <div class="toc-pages">08p ~ 11p</div>
+          <div class="toc-pages">09p ~ 13p</div>
         </div>
         <div class="toc-item">
           <div class="toc-index">Project. 3</div>
@@ -1061,7 +1093,7 @@
             <div class="toc-name">Glim</div>
             <p class="toc-desc">글귀를 공유하며 숏츠 폼으로 감성을 공유하는 Android 앱</p>
           </div>
-          <div class="toc-pages">12p ~ 16p</div>
+          <div class="toc-pages">14p ~ 19p</div>
         </div>
       </div>
       <span class="footer-title">Table of Contents</span>
@@ -1108,6 +1140,23 @@
     </section>
 
     <section id="slide-04" class="slide">
+      <p class="section-label">App ScreenShot</p>
+      <div class="screenshot-grid">
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/nanoon4.png" alt="내눈 키오스크 앱 화면 4" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/nanoon5.png" alt="내눈 키오스크 앱 화면 5" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/nanoon6.png" alt="내눈 키오스크 앱 화면 6" />
+        </div>
+      </div>
+      <span class="footer-title">Naenun Kiosk App ScreenShot</span>
+      <span class="slide-no">04</span>
+    </section>
+
+    <section id="slide-05" class="slide">
       <p class="section-label">Problem Solving 1</p>
       <h2 class="title-md">XML·Compose 혼용 UI 개선 / State Hoisting 구조화</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1166,10 +1215,10 @@
         </div>
       </div>
       <span class="footer-title">Naenun Kiosk</span>
-      <span class="slide-no">04</span>
+      <span class="slide-no">05</span>
     </section>
 
-    <section id="slide-05" class="slide">
+    <section id="slide-06" class="slide">
       <p class="section-label">Problem Solving 2</p>
       <h2 class="title-md">레거시 패키지 구조 재편</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1242,10 +1291,10 @@
         </div>
       </div>
       <span class="footer-title">Naenun Kiosk</span>
-      <span class="slide-no">05</span>
+      <span class="slide-no">06</span>
     </section>
 
-    <section id="slide-06" class="slide">
+    <section id="slide-07" class="slide">
       <p class="section-label">Problem Solving 3</p>
       <h2 class="title-md">메모리 누수 개선</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1306,10 +1355,10 @@
         </div>
       </div>
       <span class="footer-title">Naenun Kiosk</span>
-      <span class="slide-no">06</span>
+      <span class="slide-no">07</span>
     </section>
 
-    <section id="slide-07" class="slide">
+    <section id="slide-08" class="slide">
       <p class="section-label">Result</p>
       <h2 class="title-md">내눈 키오스크 성과 및 회고</h2>
       <div class="closing-grid with-image" style="margin-top: 0.35in;">
@@ -1336,10 +1385,10 @@
         </div>
       </div>
       <span class="footer-title">Naenun Kiosk Retrospective</span>
-      <span class="slide-no">07</span>
+      <span class="slide-no">08</span>
     </section>
 
-    <section id="slide-08" class="slide">
+    <section id="slide-09" class="slide">
       <p class="section-label">Projects. 2</p>
       <h2 class="title-lg">모리, Mo-Re</h2>
       <p class="meta">2025.08 ~ 2025.09 · 6명(Backend 4명, Android 2명) · Android 개발(기여도 80%)</p>
@@ -1375,10 +1424,27 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re Overview</span>
-      <span class="slide-no">08</span>
+      <span class="slide-no">09</span>
     </section>
 
-    <section id="slide-09" class="slide">
+    <section id="slide-10" class="slide">
+      <p class="section-label">App ScreenShot</p>
+      <div class="screenshot-grid">
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/more4.png" alt="모리 앱 화면 4" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/more5.png" alt="모리 앱 화면 5" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/more6.png" alt="모리 앱 화면 6" />
+        </div>
+      </div>
+      <span class="footer-title">Mo-Re App ScreenShot</span>
+      <span class="slide-no">10</span>
+    </section>
+
+    <section id="slide-11" class="slide">
       <p class="section-label">Problem Solving 1</p>
       <h2 class="title-md">6개 API 병렬 처리와 부분 실패 대응</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1444,10 +1510,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re</span>
-      <span class="slide-no">09</span>
+      <span class="slide-no">11</span>
     </section>
 
-    <section id="slide-10" class="slide">
+    <section id="slide-12" class="slide">
       <p class="section-label">Problem Solving 2</p>
       <h2 class="title-md">Convention Plugin 기반 멀티 모듈 빌드 표준화</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1501,10 +1567,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re</span>
-      <span class="slide-no">10</span>
+      <span class="slide-no">12</span>
     </section>
 
-    <section id="slide-11" class="slide">
+    <section id="slide-13" class="slide">
       <p class="section-label">Result</p>
       <h2 class="title-md">모리, Mo-Re 성과 및 회고</h2>
       <div class="closing-grid with-image" style="margin-top: 0.35in;">
@@ -1532,10 +1598,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re Retrospective</span>
-      <span class="slide-no">11</span>
+      <span class="slide-no">13</span>
     </section>
 
-    <section id="slide-12" class="slide">
+    <section id="slide-14" class="slide">
       <p class="section-label">Projects. 3</p>
       <h2 class="title-lg">Glim</h2>
       <p class="meta">2025.07 ~ 2025.08 · 6명(Backend 2명, Android 2명, Frontend 1명, Backend & Android 1명) · Android 앱 개발</p>
@@ -1572,10 +1638,27 @@
         </div>
       </div>
       <span class="footer-title">Glim Overview</span>
-      <span class="slide-no">12</span>
+      <span class="slide-no">14</span>
     </section>
 
-    <section id="slide-13" class="slide">
+    <section id="slide-15" class="slide">
+      <p class="section-label">App ScreenShot</p>
+      <div class="screenshot-grid">
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/Glim4.png" alt="Glim 앱 화면 4" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/Glim5.png" alt="Glim 앱 화면 5" />
+        </div>
+        <div class="screenshot-frame">
+          <img class="app-shot" src="public/screenshot/Glim6.png" alt="Glim 앱 화면 6" />
+        </div>
+      </div>
+      <span class="footer-title">Glim App ScreenShot</span>
+      <span class="slide-no">15</span>
+    </section>
+
+    <section id="slide-16" class="slide">
       <p class="section-label">Problem Solving 1</p>
       <h2 class="title-md">Token 재발급과 인증 예외 처리 구조화</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1630,10 +1713,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">13</span>
+      <span class="slide-no">16</span>
     </section>
 
-    <section id="slide-14" class="slide">
+    <section id="slide-17" class="slide">
       <p class="section-label">Problem Solving 2</p>
       <h2 class="title-md">Orbit MVI 기반 상태 관리와 테스트 가능성 확보</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1689,10 +1772,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">14</span>
+      <span class="slide-no">17</span>
     </section>
 
-    <section id="slide-15" class="slide">
+    <section id="slide-18" class="slide">
       <p class="section-label">Problem Solving 3</p>
       <h2 class="title-md">Channel 기반 Navigator로 화면-네비게이션 결합 분리</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1763,10 +1846,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">15</span>
+      <span class="slide-no">18</span>
     </section>
 
-    <section id="slide-16" class="slide">
+    <section id="slide-19" class="slide">
       <p class="section-label">Result</p>
       <h2 class="title-md">Glim 성과 및 회고</h2>
       <div class="closing-grid with-image" style="margin-top: 0.35in;">
@@ -1795,7 +1878,7 @@
         </div>
       </div>
       <span class="footer-title">Glim Retrospective</span>
-      <span class="slide-no">16</span>
+      <span class="slide-no">19</span>
     </section>
   </main>
 </body>
