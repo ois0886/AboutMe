@@ -1434,7 +1434,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     details: [
       '위치 기반 서비스 업체의 온라인 예약 시스템 구축을 통한 고객 편의성 향상 및 업체 운영 효율성 증대',
       '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트로, 기존 오프라인 중심의 예약 시스템을 디지털화하여 언제 어디서나 접근 가능한 통합 예약 플랫폼 구축',
-      'GitHub 기록 기준 Android 저장소 전체 187커밋 중 163커밋을 작성하며 검색, 지도, 예약, 인증, 로컬 캐싱 흐름을 주도적으로 구현',
+      '코드베이스·Git 기록 기준 Android 저장소 전체 187커밋 중 163커밋을 작성하며 검색, 지도, 예약, 인증, 로컬 캐싱 흐름을 주도적으로 구현',
     ],
     features: [
       '위치 기반 서비스 업체 검색 및 정보 제공, 실시간 거리/소요시간 계산 (Direction5 API 연동)',
@@ -1445,7 +1445,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
       '현재 위치 기반 주변 업체 탐색',
     ],
     contributions: [
-      rich('Android 팀 리드 개발자 (3인 팀 중 Android 전담, ', strong('GitHub 기록 기준 163/187커밋 작성'), ')'),
+      rich('Android 팀 리드 개발자 (3인 팀 중 Android 전담, ', strong('코드베이스·Git 기록 기준 163/187커밋 작성'), ')'),
       rich('업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
       '조회된 업체에 대해서만 Direction5 API로 거리·소요시간을 계산하고 RecyclerView에 거리순 정렬 결과 표시',
       'Naver Map 마커, SearchView, 예약 WebView를 연결해 검색 → 위치 확인 → 예약 흐름 구현',
@@ -1560,7 +1560,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     ],
     achievements: [
       rich('업체 목록 조회를 Room 기반 로컬 검색으로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
-      rich('GitHub 기록 기준 ', strong('전체 187커밋 중 163커밋 작성'), '으로 검색·지도·예약·인증 흐름 주도'),
+      rich('코드베이스·Git 기록 기준 ', strong('전체 187커밋 중 163커밋 작성'), '으로 검색·지도·예약·인증 흐름 주도'),
       'Hilt, Room, EncryptedSharedPreferences, Naver Map, Direction5 API를 조합해 위치 기반 예약 앱의 핵심 흐름 구현',
     ],
     retrospective: [
@@ -1569,7 +1569,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
       '사용자 경험 우선 개발, 현업 멘토링의 중요성, 초기 설계에서의 확장성 고려가 장기적 유지보수에 미치는 임팩트 실감',
     ],
     links: [
-      { label: 'GitHub', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
+      { label: 'Codebase', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
     ],
     screenshots: [
       'screenshot/didim1.png',
@@ -1602,7 +1602,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     details: [
       '기존의 재화 중심 교환이 아닌, 재능과 재능을 교환할 수 있는 모바일 앱 서비스 개발',
       '한성대학교 캡스톤디자인(졸업작품) 프로젝트로, 대학생들이 재화 부족 때문에 원하는 재능을 배우기 어려운 현실을 개선하고자 기획함',
-      'Android 1인 전담으로 presentation/domain/data 멀티 모듈 구조를 설계하고, 앱 전체 화면·API 연동·상태 관리 구현',
+      '코드베이스 기준 presentation/domain/data 멀티 모듈과 33개 UseCase를 구성하고, Android 1인 전담으로 앱 전체 화면·API 연동·상태 관리 구현',
     ],
     features: [
       '재능 등록 및 신청 (게시글 CRUD), 관심 거래/거래 진행 현황 관리',
@@ -1613,7 +1613,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     ],
     contributions: [
       rich(strong('팀장'), ', 안드로이드 개발 전담 (1인)'),
-      rich('Android repo ', strong('137커밋 전체 작성'), ' 및 앱 전체 화면·API 연동·상태 관리 구현'),
+      rich('코드베이스·Git 기록 기준 Android repo ', strong('137커밋 전체 작성'), ' 및 앱 전체 화면·API 연동·상태 관리 구현'),
       'presentation/domain/data 멀티 모듈 구조와 MVVM + Clean Architecture 적용',
       'Repository, DataSource, UseCase, Mapper를 분리해 계층별 책임과 의존 방향 명확화',
       'OkHttp WebSocket 기반 1:1 실시간 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리',
@@ -1837,7 +1837,7 @@ class ChattingViewModel @Inject constructor(
       '"잘 만든 구조가 좋은 코드보다 유지보수에 더 큰 가치를 준다"는 점, 테스트/유지보수/사용자 피드백의 중요성 체감',
     ],
     links: [
-      { label: 'GitHub', url: 'https://github.com/GrapeBongBong/Android' },
+      { label: 'Codebase', url: 'https://github.com/GrapeBongBong/Android' },
     ],
     screenshots: [
       'screenshot/Bong1.png',
