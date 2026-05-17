@@ -1430,7 +1430,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     ],
     period: '2023.01 ~ 2023.06',
     team: '3명 (Android 3명)',
-    role: 'Android 팀 리드 개발자 (전체 기여도 80%)',
+    role: 'Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
     details: [
       '위치 기반 서비스 업체의 온라인 예약 시스템 구축을 통한 고객 편의성 향상 및 업체 운영 효율성 증대',
       '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트로, 기존 오프라인 중심의 예약 시스템을 디지털화하여 언제 어디서나 접근 가능한 통합 예약 플랫폼 구축',

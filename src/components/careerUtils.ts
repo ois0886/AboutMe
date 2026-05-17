@@ -20,12 +20,12 @@ export const careers: CareerEntry[] = [
     periodLabel: '2026.02.09 ~ 재직 중',
     start: new Date(2026, 1, 9),
     tasks: [
-      '금융 및 증권 B2B Android 차트 SDK의 레거시 엔진 연동 UI 및 설정/제어 레이어 개발',
-      '이지차트(간편차트) 모듈 신규 구축 및 차트 화면, 데이터 갱신, 설정 플로우 구현',
-      '지표 정의 데이터 기반의 지표 설정 목록, 상세 설정 화면, 엔진 반영 구조 구현',
-      '기존 이동평균선, Signal 지표, 분석 도구 UI, GMT 시간대 등 차트 표시/설정 오류 개선',
-      '회사 홈페이지 리팩토링 진행',
-      '인사, 고객관리, 문서관리, 사무 보조, 기획안 작성, 문의 전화 응대, 비품 주문 업무 수행',
+      '금융·증권 B2B Android 차트 SDK의 레거시 엔진 연동 UI 및 설정/제어 레이어 개발',
+      '이지차트(간편차트) 모듈 신규 구축: 차트 화면, 데이터 갱신, 설정 플로우 구현',
+      '지표 정의 데이터 기반의 지표 설정 목록·상세 설정·엔진 반영 흐름 구현',
+      '이동평균선, Signal 지표, 분석 도구 UI, GMT 시간대 등 차트 표시/설정 오류 개선',
+      '성능 병목과 구조 개선 지점을 검증하고 차트 SDK의 화면·설정 흐름 개선안 정리',
+      '고객 문의, 운영 문서, 기획안을 개발 이슈로 정리하며 요구사항 커뮤니케이션 지원',
     ],
   },
   {
@@ -36,10 +36,10 @@ export const careers: CareerEntry[] = [
     start: new Date(2023, 0, 16),
     end: new Date(2023, 5, 15),
     tasks: [
-      'Didimdol 프로젝트 Android 팀 리드 개발자 (3인 팀 중 Android 전담, 전체 기여도 80%)',
-      'Room 캐싱 전략 도입으로 반복 API 호출 최소화 및 응답시간 85% 단축',
-      '전국 업체 위치정보 실시간 검색: SearchView + RecyclerView + 거리순 정렬로 사용자 경험 최적화',
-      'ViewBinding 확장 함수와 추상 베이스 클래스 활용해 코드 재사용성 강화',
+      'Didimdol 프로젝트 Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
+      '업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 검색 응답시간 85% 단축',
+      'Direction5 API로 조회된 업체의 거리·소요시간만 보강하고 RecyclerView에 거리순 정렬 결과 표시',
+      'Hilt로 Room DB/DAO, Repository, Remote/Local DataSource, EncryptedSharedPreferences 의존성 구성',
     ],
   },
 ]

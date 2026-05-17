@@ -58,10 +58,10 @@ const activities = [
     image: null,
     details: [
       '(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱',
-      'Android 팀 리드 개발자 (3인 팀 중 Android 전담, 전체 기여도 80%)',
-      'Room 캐싱 전략 도입으로 반복 API 호출 최소화 및 응답시간 85% 단축',
-      '전국 업체 위치정보 실시간 검색: SearchView + RecyclerView + 거리순 정렬로 사용자 경험 최적화',
-      'ViewBinding 확장 함수와 추상 베이스 클래스 활용해 코드 재사용성 강화',
+      'Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
+      '업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 검색 응답시간 85% 단축',
+      'Direction5 API로 조회된 업체의 거리·소요시간만 보강하고 RecyclerView에 거리순 정렬 결과 표시',
+      'Hilt로 Room DB/DAO, Repository, Remote/Local DataSource, EncryptedSharedPreferences 의존성 구성',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
