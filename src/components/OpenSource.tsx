@@ -15,7 +15,7 @@ const openSourceProjects: OpenSourceProject[] = [
     title: 'Compose-Chart',
     period: '2026.02 ~ 2026.03 (Android 1인)',
     description:
-      '외부 의존 없이 Canvas API만으로 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar)를 구현한 Jetpack Compose 라이브러리 · Maven Central 배포 (v1.3.0)',
+      'Canvas API만으로 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar)를 구현한 Jetpack Compose 라이브러리 · Maven Central 배포 (v1.3.0)',
     image: 'screenshot/chart.png',
     tech: ['Kotlin', 'Jetpack Compose', 'Canvas API'],
     github: 'https://github.com/ois0886/compose-chart',
