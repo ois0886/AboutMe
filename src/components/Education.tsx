@@ -20,7 +20,7 @@ const educations = [
     subtitle: '',
     period: '2023.10 ~ 2023.11',
     details: [
-      'Java, SQL, Spring Boot, Git 등 기초적인 백엔드 비대면 교육 프로그램 이수',
+      'Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 프로그램 이수',
     ],
     gpa: '',
     courses: [] as { name: string; grade: string }[],
