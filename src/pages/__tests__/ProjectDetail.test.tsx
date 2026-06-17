@@ -67,4 +67,15 @@ describe('ProjectDetail', () => {
       ),
     ).toBe(true)
   })
+
+  it('주전부리 프로젝트 상세가 정상 렌더링된다', () => {
+    renderProjectDetail('pubburi')
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: '주전부리 - Backend & Web' }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('2025.05')).toBeInTheDocument()
+    expect(screen.getByText('Backend & Web 개발')).toBeInTheDocument()
+    expect(screen.getByText('개인화 추천 파이프라인')).toBeInTheDocument()
+  })
 })

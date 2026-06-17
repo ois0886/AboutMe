@@ -1,12 +1,18 @@
 import type { ReactNode } from 'react'
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+import java from 'react-syntax-highlighter/dist/esm/languages/prism/java'
 import kotlin from 'react-syntax-highlighter/dist/esm/languages/prism/kotlin'
+import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup'
+import sql from 'react-syntax-highlighter/dist/esm/languages/prism/sql'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
-
-SyntaxHighlighter.registerLanguage('kotlin', kotlin)
 import projects, { type RichText } from '../data/projects'
 import styles from './ProjectDetail.module.css'
+
+SyntaxHighlighter.registerLanguage('java', java)
+SyntaxHighlighter.registerLanguage('kotlin', kotlin)
+SyntaxHighlighter.registerLanguage('xml', markup)
+SyntaxHighlighter.registerLanguage('sql', sql)
 
 function renderRichText(content: RichText): ReactNode {
   if (typeof content === 'string') return content
@@ -231,7 +237,7 @@ function ProjectDetail() {
                         </blockquote>
                         {block.code && (
                           <SyntaxHighlighter
-                            language="kotlin"
+                            language={block.language || 'kotlin'}
                             style={oneDark}
                             customStyle={{ borderRadius: '8px', fontSize: '0.85rem', margin: 0 }}
                           >
