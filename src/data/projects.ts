@@ -1130,7 +1130,7 @@ internal class LoginViewModel @Inject constructor(
     title: '주전부리 - Backend & Web',
     description:
       'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue를 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스',
-    thumbnail: 'screenshot/pubburi-web.png',
+    thumbnail: 'screenshot/pubburi-home.png',
     tech: [
       'Java',
       'Spring Boot 3',
@@ -1360,7 +1360,7 @@ public int makeOrder(Order order, List<OrderDetail> details) {
       { label: 'GitHub', url: 'https://github.com/ois0886/Pubburi-Refactor' },
     ],
     screenshots: [
-      'screenshot/pubburi-web.png',
+      'screenshot/pubburi-home.png',
       'screenshot/pubburi-products.png',
       'screenshot/pubburi-admin.png',
     ],
