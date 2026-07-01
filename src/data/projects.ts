@@ -1129,68 +1129,167 @@ internal class LoginViewModel @Inject constructor(
     id: 'pubburi',
     title: '주전부리 - Backend & Web',
     description:
-      'SSAFY 1학기 학습 기술을 적용해 주류 상품 탐색, 주문, 스탬프 적립을 구현한 Spring Boot/Vue 기반 웹 서비스',
+      'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue를 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스',
     thumbnail: 'screenshot/pubburi-web.png',
     tech: [
       'Java',
-      'Spring Boot',
+      'Spring Boot 3',
       'MyBatis',
       'MySQL',
       'REST API',
-      'Swagger/OpenAPI',
       'Vue 3',
       'Vite',
       'Bootstrap',
+      'Docker Compose',
     ],
     period: '2025.05',
     team: '2명 (Backend & Web)',
     role: 'Backend & Web 개발',
     details: [
-      'SSAFY 1학기 관통 프로젝트에서 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 기술을 실제 주문 서비스 흐름에 적용',
-      '상품 목록, 주문, 댓글, 매장 위치, 사용자 정보, 스탬프 적립을 REST API로 구성하고 Swagger/OpenAPI 문서화 적용',
-      'Vue 3와 Bootstrap 기반으로 카테고리, 배너, 상품 카드 중심의 웹 홈 화면을 구성하고 백엔드 API와 연동 가능한 화면 구조 설계',
-      'Android 구현 내용은 제외하고, 백엔드와 웹 화면 구현 경험 중심으로 정리',
+      'SSAFY 1학기 관통 프로젝트에서 배운 Java, Spring Boot, MyBatis, MySQL, Vue 학습 내용을 실제 주류 주문 웹 서비스에 적용',
+      '주류 상품 조회, 카테고리/검색, 장바구니, 주문, 댓글, 마이페이지, 스탬프 등급, 매장 조회, 관리자 CRUD를 하나의 웹 애플리케이션으로 구현',
+      'Backend는 Controller-Service-DAO 계층과 MyBatis XML Mapper를 기반으로 구성하고, Frontend는 Vue 3와 Bootstrap으로 고객/관리자 화면을 구성',
+      '이후 public repository 기준으로 로컬 실행이 가능하도록 Spring Boot 3, Vue 3, Docker Compose MySQL 구조와 문서를 정리',
     ],
     features: [
-      '상품/카테고리 조회 및 주류 상품 홈 화면 구성',
-      '주문 생성, 주문 상세 조회, 최근 1개월/6개월 주문 내역 조회 API',
-      '댓글 등록/수정/삭제 및 상품별 댓글 조회 API',
-      '주문 수 기반 인기 상품 조회와 스탬프 적립/등급 정보 계산',
-      '매장 위치 조회 API 및 사용자 정보/주문 내역 통합 조회',
+      '고객 화면: 상품 목록/검색/카테고리/상세, 댓글, 장바구니, 주문, 로그인, 회원가입, 마이페이지, 매장 조회',
+      '관리자 화면: 상품 CRUD, 매장 CRUD, 주문 관리, 댓글 관리, 사용자 관리',
+      '세션 기반 로그인, 사용자 프로필, 주문 내역, 스탬프 등급 계산',
+      '주문 생성, 주문 상세 조회, 사용자 주문 목록, 주문 완료/삭제 API',
+      '상품별 댓글 등록/수정/삭제 및 관리자 댓글 목록 조회',
+      '주문 수 기반 인기 상품 조회와 상품 목록 검색/정렬',
     ],
     contributions: [
       'Spring Boot Controller-Service-DAO 계층으로 사용자, 상품, 주문, 댓글, 매장 API 구현',
-      'MyBatis XML Mapper로 주문-상세주문, 상품, 사용자 테이블을 직접 매핑',
+      'MyBatis XML Mapper로 상품 목록/상세, 주문/주문 상세, 댓글, 사용자, 매장 데이터를 직접 매핑',
       '주문 생성 시 주문 상세, 상품 주문 수, 스탬프, 사용자 상태를 하나의 트랜잭션 흐름으로 연결',
-      '최근 주문 내역 조회와 주문 수 기반 인기 상품 조회 API 구현',
-      'Vue 3, Vite, Bootstrap 기반으로 배너/카테고리/상품 카드 컴포넌트 중심의 웹 홈 화면 구성',
+      'Vue 3와 Bootstrap 기반으로 고객 홈, 상품 목록/상세, 장바구니, 마이페이지, 관리자 화면 구성',
+      '고객/관리자 화면에서 사용할 Backend API contract를 정리하고 `/api` 호출 흐름을 Vue API client로 연결',
+      '프로젝트 이후 로컬 실행 문서, API map, layer 문서, 성능 기록을 정리해 재현 가능한 저장소로 보강',
     ],
     problemSolvings: [
       {
         problem: [
-          '주문 생성은 단순히 주문 row를 추가하는 작업이 아니라, 상세 주문 저장, 상품별 주문 수 증가, 스탬프 적립, 사용자 스탬프 갱신까지 함께 처리되어야 하는 복합 비즈니스 흐름이었음',
-          '각 처리가 개별 API나 화면 로직에 흩어지면 주문은 생성됐지만 스탬프가 누락되거나, 상품 주문 수와 사용자 상태가 맞지 않는 데이터 불일치가 발생할 수 있었음',
+          'SSAFY 1학기에서 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 내용을 단순 예제가 아니라 상품 탐색, 주문, 댓글, 마이페이지, 관리자 기능까지 이어지는 하나의 서비스 흐름으로 연결해야 했음',
+          '고객 화면과 관리자 화면이 같은 상품/주문/댓글 데이터를 사용하므로, API 경로와 응답 구조가 흔들리면 Frontend 구현과 Backend 유지보수가 함께 복잡해질 수 있었음',
+          '로그인 사용자, 관리자, 본인만 접근 가능한 API가 섞여 있어 화면별로 권한 체크를 흩어 작성하면 누락 위험이 있었음',
         ],
         solution: [
+          'Backend API를 user, product, order, comment, market 영역으로 나누고, 각 기능을 Controller-Service-DAO-Mapper 흐름으로 구현',
+          'Vue 화면에서 사용할 API contract를 `/api` prefix 아래로 정리하고, `src/services/api.js`의 단일 request wrapper로 세션 쿠키와 JSON error handling을 공통 적용',
+          'SessionSupport로 로그인 필요, 관리자 권한, 본인 또는 관리자 권한 체크를 통합해 Controller별 중복 검증 로직을 줄임',
+          '프로젝트 이후에는 Docker Compose MySQL, `.env.example`, runbook을 보강해 다른 환경에서도 같은 흐름으로 실행할 수 있게 정리',
+        ],
+        result: [
+          rich('SSAFY 1학기 학습 기술을 ', strong('DB, REST API, Vue 화면'), '으로 연결해 실제 주문 웹 서비스 형태로 구현'),
+          '고객 화면과 관리자 화면이 동일한 API contract를 사용하게 되어 상품/주문/댓글 기능의 변경 위치와 검증 범위가 명확해짐',
+          '로그인/관리자/본인 권한 기준을 공통화해 API 접근 조건을 일관되게 유지',
+        ],
+        implementation: [
+          {
+            description:
+              'Vue 화면에서 상품, 주문, 댓글, 관리자 API를 직접 fetch로 흩어 호출하지 않고, API client를 통해 의도 중심 메서드로 호출하도록 정리함. 화면 코드는 api.products(), api.createOrder()처럼 필요한 동작만 호출하고, 세션 쿠키와 JSON parsing은 공통 request가 담당함.',
+            language: 'text',
+            code: `const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
+
+async function request(path, options = {}) {
+  const response = await fetch(\`\${API_BASE}\${path}\`, {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+    },
+    ...options,
+  })
+
+  if (response.status === 204) {
+    return null
+  }
+
+  const text = await response.text()
+  const data = text ? JSON.parse(text) : null
+
+  if (!response.ok) {
+    const message = data?.message || response.statusText || 'Request failed'
+    throw new Error(message)
+  }
+
+  return data
+}`,
+          },
+          {
+            description:
+              '사용자 주문 목록, 마이페이지, 관리자 주문/상품/댓글 관리처럼 접근 조건이 다른 API를 같은 기준으로 처리하기 위해 세션 사용자 확인과 권한 검증을 공통 support 클래스로 모음.',
+            language: 'java',
+            code: `abstract class SessionSupport {
+    static final String SESSION_USER = "PUBBURI_USER";
+
+    User requireLogin(HttpSession session) {
+        User user = currentUser(session);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Login required");
+        }
+        return user;
+    }
+
+    User requireAdmin(HttpSession session) {
+        User user = requireLogin(session);
+        if (!user.isAdmin()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin permission required");
+        }
+        return user;
+    }
+
+    void requireSelfOrAdmin(HttpSession session, String userId) {
+        User user = requireLogin(session);
+        if (!user.isAdmin() && !user.getId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed");
+        }
+    }
+}`,
+          },
+        ],
+        alternatives: [
+          '화면별 fetch 호출을 유지하면서 일부 옵션만 맞출 수도 있었지만, 고객/관리자 화면이 늘어날수록 세션 쿠키와 에러 처리 방식이 다시 흩어질 가능성이 있어 API client를 단일 진입점으로 두는 쪽이 적합했음.',
+          '권한 체크를 각 Controller 메서드에 직접 작성하는 방식도 가능했지만, 관리자/본인 검증 조건이 늘어날수록 누락 위험이 커져 공통 support 클래스로 기준을 모으는 방향을 선택함.',
+        ],
+      },
+      {
+        problem: [
+          '주문 생성은 단순히 주문 row를 추가하는 작업이 아니라, 상세 주문 저장, 상품별 주문 수 증가, 스탬프 적립, 사용자 스탬프 갱신까지 함께 처리되어야 하는 복합 비즈니스 흐름이었음',
+          '각 처리가 개별 API나 화면 로직에 흩어지면 주문은 생성됐지만 스탬프가 누락되거나, 상품 주문 수와 사용자 상태가 맞지 않는 데이터 불일치가 발생할 수 있었음',
+          '잘못된 주문 상세나 비로그인 사용자의 주문 요청이 들어올 때 어느 layer에서 검증해야 하는지 명확하지 않았음',
+        ],
+        solution: [
+          'OrderRestController에서 세션 사용자를 확인하고, 주문 사용자와 로그인 사용자가 일치하거나 관리자 권한을 가진 경우에만 주문을 허용',
           'OrderService의 주문 생성 메서드에 @Transactional을 적용하고, 주문 생성 이후 생성된 주문 id를 상세 주문에 주입해 주문-상세주문 관계를 명확히 연결',
-          '상세 주문을 순회하며 상품 주문 수를 수량만큼 증가시키고, 전체 주문 수량을 기반으로 스탬프 적립과 사용자 스탬프 갱신을 한 흐름에서 처리',
+          '상세 주문의 productId와 quantity를 검증한 뒤 상품 주문 수 증가, 전체 주문 수량 기반 스탬프 적립, 사용자 스탬프 갱신을 하나의 서비스 흐름에서 처리',
         ],
         result: [
           rich('주문 생성 시 발생하는 여러 상태 변경을 ', strong('하나의 트랜잭션성 서비스 흐름'), '으로 묶어 데이터 일관성을 확보'),
+          'Controller는 인증/권한과 요청 진입 조건을 담당하고, Service는 도메인 상태 변경과 트랜잭션 경계를 담당하도록 책임 분리',
           '단순 CRUD를 넘어 주문 도메인의 후속 상태 변화를 설계하며 Spring Boot 서비스 계층의 책임 범위를 학습',
         ],
         implementation: [
           {
             description:
-              '주문 생성 서비스에서 주문 row를 먼저 저장하고, 생성된 주문 id를 상세 주문에 연결함. 이후 상세 주문 수량을 기준으로 상품 주문 수와 스탬프를 함께 갱신해 주문 도메인의 후속 상태를 한곳에서 관리함.',
+              '주문 생성 서비스에서 입력값을 검증하고 주문 row를 먼저 저장한 뒤, 생성된 주문 id를 상세 주문에 연결함. 이후 상세 주문 수량을 기준으로 상품 주문 수와 스탬프를 함께 갱신해 주문 도메인의 후속 상태를 한곳에서 관리함.',
             language: 'java',
             code: `@Override
 @Transactional
 public int makeOrder(Order order, List<OrderDetail> details) {
+    if (order == null || isBlank(order.getUserId()) || details == null || details.isEmpty()) {
+        return 0;
+    }
+    if (isBlank(order.getCompleted())) {
+        order.setCompleted("N");
+    }
     int result = orderDao.insert(order);
-
     int totalQuantity = 0;
     for (OrderDetail detail : details) {
+        if (detail.getProductId() <= 0 || detail.getQuantity() <= 0) {
+            throw new IllegalArgumentException("Invalid order detail");
+        }
         detail.setOrderId(order.getoId());
         orderDetailDao.insert(detail);
         productDao.incrementOrderCount(detail.getProductId(), detail.getQuantity());
@@ -1204,8 +1303,10 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     stampDao.insert(stamp);
 
     User user = userDao.selectById(order.getUserId());
-    user.setStamps(user.getStamps() + totalQuantity);
-    userDao.updateStamp(user);
+    if (user != null) {
+        user.setStamps(user.getStamps() + totalQuantity);
+        userDao.updateStamp(user);
+    }
 
     return result;
 }`,
@@ -1232,20 +1333,83 @@ public int makeOrder(Order order, List<OrderDetail> details) {
           'JPA 기반 연관관계 매핑도 고려할 수 있었지만, SSAFY 1학기에서 학습한 SQL/MyBatis 흐름을 직접 적용하는 프로젝트 목적에는 XML Mapper로 쿼리와 응답 구조를 명확히 확인하는 방식이 더 적합했음.',
         ],
       },
+      {
+        problem: [
+          '상품 목록, 인기 상품, 주문 상세, 댓글 조회는 서비스의 핵심 화면에서 반복적으로 사용되므로, Backend 응답이 화면 요구사항을 충분히 담지 못하면 Frontend에서 추가 요청과 임의 가공이 늘어날 수 있었음',
+          '카테고리, 검색어, 가격/이름/인기순 정렬 같은 조건을 화면에서 처리하면 데이터가 늘어날수록 응답 크기와 화면 처리 비용이 커질 수 있었음',
+          '주문 상세 화면은 주문 정보와 상품명, 수량, 단가, 합계 금액이 함께 필요해 단순 주문 row 조회만으로는 화면을 구성하기 어려웠음',
+        ],
+        solution: [
+          '상품 목록은 SQL에서 카테고리, 검색어, 정렬 조건을 처리하고 인기 상품은 order_count 기준 제한 목록으로 조회',
+          '주문 상세는 MyBatis resultMap과 collection을 활용해 주문 정보와 상세 상품 목록을 함께 조립',
+          '상품 타입, 상품 주문 수, 주문 사용자/시간, 주문 상세, 댓글 상품 기준 index를 추가해 주요 조회 경로를 보강',
+          'Frontend는 Backend에서 정리된 응답을 받아 상품 카드, 주문 내역, 관리자 목록 화면에 바로 사용할 수 있도록 구성',
+        ],
+        result: [
+          rich('상품·주문·댓글의 주요 조회 경로가 ', strong('SQL 정렬/필터와 MyBatis 매핑'), ' 중심으로 정리되어 화면의 임의 가공과 중복 호출을 줄임'),
+          '인기 상품, 상품 목록, 주문 상세, 사용자 주문 내역, 댓글 목록을 Backend API 기준으로 안정적으로 제공',
+          'SQL과 index를 직접 설계하며 SSAFY 1학기에서 배운 DB 조회와 Backend API 설계를 서비스 화면 요구사항에 맞게 적용',
+        ],
+        implementation: [
+          {
+            description:
+              '상품 목록 Mapper에서 검색어, 카테고리, 정렬 조건을 SQL에 모아 화면은 결과를 그대로 렌더링하도록 정리함. 인기 상품은 주문 수 기준 상위 목록만 제한 조회함.',
+            language: 'xml',
+            code: `<select id="selectFiltered" resultMap="ProductResult">
+    SELECT id, name, type, price, img, abv, order_count
+    FROM t_product
+    <where>
+        <if test="type != null">
+            type = #{type}
+        </if>
+        <if test="q != null">
+            AND (name LIKE CONCAT('%', #{q}, '%') OR type LIKE CONCAT('%', #{q}, '%'))
+        </if>
+    </where>
+    <choose>
+        <when test="sort == 'priceAsc'">ORDER BY price ASC, id ASC</when>
+        <when test="sort == 'priceDesc'">ORDER BY price DESC, id ASC</when>
+        <when test="sort == 'name'">ORDER BY name ASC, id ASC</when>
+        <otherwise>ORDER BY order_count DESC, id ASC</otherwise>
+    </choose>
+</select>`,
+          },
+          {
+            description:
+              '조회 빈도가 높은 필터와 join 기준에 index를 추가해 상품 목록, 인기 상품, 주문 목록, 주문 상세, 댓글 목록의 기본 조회 비용을 줄이는 방향으로 schema를 정리함.',
+            language: 'sql',
+            code: `CREATE INDEX idx_product_type ON t_product(type);
+CREATE INDEX idx_product_order_count ON t_product(order_count);
+CREATE INDEX idx_order_user_time ON t_order(user_id, order_time);
+CREATE INDEX idx_order_detail_order ON t_order_detail(order_id);
+CREATE INDEX idx_order_detail_product ON t_order_detail(product_id);
+CREATE INDEX idx_comment_product ON t_comment(product_id);`,
+          },
+        ],
+        alternatives: [
+          'Frontend에서 전체 상품 목록을 받아 필터링/정렬하는 방식도 가능했지만, 상품 수가 늘어날수록 클라이언트 가공 비용과 응답 크기가 커지므로 SQL에서 조건을 처리하는 방향이 더 적합했음.',
+          '주문 상세를 주문 API와 상품 API 여러 번 호출로 조립할 수도 있었지만, 화면에서 필요한 응답 형태가 명확했기 때문에 Backend에서 주문 상세 정보를 조립해 내려주는 방식이 더 단순했음.',
+        ],
+      },
     ],
     insights: [],
     achievements: [
-      'SSAFY 1학기 학습 기술을 Spring Boot REST API, MyBatis SQL 매핑, Vue 웹 화면 구성으로 연결',
+      'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 기술을 full-stack 웹 서비스로 구현',
+      '고객용 상품 탐색/주문/댓글/마이페이지와 관리자용 상품/매장/주문/댓글/사용자 관리 화면 구현',
       rich('주문 생성, 스탬프 적립, 상품 주문 수 증가를 ', strong('하나의 주문 비즈니스 흐름'), '으로 구현'),
-      '최근 주문 내역 조회와 주문 수 기반 인기 상품 조회 API를 백엔드 기능으로 정리',
-      'Swagger/OpenAPI 문서화로 API 사용 흐름을 확인할 수 있는 백엔드 프로젝트 구조 구성',
+      '상품 목록 검색/정렬, 인기 상품, 주문 상세, 댓글 조회 API를 MyBatis SQL 매핑으로 구성',
+      '프로젝트 이후 Spring Boot 3, Vue 3, Docker Compose MySQL 기반으로 로컬 실행 가능한 구조와 문서 보강',
     ],
     retrospective: [
-      '학습 프로젝트였기 때문에 인증 보안, 비밀번호 저장 방식 등 운영 수준의 보완점이 남아 있음을 확인',
+      'SSAFY 1학기 학습 내용을 프로젝트에 적용하며, Controller-Service-DAO 계층과 SQL Mapper가 실제 화면 요구사항과 어떻게 연결되는지 체감',
       '도메인 상태 변경이 여러 테이블에 걸쳐 발생할 때 트랜잭션 경계와 실패 처리 기준을 먼저 정리해야 한다는 점을 학습',
-      'Vue 웹은 화면 구성 중심으로 구현되어, 이후 프로젝트에서는 API 연동 상태 관리와 에러 처리까지 프론트 구조에 포함해야 한다는 점을 깨달음',
+      'Frontend 화면을 단순히 만드는 것에서 끝나지 않고, API 응답 구조와 에러 처리 기준까지 함께 설계해야 화면 구현이 안정적이라는 점을 깨달음',
+      '프로젝트 이후 다시 정리하면서 실행 환경, seed data, 문서, 검증 명령을 함께 남겨야 다른 사람이 프로젝트를 재현할 수 있음을 확인',
+      '다음 개선으로 비밀번호 해시 알고리즘 고도화, 관리자 목록 pagination, 이미지 WebP/리사이즈, route 단위 code splitting을 적용할 필요성을 정리',
     ],
-    links: [],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/ois0886/Pubburi-Refactor' },
+    ],
     screenshots: [
       'screenshot/pubburi-web.png',
     ],
