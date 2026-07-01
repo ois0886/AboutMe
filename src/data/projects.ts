@@ -626,7 +626,7 @@ dependencies {
     title: 'Glim - Android',
     description: '글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱',
     thumbnail: 'screenshot/Glim1.png',
-    tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
+    tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'Firebase Messaging', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
     period: '2025.07 ~ 2025.08',
     team: '6명 (Backend 2명, Android 2명, Frontend 1명, Backend & Android 1명)',
     role: 'Android 앱 개발(로그인/회원가입, 마이페이지 UI 및 기능 개발)',
