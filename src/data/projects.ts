@@ -626,7 +626,7 @@ dependencies {
     title: 'Glim - Android',
     description: '글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱',
     thumbnail: 'screenshot/Glim1.png',
-    tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'Firebase Messaging', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
+    tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
     period: '2025.07 ~ 2025.08',
     team: '6명 (Backend 2명, Android 2명, Frontend 1명, Backend & Android 1명)',
     role: 'Android 앱 개발(로그인/회원가입, 마이페이지 UI 및 기능 개발)',
@@ -1129,7 +1129,7 @@ internal class LoginViewModel @Inject constructor(
     id: 'pubburi',
     title: '주전부리 - Backend & Web',
     description:
-      'SSAFY 1학기 학습 기술을 적용해 주류 상품 탐색, 주문, 스탬프 적립, AI 추천을 구현한 Spring Boot/Vue 기반 웹 서비스',
+      'SSAFY 1학기 학습 기술을 적용해 주류 상품 탐색, 주문, 스탬프 적립을 구현한 Spring Boot/Vue 기반 웹 서비스',
     thumbnail: 'screenshot/pubburi-web.png',
     tech: [
       'Java',
@@ -1138,8 +1138,6 @@ internal class LoginViewModel @Inject constructor(
       'MySQL',
       'REST API',
       'Swagger/OpenAPI',
-      'Firebase FCM',
-      'OpenAI API',
       'Vue 3',
       'Vite',
       'Bootstrap',
@@ -1149,9 +1147,9 @@ internal class LoginViewModel @Inject constructor(
     role: 'Backend & Web 개발',
     details: [
       'SSAFY 1학기 관통 프로젝트에서 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 기술을 실제 주문 서비스 흐름에 적용',
-      '상품 목록, 주문, 댓글, 매장 위치, 사용자 정보, 스탬프 적립, FCM 토큰 등록을 REST API로 구성하고 Swagger/OpenAPI 문서화 적용',
+      '상품 목록, 주문, 댓글, 매장 위치, 사용자 정보, 스탬프 적립을 REST API로 구성하고 Swagger/OpenAPI 문서화 적용',
       'Vue 3와 Bootstrap 기반으로 카테고리, 배너, 상품 카드 중심의 웹 홈 화면을 구성하고 백엔드 API와 연동 가능한 화면 구조 설계',
-      'Android 구현 내용은 제외하고, 백엔드와 웹 화면 구현 및 외부 API 연동 경험 중심으로 정리',
+      'Android 구현 내용은 제외하고, 백엔드와 웹 화면 구현 경험 중심으로 정리',
     ],
     features: [
       '상품/카테고리 조회 및 주류 상품 홈 화면 구성',
@@ -1159,30 +1157,27 @@ internal class LoginViewModel @Inject constructor(
       '댓글 등록/수정/삭제 및 상품별 댓글 조회 API',
       '주문 수 기반 인기 상품 조회와 스탬프 적립/등급 정보 계산',
       '매장 위치 조회 API 및 사용자 정보/주문 내역 통합 조회',
-      'FCM 토큰 저장 및 주문 유형별 푸시 알림 발송',
-      'OpenAI API 기반 AI 큐레이터 응답 및 최근 주문 이력 기반 상품 추천',
     ],
     contributions: [
       'Spring Boot Controller-Service-DAO 계층으로 사용자, 상품, 주문, 댓글, 매장 API 구현',
-      'MyBatis XML Mapper로 주문-상세주문, 상품, 사용자, 대화 이력 테이블을 직접 매핑',
-      '주문 생성 시 주문 상세, 상품 주문 수, 스탬프, 사용자 상태, FCM 알림을 하나의 비즈니스 흐름으로 연결',
-      '최근 6개월 주문 데이터를 기반으로 OpenAI 추천 응답을 생성하고 상품 DB와 매칭하는 추천 API 구현',
+      'MyBatis XML Mapper로 주문-상세주문, 상품, 사용자 테이블을 직접 매핑',
+      '주문 생성 시 주문 상세, 상품 주문 수, 스탬프, 사용자 상태를 하나의 트랜잭션 흐름으로 연결',
+      '최근 주문 내역 조회와 주문 수 기반 인기 상품 조회 API 구현',
       'Vue 3, Vite, Bootstrap 기반으로 배너/카테고리/상품 카드 컴포넌트 중심의 웹 홈 화면 구성',
     ],
     problemSolvings: [
       {
         problem: [
-          '주문 생성은 단순히 주문 row를 추가하는 작업이 아니라, 상세 주문 저장, 상품별 주문 수 증가, 스탬프 적립, 사용자 스탬프 갱신, 주문 완료 알림까지 함께 처리되어야 하는 복합 비즈니스 흐름이었음',
+          '주문 생성은 단순히 주문 row를 추가하는 작업이 아니라, 상세 주문 저장, 상품별 주문 수 증가, 스탬프 적립, 사용자 스탬프 갱신까지 함께 처리되어야 하는 복합 비즈니스 흐름이었음',
           '각 처리가 개별 API나 화면 로직에 흩어지면 주문은 생성됐지만 스탬프가 누락되거나, 상품 주문 수와 사용자 상태가 맞지 않는 데이터 불일치가 발생할 수 있었음',
         ],
         solution: [
           'OrderService의 주문 생성 메서드에 @Transactional을 적용하고, 주문 생성 이후 생성된 주문 id를 상세 주문에 주입해 주문-상세주문 관계를 명확히 연결',
           '상세 주문을 순회하며 상품 주문 수를 수량만큼 증가시키고, 전체 주문 수량을 기반으로 스탬프 적립과 사용자 스탬프 갱신을 한 흐름에서 처리',
-          '주문 유형을 DELIVERY/TAKEOUT으로 구분해 주문 완료 알림을 발송하고, 배달 주문은 추가 완료 알림까지 FCM으로 전달하도록 구성',
         ],
         result: [
-          rich('주문 생성 시 발생하는 여러 상태 변경을 ', strong('하나의 트랜잭션성 서비스 흐름'), '으로 묶어 데이터 일관성과 사용자 피드백을 함께 고려한 경험 확보'),
-          '단순 CRUD를 넘어 주문 도메인의 후속 상태 변화와 외부 알림 연동까지 설계하며 Spring Boot 서비스 계층의 책임 범위를 학습',
+          rich('주문 생성 시 발생하는 여러 상태 변경을 ', strong('하나의 트랜잭션성 서비스 흐름'), '으로 묶어 데이터 일관성을 확보'),
+          '단순 CRUD를 넘어 주문 도메인의 후속 상태 변화를 설계하며 Spring Boot 서비스 계층의 책임 범위를 학습',
         ],
         implementation: [
           {
@@ -1233,93 +1228,21 @@ public int makeOrder(Order order, List<OrderDetail> details) {
           },
         ],
         alternatives: [
-          '주문 생성 후 스탬프 적립과 알림 발송을 별도 API로 분리할 수도 있었지만, 학습 프로젝트 규모에서는 호출 순서와 실패 처리를 클라이언트가 떠안게 되어 일관성 관리가 더 어려웠을 것임.',
+          '주문 생성 후 스탬프 적립을 별도 API로 분리할 수도 있었지만, 학습 프로젝트 규모에서는 호출 순서와 실패 처리를 클라이언트가 떠안게 되어 일관성 관리가 더 어려웠을 것임.',
           'JPA 기반 연관관계 매핑도 고려할 수 있었지만, SSAFY 1학기에서 학습한 SQL/MyBatis 흐름을 직접 적용하는 프로젝트 목적에는 XML Mapper로 쿼리와 응답 구조를 명확히 확인하는 방식이 더 적합했음.',
-        ],
-      },
-      {
-        problem: [
-          '인기 상품 조회만으로는 모든 사용자에게 동일한 상품이 노출되어, 사용자의 최근 주문 이력이나 선호 주종을 반영하기 어려웠음',
-          'OpenAI 응답은 자연어 형태로 반환되기 때문에, 추천 문장을 그대로 보여주는 것만으로는 실제 상품 상세 화면이나 카드 UI와 연결하기 어려웠음',
-        ],
-        solution: [
-          '최근 6개월 주문 내역을 조회해 상품별 주문 수량과 주종별 주문량을 집계하고, 이를 추천 프롬프트의 사용자 맥락으로 구성',
-          'OpenAI 응답에서 따옴표로 감싼 추천 상품명을 정규식으로 파싱하고, DB에서 정확히 일치하는 상품을 조회해 실제 상품 카드 데이터와 연결',
-          '추천 상품이 식별되면 같은 주종의 인기 상품을 추가로 조회해 메인 추천 1개와 유사 상품 2개를 함께 반환하도록 구성',
-        ],
-        result: [
-          rich('사용자의 주문 데이터, LLM 응답, 상품 DB 조회를 연결한 ', strong('개인화 추천 파이프라인'), '을 구현'),
-          'LLM 응답을 단순 텍스트로 소비하지 않고 서비스 데이터 모델과 다시 매칭하면서, AI 기능을 실제 상품 UI와 연결하는 흐름을 경험',
-        ],
-        implementation: [
-          {
-            description:
-              '최근 주문 목록의 상세 상품을 순회해 상품별 수량을 집계하고, 상품 DB에서 주종 정보를 조회해 추천 프롬프트에 넣을 요약 문장을 구성함.',
-            language: 'java',
-            code: `Map<Integer, Integer> productCount = new HashMap<>();
-for (OrderInfo order : orderList) {
-    for (OrderDetailInfo detail : order.getDetails()) {
-        productCount.merge(detail.getProductId(), detail.getQuantity(), Integer::sum);
-    }
-}
-
-Map<String, Integer> typeCount = new HashMap<>();
-for (Map.Entry<Integer, Integer> entry : productCount.entrySet()) {
-    Product product = productDao.selectById(entry.getKey());
-    if (product == null) continue;
-    typeCount.merge(product.getType(), entry.getValue(), Integer::sum);
-}`,
-          },
-          {
-            description:
-              'OpenAI 응답에서 추천 상품명을 파싱한 뒤 DB 상품과 매칭함. 추천 상품이 식별되면 같은 주종의 인기 상품을 함께 조회해 추천 결과를 카드 목록으로 내려줄 수 있게 구성함.',
-            language: 'java',
-            code: `String reply = result.getChoices().get(0).getMessage().getContent().trim();
-String recommendedName = parseRecommendedName(reply);
-
-Product mainProduct = productDao.selectByExactName(recommendedName);
-String targetType = (mainProduct != null) ? mainProduct.getType() : null;
-
-List<Product> similarProducts = targetType != null
-        ? productDao.selectTopNByTypeExcludeName(targetType, recommendedName, 2)
-        : productDao.selectPopular().stream()
-                .filter(p -> !p.getName().equals(recommendedName))
-                .limit(2)
-                .collect(Collectors.toList());`,
-          },
-          {
-            description:
-              '상품명 기반 매칭과 주종 기반 유사 상품 조회는 MyBatis 쿼리로 분리함. LLM이 고른 추천 상품을 서비스의 실제 상품 데이터와 연결하고, 실패 시 인기 상품 기반 fallback을 사용할 수 있는 여지를 둠.',
-            language: 'xml',
-            code: `<select id="selectByExactName" resultType="com.pubburi.pub.model.dto.Product">
-    SELECT * FROM t_product WHERE name = #{name} LIMIT 1
-</select>
-
-<select id="selectTopNByTypeExcludeName" resultType="com.pubburi.pub.model.dto.Product">
-    SELECT * FROM t_product
-    WHERE type = #{type}
-      AND name != #{excludeName}
-    ORDER BY order_count DESC
-    LIMIT #{n}
-</select>`,
-          },
-        ],
-        alternatives: [
-          '상품 order_count만 기준으로 인기순 추천을 제공할 수도 있었지만, 사용자별 구매 이력이라는 차별점이 없어 개인화 경험을 보여주기 어려웠을 것임.',
-          'OpenAI 응답 전체를 그대로 화면에 노출하는 방식도 가능했지만, 실제 상품 카드와 연결되지 않아 추천 이후 탐색/구매 흐름으로 이어지기 어려웠을 것임.',
         ],
       },
     ],
     insights: [],
     achievements: [
       'SSAFY 1학기 학습 기술을 Spring Boot REST API, MyBatis SQL 매핑, Vue 웹 화면 구성으로 연결',
-      rich('주문 생성, 스탬프 적립, 상품 주문 수 증가, FCM 알림을 ', strong('하나의 주문 비즈니스 흐름'), '으로 구현'),
-      '최근 6개월 주문 이력과 OpenAI API를 연결해 개인화 추천 응답과 실제 상품 데이터를 매칭',
+      rich('주문 생성, 스탬프 적립, 상품 주문 수 증가를 ', strong('하나의 주문 비즈니스 흐름'), '으로 구현'),
+      '최근 주문 내역 조회와 주문 수 기반 인기 상품 조회 API를 백엔드 기능으로 정리',
       'Swagger/OpenAPI 문서화로 API 사용 흐름을 확인할 수 있는 백엔드 프로젝트 구조 구성',
     ],
     retrospective: [
-      '학습 프로젝트였기 때문에 인증 보안, 비밀번호 저장 방식, API 키 관리 등 운영 수준의 보완점이 남아 있음을 확인',
-      '프롬프트에 상품 정보를 직접 포함하는 방식은 빠르게 구현할 수 있었지만, 상품 데이터가 변경될 때 유지보수 비용이 커질 수 있어 DB 기반 프롬프트 생성 구조의 필요성을 느낌',
+      '학습 프로젝트였기 때문에 인증 보안, 비밀번호 저장 방식 등 운영 수준의 보완점이 남아 있음을 확인',
+      '도메인 상태 변경이 여러 테이블에 걸쳐 발생할 때 트랜잭션 경계와 실패 처리 기준을 먼저 정리해야 한다는 점을 학습',
       'Vue 웹은 화면 구성 중심으로 구현되어, 이후 프로젝트에서는 API 연동 상태 관리와 에러 처리까지 프론트 구조에 포함해야 한다는 점을 깨달음',
     ],
     links: [],

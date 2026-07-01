@@ -76,6 +76,6 @@ describe('ProjectDetail', () => {
     ).toBeInTheDocument()
     expect(screen.getByText('2025.05')).toBeInTheDocument()
     expect(screen.getByText('Backend & Web 개발')).toBeInTheDocument()
-    expect(screen.getByText('개인화 추천 파이프라인')).toBeInTheDocument()
+    expect(screen.getByText('하나의 트랜잭션성 서비스 흐름')).toBeInTheDocument()
   })
 })

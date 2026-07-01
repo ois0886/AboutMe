@@ -22,7 +22,6 @@ const skills = [
       'Spring Boot 기반 REST API 설계 및 Controller-Service-DAO 계층 구현 경험',
       'MyBatis와 MySQL을 활용한 직접 SQL 매핑, resultMap/collection 기반 응답 모델 구성 경험',
       '주문 생성, 상세 주문, 스탬프 적립, 상품 주문 수 갱신 등 도메인 상태 변경을 트랜잭션 흐름으로 구성한 경험',
-      'OpenAI API와 Firebase FCM 등 외부 서비스를 백엔드 기능 흐름에 연동한 경험',
       'Vue 3, Vite, Bootstrap 기반 웹 화면 구성 및 컴포넌트 단위 UI 분리 경험',
     ],
   },
