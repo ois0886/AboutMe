@@ -20,10 +20,10 @@ export const careers: CareerEntry[] = [
     periodLabel: '2026.02.09 ~ 재직 중',
     start: new Date(2026, 1, 9),
     tasks: [
-      '금융·증권 B2B Android 차트 SDK의 레거시 엔진 연동 UI 및 설정/제어 레이어 개발',
-      '이지차트(간편차트) 모듈 신규 구축: 차트 화면, 데이터 갱신, 설정 플로우 구현',
-      '지표 정의 데이터 기반의 지표 설정 목록·상세 설정·엔진 반영 흐름 구현',
-      '이동평균선, Signal 지표, 분석 도구 UI, GMT 시간대 등 차트 표시/설정 오류 개선',
+      '증권사 MTS 차트 솔루션 Android 영역 유지보수 및 기능 개선',
+      '모바일 차트 화면 오류 재현, 로그 확인 및 디버깅을 통한 원인 파악',
+      '모바일 사용성을 고려한 간편차트 화면 구성 및 주요 동작 구현',
+      '고객사 요청사항에 따른 차트 화면 오류 재현, 로그 확인 및 디버깅 수행',
     ],
   },
 ]
@@ -31,9 +31,10 @@ export const careers: CareerEntry[] = [
 function getCareerMonths(start: Date, end: Date) {
   const years = end.getFullYear() - start.getFullYear()
   const months = end.getMonth() - start.getMonth()
-  const totalMonths = years * 12 + months + 1
+  const dayAdjustment = end.getDate() < start.getDate() ? 1 : 0
+  const totalMonths = years * 12 + months - dayAdjustment
 
-  return Math.max(totalMonths, 1)
+  return Math.max(totalMonths, 0)
 }
 
 export function getTotalCareer() {

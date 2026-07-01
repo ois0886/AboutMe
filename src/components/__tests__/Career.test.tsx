@@ -54,24 +54,29 @@ describe('getTotalCareer', () => {
     vi.useRealTimers()
   })
 
-  it('재직 시작일이면 1개월을 반환한다', () => {
+  it('재직 시작일이면 1개월 미만을 반환한다', () => {
     vi.setSystemTime(new Date(2026, 1, 9))
-    expect(getTotalCareer()).toBe('1개월')
+    expect(getTotalCareer()).toBe('1개월 미만')
   })
 
-  it('재직 개월 수가 늘어나면 현재 경력 기준으로 누적 개월 수가 증가한다', () => {
-    vi.setSystemTime(new Date(2026, 4, 15)) // (주)차트연구소 4개월
+  it('재직 개월 수가 늘어나면 완료된 개월 수를 반환한다', () => {
+    vi.setSystemTime(new Date(2026, 4, 15)) // (주)차트연구소 3개월
+    expect(getTotalCareer()).toBe('3개월')
+  })
+
+  it('월 시작일이 재직 시작일보다 빠르면 현재 달은 포함하지 않는다', () => {
+    vi.setSystemTime(new Date(2026, 6, 1)) // (주)차트연구소 4개월
     expect(getTotalCareer()).toBe('4개월')
   })
 
   it('누적 경력이 1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 0, 9)) // (주)차트연구소 12개월
+    vi.setSystemTime(new Date(2027, 1, 9)) // (주)차트연구소 1년
     expect(getTotalCareer()).toBe('1년')
   })
 
   it('1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 7, 15)) // (주)차트연구소 1년 7개월
-    expect(getTotalCareer()).toBe('1년 7개월')
+    vi.setSystemTime(new Date(2027, 7, 15)) // (주)차트연구소 1년 6개월
+    expect(getTotalCareer()).toBe('1년 6개월')
   })
 
   it('Career 데이터에 (주)차트연구소만 등록되어 있다', () => {

@@ -23,6 +23,8 @@
       line-height: 1.52;
       word-break: keep-all;
       overflow-wrap: anywhere;
+      orphans: 3;
+      widows: 3;
     }
 
     main {
@@ -35,12 +37,42 @@
 
     .project {
       break-inside: avoid;
-      margin-bottom: 10px;
+      page-break-inside: avoid;
+      margin-bottom: 12px;
       padding-top: 2px;
     }
 
     .project-fit {
-      break-inside: auto;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .project-pair {
+      margin: 0;
+    }
+
+    .project-section .project {
+      margin-bottom: 9px;
+    }
+
+    .project-section .row-title {
+      margin: 5px 0 2px;
+    }
+
+    .project-section .meta,
+    .project-section .link-row {
+      margin-bottom: 2px;
+      font-size: 10.8px;
+      line-height: 1.42;
+    }
+
+    .project-section ul {
+      padding-left: 13px;
+    }
+
+    .project-section li {
+      margin-bottom: 0;
+      line-height: 1.42;
     }
 
     h1,
@@ -80,6 +112,7 @@
       padding-bottom: 3px;
       border-bottom: 1px solid #d1d5db;
       break-after: avoid;
+      page-break-after: avoid;
     }
 
     h2 {
@@ -182,6 +215,7 @@
     .education-item,
     .career-item {
       break-inside: avoid;
+      page-break-inside: avoid;
       margin-bottom: 8px;
     }
 
@@ -191,6 +225,8 @@
 
     .group {
       margin-top: 6px;
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
   </style>
 </head>
@@ -198,7 +234,7 @@
   <main>
     <header class="resume-header">
       <h1>Oh InSeong(오인성)</h1>
-      <p class="headline">Android Developer</p>
+      <p class="headline">Software Engineer</p>
     </header>
 
     <section class="contact-section">
@@ -227,7 +263,7 @@
     <section>
       <div class="section-heading">
         <h2>Career</h2>
-        <span class="right-meta">총 경력 5개월</span>
+        <span class="right-meta">총 경력 4개월</span>
       </div>
       <div class="career-item">
         <div class="row-title">
@@ -236,10 +272,10 @@
         </div>
         <p class="meta">Android Developer · 연구원/정규직 | 서울시 강서구</p>
         <ul>
-          <li>금융·증권 B2B Android 차트 SDK의 레거시 엔진 연동 UI 및 설정/제어 레이어 개발</li>
-          <li>이지차트(간편차트) 모듈 신규 구축: 차트 화면, 데이터 갱신, 설정 플로우 구현</li>
-          <li>지표 정의 데이터 기반의 지표 설정 목록·상세 설정·엔진 반영 흐름 구현</li>
-          <li>이동평균선, Signal 지표, 분석 도구 UI, GMT 시간대 등 차트 표시/설정 오류 개선</li>
+          <li>증권사 MTS 차트 솔루션 Android 영역 유지보수 및 기능 개선</li>
+          <li>모바일 차트 화면 오류 재현, 로그 확인 및 디버깅을 통한 원인 파악</li>
+          <li>모바일 사용성을 고려한 간편차트 화면 구성 및 주요 동작 구현</li>
+          <li>고객사 요청사항에 따른 차트 화면 오류 재현, 로그 확인 및 디버깅 수행</li>
         </ul>
       </div>
     </section>
@@ -260,6 +296,16 @@
           <li>Extension Functions, Sealed Interface, Generic 활용으로 코드 재사용</li>
           <li>Gradle Convention Plugin 기반 build-logic 구축 및 멀티모듈 설정 표준화 경험</li>
           <li>오픈소스 UI 라이브러리 개발 및 Maven Central 배포 경험</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Backend & Web</h3>
+        <ul>
+          <li>Spring Boot 기반 REST API 설계 및 계층형 구조로 요청/응답 흐름 구성 경험</li>
+          <li>MyBatis와 MySQL을 활용한 SQL 매핑, join, pagination, 검색 조건 처리 경험</li>
+          <li>트랜잭션 경계를 고려한 도메인 상태 변경 처리 및 예외/검증 흐름 설계 경험</li>
+          <li>공통 응답 형식, 에러 처리, pagination contract를 정리해 클라이언트 연동 일관성 확보 경험</li>
+          <li>Vue 3, Vite 기반 화면 구성과 라우팅, 상태 관리, 컴포넌트 분리 경험</li>
         </ul>
       </div>
       <div class="group">
@@ -334,7 +380,7 @@
       </div>
     </section>
 
-    <section>
+    <section class="project-section">
       <div class="section-heading">
         <h2>Project</h2>
       </div>
@@ -366,21 +412,39 @@
         </ul>
       </div>
 
-      <div class="project">
-        <div class="row-title">
-          <h3>Glim - Android</h3>
-          <span class="right-meta">2025.07 ~ 2025.08</span>
+      <div class="project-pair">
+        <div class="project">
+          <div class="row-title">
+            <h3>Glim - Android</h3>
+            <span class="right-meta">2025.07 ~ 2025.08</span>
+          </div>
+          <p class="meta">글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱</p>
+          <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
+          <ul>
+            <li><strong>Orbit MVI</strong> 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계</li>
+            <li><strong>Kotlin Coroutine</strong>과 <strong>DataStore</strong>를 활용한 Session, Refresh Token 관리 시스템 구현</li>
+            <li><strong>Channel 기반 Navigator</strong> 패턴 도입으로 Screen과 Navigation 로직 완전 분리</li>
+            <li><strong>JUnit, MockK 기반 ViewModelTest</strong>를 <strong>130+ 케이스</strong> 구현으로 안정적인 단위 테스트 구축</li>
+            <li>GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 <strong>잔디밭 형태의 Custom Compose UI 컴포넌트</strong>로 구현</li>
+            <li><strong>SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상</strong></li>
+          </ul>
         </div>
-        <p class="meta">글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱</p>
-        <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
-        <ul>
-          <li><strong>Orbit MVI</strong> 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계</li>
-          <li><strong>Kotlin Coroutine</strong>과 <strong>DataStore</strong>를 활용한 Session, Refresh Token 관리 시스템 구현</li>
-          <li><strong>Channel 기반 Navigator</strong> 패턴 도입으로 Screen과 Navigation 로직 완전 분리</li>
-          <li><strong>JUnit, MockK 기반 ViewModelTest</strong>를 <strong>130+ 케이스</strong> 구현으로 안정적인 단위 테스트 구축</li>
-          <li>GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 <strong>잔디밭 형태의 Custom Compose UI 컴포넌트</strong>로 구현</li>
-          <li><strong>SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상</strong></li>
-        </ul>
+
+        <div class="project">
+          <div class="row-title">
+            <h3>주전부리 - Backend & Web</h3>
+            <span class="right-meta">2025.05</span>
+          </div>
+          <p class="meta">SSAFY 1학기 학습 기술(Java, Spring Boot, MyBatis, MySQL, Vue)을 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스</p>
+          <p class="link-row">GitHub. <a href="https://github.com/ois0886/Pubburi-Refactor">https://github.com/ois0886/Pubburi-Refactor</a></p>
+          <ul>
+            <li><strong>Backend & Web 개발</strong>로 사용자, 상품, 주문, 댓글, 매장 API와 고객/관리자 화면 구현</li>
+            <li>Spring Boot Controller-Service-DAO 계층과 MyBatis XML Mapper 기반으로 API와 SQL 매핑 구성</li>
+            <li><strong>ApiResponse/PageResponse</strong>와 GlobalExceptionHandler로 응답, pagination, validation/error contract 통일</li>
+            <li>Vue Router와 Pinia 기반으로 고객/관리자 화면, 인증, 장바구니, 카탈로그, 관리자 상태 분리</li>
+            <li>주문 생성, 상세 주문 batch insert, 상품 주문 수 증가, 스탬프 원자적 증가를 <strong>하나의 트랜잭션성 서비스 흐름</strong>으로 구현</li>
+          </ul>
+        </div>
       </div>
 
       <div class="project project-fit">
@@ -446,6 +510,20 @@
           <li><strong>Play Store 정식 배포 완료</strong>로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험</li>
         </ul>
       </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Blog</h2>
+      </div>
+      <p class="meta">인성의 개발 공부 노트 · <a href="https://superohinsung.tistory.com">https://superohinsung.tistory.com</a></p>
+      <ul>
+        <li><strong>2021년부터 5년동안</strong> Kotlin, Android, CS, Algorithm 등 <strong>220+개의 포스팅</strong> 작성</li>
+        <li>Jetpack Compose 렌더링/Recomposition, Android 아키텍처(MVVM, MVI), 네트워크/직렬화 라이브러리 비교 학습 내용 정리</li>
+        <li>Android 시리즈: Compose UI, 인텐트/4대 컴포넌트, 멀티모듈 등 안드로이드 전반 정리</li>
+        <li>Kotlin 시리즈: 코루틴, 컬렉션/람다 등 언어와 라이브러리 특성 정리</li>
+        <li>CS 시리즈: 운영체제, 자료구조, 알고리즘 개념 정리</li>
+      </ul>
     </section>
 
     <section>

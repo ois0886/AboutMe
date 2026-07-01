@@ -19,11 +19,11 @@ const skills = [
   {
     category: 'Backend & Web',
     items: [
-      'Spring Boot 기반 REST API 설계 및 Controller-Service-DAO 계층 구현 경험',
-      'MyBatis와 MySQL을 활용한 직접 SQL 매핑, resultMap/collection 기반 응답 모델 구성 경험',
-      '주문 생성, 상세 주문, 스탬프 적립, 상품 주문 수 갱신 등 도메인 상태 변경을 트랜잭션 흐름으로 구성한 경험',
-      'OpenAI API와 Firebase FCM 등 외부 서비스를 백엔드 기능 흐름에 연동한 경험',
-      'Vue 3, Vite, Bootstrap 기반 웹 화면 구성 및 컴포넌트 단위 UI 분리 경험',
+      'Spring Boot 기반 REST API 설계 및 계층형 구조로 요청/응답 흐름 구성 경험',
+      'MyBatis와 MySQL을 활용한 SQL 매핑, join, pagination, 검색 조건 처리 경험',
+      '트랜잭션 경계를 고려한 도메인 상태 변경 처리 및 예외/검증 흐름 설계 경험',
+      '공통 응답 형식, 에러 처리, pagination contract를 정리해 클라이언트 연동 일관성 확보 경험',
+      'Vue 3, Vite 기반 화면 구성과 라우팅, 상태 관리, 컴포넌트 분리 경험',
     ],
   },
   {
