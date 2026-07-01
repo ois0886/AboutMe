@@ -1361,6 +1361,8 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     ],
     screenshots: [
       'screenshot/pubburi-web.png',
+      'screenshot/pubburi-products.png',
+      'screenshot/pubburi-admin.png',
     ],
     hasBottomScreenshot: false,
   },
