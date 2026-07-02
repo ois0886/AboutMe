@@ -1353,8 +1353,10 @@ public int makeOrder(Order order, List<OrderDetail> details) {
       'SSAFY 1학기 학습 내용을 프로젝트에 적용하며, Controller-Service-DAO 계층과 SQL Mapper가 실제 화면 요구사항과 어떻게 연결되는지 체감',
       '도메인 상태 변경이 여러 테이블에 걸쳐 발생할 때 트랜잭션 경계와 실패 처리 기준을 먼저 정리해야 한다는 점을 학습',
       'Frontend 화면을 단순히 만드는 것에서 끝나지 않고, API 응답 wrapper, pagination, validation error 처리 기준까지 함께 설계해야 화면 구현이 안정적이라는 점을 깨달음',
+      '고객용 Android를 맡은 팀원과 Backend & Web 영역을 나누어 진행하며, 상품 목록, 장바구니, 주문 완료 후 스탬프 반영처럼 앱 화면이 기다리는 데이터를 계속 맞춰가야 했음',
+      '말로만 정한 규칙은 금방 흔들렸지만, DTO 필드명, PageResponse 형태, seed data를 실제 코드와 문서로 고정하자 서로의 작업을 더 편하게 믿고 이어갈 수 있었음',
+      '관리자 화면을 만들면서 상품 등록, 주문 확인, 댓글 관리가 고객 앱의 사용 경험 뒤편을 받쳐주는 흐름이라는 점을 느꼈고, Backend & Web 작업도 결국 같은 서비스를 함께 완성하는 일이라고 받아들이게 됨',
       '프로젝트 이후 다시 정리하면서 실행 환경, seed data, 문서, 검증 명령을 함께 남겨야 다른 사람이 프로젝트를 재현할 수 있음을 확인',
-      '다음 개선으로 검색어 사용 패턴 기반 index 검토, 이미지 품질/용량 기준 세분화, 관리자 대용량 목록 virtual list 또는 서버 필터 적용 필요성을 정리',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/ois0886/Pubburi-Refactor' },
