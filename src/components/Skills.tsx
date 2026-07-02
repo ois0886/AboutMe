@@ -17,7 +17,7 @@ const skills = [
     ],
   },
   {
-    category: 'Backend & Web',
+    category: 'Backend & Front',
     items: [
       'Spring Boot 기반 REST API 설계 및 계층형 구조로 요청/응답 흐름 구성 경험',
       'MyBatis와 MySQL을 활용한 SQL 매핑, join, pagination, 검색 조건 처리 경험',

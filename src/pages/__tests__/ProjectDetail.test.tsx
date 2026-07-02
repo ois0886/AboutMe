@@ -72,10 +72,10 @@ describe('ProjectDetail', () => {
     renderProjectDetail('pubburi')
 
     expect(
-      screen.getByRole('heading', { level: 1, name: '주전부리 - Backend & Web' }),
+      screen.getByRole('heading', { level: 1, name: '주전부리 - Backend & Front' }),
     ).toBeInTheDocument()
     expect(screen.getByText('2025.05')).toBeInTheDocument()
-    expect(screen.getByText('Backend & Web 개발')).toBeInTheDocument()
+    expect(screen.getByText('Backend & Front 개발')).toBeInTheDocument()
     expect(screen.getByText('하나의 트랜잭션성 서비스 흐름')).toBeInTheDocument()
   })
 })
