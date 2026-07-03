@@ -34,7 +34,10 @@ function getCareerMonths(start: Date, end: Date) {
   const dayAdjustment = end.getDate() < start.getDate() ? 1 : 0
   const totalMonths = years * 12 + months - dayAdjustment
 
-  return Math.max(totalMonths, 0)
+  if (end < start) return 0
+
+  // 재직 첫 달을 1개월로 포함해서 표시한다.
+  return totalMonths + 1
 }
 
 export function getTotalCareer() {
