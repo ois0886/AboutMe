@@ -1171,114 +1171,85 @@ internal class LoginViewModel @Inject constructor(
     problemSolvings: [
       {
         problem: [
-          'SSAFY 1학기에서 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 내용을 상품 탐색, 주문, 댓글, 마이페이지, 관리자 기능까지 이어지는 하나의 서비스 흐름으로 연결해야 했음',
-          '기능이 늘어나면서 성공 응답, validation error, 인증/권한 error, pagination 응답 형태가 섞이면 Vue 화면과 store마다 다른 방식으로 예외를 처리해야 하는 문제가 있었음',
-          '고객 화면과 관리자 화면이 같은 API를 사용하므로, 화면 구조와 상태 관리가 한 파일에 몰리면 인증/장바구니/카탈로그/관리자 데이터의 책임 경계가 흐려질 수 있었음',
+          '주문 목록 API는 pagination으로 주문 20건을 가져온 뒤 각 주문의 상세 상품을 다시 조회해야 했음',
+          'MyBatis nested select나 주문별 상세 조회를 그대로 유지하면 주문 건수만큼 상세 조회 쿼리가 반복되어, page size가 커질수록 N+1 형태의 조회 비용이 증가할 수 있었음',
+          'Frontend 응답 형태는 기존처럼 각 주문이 details를 포함해야 했기 때문에, API contract를 바꾸지 않고 조회 구조만 개선해야 했음',
         ],
         solution: [
-          '모든 Backend API를 `/api` prefix 아래에 두고, 성공/실패 응답을 `{ data, message, error }` wrapper로 통일',
-          '목록 API는 PageResponse 형태로 `items, page, size, total, totalPages, hasNext`를 내려주도록 정리하고, Frontend API client에서 page query와 wrapper unwrap을 공통 처리',
-          'AccessGuard와 SessionUser를 도입해 로그인 필요, 관리자 권한, 본인 또는 관리자 권한 체크를 공통화하고 session에는 비밀번호 없는 사용자 정보만 저장',
-          'Vue Router로 화면을 route 단위로 나누고, Pinia store로 인증, 장바구니, 카탈로그, 관리자, UI 알림 상태를 분리',
+          '주문 목록을 먼저 조회한 뒤 order id 목록을 한 번에 수집하고, `order_id IN (...)` 조건으로 상세 상품을 batch 조회',
+          '조회된 상세 상품 목록은 service layer에서 `orderId` 기준으로 그룹핑한 뒤 각 OrderInfo의 details에 다시 attach',
+          '사용자 주문 목록, 관리자 주문 목록, 최근 주문 조회가 같은 attachDetails 흐름을 사용하도록 구성해 목록 API의 응답 형태를 유지',
         ],
         result: [
-          rich('SSAFY 1학기 학습 기술을 ', strong('DB, REST API, Vue 화면, 상태 관리'), '로 연결해 실제 주문 웹 서비스 형태로 구현'),
-          'API 응답과 에러 처리 경로가 통일되어 고객/관리자 화면의 fetch 중복과 예외 분기 감소',
-          '화면은 route/view, 재사용 UI는 components, 상태는 Pinia store로 분리되어 기능 추가 시 수정 범위가 명확해짐',
+          rich('20건 조회 기준 상세 조회 쿼리를 ', strong('20회에서 1회'), '로 줄이고 ', strong('상세 조회 쿼리 수 95% 절감'), '을 확인'),
+          '주문 목록 API의 응답 구조는 유지하면서 상세 상품 조회 비용이 주문 건수에 비례해 증가하던 구조를 개선',
+          '사용자/관리자 주문 목록 모두 같은 batch attach 로직을 사용해 조회 성능과 구현 일관성을 함께 확보',
         ],
         implementation: [
           {
             description:
-              'Backend는 성공/실패 응답을 공통 wrapper로 감싸고, Frontend API client는 wrapper를 unwrap해 화면에는 실제 data만 전달함. 실패 시에는 code, fields를 가진 ApiClientError로 변환해 validation/error UI가 한 흐름을 따르도록 구성함.',
-            language: 'text',
-            code: `const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
+              '주문 목록 조회 결과에서 order id를 모아 상세 상품을 한 번에 batch 조회하고, orderId 기준으로 그룹핑한 뒤 기존 OrderInfo.details 형태로 다시 붙임.',
+            language: 'java',
+            code: `private List<OrderInfo> attachDetails(List<OrderInfo> orders) {
+    if (orders == null || orders.isEmpty()) {
+        return List.of();
+    }
+    List<Integer> orderIds = orders.stream().map(OrderInfo::getoId).toList();
+    Map<Integer, List<OrderDetailInfo>> detailsByOrderId =
+        orderDao.getOrderDetailInfoByOrderIds(orderIds).stream()
+            .collect(Collectors.groupingBy(OrderDetailInfo::getOrderId));
 
-export class ApiClientError extends Error {
-  constructor(error, status) {
-    super(error?.message || 'Request failed')
-    this.status = status
-    this.code = error?.code || 'REQUEST_FAILED'
-    this.fields = error?.fields || {}
-  }
-}
-
-async function request(path, options = {}) {
-  const response = await fetch(\`\${API_BASE}\${path}\`, {
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(options.headers || {}),
-    },
-    ...options,
-  })
-
-  const text = await response.text()
-  const envelope = text ? JSON.parse(text) : null
-  const hasEnvelope = envelope && Object.prototype.hasOwnProperty.call(envelope, 'data')
-
-  if (!response.ok || envelope?.error) {
-    const error = envelope?.error || { code: response.statusText, message: response.statusText }
-    throw new ApiClientError(error, response.status)
-  }
-
-  return hasEnvelope ? envelope.data : envelope
+    for (OrderInfo order : orders) {
+        order.setDetails(detailsByOrderId.getOrDefault(order.getoId(), List.of()));
+    }
+    return orders;
 }`,
           },
           {
             description:
-              '사용자 주문 목록, 마이페이지, 관리자 주문/상품/댓글 관리처럼 접근 조건이 다른 API를 같은 기준으로 처리하기 위해 AccessGuard로 세션 사용자 확인과 권한 검증을 모음.',
-            language: 'java',
-            code: `@Component
-public class AccessGuard {
-    public static final String SESSION_USER = "PUBBURI_USER";
-
-    public SessionUser requireLogin(HttpSession session) {
-        SessionUser user = currentUser(session);
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Login required");
-        }
-        return user;
-    }
-
-    public SessionUser requireAdmin(HttpSession session) {
-        SessionUser user = requireLogin(session);
-        if (!user.admin()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin permission required");
-        }
-        return user;
-    }
-
-    public SessionUser requireSelfOrAdmin(HttpSession session, String userId) {
-        SessionUser user = requireLogin(session);
-        if (!user.admin() && !user.id().equals(userId)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed");
-        }
-        return user;
-    }
-}`,
+              'MyBatis Mapper에서는 `foreach`로 order id 목록을 `IN` 절에 바인딩해 주문 상세와 상품 정보를 한 번에 조회함.',
+            language: 'xml',
+            code: `<select id="getOrderDetailInfoByOrderIds" resultType="OrderDetailInfo">
+    SELECT
+        d.d_id AS id,
+        d.order_id AS orderId,
+        d.product_id AS productId,
+        d.quantity,
+        p.name,
+        p.type,
+        p.price AS unitPrice,
+        (p.price * d.quantity) AS sumPrice,
+        p.img
+    FROM t_order_detail d
+    JOIN t_product p ON d.product_id = p.id
+    WHERE d.order_id IN
+    <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+        #{orderId}
+    </foreach>
+    ORDER BY d.order_id DESC, d.d_id ASC
+</select>`,
           },
         ],
         alternatives: [
-          '화면별 fetch 호출을 유지하면서 일부 옵션만 맞출 수도 있었지만, 고객/관리자 화면이 늘어날수록 세션 쿠키, pagination, validation error 처리가 다시 흩어질 가능성이 있어 API client를 단일 진입점으로 두는 쪽이 적합했음.',
-          '권한 체크를 각 Controller 메서드에 직접 작성하는 방식도 가능했지만, 관리자/본인 검증 조건이 늘어날수록 누락 위험이 커져 AccessGuard로 기준을 모으는 방향을 선택함.',
+          'MyBatis nested select를 유지하면 구현은 단순하지만 주문 20건 기준 상세 조회가 20회 발생해 pagination size가 커질수록 조회 비용을 예측하기 어려웠음.',
+          'Frontend에서 주문별 상세 API를 병렬 호출하는 방식도 가능했지만, 네트워크 요청 수와 화면 조립 책임이 커지므로 Backend에서 batch 조회 후 기존 응답 형태를 유지하는 방식이 더 적합했음.',
         ],
       },
       {
         problem: [
           '주문 생성은 단순히 주문 row를 추가하는 작업이 아니라, 상세 주문 저장, 상품별 주문 수 증가, 스탬프 적립, 사용자 스탬프 갱신까지 함께 처리되어야 하는 복합 비즈니스 흐름이었음',
           '같은 상품이 주문 상세에 중복으로 들어오거나 잘못된 수량이 들어오는 경우, 상세 row와 상품 주문 수, 스탬프 적립량이 서로 어긋날 수 있었음',
-          '주문 목록을 pagination으로 조회할 때 각 주문마다 상세 상품을 nested select로 가져오면 주문 수가 늘어날수록 N+1 형태의 조회 비용이 커질 수 있었음',
+          '주문 처리 중 일부 단계만 성공하면 주문, 상세 주문, 상품 주문 수, 스탬프 데이터 사이의 일관성이 깨질 수 있었음',
         ],
         solution: [
           'OrderRestController에서 세션 사용자를 확인하고, 주문 사용자와 로그인 사용자가 일치하거나 관리자 권한을 가진 경우에만 주문을 허용',
           'OrderService의 주문 생성 메서드에 @Transactional을 적용하고, 주문 상세는 productId 기준으로 수량을 합산한 뒤 batch insert로 저장',
           '상품 주문 수는 상세 수량만큼 증가시키고, 회원 스탬프는 read-modify-write 대신 `stamps = stamps + quantity` 원자적 update로 적립',
-          '주문 목록 상세는 nested select를 제거하고 `order_id IN (...)` batch 조회 후 service layer에서 orderId 기준으로 그룹핑',
         ],
         result: [
           rich('주문 생성 시 발생하는 여러 상태 변경을 ', strong('하나의 트랜잭션성 서비스 흐름'), '으로 묶어 데이터 일관성을 확보'),
           '중복 상품 수량 합산, 상세 batch insert, 원자적 스탬프 증가로 주문 생성 흐름의 무결성과 효율성 개선',
-          '주문 목록 pagination에서도 상세 상품 정보를 batch 조회로 붙여 화면 응답 형태는 유지하면서 조회 비용 증가를 완화',
+          '주문 생성 실패 시 관련 상태 변경이 함께 rollback되도록 구성해 부분 성공으로 인한 데이터 불일치 위험 감소',
         ],
         implementation: [
           {
@@ -1314,29 +1285,10 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     return result;
 }`,
           },
-          {
-            description:
-              '주문 목록 조회 시 order id 목록을 한 번에 모아 상세 상품을 batch 조회하고, service layer에서 주문별 details로 다시 붙임. 이를 통해 목록/상세 API의 OrderResponse 형태는 유지하면서 nested select 의존을 제거함.',
-            language: 'java',
-            code: `private List<OrderInfo> attachDetails(List<OrderInfo> orders) {
-    if (orders == null || orders.isEmpty()) {
-        return List.of();
-    }
-    List<Integer> orderIds = orders.stream().map(OrderInfo::getoId).toList();
-    Map<Integer, List<OrderDetailInfo>> detailsByOrderId =
-        orderDao.getOrderDetailInfoByOrderIds(orderIds).stream()
-            .collect(Collectors.groupingBy(OrderDetailInfo::getOrderId));
-
-    for (OrderInfo order : orders) {
-        order.setDetails(detailsByOrderId.getOrDefault(order.getoId(), List.of()));
-    }
-    return orders;
-}`,
-          },
         ],
         alternatives: [
           '주문 생성 후 스탬프 적립을 별도 API로 분리할 수도 있었지만, 호출 순서와 실패 처리를 클라이언트가 떠안게 되어 주문 도메인의 일관성 관리가 더 어려웠을 것임.',
-          '주문 목록 상세를 MyBatis nested select로 유지할 수도 있었지만, pagination과 관리자 목록까지 고려하면 batch 조회 후 그룹핑하는 방식이 조회 비용을 예측하기 더 쉬웠음.',
+          '중복 상품을 그대로 상세 row로 저장할 수도 있었지만, 같은 주문 안에서 상품 주문 수와 스탬프 적립 기준이 흔들릴 수 있어 productId 기준으로 먼저 정규화하는 쪽을 선택함.',
         ],
       },
     ],

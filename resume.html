@@ -439,9 +439,9 @@
           <p class="link-row">GitHub. <a href="https://github.com/ois0886/Pubburi-Refactor">https://github.com/ois0886/Pubburi-Refactor</a></p>
           <ul>
             <li><strong>Backend & Front 개발</strong>로 사용자, 상품, 주문, 댓글, 매장 API와 고객/관리자 화면 구현</li>
-            <li>Spring Boot Controller-Service-DAO 계층과 MyBatis XML Mapper 기반으로 API와 SQL 매핑 구성</li>
             <li><strong>ApiResponse/PageResponse</strong>와 GlobalExceptionHandler로 응답, pagination, validation/error contract 통일</li>
             <li>Vue Router와 Pinia 기반으로 고객/관리자 화면, 인증, 장바구니, 카탈로그, 관리자 상태 분리</li>
+            <li>주문 목록 API의 상세 데이터를 <strong>order_id IN (...)</strong> batch 조회로 전환해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 <strong>95% 절감</strong></li>
             <li>주문 생성, 상세 주문 batch insert, 상품 주문 수 증가, 스탬프 원자적 증가를 <strong>하나의 트랜잭션성 서비스 흐름</strong>으로 구현</li>
           </ul>
         </div>
