@@ -176,6 +176,7 @@ function ActivityCard({ activity }: { activity: typeof activities[number] }) {
           <button
             className={styles.imageToggle}
             onClick={() => setImageOpen(!imageOpen)}
+            aria-expanded={imageOpen}
           >
             {imageOpen ? '사진 접기' : '사진 보기'}
             <span className={`${styles.arrow} ${imageOpen ? styles.arrowUp : ''}`} />

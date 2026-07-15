@@ -49,13 +49,23 @@
 
 ## Features
 
-- Light / Dark mode toggle
-- Scroll reveal animations (IntersectionObserver)
+- Ivory / Dark Navy editorial design system
+- Light / Dark mode toggle with persisted theme on direct project entry
+- Active section navigation and accessible mobile drawer
+- Scroll reveal animations with `prefers-reduced-motion` support
 - Scroll position restore on back navigation
-- Wave divider section transitions
+- Geometric section bands and responsive timeline/card layouts
 - Project detail pages with problem-solving, code snippets, insights
-- Mobile responsive hamburger menu
-- Responsive design
+- Responsive media cards and screenshot galleries
+- Keyboard focus states and 44px mobile touch targets
+
+## Design System
+
+- **Light mode:** Ivory background, dark navy surfaces, steel blue accents
+- **Dark mode:** Deep navy background, layered blue-gray surfaces, warm ivory text
+- **Layout:** Asymmetric About hero, Career/Education timelines, balanced desktop grids, readable mobile single column
+- **Motion:** Restrained scroll reveal and hover feedback, automatically minimized when reduced motion is preferred
+- **Reference:** `아이보리 다크 블루 미니멀한 포트폴리오 프레젠테이션.pdf`
 
 ## Getting Started
 

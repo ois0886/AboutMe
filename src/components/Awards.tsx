@@ -70,6 +70,7 @@ function AwardCard({ item, toggleLabel }: { item: typeof awards[number]; toggleL
           <button
             className={styles.imageToggle}
             onClick={() => setImageOpen(!imageOpen)}
+            aria-expanded={imageOpen}
           >
             {imageOpen ? toggleLabel[1] : toggleLabel[0]}
             <span className={`${styles.arrow} ${imageOpen ? styles.arrowUp : ''}`} />

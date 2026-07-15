@@ -32,6 +32,22 @@ describe('Header', () => {
     expect(screen.getByLabelText('테마 전환')).toBeInTheDocument()
   })
 
+  it('현재 섹션에 aria-current가 표시된다', () => {
+    renderHeader()
+    expect(screen.getByRole('link', { name: 'About' })).toHaveAttribute('aria-current', 'location')
+  })
+
+  it('모바일 메뉴 버튼이 열림 상태를 접근성 속성으로 제공한다', () => {
+    renderHeader()
+    const button = screen.getByLabelText('메뉴 열기')
+
+    expect(button).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(button)
+    expect(screen.getByLabelText('메뉴 닫기')).toHaveAttribute('aria-expanded', 'true')
+    fireEvent.click(screen.getByLabelText('메뉴 닫기'))
+    expect(screen.getByLabelText('메뉴 열기')).toHaveAttribute('aria-expanded', 'false')
+  })
+
   it('테마 토글 클릭 시 data-theme 속성이 변경된다', () => {
     renderHeader()
     const button = screen.getByLabelText('테마 전환')

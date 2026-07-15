@@ -1,23 +1,97 @@
+.panel {
+  position: relative;
+  padding: 54px 58px;
+  overflow: hidden;
+  border-radius: 24px;
+  color: var(--color-on-surface-strong);
+  background-color: var(--color-surface-strong);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.panel::before,
+.panel::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.panel::before {
+  top: 0;
+  right: 0;
+  width: 28%;
+  height: 10px;
+  background-color: var(--color-accent);
+}
+
+.panel::after {
+  right: -70px;
+  bottom: -110px;
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(255, 254, 250, 0.18);
+  border-radius: 50%;
+}
+
+.panel :global(.section__title) {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 28px;
+  color: var(--color-on-surface-strong);
+}
+
+.panel :global(.section__title)::after {
+  background-color: var(--color-on-surface-strong);
+  opacity: 0.7;
+}
+
 .description {
-  font-size: 1.05rem;
-  color: var(--color-text-secondary);
-  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 28px;
+  color: var(--color-on-surface-strong);
+  font-size: 1.08rem;
+  opacity: 0.84;
 }
 
 .links {
+  position: relative;
+  z-index: 1;
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .link {
-  padding: 10px 24px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 112px;
+  min-height: 46px;
+  padding: 10px 22px;
+  border: 1px solid rgba(255, 254, 250, 0.45);
+  border-radius: 999px;
+  color: var(--color-on-surface-strong);
+  font-weight: 750;
+  transition: color 0.2s, background-color 0.2s, transform 0.2s;
 }
 
 .link:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-surface-strong);
+  background-color: var(--color-on-surface-strong);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .panel {
+    padding: 40px 24px;
+    border-radius: 18px;
+  }
+
+  .links {
+    flex-direction: column;
+  }
+
+  .link {
+    width: 100%;
+  }
 }

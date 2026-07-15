@@ -6,22 +6,24 @@ function Contact() {
 
   return (
     <section id="contact" className="section reveal" ref={ref}>
-      <h2 className="section__title">Contact</h2>
-      <p className={styles.description}>
-        방문해주셔서 감사합니다.
-      </p>
-      <div className={styles.links}>
-        <a href="mailto:superohinsung@naver.com" className={styles.link}>
-          Email
-        </a>
-        <a
-          href="https://github.com/ois0886"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.link}
-        >
-          GitHub
-        </a>
+      <div className={styles.panel}>
+        <h2 className="section__title">Contact</h2>
+        <p className={styles.description}>
+          방문해주셔서 감사합니다.
+        </p>
+        <div className={styles.links}>
+          <a href="mailto:superohinsung@naver.com" className={styles.link}>
+            Email
+          </a>
+          <a
+            href="https://github.com/ois0886"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.link}
+          >
+            GitHub
+          </a>
+        </div>
       </div>
     </section>
   )

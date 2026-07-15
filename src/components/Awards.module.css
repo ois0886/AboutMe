@@ -1,95 +1,128 @@
 .groupTitle {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--color-primary-strong);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.groupTitle::before {
+  content: '';
+  width: 28px;
+  height: 4px;
+  border-radius: 999px;
+  background-color: var(--color-primary);
 }
 
 .groupTitleMargin {
-  margin-top: 36px;
+  margin-top: 44px;
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
 .card {
+  position: relative;
+  padding: 26px;
+  overflow: hidden;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: var(--space-lg);
+  border-radius: var(--radius-card);
   background-color: var(--color-bg-card);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 5px;
+  background-color: var(--color-primary);
 }
 
 .card:hover {
-  border-color: var(--color-primary);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-3px);
 }
 
 .cardInner {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 18px;
 }
 
 .left {
+  min-width: 0;
   flex: 1;
 }
 
 .title {
-  font-size: var(--font-size-subtitle);
-  font-weight: 700;
+  color: var(--color-primary-strong);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.45;
 }
 
 .emphasis {
-  color: var(--color-text);
-  font-weight: 700;
+  color: inherit;
+  font-weight: inherit;
 }
 
 .org {
-  font-size: 0.85rem;
+  margin-top: 6px;
   color: var(--color-primary);
-  margin-top: 4px;
+  font-size: 0.85rem;
+  font-weight: 650;
 }
 
 .right {
-  text-align: right;
   flex-shrink: 0;
-  margin-left: 24px;
+  padding-left: 16px;
+  border-left: 1px solid var(--color-border);
+  text-align: right;
 }
 
 .date {
-  font-size: 0.9rem;
   color: var(--color-text-secondary);
+  font-size: 0.86rem;
+  font-weight: 650;
 }
 
 .id {
-  font-size: 0.8rem;
+  margin-top: 3px;
   color: var(--color-text-secondary);
-  opacity: 1;
-  margin-top: 2px;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
 }
 
 .toggleArea {
-  margin-top: 12px;
+  margin-top: 18px;
 }
 
 .imageToggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-primary);
-  background: none;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 6px 14px;
+  border-radius: var(--radius-control);
+  color: var(--color-primary);
+  background-color: transparent;
+  font-size: 0.84rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
 .imageToggle:hover {
@@ -99,23 +132,25 @@
 
 .arrow {
   display: inline-block;
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 5px solid var(--color-primary);
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
   transition: transform 0.2s;
 }
 
 .arrowUp {
-  transform: rotate(180deg);
+  transform: rotate(225deg) translate(-1px, -1px);
 }
 
 .imageWrap {
   width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 12px;
+  max-height: 580px;
+  margin-top: 16px;
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
   background-color: var(--color-bg-secondary);
 }
 
@@ -127,15 +162,31 @@
   margin: 0 auto;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 820px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 24px 20px;
+  }
+
   .cardInner {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    gap: 12px;
   }
 
   .right {
+    width: 100%;
+    padding: 12px 0 0;
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
     text-align: left;
-    margin-left: 0;
+  }
+
+  .imageToggle {
+    min-height: 44px;
   }
 }
