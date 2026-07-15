@@ -67,33 +67,36 @@ function ProjectDetail() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <a href="#" onClick={handleBack} className={styles.backLink}>← 돌아가기</a>
+        <header className={styles.hero}>
+          <a href="#" onClick={handleBack} className={styles.backLink}>← 돌아가기</a>
 
-        <h1 className={styles.title}>{project.title}</h1>
-        <p className={styles.descriptionText}>{project.description}</p>
+          <h1 className={styles.title}>{project.title}</h1>
+          <p className={styles.descriptionText}>{project.description}</p>
 
-        <div className={styles.meta}>
-          <div className={styles.metaItem}>
-            <span className={styles.metaLabel}>기간</span>
-            <span>{project.period}</span>
+          <div className={styles.meta}>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>기간</span>
+              <span>{project.period}</span>
+            </div>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>팀 구성</span>
+              <span>{project.team}</span>
+            </div>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>역할</span>
+              <span>{project.role}</span>
+            </div>
           </div>
-          <div className={styles.metaItem}>
-            <span className={styles.metaLabel}>팀 구성</span>
-            <span>{project.team}</span>
-          </div>
-          <div className={styles.metaItem}>
-            <span className={styles.metaLabel}>역할</span>
-            <span>{project.role}</span>
-          </div>
-        </div>
 
-        <div className={styles.techList}>
-          {project.tech.map((t) => (
-            <span key={t} className={styles.tag}>{t}</span>
-          ))}
-        </div>
+          <div className={styles.techList}>
+            {project.tech.map((t) => (
+              <span key={t} className={styles.tag}>{t}</span>
+            ))}
+          </div>
+        </header>
 
-        {project.achievements.length > 0 && (
+        <main className={styles.content}>
+          {project.achievements.length > 0 && (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>성과 및 결과</h2>
             <ul className={styles.list}>
@@ -306,7 +309,7 @@ function ProjectDetail() {
           </section>
         )}
 
-        {project.retrospective.length > 0 && (
+          {project.retrospective.length > 0 && (
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>프로젝트 회고</h2>
             <ul className={styles.list}>
@@ -317,8 +320,8 @@ function ProjectDetail() {
               ))}
             </ul>
           </section>
-        )}
-
+          )}
+        </main>
       </div>
     </div>
   )
