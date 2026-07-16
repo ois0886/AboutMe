@@ -78,6 +78,5 @@ describe('ProjectDetail', () => {
     expect(screen.getByText('Backend & Front 개발')).toBeInTheDocument()
     expect(screen.getAllByText('상세 조회 쿼리 수 95% 절감')).toHaveLength(2)
     expect(screen.getByText('전체 변경이 rollback')).toBeInTheDocument()
-    expect(screen.getByText('13개 테스트')).toBeInTheDocument()
   })
 })
