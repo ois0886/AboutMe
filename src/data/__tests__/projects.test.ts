@@ -46,6 +46,13 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
+  it('주점부리 문제 해결은 2개만 제공한다', () => {
+    const pubburi = projects.find((project) => project.id === 'pubburi')
+
+    expect(pubburi).toBeDefined()
+    expect(pubburi?.problemSolvings).toHaveLength(2)
+  })
+
   it('강조 세그먼트를 사용하는 항목은 텍스트를 유지한다', () => {
     const highlightedItems = projects.flatMap((project) => [
       ...project.details,

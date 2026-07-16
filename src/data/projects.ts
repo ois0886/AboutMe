@@ -1127,7 +1127,7 @@ internal class LoginViewModel @Inject constructor(
   },
   {
     id: 'pubburi',
-    title: '주전부리 - Backend & Front',
+    title: '주점부리 - Backend & Front',
     description:
       'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue를 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스',
     thumbnail: 'screenshot/pubburi-home.png',
@@ -1149,8 +1149,8 @@ internal class LoginViewModel @Inject constructor(
     details: [
       'SSAFY 1학기 관통 프로젝트에서 배운 Java, Spring Boot, MyBatis, MySQL, Vue 학습 내용을 실제 주류 주문 웹 서비스에 적용',
       '주류 상품 조회, 카테고리/검색, 장바구니, 주문, 댓글, 마이페이지, 스탬프 등급, 매장 조회, 관리자 CRUD를 하나의 웹 애플리케이션으로 구현',
-      'Backend는 Controller-Service-DAO 계층과 MyBatis XML Mapper를 기반으로 구성하고, Frontend는 Vue Router와 Pinia로 고객/관리자 화면과 상태를 분리',
-      '이후 public repository 기준으로 로컬 실행이 가능하도록 Spring Boot 3, Vue 3, Docker Compose MySQL 구조와 API/Layer/성능 문서를 정리',
+      'Backend는 Spring Boot 3와 MyBatis 기반 Controller-Service-DAO 계층으로, Frontend는 Vue Router와 Pinia 기반 화면·상태 구조로 구성',
+      '리팩터링 이후 공개 저장소에서 로컬 실행과 검증이 가능하도록 Docker Compose MySQL 환경과 API·Layer·성능 문서를 정리',
     ],
     features: [
       '고객 화면: 상품 목록/검색/카테고리/상세, 댓글, 장바구니, 주문, 로그인, 회원가입, 마이페이지, 매장 조회',
@@ -1161,12 +1161,13 @@ internal class LoginViewModel @Inject constructor(
       '주문 수 기반 인기 상품 조회와 상품 목록 검색/정렬',
     ],
     contributions: [
-      'Spring Boot Controller-Service-DAO 계층으로 사용자, 상품, 주문, 댓글, 매장 API 구현',
-      'ApiResponse, PageResponse, GlobalExceptionHandler 기반으로 성공/실패 응답과 목록 pagination contract 통일',
-      'AccessGuard와 SessionUser로 로그인/관리자/본인 권한 검증을 공통화하고 session에 비밀번호 필드가 남지 않도록 개선',
-      '주문 생성 시 중복 상품 수량 합산, 상세 주문 batch insert, 상품 주문 수 증가, 스탬프 원자적 증가를 하나의 트랜잭션 흐름으로 연결',
-      'Vue Router로 홈/상품/상세/장바구니/계정/마이페이지/관리자 화면을 route 단위로 분리하고 Pinia store로 인증/장바구니/카탈로그/관리자 상태 분리',
-      'Bootstrap 의존성을 제거하고 로컬 UI primitive와 Vue 상태 기반 carousel, WebP 이미지 자산 기반 화면으로 정리',
+      'Spring Boot Controller-Service-DAO 계층과 MyBatis XML Mapper로 사용자, 상품, 주문, 댓글, 매장 API 구현',
+      'ApiResponse, PageResponse, 입력 검증과 GlobalExceptionHandler를 적용해 성공·실패 응답과 pagination contract 통일',
+      'AccessGuard와 SessionUser로 로그인·관리자·본인 권한 검증을 공통화하고 session에 비밀번호 필드가 남지 않도록 개선',
+      '주문 생성 시 중복 상품 수량 합산, 상세 주문 batch insert, 상품 주문 수 증가, 스탬프 적립을 하나의 트랜잭션으로 연결하고 각 처리 결과를 검증',
+      'Vue Router와 Pinia로 인증·장바구니·카탈로그·관리자 상태를 분리하고 상품 검색 조건을 route query와 동기화',
+      '고객용 catalog와 관리자용 product/market 상태를 분리하고 요청별 pending 상태를 적용해 검색 조건 충돌과 중복 요청을 방지',
+      'Bootstrap 의존성을 제거하고 공통 UI 컴포넌트, Vue 상태 기반 carousel, WebP 이미지 자산으로 화면 구조를 정리',
     ],
     problemSolvings: [
       {
@@ -1238,23 +1239,23 @@ internal class LoginViewModel @Inject constructor(
       {
         problem: [
           '주문 생성은 단순히 주문 row를 추가하는 작업이 아니라, 상세 주문 저장, 상품별 주문 수 증가, 스탬프 적립, 사용자 스탬프 갱신까지 함께 처리되어야 하는 복합 비즈니스 흐름이었음',
-          '같은 상품이 주문 상세에 중복으로 들어오거나 잘못된 수량이 들어오는 경우, 상세 row와 상품 주문 수, 스탬프 적립량이 서로 어긋날 수 있었음',
-          '주문 처리 중 일부 단계만 성공하면 주문, 상세 주문, 상품 주문 수, 스탬프 데이터 사이의 일관성이 깨질 수 있었음',
+          '@Transactional을 적용하더라도 DAO가 실패를 예외가 아닌 영향 행 0건으로 반환하면 rollback이 발생하지 않아 일부 데이터만 저장될 수 있었음',
+          '존재하지 않는 상품이나 상세 주문 일부 저장 실패를 확인하지 않으면 주문, 상품 주문 수, 스탬프 데이터 사이의 일관성이 깨질 수 있었음',
         ],
         solution: [
-          'OrderRestController에서 세션 사용자를 확인하고, 주문 사용자와 로그인 사용자가 일치하거나 관리자 권한을 가진 경우에만 주문을 허용',
           'OrderService의 주문 생성 메서드에 @Transactional을 적용하고, 주문 상세는 productId 기준으로 수량을 합산한 뒤 batch insert로 저장',
-          '상품 주문 수는 상세 수량만큼 증가시키고, 회원 스탬프는 read-modify-write 대신 `stamps = stamps + quantity` 원자적 update로 적립',
+          '상품 주문 수 증가, 상세 주문 batch insert, 스탬프 생성, 회원 스탬프 증가의 영향 행을 단계별로 검증하고 실패 시 예외를 발생시켜 전체 rollback',
+          '회원 스탬프는 read-modify-write 대신 `stamps = stamps + quantity` 원자적 update로 처리하고 존재하지 않는 상품은 후속 저장 전에 차단',
         ],
         result: [
-          rich('주문 생성 시 발생하는 여러 상태 변경을 ', strong('하나의 트랜잭션성 서비스 흐름'), '으로 묶어 데이터 일관성을 확보'),
-          '중복 상품 수량 합산, 상세 batch insert, 원자적 스탬프 증가로 주문 생성 흐름의 무결성과 효율성 개선',
-          '주문 생성 실패 시 관련 상태 변경이 함께 rollback되도록 구성해 부분 성공으로 인한 데이터 불일치 위험 감소',
+          rich('주문 생성 중 하나라도 실패하면 ', strong('전체 변경이 rollback'), '되도록 구성해 부분 저장 가능성을 차단'),
+          rich('존재하지 않는 상품 요청에서 상세 주문·스탬프·회원 적립이 남지 않는 ', strong('실패 경로 테스트'), '를 추가'),
+          rich('Backend ', strong('13개 테스트'), '로 주문 무결성, 권한, 입력 검증과 오류 처리 동작을 검증'),
         ],
         implementation: [
           {
             description:
-              '주문 생성 서비스에서 상세 항목을 productId 기준으로 정규화하고, 생성된 주문 id를 상세 주문에 연결한 뒤 batch insert와 스탬프 원자적 증가를 하나의 트랜잭션 안에서 처리함.',
+              '주문 상세를 productId 기준으로 정규화한 뒤 각 저장 단계의 영향 행을 검증한다. 상품, 상세 주문, 스탬프, 회원 적립 중 하나라도 반영되지 않으면 예외를 발생시켜 전체 트랜잭션을 rollback함.',
             language: 'java',
             code: `@Override
 @Transactional
@@ -1267,28 +1268,39 @@ public int makeOrder(Order order, List<OrderDetail> details) {
         order.setCompleted("N");
     }
     int result = orderDao.insert(order);
+    if (result <= 0) {
+        return 0;
+    }
     int totalQuantity = 0;
     for (OrderDetail detail : normalizedDetails) {
         detail.setOrderId(order.getoId());
-        productDao.incrementOrderCount(detail.getProductId(), detail.getQuantity());
+        if (productDao.incrementOrderCount(detail.getProductId(), detail.getQuantity()) <= 0) {
+            throw new IllegalArgumentException("Product not found: " + detail.getProductId());
+        }
         totalQuantity += detail.getQuantity();
     }
-    orderDetailDao.insertAll(normalizedDetails);
+    if (orderDetailDao.insertAll(normalizedDetails) != normalizedDetails.size()) {
+        throw new IllegalStateException("Order details could not be created");
+    }
 
     Stamp stamp = new Stamp();
     stamp.setUserId(order.getUserId());
     stamp.setOrderId(order.getoId());
     stamp.setQuantity(totalQuantity);
-    stampDao.insert(stamp);
+    if (stampDao.insert(stamp) <= 0) {
+        throw new IllegalStateException("Stamp could not be created");
+    }
 
-    userDao.incrementStamps(order.getUserId(), totalQuantity);
+    if (userDao.incrementStamps(order.getUserId(), totalQuantity) <= 0) {
+        throw new IllegalArgumentException("User not found: " + order.getUserId());
+    }
     return result;
 }`,
           },
         ],
         alternatives: [
-          '주문 생성 후 스탬프 적립을 별도 API로 분리할 수도 있었지만, 호출 순서와 실패 처리를 클라이언트가 떠안게 되어 주문 도메인의 일관성 관리가 더 어려웠을 것임.',
-          '중복 상품을 그대로 상세 row로 저장할 수도 있었지만, 같은 주문 안에서 상품 주문 수와 스탬프 적립 기준이 흔들릴 수 있어 productId 기준으로 먼저 정규화하는 쪽을 선택함.',
+          '@Transactional만 적용하고 DAO 반환값을 확인하지 않으면 영향 행 0건이 정상 흐름으로 처리되어 부분 저장을 막을 수 없었음.',
+          '실패한 단계를 별도 보상 로직으로 되돌리는 방법도 가능하지만 복구 경로가 복잡해지므로, 주문 도메인의 변경을 하나의 트랜잭션 경계에서 검증하는 방식을 선택함.',
         ],
       },
     ],
@@ -1296,10 +1308,10 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     achievements: [
       'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 기술을 full-stack 웹 서비스로 구현',
       '고객용 상품 탐색/주문/댓글/마이페이지와 관리자용 상품/매장/주문/댓글/사용자 관리 화면 구현',
-      rich('ApiResponse/PageResponse 기반 ', strong('API 응답 contract와 pagination'), '을 통일하고 Vue API client에서 공통 처리'),
-      rich('주문 생성, 상세 주문 batch insert, 스탬프 원자적 증가를 ', strong('하나의 주문 비즈니스 흐름'), '으로 구현'),
-      'Vue Router와 Pinia 기반으로 고객/관리자 화면, 인증, 장바구니, 카탈로그, 관리자 상태를 분리',
-      'WebP 이미지 전환, Bootstrap 제거, 로컬 UI primitive 적용으로 frontend build 산출물과 화면 구조 개선',
+      rich('주문 20건 기준 상세 조회를 20회에서 1회로 줄여 ', strong('상세 조회 쿼리 수 95% 절감')),
+      rich('PNG/JPG 원본 약 60MB를 WebP 약 2.9MB로 전환해 ', strong('이미지 자산 용량 최적화')),
+      rich('Backend ', strong('13개'), '·Frontend ', strong('20개 테스트'), '와 Vite build 통과'),
+      rich('주문 처리 단계별 영향 행 검증과 예외 기반 rollback으로 ', strong('부분 저장 차단')),
     ],
     retrospective: [
       'SSAFY 1학기 학습 내용을 프로젝트에 적용하며, Controller-Service-DAO 계층과 SQL Mapper가 실제 화면 요구사항과 어떻게 연결되는지 체감',
@@ -1316,7 +1328,7 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     screenshots: [
       'screenshot/pubburi-home.png',
       'screenshot/pubburi-products.png',
-      'screenshot/pubburi-admin.png',
+      'screenshot/pubburi-product-detail.png',
     ],
     hasBottomScreenshot: false,
   },
