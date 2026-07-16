@@ -440,7 +440,7 @@
           <ul>
             <li><strong>Backend & Front 개발</strong>로 사용자, 상품, 주문, 댓글, 매장 API와 고객/관리자 화면 구현</li>
             <li><strong>ApiResponse/PageResponse</strong>, 입력 검증, 공통 예외 처리와 <strong>AccessGuard</strong>로 API 응답·권한 규칙 통일</li>
-            <li>주문 목록 API의 상세 데이터를 <strong>order_id IN (...)</strong> batch 조회로 전환해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 <strong>95% 절감</strong></li>
+            <li>주문 목록 API의 상세 데이터를 일괄 조회하도록 개선해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 <strong>95% 절감</strong></li>
             <li>주문·상세·상품 주문 수·스탬프 적립의 처리 결과를 검증하고 실패 시 전체 rollback하도록 구성</li>
           </ul>
         </div>
