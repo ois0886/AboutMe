@@ -1250,7 +1250,6 @@ internal class LoginViewModel @Inject constructor(
         result: [
           rich('주문 생성 중 하나라도 실패하면 ', strong('전체 변경이 rollback'), '되도록 구성해 부분 저장 가능성을 차단'),
           rich('존재하지 않는 상품 요청에서 상세 주문·스탬프·회원 적립이 남지 않는 ', strong('실패 경로 테스트'), '를 추가'),
-          rich('Backend ', strong('13개 테스트'), '로 주문 무결성, 권한, 입력 검증과 오류 처리 동작을 검증'),
         ],
         implementation: [
           {
@@ -1309,8 +1308,6 @@ public int makeOrder(Order order, List<OrderDetail> details) {
       'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 기술을 full-stack 웹 서비스로 구현',
       '고객용 상품 탐색/주문/댓글/마이페이지와 관리자용 상품/매장/주문/댓글/사용자 관리 화면 구현',
       rich('주문 20건 기준 상세 조회를 20회에서 1회로 줄여 ', strong('상세 조회 쿼리 수 95% 절감')),
-      rich('PNG/JPG 원본 약 60MB를 WebP 약 2.9MB로 전환해 ', strong('이미지 자산 용량 최적화')),
-      rich('Backend ', strong('13개'), '·Frontend ', strong('20개 테스트'), '와 Vite build 통과'),
       rich('주문 처리 단계별 영향 행 검증과 예외 기반 rollback으로 ', strong('부분 저장 차단')),
     ],
     retrospective: [
