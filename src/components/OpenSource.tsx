@@ -11,11 +11,11 @@ interface OpenSourceProject {
 }
 
 const openSourceProjects: OpenSourceProject[] = [
-{
+  {
     title: 'Compose-Chart',
     period: '2026.02 ~ 2026.03 (Android 1인)',
     description:
-      'Canvas API만으로 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar)를 구현한 Jetpack Compose 라이브러리 · Maven Central 배포 (v1.3.0)',
+      'Canvas API만으로 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar)를 구현한 Jetpack Compose 라이브러리 · Maven Central 배포 (v1.3.2)',
     image: 'screenshot/chart.png',
     tech: ['Kotlin', 'Jetpack Compose', 'Canvas API'],
     github: 'https://github.com/ois0886/compose-chart',
@@ -24,7 +24,7 @@ const openSourceProjects: OpenSourceProject[] = [
     title: 'Compose-Git-Grass',
     period: '2026.02 (Android 1인)',
     description:
-      'Compose 기본 요소만으로 구현한 GitHub 잔디(contribution graph) 범용 UI 라이브러리 · Maven Central 배포 (v1.1.0)',
+      'Compose 기본 요소만으로 구현한 GitHub 잔디(contribution graph) 범용 UI 라이브러리 · Maven Central 배포 (v1.2.0)',
     image: 'screenshot/Grass1.png',
     tech: ['Kotlin', 'Jetpack Compose'],
     github: 'https://github.com/ois0886/compose-git-grass',

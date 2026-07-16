@@ -68,15 +68,16 @@ describe('ProjectDetail', () => {
     ).toBe(true)
   })
 
-  it('주전부리 프로젝트 상세가 정상 렌더링된다', () => {
+  it('주점부리 프로젝트 상세가 정상 렌더링된다', () => {
     renderProjectDetail('pubburi')
 
     expect(
-      screen.getByRole('heading', { level: 1, name: '주전부리 - Backend & Front' }),
+      screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Front' }),
     ).toBeInTheDocument()
     expect(screen.getByText('2025.05')).toBeInTheDocument()
     expect(screen.getByText('Backend & Front 개발')).toBeInTheDocument()
-    expect(screen.getByText('상세 조회 쿼리 수 95% 절감')).toBeInTheDocument()
-    expect(screen.getByText('하나의 트랜잭션성 서비스 흐름')).toBeInTheDocument()
+    expect(screen.getAllByText('상세 조회 쿼리 수 95% 절감')).toHaveLength(2)
+    expect(screen.getByText('전체 변경이 rollback')).toBeInTheDocument()
+    expect(screen.getByText('13개 테스트')).toBeInTheDocument()
   })
 })
