@@ -333,7 +333,7 @@
       grid-template-rows: auto 1fr;
       min-height: 0;
       border: 2px solid #0e2b4c;
-      background: rgba(255, 252, 244, 0.58);
+      background: #fbfaf7;
       overflow: hidden;
     }
 
@@ -352,8 +352,45 @@
       width: 100%;
       height: 100%;
       min-height: 0;
-      object-fit: cover;
+      object-fit: contain;
       object-position: top center;
+    }
+
+    #slide-20 .overview-grid {
+      margin-top: 0.16in !important;
+    }
+
+    #slide-20 .shot-panel {
+      min-height: 5.05in;
+    }
+
+    #slide-20 .info-panel {
+      gap: 0.07in;
+    }
+
+    #slide-20 .info-card {
+      padding: 0.12in 0.16in;
+    }
+
+    #slide-20 .info-card h3 {
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    #slide-20 .info-card p,
+    #slide-20 .info-card li {
+      font-size: 15.5px;
+      line-height: 1.36;
+    }
+
+    #slide-20 .tag-list {
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    #slide-20 .tag {
+      padding: 4px 8px;
+      font-size: 12.5px;
     }
 
     .screenshot-grid {
@@ -466,6 +503,7 @@
 
     .diagram-card {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 5.42in;
@@ -1015,7 +1053,8 @@
     .generated-visual {
       position: relative;
       width: 100%;
-      min-height: 5.05in;
+      height: 4.82in;
+      min-height: 4.82in;
       overflow: hidden;
       border: 2px solid #0e2b4c;
       background: #fbf7ef;
@@ -1025,8 +1064,19 @@
       display: block;
       width: 100%;
       height: 100%;
-      min-height: 5.05in;
+      min-height: 4.82in;
       object-fit: contain;
+    }
+
+    .image-credit {
+      width: 100%;
+      margin: 0.055in 0 0;
+      color: #8a96a4;
+      font-size: 10.5px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: 0;
+      text-align: center;
     }
 
     .visual-chip {
@@ -1459,25 +1509,10 @@
       <h2 class="title-md">XML·Compose 혼용 UI 개선 / State Hoisting 구조화</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="layer-diagram">
-            <div class="layer-grid">
-              <div class="layer-box">
-                <div class="layer-title">기존 화면</div>
-                <div class="messy-item">XML View</div>
-                <div class="messy-item">Compose UI</div>
-                <div class="messy-item">ViewModel / Navigation</div>
-                <div class="messy-item">텍스트·버튼·상태 처리</div>
-              </div>
-              <div class="layer-arrow">→</div>
-              <div class="layer-box">
-                <div class="layer-title">재구성한 화면</div>
-                <div class="clean-layer is-core">Route<small>상태 생성 · 의미 결정</small></div>
-                <div class="clean-layer">Screen<small>레이아웃 조립</small></div>
-                <div class="clean-layer">Component<small>재사용 UI 조각</small></div>
-              </div>
-            </div>
-            <div class="flow-caption">화면별 혼재 로직을 계층으로 분리해 수정 범위와 중복을 줄임</div>
+          <div class="generated-visual">
+            <img src="public/screenshot/naenun-state-hoisting-visual.png" alt="한 화면의 네 가지 책임을 외부 상태 제어와 세 계층으로 분리한 전후 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -1521,42 +1556,10 @@
       <h2 class="title-md">레거시 패키지 구조 재편</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="package-diagram">
-            <div class="package-compare">
-              <div class="package-box">
-                <div class="diagram-title">기존 구조</div>
-                <div class="legacy-map">
-                  <div class="legacy-chip" style="left: 12px; top: 18px;">AppActivity</div>
-                  <div class="legacy-chip" style="right: 20px; top: 36px;">Screen</div>
-                  <div class="legacy-chip" style="left: 64px; top: 112px;">Navigation</div>
-                  <div class="legacy-chip" style="right: 38px; top: 138px;">Manager</div>
-                  <div class="legacy-chip" style="left: 22px; bottom: 44px;">ViewModel</div>
-                  <div class="legacy-chip" style="right: 10px; bottom: 22px;">UI Model</div>
-                </div>
-              </div>
-              <div class="layer-arrow">→</div>
-              <div class="package-box">
-                <div class="diagram-title">기능·계층 기준 재구성</div>
-                <div class="feature-stack">
-                  <div class="feature-layer is-core">Feature<small>기능 단위 분리</small></div>
-                  <div class="feature-row">
-                    <div class="feature-layer">Route</div>
-                    <div class="feature-layer">Screen</div>
-                  </div>
-                  <div class="feature-row">
-                    <div class="feature-layer">Component</div>
-                    <div class="feature-layer">ViewModel</div>
-                  </div>
-                  <div class="feature-row">
-                    <div class="feature-layer">Domain</div>
-                    <div class="feature-layer">Model</div>
-                  </div>
-                  <div class="feature-layer is-core">Core<small>공통 로직 분리</small></div>
-                </div>
-              </div>
-            </div>
-            <div class="flow-caption">뒤섞인 화면·로직·데이터를 기능 단위로 나누고 의존성 방향을 명확히 정리</div>
+          <div class="generated-visual">
+            <img src="public/screenshot/naenun-package-refactor-visual.png" alt="순환 참조가 얽힌 레거시 서랍을 Feature와 Core 구조로 정리한 전후 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -1597,26 +1600,10 @@
       <h2 class="title-md">메모리 누수 개선</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="leak-diagram">
-            <div class="leak-flow">
-              <div class="leak-column">
-                <div class="diagram-title">누수 원인</div>
-                <div class="leak-step">Singleton 남용<small>긴 생명주기 객체</small></div>
-                <div class="leak-step">Activity Context 참조<small>짧은 생명주기 보유</small></div>
-                <div class="leak-step">Listener 미해제<small>Callback 참조 유지</small></div>
-                <div class="leak-step">순환 참조<small>객체 해제 지연</small></div>
-              </div>
-              <div class="layer-arrow">→</div>
-              <div class="leak-column">
-                <div class="diagram-title">정리한 구조</div>
-                <div class="leak-step is-core">Application Context<small>Context 보유 범위 조정</small></div>
-                <div class="leak-step">Hilt DI<small>Singleton 사용 최소화</small></div>
-                <div class="leak-step">onDispose / onCleared<small>Listener·리소스 해제</small></div>
-                <div class="leak-step">WeakReference<small>순환 참조 완화</small></div>
-              </div>
-            </div>
-            <div class="flow-caption">생명주기보다 오래 남는 참조를 제거해 장시간 실행 환경의 메모리 누수 위험을 낮춤</div>
+          <div class="generated-visual">
+            <img src="public/screenshot/naenun-memory-leak-visual.png" alt="종료된 Activity에 남은 참조와 Listener를 해제해 메모리를 반환한 전후 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -1752,31 +1739,10 @@
       <h2 class="title-md">6개 API 병렬 처리와 부분 실패 대응</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="timeline-diagram">
-            <div class="timeline-panel">
-              <div class="timeline-head"><span>Before · 순차 호출</span><span>약 356ms</span></div>
-              <div class="timeline-track">
-                <div class="timeline-lane"><span class="lane-label">CPU</span><span class="lane-line"><span class="time-bar" style="left: 0%; width: 16%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Memory</span><span class="lane-line"><span class="time-bar" style="left: 17%; width: 16%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Network R</span><span class="lane-line"><span class="time-bar" style="left: 34%; width: 16%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Network T</span><span class="lane-line"><span class="time-bar" style="left: 51%; width: 16%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Event</span><span class="lane-line"><span class="time-bar" style="left: 68%; width: 15%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">AI</span><span class="lane-line"><span class="time-bar" style="left: 84%; width: 16%;"></span></span></div>
-              </div>
-            </div>
-            <div class="timeline-panel">
-              <div class="timeline-head"><span>After · supervisorScope + async</span><span>약 156ms</span></div>
-              <div class="timeline-track">
-                <div class="timeline-lane"><span class="lane-label">CPU</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 40%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Memory</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 38%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Network R</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 36%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Network T</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 37%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">Event</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 34%;"></span></span></div>
-                <div class="timeline-lane"><span class="lane-label">AI</span><span class="lane-line"><span class="time-bar is-active" style="left: 0%; width: 40%;"></span></span></div>
-              </div>
-              <div class="timeline-result">동시에 시작 · 부분 실패 허용 · 가장 늦은 작업 기준 완료 · 56% 단축</div>
-            </div>
+          <div class="generated-visual">
+            <img src="public/screenshot/more-parallel-api-visual.png" alt="6개 API를 한 줄 대기에서 병렬 처리로 바꿔 356ms를 156ms로 단축한 전후 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -1821,22 +1787,10 @@
       <h2 class="title-md">Convention Plugin 기반 멀티 모듈 빌드 표준화</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="build-diagram">
-            <div class="build-core">build-logic<small>공통 빌드 설정과 의존성을 모듈 밖에서 중앙 관리</small></div>
-            <div class="plugin-grid">
-              <div class="plugin-tile">mori.android.feature<small>Compose · Hilt · Orbit · Test</small></div>
-              <div class="plugin-tile">mori.android.core<small>Android/Kotlin 기본 설정</small></div>
-              <div class="plugin-tile">mori.android.network<small>Retrofit · OkHttp · MockWebServer</small></div>
-              <div class="plugin-tile">mori.android.datastore<small>DataStore · Serialization</small></div>
-            </div>
-            <div class="module-strip">
-              <div class="module-pill">feature-dashboard</div>
-              <div class="module-pill">feature-instance</div>
-              <div class="module-pill">core-domain</div>
-              <div class="module-pill">core-network</div>
-            </div>
-            <div class="flow-caption">모듈은 플러그인 한 줄만 적용하고, 설정 변경은 build-logic 한 곳에서 반영</div>
+          <div class="generated-visual">
+            <img src="public/screenshot/more-build-logic-visual.png" alt="하나의 Convention Plugin 설정을 모든 모듈에 동일하게 적용하는 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -1970,22 +1924,10 @@
       <h2 class="title-md">Token 재발급과 인증 예외 처리 구조화</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="flow-diagram">
-            <div class="flow-row">
-              <div class="flow-node">UI / Domain</div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-node is-accent">AuthManager<small>메모리 캐시·로그아웃 이벤트</small></div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-node">API</div>
-            </div>
-            <div class="flow-row"><div class="flow-arrow">↓</div></div>
-            <div class="flow-node">AuthDataStore<small>토큰·유저 정보 영속화</small></div>
-            <div class="flow-compare">
-              <div class="flow-node">AuthInterceptor<small>Authorization 헤더 자동 추가</small></div>
-              <div class="flow-node">TokenAuthenticator<small>401 응답 시 재발급·재시도</small></div>
-            </div>
-            <div class="flow-caption">토큰 저장, 헤더 주입, 401 재시도, 재발급 실패, 로그아웃 사유 전달을 계층별로 분리</div>
+          <div class="generated-visual">
+            <img src="public/screenshot/glim-auth-flow-visual.png" alt="만료된 Access Token을 재발급해 한 번 재시도하고 Refresh 만료 시 로그아웃하는 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -2028,20 +1970,10 @@
       <h2 class="title-md">Orbit MVI 기반 상태 관리와 테스트 가능성 확보</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="mvi-diagram">
-            <div class="mvi-node" style="left: 22px; top: 34px;">User Input<small>이메일·비밀번호 변경</small></div>
-            <div class="mvi-arrow" style="left: 194px; top: 70px;">→</div>
-            <div class="mvi-node is-core" style="left: 242px; top: 34px;">Intent<small>ViewModel 진입점</small></div>
-            <div class="mvi-arrow" style="left: 416px; top: 70px;">→</div>
-            <div class="mvi-node" style="left: 464px; top: 34px;">Reduce<small>상태 변경</small></div>
-            <div class="mvi-arrow" style="left: 520px; top: 142px;">↓</div>
-            <div class="mvi-node" style="left: 464px; top: 206px;">UiState<small>검증·로딩·에러</small></div>
-            <div class="mvi-arrow" style="left: 416px; top: 242px;">←</div>
-            <div class="mvi-node is-core" style="left: 242px; top: 206px;">ContainerHost<small>State + SideEffect</small></div>
-            <div class="mvi-arrow" style="left: 194px; top: 242px;">←</div>
-            <div class="mvi-node" style="left: 22px; top: 206px;">Screen<small>상태 구독·렌더링</small></div>
-            <div class="mvi-branch">SideEffect는 Toast / Navigation 같은 일회성 이벤트로 분리</div>
+          <div class="generated-visual">
+            <img src="public/screenshot/glim-mvi-test-visual.png" alt="여러 Intent와 Reducer 클래스를 Orbit Container로 통합하고 ViewModel을 테스트하는 전후 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -2087,35 +2019,10 @@
       <h2 class="title-md">Channel 기반 Navigator로 화면-네비게이션 결합 분리</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
-          <div class="navigator-diagram">
-            <div class="nav-lane">
-              <div class="nav-label">Feature</div>
-              <div class="nav-body">
-                <div class="nav-chip">Screen</div>
-                <div class="flow-arrow">→</div>
-                <div class="nav-chip">ViewModel<small>navigate 호출</small></div>
-              </div>
-            </div>
-            <div class="nav-divider">Screen / ViewModel은 NavBackStack을 직접 모름</div>
-            <div class="nav-lane">
-              <div class="nav-label">Navigation Core</div>
-              <div class="nav-body">
-                <div class="nav-chip is-core">Navigator</div>
-                <div class="flow-arrow">→</div>
-                <div class="nav-chip is-core">Channel&lt;InternalRoute&gt;</div>
-                <div class="flow-arrow">→</div>
-                <div class="nav-chip">NavigatorVM</div>
-              </div>
-            </div>
-            <div class="nav-lane">
-              <div class="nav-label">App Shell</div>
-              <div class="nav-body">
-                <div class="nav-chip">LaunchedNavigator</div>
-                <div class="flow-arrow">→</div>
-                <div class="nav-chip">NavBackStack 조작</div>
-              </div>
-            </div>
+          <div class="generated-visual">
+            <img src="public/screenshot/glim-navigator-channel-visual.png" alt="Feature의 직접 BackStack 접근을 끊고 Channel과 Navigator가 전환을 담당하는 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -2256,14 +2163,9 @@
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
           <div class="generated-visual">
-            <img src="public/screenshot/pubburi-batch-query-visual.png" alt="주문 상세 조회 batch query 구조 시각화" />
-            <div class="visual-chip is-large" style="left: 0.18in; top: 0.18in;">Before</div>
-            <div class="visual-chip is-large is-dark" style="right: 0.18in; top: 0.18in;">After</div>
-            <div class="visual-chip is-danger" style="left: 1.18in; bottom: 0.28in;">20회</div>
-            <div class="visual-chip is-dark" style="left: 3.02in; bottom: 0.28in;">1회</div>
-            <div class="visual-chip" style="left: 2.22in; top: 2.28in;">Batch IN query</div>
-            <div class="visual-chip" style="right: 0.26in; bottom: 0.34in;">Group by orderId</div>
+            <img src="public/screenshot/pubburi-batch-query-visual.png" alt="주문 20건을 개별 조회하다 IN batch 한 번으로 묶어 95퍼센트 줄인 전후 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
@@ -2308,14 +2210,9 @@
       <div class="problem-layout" style="margin-top: 0.24in;">
         <div class="diagram-card">
           <div class="generated-visual">
-            <img src="public/screenshot/pubburi-transaction-visual.png" alt="주문 생성 트랜잭션과 rollback 구조 시각화" />
-            <div class="visual-chip is-dark" style="left: 0.2in; top: 0.18in;">Transaction</div>
-            <div class="visual-chip" style="left: 0.72in; top: 2.25in;">Order</div>
-            <div class="visual-chip" style="left: 2.1in; top: 2.05in;">Details</div>
-            <div class="visual-chip" style="right: 1.42in; top: 1.82in;">Product Count</div>
-            <div class="visual-chip" style="right: 0.52in; top: 2.72in;">Stamp</div>
-            <div class="visual-chip is-danger is-large" style="left: 2.72in; bottom: 0.46in;">Rollback</div>
+            <img src="public/screenshot/pubburi-transaction-visual.png" alt="주문 생성 네 단계 중 0 rows 실패가 발생하면 전체를 rollback해 부분 저장을 막는 이미지" />
           </div>
+          <p class="image-credit">ChatGPT로 제작한 이미지입니다.</p>
         </div>
         <div class="content-stack">
           <div class="compact-card">
