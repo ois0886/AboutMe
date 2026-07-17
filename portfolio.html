@@ -265,6 +265,15 @@
       text-align: right;
     }
 
+    #slide-02 .toc-list {
+      gap: 0.18in;
+      margin-top: 0.32in;
+    }
+
+    #slide-02 .toc-item {
+      padding: 0.18in 0.24in;
+    }
+
     .overview-grid {
       display: grid;
       grid-template-columns: 0.96fr 1.04fr;
@@ -291,6 +300,60 @@
 
     .phone-shot:nth-child(n + 2) {
       display: none;
+    }
+
+    .web-overview-shot {
+      display: block;
+      width: 100%;
+      border: 2px solid #0e2b4c;
+      background: #f7f0e2;
+      box-shadow: 12px 12px 0 rgba(14, 43, 76, 0.12);
+    }
+
+    .web-showcase-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 0.2in;
+      height: 6.35in;
+      margin-top: 0.16in;
+    }
+
+    .web-showcase-main,
+    .web-showcase-side {
+      min-height: 0;
+    }
+
+    .web-showcase-side {
+      display: grid;
+      gap: 0.18in;
+    }
+
+    .web-shot-card {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 0;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.58);
+      overflow: hidden;
+    }
+
+    .web-shot-label {
+      padding: 10px 14px;
+      border-bottom: 2px solid #0e2b4c;
+      color: #0e2b4c;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .web-shot-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+      object-position: top center;
     }
 
     .screenshot-grid {
@@ -949,6 +1012,109 @@
       text-align: center;
     }
 
+    .generated-visual {
+      position: relative;
+      width: 100%;
+      min-height: 5.05in;
+      overflow: hidden;
+      border: 2px solid #0e2b4c;
+      background: #fbf7ef;
+    }
+
+    .generated-visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 5.05in;
+      object-fit: contain;
+    }
+
+    .visual-chip {
+      position: absolute;
+      z-index: 1;
+      padding: 8px 12px;
+      border: 2px solid #0e2b4c;
+      background: rgba(247, 240, 226, 0.92);
+      color: #0e2b4c;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.2;
+      box-shadow: 5px 5px 0 rgba(14, 43, 76, 0.12);
+      white-space: nowrap;
+    }
+
+    .visual-chip.is-dark {
+      background: #0e2b4c;
+      color: #f7f0e2;
+    }
+
+    .visual-chip.is-danger {
+      border-color: #8f2f2f;
+      background: #fff1ec;
+      color: #8f2f2f;
+    }
+
+    .visual-chip.is-large {
+      padding: 10px 16px;
+      font-size: 17px;
+    }
+
+    #slide-22 .diagram-card,
+    #slide-23 .diagram-card {
+      padding: 0.14in;
+    }
+
+    #slide-22 .content-stack,
+    #slide-23 .content-stack {
+      gap: 0.07in;
+    }
+
+    #slide-22 .compact-card,
+    #slide-23 .compact-card {
+      padding: 0.085in 0.14in;
+    }
+
+    #slide-22 .compact-card p,
+    #slide-22 .compact-card li,
+    #slide-23 .compact-card p,
+    #slide-23 .compact-card li {
+      font-size: 14.1px;
+      line-height: 1.34;
+    }
+
+    .pubburi-result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3in;
+      margin-top: 0.32in;
+    }
+
+    .pubburi-result-card {
+      min-height: 5.62in;
+      padding: 0.28in;
+      border: 2px solid #0e2b4c;
+      background: rgba(255, 252, 244, 0.58);
+    }
+
+    .pubburi-result-card h3 {
+      margin-bottom: 0.18in;
+      color: #0e2b4c;
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .pubburi-result-card ul {
+      display: grid;
+      gap: 0.13in;
+      padding-left: 22px;
+    }
+
+    .pubburi-result-card li {
+      color: #243f5e;
+      font-size: 18px;
+      line-height: 1.46;
+    }
+
     svg {
       width: 100%;
       height: auto;
@@ -1221,6 +1387,14 @@
             <p class="toc-desc">글귀를 공유하며 숏츠 폼으로 감성을 공유하는 Android 앱</p>
           </div>
           <div class="toc-pages">14p ~ 19p</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-index">Project. 4</div>
+          <div>
+            <div class="toc-name">주점부리</div>
+            <p class="toc-desc">주류 상품 탐색부터 주문, 관리자 CRUD까지 구현한 풀스택 웹 서비스</p>
+          </div>
+          <div class="toc-pages">20p ~ 24p</div>
         </div>
       </div>
       <span class="footer-title">Table of Contents</span>
@@ -2012,6 +2186,202 @@
       </div>
       <span class="footer-title">Glim Retrospective</span>
       <span class="slide-no">19</span>
+    </section>
+
+    <section id="slide-20" class="slide">
+      <p class="section-label">Projects. 4</p>
+      <h2 class="title-lg">주점부리</h2>
+      <p class="meta">2025.05 · 2명(Backend &amp; Front) · Backend &amp; Front 개발</p>
+      <div class="overview-grid" style="margin-top: 0.28in;">
+        <div class="shot-panel">
+          <img class="web-overview-shot" src="public/screenshot/pubburi-home.png" alt="주점부리 홈 화면" />
+        </div>
+        <div class="info-panel">
+          <div class="info-card">
+            <h3>간단 소개</h3>
+            <p>SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue를 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스</p>
+          </div>
+          <div class="info-card">
+            <h3>배경</h3>
+            <p>학습한 Backend와 Frontend 기술을 하나의 주문 서비스로 연결하기 위해 고객용 상품 탐색/주문 화면과 관리자용 상품·매장·주문 관리 화면을 함께 구현.</p>
+          </div>
+          <div class="info-card">
+            <h3>핵심 기여</h3>
+            <ul>
+              <li>Spring Boot Controller-Service-DAO 계층과 MyBatis Mapper로 사용자, 상품, 주문, 댓글, 매장 API 구현</li>
+              <li>ApiResponse, PageResponse, 입력 검증, GlobalExceptionHandler로 응답과 pagination contract 통일</li>
+              <li>주문 생성, 상세 주문 저장, 상품 주문 수 증가, 스탬프 적립을 하나의 트랜잭션으로 연결</li>
+              <li>Vue Router와 Pinia로 인증, 장바구니, 카탈로그, 관리자 상태 분리</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3>기술 스택</h3>
+            <div class="tag-list">
+              <span class="tag">Java</span><span class="tag">Spring Boot 3</span><span class="tag">MyBatis</span><span class="tag">MySQL</span><span class="tag">REST API</span><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">Pinia</span><span class="tag">Docker Compose</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Pubburi Overview</span>
+      <span class="slide-no">20</span>
+    </section>
+
+    <section id="slide-21" class="slide">
+      <p class="section-label">Web ScreenShot</p>
+      <div class="web-showcase-grid">
+        <div class="web-showcase-main">
+          <div class="web-shot-card" style="height: 100%;">
+            <div class="web-shot-label">Home</div>
+            <img class="web-shot-image" src="public/screenshot/pubburi-home.png" alt="주점부리 홈 화면" />
+          </div>
+        </div>
+        <div class="web-showcase-side">
+          <div class="web-shot-card">
+            <div class="web-shot-label">Product List</div>
+            <img class="web-shot-image" src="public/screenshot/pubburi-products.png" alt="주점부리 상품 목록 화면" />
+          </div>
+          <div class="web-shot-card">
+            <div class="web-shot-label">Product Detail</div>
+            <img class="web-shot-image" src="public/screenshot/pubburi-product-detail.png" alt="주점부리 상품 상세 화면" />
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Pubburi Web ScreenShot</span>
+      <span class="slide-no">21</span>
+    </section>
+
+    <section id="slide-22" class="slide">
+      <p class="section-label">Problem Solving 1</p>
+      <h2 class="title-md">주문 목록 N+1 조회 개선</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="generated-visual">
+            <img src="public/screenshot/pubburi-batch-query-visual.png" alt="주문 상세 조회 batch query 구조 시각화" />
+            <div class="visual-chip is-large" style="left: 0.18in; top: 0.18in;">Before</div>
+            <div class="visual-chip is-large is-dark" style="right: 0.18in; top: 0.18in;">After</div>
+            <div class="visual-chip is-danger" style="left: 1.18in; bottom: 0.28in;">20회</div>
+            <div class="visual-chip is-dark" style="left: 3.02in; bottom: 0.28in;">1회</div>
+            <div class="visual-chip" style="left: 2.22in; top: 2.28in;">Batch IN query</div>
+            <div class="visual-chip" style="right: 0.26in; bottom: 0.34in;">Group by orderId</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <ul>
+              <li>주문 목록 20건을 조회한 뒤 각 주문의 상세 상품을 다시 조회해야 했음</li>
+              <li>주문 건수만큼 상세 조회 쿼리가 반복되어 page size가 커질수록 N+1 형태의 조회 비용 증가</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>주문 목록과 주문 상세를 분리 조회하면서, 목록 응답의 각 주문마다 상세 상품 select가 반복되는 구조였음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>주문 목록에서 order id 목록을 수집하고 `order_id IN (...)` 조건으로 상세 상품을 batch 조회</li>
+              <li>Service layer에서 orderId 기준으로 상세 상품을 그룹핑한 뒤 기존 OrderInfo.details 형태로 attach</li>
+              <li>사용자/관리자 주문 목록과 최근 주문 조회가 같은 attachDetails 흐름을 사용하도록 정리</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>주문 20건 기준 상세 조회 쿼리를 <strong>20회에서 1회</strong>로 축소</li>
+              <li>응답 구조는 유지하면서 상세 조회 쿼리 수 <strong>95% 절감</strong></li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>회고</h3>
+            <p>Frontend contract를 바꾸지 않고 내부 조회 구조만 개선하면, 화면 영향 없이 API 성능과 구현 일관성을 함께 잡을 수 있음을 확인.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Pubburi</span>
+      <span class="slide-no">22</span>
+    </section>
+
+    <section id="slide-23" class="slide">
+      <p class="section-label">Problem Solving 2</p>
+      <h2 class="title-md">주문 생성 트랜잭션과 rollback 구조</h2>
+      <div class="problem-layout" style="margin-top: 0.24in;">
+        <div class="diagram-card">
+          <div class="generated-visual">
+            <img src="public/screenshot/pubburi-transaction-visual.png" alt="주문 생성 트랜잭션과 rollback 구조 시각화" />
+            <div class="visual-chip is-dark" style="left: 0.2in; top: 0.18in;">Transaction</div>
+            <div class="visual-chip" style="left: 0.72in; top: 2.25in;">Order</div>
+            <div class="visual-chip" style="left: 2.1in; top: 2.05in;">Details</div>
+            <div class="visual-chip" style="right: 1.42in; top: 1.82in;">Product Count</div>
+            <div class="visual-chip" style="right: 0.52in; top: 2.72in;">Stamp</div>
+            <div class="visual-chip is-danger is-large" style="left: 2.72in; bottom: 0.46in;">Rollback</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <ul>
+              <li>주문 생성은 주문 row 추가, 상세 주문 저장, 상품 주문 수 증가, 스탬프 적립까지 함께 처리되어야 했음</li>
+              <li>DAO 실패가 예외가 아닌 영향 행 0건으로 반환되면 @Transactional만으로는 부분 저장을 막기 어려웠음</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>저장 단계가 여러 테이블에 걸쳐 있고, 각 단계의 영향 행을 검증하지 않으면 주문·상품·스탬프 데이터 일관성이 깨질 수 있었음.</p>
+          </div>
+          <div class="compact-card">
+            <h3>해결</h3>
+            <ul>
+              <li>OrderService 주문 생성 메서드에 @Transactional 적용</li>
+              <li>주문 상세는 productId 기준으로 수량을 합산한 뒤 batch insert</li>
+              <li>상품 주문 수 증가, 상세 주문 저장, 스탬프 생성, 회원 스탬프 증가의 영향 행을 단계별로 검증</li>
+              <li>하나라도 실패하면 예외를 발생시켜 전체 rollback</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>주문 생성 중 일부 단계만 저장되는 부분 저장 가능성 차단</li>
+              <li>존재하지 않는 상품 요청에서 상세 주문·스탬프·회원 적립이 남지 않는 실패 경로 검증</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>회고</h3>
+            <p>트랜잭션은 애너테이션만 붙이는 것이 아니라, 실패를 실패로 판정하는 기준과 검증 지점을 함께 설계해야 의미가 있음을 배움.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">Pubburi</span>
+      <span class="slide-no">23</span>
+    </section>
+
+    <section id="slide-24" class="slide">
+      <p class="section-label">Result</p>
+      <h2 class="title-md">주점부리 성과 및 회고</h2>
+      <div class="pubburi-result-grid">
+        <div class="pubburi-result-card">
+          <h3>성과 및 결과</h3>
+          <ul>
+            <li>SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 기술을 full-stack 웹 서비스로 구현</li>
+            <li>고객용 상품 탐색/주문/댓글/마이페이지와 관리자용 상품/매장/주문/댓글/사용자 관리 화면 구현</li>
+            <li>주문 20건 기준 상세 조회를 20회에서 1회로 줄여 <strong>상세 조회 쿼리 수 95% 절감</strong></li>
+            <li>주문 처리 단계별 영향 행 검증과 예외 기반 rollback으로 <strong>부분 저장 차단</strong></li>
+            <li>Docker Compose MySQL 환경과 API, Layer, 성능 문서를 정리해 로컬 실행과 검증 가능성 확보</li>
+          </ul>
+        </div>
+        <div class="pubburi-result-card">
+          <h3>회고</h3>
+          <ul>
+            <li>Controller-Service-DAO 계층과 SQL Mapper가 실제 화면 요구사항과 어떻게 연결되는지 체감했습니다.</li>
+            <li>도메인 상태 변경이 여러 테이블에 걸쳐 발생할 때 트랜잭션 경계와 실패 처리 기준을 먼저 정리해야 한다는 점을 배웠습니다.</li>
+            <li>API 응답 wrapper, pagination, validation error 처리 기준까지 함께 설계해야 화면 구현이 안정적이라는 점을 확인했습니다.</li>
+            <li>DTO 필드명, PageResponse 형태, seed data를 코드와 문서로 고정하자 Backend와 Front 작업을 더 편하게 이어갈 수 있었습니다.</li>
+            <li>프로젝트 이후 다시 정리하면서 실행 환경, seed data, 문서, 검증 명령을 함께 남겨야 다른 사람이 프로젝트를 재현할 수 있음을 확인했습니다.</li>
+          </ul>
+        </div>
+      </div>
+      <span class="footer-title">Pubburi Retrospective</span>
+      <span class="slide-no">24</span>
     </section>
   </main>
 </body>
