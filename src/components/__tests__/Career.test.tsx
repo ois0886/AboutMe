@@ -1,7 +1,11 @@
 import { render, screen } from '@testing-library/react'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import Activity from '../Activity'
 import Career from '../Career'
 import { careers, getTotalCareer } from '../careerUtils'
+
+const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim()
 
 describe('Career', () => {
   it('(주)차트연구소 경력이 렌더링된다', () => {
@@ -14,6 +18,24 @@ describe('Career', () => {
     render(<Career />)
 
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
+  })
+
+  it('웹과 이력서의 차트연구소 경력 문구가 동일하다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+    const resumeTasks = Array.from(
+      resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
+    ).map((item) => normalizeText(item.textContent ?? ''))
+
+    expect(resumeTasks).toEqual(careers[0].tasks.map(normalizeText))
+    expect(resumeDocument.querySelector('[data-career-id="chartlab"]')?.closest('section')?.textContent)
+      .toContain('총 경력 6개월')
+  })
+
+  it('경력 문구에 설명 없이 사용되는 내부 용어가 없다', () => {
+    const careerText = careers.flatMap((career) => career.tasks).join(' ')
+
+    expect(careerText).not.toMatch(/\b(?:AAR|TR|Enum|CMS|SDK)\b/)
   })
 })
 

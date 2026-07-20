@@ -197,10 +197,10 @@ val personalTable = remember {
     ],
     insights: [],
     achievements: [
-      'SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상',
       rich(strong('상용 키오스크 앱'), '의 XML·Compose 혼용 UI를 Compose 중심 구조로 정리하고 Route-Screen-Component 책임 분리'),
       'Activity Context 참조, Listener 미해제, Singleton 참조 구조를 개선해 장시간 실행 환경의 메모리 누수 위험 요소 제거',
       '기능·계층 기준 패키지 재편과 공통 UI 컴포넌트 분리로 수정 영향 범위와 중복 수정 비용 감소',
+      rich(strong('SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상')),
     ],
     retrospective: [
       '기업·팀 간 초반 이해도가 맞지 않아 설계를 두 번 이상 수정하는 비효율이 발생했던 점이 아쉬움',
@@ -587,9 +587,9 @@ dependencies {
       { title: 'Compose가 그려지는 과정에 대해서 알아보자.', url: 'https://superohinsung.tistory.com/444' },
     ],
     achievements: [
-      '멀티 모듈 아키텍처 도입으로 기능별 모듈 분리 및 재사용성 향상',
-      rich('async/await를 활용한 API 병렬 처리로 ', strong('데이터 로딩 시간 56% 개선'), ', 약 156ms로 단축'),
-      rich(strong('10개 이상의 Feature 모듈'), '과 재사용 가능한 Design System 컴포넌트 구현'),
+      rich(strong('멀티 모듈 아키텍처'), ' 설계 및 ', strong('Convention Plugin 기반 Build-logic'), ' 구축'),
+      rich(strong('Custom Compose UI'), '로 시계열 차트(LineChart) 구현'),
+      rich(strong('Kotlin Coroutine async/await'), '를 활용한 6개 API 비동기 처리로 ', strong('데이터 로딩 시간 56% 단축')),
     ],
     retrospective: [
       '팀원들의 예비군 일정으로 인해 초반 일정 관리가 원활하지 않았고, 프로젝트에 대한 이해도가 팀원 간 싱크가 맞지 않았던 점이 아쉬움',
@@ -1095,10 +1095,12 @@ internal class LoginViewModel @Inject constructor(
       { title: '안드로이드 프로젝트에서 토큰 관리는 어떻게 했나요? feat AuthManagingSystem', url: 'https://superohinsung.tistory.com/437' },
     ],
     achievements: [
-      'SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상',
-      '로그인/회원가입 등 인증 구조의 안정적 구현',
-      'Compose, MVI 기반 프로젝트 적용',
-      rich(strong('ViewModel Unit Test'), '를 진행하여 안정적인 서비스 구축'),
+      rich(strong('Orbit MVI'), ' 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계'),
+      rich(strong('Kotlin Coroutine'), '과 ', strong('DataStore'), '를 활용한 Session, Refresh Token 관리 시스템 구현'),
+      rich(strong('Channel 기반 Navigator'), ' 패턴 도입으로 Screen과 Navigation 로직 완전 분리'),
+      rich(strong('JUnit, MockK 기반 ViewModelTest'), '를 ', strong('130+ 케이스'), ' 구현으로 안정적인 단위 테스트 구축'),
+      rich('GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 ', strong('잔디밭 형태의 Custom Compose UI 컴포넌트'), '로 구현'),
+      rich(strong('SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상')),
     ],
     retrospective: [
       '주어진 개발 시간의 부족으로 인해 완전한 리팩토링 미흡',
@@ -1305,10 +1307,10 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     ],
     insights: [],
     achievements: [
-      'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue 기술을 full-stack 웹 서비스로 구현',
-      '고객용 상품 탐색/주문/댓글/마이페이지와 관리자용 상품/매장/주문/댓글/사용자 관리 화면 구현',
-      rich('주문 20건 기준 상세 조회를 20회에서 1회로 줄여 ', strong('상세 조회 쿼리 수 95% 절감')),
-      rich('주문 처리 단계별 영향 행 검증과 예외 기반 rollback으로 ', strong('부분 저장 차단')),
+      rich(strong('Backend & Front 개발'), '로 사용자, 상품, 주문, 댓글, 매장 API와 고객/관리자 화면 구현'),
+      rich(strong('ApiResponse/PageResponse'), ', 입력 검증, 공통 예외 처리와 ', strong('AccessGuard'), '로 API 응답·권한 규칙 통일'),
+      rich('주문 목록 API의 상세 데이터를 일괄 조회하도록 개선해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 ', strong('95% 절감')),
+      '주문·상세·상품 주문 수·스탬프 적립의 처리 결과를 검증하고 실패 시 전체 rollback하도록 구성',
     ],
     retrospective: [
       'SSAFY 1학기 학습 내용을 프로젝트에 적용하며, Controller-Service-DAO 계층과 SQL Mapper가 실제 화면 요구사항과 어떻게 연결되는지 체감',
@@ -1660,9 +1662,11 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
       },
     ],
     achievements: [
-      '퀴즈 기반 학습 플랫폼 MVP 버전 구현 및 내부 활용',
-      '재사용 가능한 Compose UI 컴포넌트 라이브러리 구축으로 개발 효율성 향상',
-      'MVI 아키텍처 도입으로 단방향 상태 관리 경험',
+      rich(strong('Android 앱 개발'), ' (메인 및 마이페이지 개발) 및 ', strong('1차 MVP 개발 완료')),
+      rich('모든 화면의 구성요소를 재사용 가능한 ', strong('Jetpack Compose UI 디자인 시스템'), ' 구축'),
+      rich(strong('Compose UI 100%'), '로 화면 구현'),
+      rich(strong('UiState–Intent–SideEffect MVI 구조'), '를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축'),
+      rich(strong('DataStore'), ' 활용 자동로그인 및 보안 세션 관리 구현, ', strong('Retrofit + Coroutine'), ' 기반 비동기 통신 및 예외 처리 구조 설계'),
     ],
     retrospective: [
       'MVI 구조 설계 과정에서 OrbitMVI 등 검증된 라이브러리 활용 기회 부족, 다음 버전에서는 OrbitMVI, ReduxKotlin 등 검증된 MVI 프레임워크 도입 검토 필요성 인식',
@@ -1878,9 +1882,11 @@ fun provideEncryptedSharedPreferences(
       },
     ],
     achievements: [
-      rich('업체 목록 조회를 Room 기반 로컬 검색으로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
-      'Android 앱에서 검색·지도·예약·인증 흐름을 연결해 핵심 사용자 여정 구현',
-      'Hilt, Room, EncryptedSharedPreferences, Naver Map, Direction5 API를 조합해 위치 기반 예약 앱의 핵심 흐름 구현',
+      rich(strong('Android 팀 리드 개발자'), ' (3인 팀 중 Android 전담)'),
+      rich('업체 마스터 데이터를 ', strong('Room'), '에 동기화하고 검색을 로컬 DB 조회로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
+      rich('조회된 업체에 대해서만 ', strong('Direction5 API'), '로 거리·소요시간을 계산하고 ', strong('RecyclerView'), '에 거리순 정렬 결과 표시'),
+      rich(strong('Naver Map'), ' 마커, ', strong('SearchView'), ', ', strong('예약 WebView'), '를 연결해 검색 → 위치 확인 → 예약 흐름 구현'),
+      rich(strong('ViewBinding'), ' 추상 베이스 클래스와 ', strong('Extension Function'), '으로 Activity/Fragment 반복 코드 축소'),
     ],
     retrospective: [
       '단위 테스트 및 UI 테스트 코드 부재로 품질 검증 프로세스 부족, JUnit/Mockito 기반 단위 테스트 및 Espresso UI 테스트 도입 계획 수립',
@@ -2186,9 +2192,11 @@ class ChattingViewModel @Inject constructor(
     ],
     insightImages: ['screenshot/Bong+.png'],
     achievements: [
-      rich('Android 1인 전담으로 ', strong('앱 주요 기능 전반 구현')),
-      'presentation/domain/data 모듈 구성과 33개 UseCase 기반으로 기능별 책임 분리',
-      'OkHttp WebSocket, StateFlow, ListAdapter/DiffUtil을 조합해 실시간 채팅과 리스트 상태 관리 구현',
+      rich(strong('팀장'), ', 안드로이드 개발 전담 (1인)'),
+      rich(strong('presentation/domain/data 모듈 구성'), '과 33개 UseCase 기반으로 기능별 책임 분리'),
+      rich(strong('OkHttp WebSocket'), ' 기반 1:1 거래 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리'),
+      rich(strong('ListAdapter/DiffUtil'), '과 RecyclerView multiple view type으로 내 메시지/상대 메시지 UI 분리'),
+      rich(strong('EncryptedSharedPreferences'), ' 기반 인증 토큰 저장 및 OkHttp Interceptor를 통한 Authorization 헤더 주입'),
     ],
     retrospective: [
       '개발 일정에 집중하다 보니 UI/UX 세부 튜닝, 접근성 지원 등은 미흡, 상태 관리 체계 강화(State 도입 필요성 인식)',
@@ -2489,9 +2497,11 @@ jobs:
       'screenshot/POCS+2.png',
     ],
     achievements: [
-      rich('Paging3 기반 커뮤니티 기능으로 ', strong('1,000건 이상 데이터'), '도 스크롤 렉 없이 제공'),
-      rich(strong('Play Store 배포 경험')),
-      'CI/CD로 빌드·릴리즈·배포 자동화 및 코드 품질 보장',
+      rich(strong('안드로이드 앱 개발'), ' (스터디·커뮤니티, 프로필 기능 개발)'),
+      rich('기존 XML View를 Jetpack Compose로 ', strong('70% 이상 전환'), '하여 코드 재사용성과 개발 효율성 개선'),
+      rich(strong('Paging3'), ' 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화'),
+      rich(strong('GitHub Actions'), '를 활용해 ', strong('Android CI/CD'), ' (자동 빌드, 테스트, Play Store 배포) 환경 구축'),
+      rich(strong('Play Store 정식 배포 완료'), '로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험'),
     ],
     retrospective: [
       'MVP에 집중하다 보니 초반 UI/UX 세부 설계가 부족함, UI/UX 설계 초기부터 더 많은 리소스와 시간 투자 필요성 인식',

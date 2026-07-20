@@ -1,4 +1,13 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import projects from '../projects'
+
+const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim()
+
+const richTextToText = (item: (typeof projects)[number]['achievements'][number]) =>
+  typeof item === 'string'
+    ? item
+    : item.map((segment) => segment.text).join('')
 
 describe('projects 데이터 무결성', () => {
   it('프로젝트가 1개 이상 존재한다', () => {
@@ -70,6 +79,22 @@ describe('projects 데이터 무결성', () => {
       item.forEach((segment) => {
         expect(segment.text).toBeTruthy()
       })
+    })
+  })
+
+  it('웹 프로젝트 성과와 이력서 프로젝트 성과가 동일하다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+
+    projects.forEach((project) => {
+      const resumeAchievements = Array.from(
+        resumeDocument.querySelectorAll(`[data-project-id="${project.id}"] > ul > li`),
+      ).map((item) => normalizeText(item.textContent ?? ''))
+      const webAchievements = project.achievements
+        .map(richTextToText)
+        .map(normalizeText)
+
+      expect(resumeAchievements, project.id).toEqual(webAchievements)
     })
   })
 })

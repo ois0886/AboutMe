@@ -40,4 +40,17 @@ describe('Projects', () => {
       })
     })
   })
+
+  it('프로젝트 카드는 성과를 최대 3개만 표시한다', () => {
+    renderProjects()
+
+    projects.forEach((project) => {
+      const card = screen.getByText(project.title).closest('a')
+      const achievementList = card?.querySelector('ul')
+
+      expect(achievementList?.querySelectorAll('li')).toHaveLength(
+        Math.min(project.achievements.length, 3),
+      )
+    })
+  })
 })

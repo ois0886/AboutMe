@@ -60,7 +60,7 @@ describe('ProjectDetail', () => {
   it('강조 세그먼트가 포함된 프로젝트 상세도 정상 렌더링된다', () => {
     const { container } = renderProjectDetail('mo-re')
 
-    expect(screen.getByText('데이터 로딩 시간 56% 단축')).toBeInTheDocument()
+    expect(screen.getAllByText('데이터 로딩 시간 56% 단축')).toHaveLength(2)
     expect(
       Array.from(container.querySelectorAll('strong')).some(
         (element) => element.textContent === '데이터 로딩 시간 56% 단축',
@@ -75,8 +75,9 @@ describe('ProjectDetail', () => {
       screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Front' }),
     ).toBeInTheDocument()
     expect(screen.getByText('2025.05')).toBeInTheDocument()
-    expect(screen.getByText('Backend & Front 개발')).toBeInTheDocument()
-    expect(screen.getAllByText('상세 조회 쿼리 수 95% 절감')).toHaveLength(2)
+    expect(screen.getAllByText('Backend & Front 개발')).toHaveLength(2)
+    expect(screen.getByText('상세 조회 쿼리 수 95% 절감')).toBeInTheDocument()
+    expect(screen.getByText('95% 절감')).toBeInTheDocument()
     expect(screen.getByText('전체 변경이 rollback')).toBeInTheDocument()
   })
 })
