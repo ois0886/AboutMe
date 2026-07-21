@@ -18,4 +18,23 @@ describe('useScrollReveal', () => {
 
     expect(screen.getByTestId('reveal-probe')).toHaveClass('revealed')
   })
+
+  it('요소 일부가 화면에 들어오면 노출되도록 관찰한다', () => {
+    let observerOptions: IntersectionObserverInit | undefined
+    const observer = vi.fn((_callback, options) => {
+      observerOptions = options
+      return {
+        observe: vi.fn(),
+        unobserve: vi.fn(),
+        disconnect: vi.fn(),
+      }
+    })
+
+    vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: false })))
+    vi.stubGlobal('IntersectionObserver', observer)
+
+    render(<RevealProbe />)
+
+    expect(observerOptions).toEqual({ threshold: 0 })
+  })
 })
