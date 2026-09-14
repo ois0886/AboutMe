@@ -56,7 +56,7 @@ const projects: Project[] = [
     description: '생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스',
     thumbnail: 'screenshot/nanoon1.png',
     tech: ['Kotlin', 'Android Jetpack', 'Jetpack Compose', 'ViewModel', 'Coroutine', 'Flow'],
-    period: '2025.10 ~ 2025.11',
+    period: '2025.10.10 ~ 2025.11.20',
     team: '6명 (IoT 1명, Android 5명)',
     role: 'Android 키오스크 코드 개선 및 리팩토링',
     details: [
@@ -227,7 +227,7 @@ val personalTable = remember {
     description: '누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리·운영 효율성을 높이는 앱 서비스',
     thumbnail: 'screenshot/more1.jpg',
     tech: ['Kotlin', 'Jetpack Compose', 'Orbit MVI', 'Hilt', 'Retrofit2', 'OkHttp3', 'Navigation3', 'DataStore', 'Coroutines', 'Flow'],
-    period: '2025.08 ~ 2025.09',
+    period: '2025.08.25 ~ 2025.09.29',
     team: '6명 (Backend 4명, Android 2명)',
     role: 'Android 개발(기여도 80%)',
     details: [
@@ -627,7 +627,7 @@ dependencies {
     description: '글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱',
     thumbnail: 'screenshot/Glim1.png',
     tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'Firebase Messaging', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
-    period: '2025.07 ~ 2025.08',
+    period: '2025.07.07 ~ 2025.08.18',
     team: '6명 (Backend 2명, Android 2명, Frontend 1명, Backend & Android 1명)',
     role: 'Android 앱 개발(로그인/회원가입, 마이페이지 UI 및 기능 개발)',
     details: [
@@ -1145,7 +1145,7 @@ internal class LoginViewModel @Inject constructor(
       'Vue Router',
       'Docker Compose',
     ],
-    period: '2025.05',
+    period: '1차 2025.05.12 ~ 2025.05.28 / 2차 2026.07.01 ~ 2026.07.15',
     team: '2명 (Backend & Frontend)',
     role: 'Backend & Frontend 개발',
     details: [

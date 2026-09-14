@@ -31,6 +31,33 @@ describe('projects 데이터 무결성', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
+  it.each([
+    ['naenun-kiosk', '2025.10.10 ~ 2025.11.20'],
+    ['mo-re', '2025.08.25 ~ 2025.09.29'],
+    ['glim', '2025.07.07 ~ 2025.08.18'],
+    ['pubburi', '1차 2025.05.12 ~ 2025.05.28 / 2차 2026.07.01 ~ 2026.07.15'],
+  ])('%s의 개발 기간이 정확하며 정적 문서와 일치한다', (id, period) => {
+    const project = projects.find((item) => item.id === id)!
+    expect(project.period).toBe(period)
+
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+    const resumePeriod = resumeDocument.querySelector(
+      `[data-project-id="${id}"] .right-meta`,
+    )
+    expect(normalizeText(resumePeriod?.textContent ?? '')).toBe(period)
+
+    for (const filename of ['portfolio.html', 'portfolio-kis.html']) {
+      const html = readFileSync(resolve(process.cwd(), filename), 'utf8')
+      const document = new DOMParser().parseFromString(html, 'text/html')
+      const title = project.title.split(' - ')[0]
+      const heading = Array.from(document.querySelectorAll('h2')).find(
+        (element) => element.textContent === title,
+      )
+      expect(heading?.nextElementSibling?.textContent, filename).toContain(`${period} · `)
+    }
+  })
+
   it('모든 프로젝트에 스크린샷이 1개 이상 있다', () => {
     projects.forEach((project) => {
       expect(project.screenshots.length).toBeGreaterThan(0)
