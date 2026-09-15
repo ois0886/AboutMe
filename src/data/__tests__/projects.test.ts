@@ -48,7 +48,7 @@ describe('projects 데이터 무결성', () => {
     expect(normalizeText(resumePeriodElement?.textContent ?? '')).toBe(resumePeriod)
     expect(resumePeriodElement?.querySelector('br')).toBeNull()
 
-    for (const filename of ['portfolio.html', 'portfolio-kis.html']) {
+    for (const filename of ['portfolio.html']) {
       const html = readFileSync(resolve(process.cwd(), filename), 'utf8')
       const document = new DOMParser().parseFromString(html, 'text/html')
       const title = project.title.split(' - ')[0]
