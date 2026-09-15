@@ -75,7 +75,7 @@ describe('ProjectDetail', () => {
       screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Frontend' }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('1차 2025.05.12 ~ 2025.05.28 / 2차 2026.07.01 ~ 2026.07.15'),
+      screen.getByText('2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15'),
     ).toBeInTheDocument()
     expect(screen.getAllByText('Backend & Frontend 개발')).toHaveLength(2)
     expect(screen.getByText('상세 조회 쿼리 수 95% 절감')).toBeInTheDocument()

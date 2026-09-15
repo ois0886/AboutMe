@@ -32,20 +32,21 @@ describe('projects 데이터 무결성', () => {
   })
 
   it.each([
-    ['naenun-kiosk', '2025.10.10 ~ 2025.11.20'],
-    ['mo-re', '2025.08.25 ~ 2025.09.29'],
-    ['glim', '2025.07.07 ~ 2025.08.18'],
-    ['pubburi', '1차 2025.05.12 ~ 2025.05.28 / 2차 2026.07.01 ~ 2026.07.15'],
-  ])('%s의 개발 기간이 정확하며 정적 문서와 일치한다', (id, period) => {
+    ['naenun-kiosk', '2025.10.10 ~ 2025.11.20', '2025.10 ~ 2025.11'],
+    ['mo-re', '2025.08.25 ~ 2025.09.29', '2025.08 ~ 2025.09'],
+    ['glim', '2025.07.07 ~ 2025.08.18', '2025.07 ~ 2025.08'],
+    ['pubburi', '2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15', '2025.05 ~ 2025.05 / 2026.07 ~ 2026.07'],
+  ])('%s의 개발 기간은 이력서에서 월 단위, 포트폴리오에서 일 단위로 표시한다', (id, period, resumePeriod) => {
     const project = projects.find((item) => item.id === id)!
     expect(project.period).toBe(period)
 
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
-    const resumePeriod = resumeDocument.querySelector(
+    const resumePeriodElement = resumeDocument.querySelector(
       `[data-project-id="${id}"] .right-meta`,
     )
-    expect(normalizeText(resumePeriod?.textContent ?? '')).toBe(period)
+    expect(normalizeText(resumePeriodElement?.textContent ?? '')).toBe(resumePeriod)
+    expect(resumePeriodElement?.querySelector('br')).toBeNull()
 
     for (const filename of ['portfolio.html', 'portfolio-kis.html']) {
       const html = readFileSync(resolve(process.cwd(), filename), 'utf8')

@@ -1145,7 +1145,7 @@ internal class LoginViewModel @Inject constructor(
       'Vue Router',
       'Docker Compose',
     ],
-    period: '1차 2025.05.12 ~ 2025.05.28 / 2차 2026.07.01 ~ 2026.07.15',
+    period: '2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15',
     team: '2명 (Backend & Frontend)',
     role: 'Backend & Frontend 개발',
     details: [
