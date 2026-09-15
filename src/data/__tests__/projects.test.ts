@@ -78,6 +78,13 @@ describe('projects 데이터 무결성', () => {
         expect(ps.solution.length).toBeGreaterThan(0)
         expect(ps.result.length).toBeGreaterThan(0)
         expect(Array.isArray(ps.implementation)).toBe(true)
+        ps.implementation.forEach(({ code }) => {
+          if (!code) return
+
+          const lines = code.split('\n').filter((line) => line.trim())
+          expect(lines.some((line) => /^\S/.test(line)), project.id).toBe(true)
+          expect(code, project.id).not.toMatch(/\t/)
+        })
         expect(Array.isArray(ps.alternatives)).toBe(true)
       })
     })

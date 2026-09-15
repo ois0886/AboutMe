@@ -57,7 +57,7 @@ describe('ProjectDetail', () => {
     expect(screen.getByText('← 돌아가기')).toBeInTheDocument()
   })
 
-  it('강조 세그먼트가 포함된 프로젝트 상세도 정상 렌더링된다', () => {
+  it('강조 세그먼트와 코드 들여쓰기가 프로젝트 상세에 유지된다', () => {
     const { container } = renderProjectDetail('mo-re')
 
     expect(screen.getAllByText('데이터 로딩 시간 56% 단축')).toHaveLength(2)
@@ -66,6 +66,12 @@ describe('ProjectDetail', () => {
         (element) => element.textContent === '데이터 로딩 시간 56% 단축',
       ),
     ).toBe(true)
+
+    const codeBlocks = container.querySelectorAll('pre code')
+    expect(codeBlocks[1].textContent).toContain(
+      'val cpuDeferred = async {\n    runCatching {\n        getCpuMetricsUseCase(instanceId, targetDate)',
+    )
+    expect(codeBlocks[2].textContent).toMatch(/^val cpuMetrics = cpuDeferred\.await\(\)/)
   })
 
   it('주점부리 프로젝트 상세가 정상 렌더링된다', () => {

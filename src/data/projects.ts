@@ -277,86 +277,86 @@ val personalTable = remember {
           },
           {
             description: 'supervisorScope 내부에서 6개의 메트릭 호출을 각각 async + runCatching으로 병렬 처리함.\n실패 시 해당 메트릭 이름과 예외 메시지를 로그로 남기고, getOrNull()로 null 처리하여 이후 로직에서 부분 데이터 렌더링을 허용함.',
-            code: `        val cpuDeferred = async {
-            runCatching {
-                getCpuMetricsUseCase(instanceId, targetDate)
-            }.onFailure {
-                Log.e("InstanceDetailViewModel", "CPU Metrics failed: \${it.message}")
-            }.getOrNull()
-        }
+            code: `val cpuDeferred = async {
+    runCatching {
+        getCpuMetricsUseCase(instanceId, targetDate)
+    }.onFailure {
+        Log.e("InstanceDetailViewModel", "CPU Metrics failed: \${it.message}")
+    }.getOrNull()
+}
 
-        val memoryDeferred = async {
-            runCatching {
-                getMemoryMetricsUseCase(instanceId, targetDate)
-            }.onFailure {
-                Log.e("InstanceDetailViewModel", "Memory Metrics failed: \${it.message}")
-            }.getOrNull()
-        }
+val memoryDeferred = async {
+    runCatching {
+        getMemoryMetricsUseCase(instanceId, targetDate)
+    }.onFailure {
+        Log.e("InstanceDetailViewModel", "Memory Metrics failed: \${it.message}")
+    }.getOrNull()
+}
 
-        val networkReceiveDeferred = async {
-            runCatching {
-                getNetworkReceiveMetricsUseCase(instanceId, targetDate)
-            }.onFailure {
-                Log.e("InstanceDetailViewModel", "Network Receive Metrics failed: \${it.message}")
-            }.getOrNull()
-        }
+val networkReceiveDeferred = async {
+    runCatching {
+        getNetworkReceiveMetricsUseCase(instanceId, targetDate)
+    }.onFailure {
+        Log.e("InstanceDetailViewModel", "Network Receive Metrics failed: \${it.message}")
+    }.getOrNull()
+}
 
-        val networkTransmitDeferred = async {
-            runCatching {
-                getNetworkTransmitMetricsUseCase(instanceId, targetDate)
-            }.onFailure {
-                Log.e("InstanceDetailViewModel", "Network Transmit Metrics failed: \${it.message}")
-            }.getOrNull()
-        }
+val networkTransmitDeferred = async {
+    runCatching {
+        getNetworkTransmitMetricsUseCase(instanceId, targetDate)
+    }.onFailure {
+        Log.e("InstanceDetailViewModel", "Network Transmit Metrics failed: \${it.message}")
+    }.getOrNull()
+}
 
-        val eventSummaryDeferred = async {
-            runCatching {
-                getEventSummaryUseCase(instanceId, targetDate)
-            }.onFailure {
-                Log.e("InstanceDetailViewModel", "Event Summary failed: \${it.message}")
-            }.getOrNull()
-        }
+val eventSummaryDeferred = async {
+    runCatching {
+        getEventSummaryUseCase(instanceId, targetDate)
+    }.onFailure {
+        Log.e("InstanceDetailViewModel", "Event Summary failed: \${it.message}")
+    }.getOrNull()
+}
 
-        val aiReportDeferred = async {
-            runCatching {
-                getDetailAiReportUseCase(instanceId, targetDate)
-            }.onFailure {
-                Log.e("InstanceDetailViewModel", "AI Report failed: \${it.message}")
-            }.getOrNull()
-        }`,
+val aiReportDeferred = async {
+    runCatching {
+        getDetailAiReportUseCase(instanceId, targetDate)
+    }.onFailure {
+        Log.e("InstanceDetailViewModel", "AI Report failed: \${it.message}")
+    }.getOrNull()
+}`,
           },
           {
             description: '모든 비동기 작업 완료 후 결과를 한 번에 await하고, 상태 로그를 남김.\n이후 타임 시리즈 데이터를 공통 TimeMetric 형태로 매핑하고, 차트용 평균값을 내부 계산하여 UiState에 반영함.',
-            code: `        val cpuMetrics = cpuDeferred.await()
-        val memoryMetrics = memoryDeferred.await()
-        val networkReceiveMetrics = networkReceiveDeferred.await()
-        val networkTransmitMetrics = networkTransmitDeferred.await()
-        val eventSummary = eventSummaryDeferred.await()
-        val aiReport = aiReportDeferred.await()
+            code: `val cpuMetrics = cpuDeferred.await()
+val memoryMetrics = memoryDeferred.await()
+val networkReceiveMetrics = networkReceiveDeferred.await()
+val networkTransmitMetrics = networkTransmitDeferred.await()
+val eventSummary = eventSummaryDeferred.await()
+val aiReport = aiReportDeferred.await()
 
-        Log.d(
-            "InstanceDetailViewModel",
-            "Results - CPU: \${cpuMetrics != null}, Memory: \${memoryMetrics != null}, " +
-                "NetworkRcv: \${networkReceiveMetrics != null}, " +
-                "NetworkTx: \${networkTransmitMetrics != null}, " +
-                "Event: \${eventSummary != null}, AI: \${aiReport != null}"
-        )
+Log.d(
+    "InstanceDetailViewModel",
+    "Results - CPU: \${cpuMetrics != null}, Memory: \${memoryMetrics != null}, " +
+        "NetworkRcv: \${networkReceiveMetrics != null}, " +
+        "NetworkTx: \${networkTransmitMetrics != null}, " +
+        "Event: \${eventSummary != null}, AI: \${aiReport != null}"
+)
 
-        val cpuTimeMetrics = cpuMetrics?.timeSeriesData?.map {
-            TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-        } ?: emptyList()
+val cpuTimeMetrics = cpuMetrics?.timeSeriesData?.map {
+    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
+} ?: emptyList()
 
-        val memoryTimeMetrics = memoryMetrics?.timeSeriesData?.map {
-            TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-        } ?: emptyList()
+val memoryTimeMetrics = memoryMetrics?.timeSeriesData?.map {
+    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
+} ?: emptyList()
 
-        val networkReceiveTimeMetrics = networkReceiveMetrics?.timeSeriesData?.map {
-            TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-        } ?: emptyList()
+val networkReceiveTimeMetrics = networkReceiveMetrics?.timeSeriesData?.map {
+    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
+} ?: emptyList()
 
-        val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
-            TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-        } ?: emptyList()`,
+val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
+    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
+} ?: emptyList()`,
           },
           {
             description: '타임 시리즈 기반으로 차트용 평균값을 계산하고, 요약 메트릭 및 AI 리포트를 포함해 한 번에 reduce로 상태 갱신함.\n모든 메트릭이 null인 경우 경고 로그를 남겨, 완전 실패 케이스를 명시적으로 식별함.',
@@ -796,9 +796,9 @@ class AuthManager @Inject constructor(
     val isLoginEnabled: Boolean
         get() =
             emailError == null &&
-                passwordError == null &&
-                email.text.isNotBlank() &&
-                password.text.isNotBlank()
+            passwordError == null &&
+            email.text.isNotBlank() &&
+            password.text.isNotBlank()
 }
 
 sealed interface LoginSideEffect {
@@ -856,50 +856,50 @@ internal class LoginViewModel @Inject constructor(
           },
           {
             description: '로그인 버튼 클릭 시 전체 입력 검증 → 에러 상태 반영 → 오류가 있을 경우 LoginSideEffect.ShowError 발행 → 정상일 경우 로딩 상태 On/Off 및 LoginUseCase 실행·네비게이션까지 일관된 플로우로 처리.',
-            code: `    fun onLoginClicked() = intent {
-        val emailValidation = ValidationUtils.validateEmail(
+            code: `fun onLoginClicked() = intent {
+    val emailValidation = ValidationUtils.validateEmail(
+        email = state.email.text,
+        emptyErrorRes = R.string.error_email_empty,
+        invalidErrorRes = R.string.error_email_invalid,
+    )
+
+    val passwordValidation = ValidationUtils.validatePassword(
+        password = state.password.text,
+        emptyErrorRes = R.string.error_password_empty,
+        invalidErrorRes = R.string.error_password_invalid,
+    )
+
+    val emailError = if (emailValidation is ValidationResult.Invalid) {
+        emailValidation.errorMessageRes
+    } else { null }
+
+    val passwordError = if (passwordValidation is ValidationResult.Invalid) {
+        passwordValidation.errorMessageRes
+    } else { null }
+
+    reduce { state.copy(emailError = emailError, passwordError = passwordError) }
+
+    if (emailError != null || passwordError != null) {
+        postSideEffect(LoginSideEffect.ShowError(emailError ?: passwordError!!))
+        return@intent
+    }
+
+    reduce { state.copy(isLoading = true) }
+
+    runCatching {
+        loginUseCase(
             email = state.email.text,
-            emptyErrorRes = R.string.error_email_empty,
-            invalidErrorRes = R.string.error_email_invalid,
-        )
-
-        val passwordValidation = ValidationUtils.validatePassword(
             password = state.password.text,
-            emptyErrorRes = R.string.error_password_empty,
-            invalidErrorRes = R.string.error_password_invalid,
         )
-
-        val emailError = if (emailValidation is ValidationResult.Invalid) {
-            emailValidation.errorMessageRes
-        } else { null }
-
-        val passwordError = if (passwordValidation is ValidationResult.Invalid) {
-            passwordValidation.errorMessageRes
-        } else { null }
-
-        reduce { state.copy(emailError = emailError, passwordError = passwordError) }
-
-        if (emailError != null || passwordError != null) {
-            postSideEffect(LoginSideEffect.ShowError(emailError ?: passwordError!!))
-            return@intent
-        }
-
-        reduce { state.copy(isLoading = true) }
-
-        runCatching {
-            loginUseCase(
-                email = state.email.text,
-                password = state.password.text,
-            )
-        }.onSuccess {
-            reduce { state.copy(isLoading = false) }
-            navigateToHome()
-        }.onFailure { exception ->
-            reduce { state.copy(isLoading = false) }
-            Log.d("LoginViewModel", "Manual login failed: \${exception.message}")
-            postSideEffect(LoginSideEffect.ShowError(R.string.login_failed))
-        }
-    }`,
+    }.onSuccess {
+        reduce { state.copy(isLoading = false) }
+        navigateToHome()
+    }.onFailure { exception ->
+        reduce { state.copy(isLoading = false) }
+        Log.d("LoginViewModel", "Manual login failed: \${exception.message}")
+        postSideEffect(LoginSideEffect.ShowError(R.string.login_failed))
+    }
+}`,
           },
           {
             description: 'LoginRoute에서 container.stateFlow.collectAsState()로 상태를 구독하고, collectSideEffect로 일회성 이벤트만 처리.\nLoginScreen은 LoginUiState와 콜백만 주입받아 순수 UI 역할만 담당하도록 설계.',
@@ -1555,10 +1555,11 @@ class AuthDataStore @Inject constructor(
     val passwordErrorMessage: String? = null,
 ) {
     val isLoginEnabled: Boolean
-        get() = email.isNotBlank() &&
-                password.isNotBlank() &&
-                emailErrorMessage == null &&
-                passwordErrorMessage == null
+        get() =
+            email.isNotBlank() &&
+            password.isNotBlank() &&
+            emailErrorMessage == null &&
+            passwordErrorMessage == null
 }`,
           },
           {
@@ -2393,33 +2394,33 @@ jobs:
           {
             description:
               'matrix.api-level 전략으로 23·30·31 버전 에뮬레이터에서 connectedCheck를 실행함으로써, 다양한 OS 버전에서 UI 회귀 테스트 자동화 환경 구축함.',
-            code: `  ui-test:
-    name: UI tests on Android (API level \${{ matrix.api-level }})
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        api-level: [ 23, 30, 31 ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+            code: `ui-test:
+  name: UI tests on Android (API level \${{ matrix.api-level }})
+  runs-on: macos-latest
+  strategy:
+    matrix:
+      api-level: [ 23, 30, 31 ]
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Setup JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: gradle
+    - name: Setup JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
 
-      - name: Run UI test
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: \${{ matrix.api-level }}
-          disable-animations: true
-          arch: x86_64
-          script: ./gradlew connectedCheck`,
+    - name: Run UI test
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: \${{ matrix.api-level }}
+        disable-animations: true
+        arch: x86_64
+        script: ./gradlew connectedCheck`,
           },
           {
             description:
