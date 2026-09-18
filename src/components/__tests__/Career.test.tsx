@@ -29,8 +29,27 @@ describe('Career', () => {
     ).map((item) => normalizeText(item.textContent ?? ''))
 
     expect(resumeTasks).toEqual(careers[0].tasks.map(normalizeText))
-    expect(resumeDocument.querySelector('[data-career-id="chartlab"]')?.closest('section')?.textContent)
-      .toContain('총 경력 7개월')
+  })
+
+  it('이력서 기준일의 총 경력이 웹 자동 계산 결과와 동일하다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+    const careerSection = resumeDocument.querySelector('[data-career-id="chartlab"]')?.closest('section')
+    const snapshotDate = careerSection?.querySelector('time')?.getAttribute('datetime')
+
+    expect(snapshotDate).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    vi.useFakeTimers()
+    try {
+      vi.setSystemTime(new Date(`${snapshotDate}T12:00:00`))
+      render(<Career />)
+
+      const totalCareer = `총 경력 ${getTotalCareer()}`
+      expect(screen.getByText(totalCareer)).toBeInTheDocument()
+      expect(careerSection?.querySelector('.section-heading .right-meta')?.textContent)
+        .toBe(`${totalCareer} · ${snapshotDate?.replaceAll('-', '.')} 기준`)
+    } finally {
+      vi.useRealTimers()
+    }
   })
 
   it('경력 문구에 설명 없이 사용되는 내부 용어가 없다', () => {
@@ -125,6 +144,15 @@ describe('getTotalCareer', () => {
   it('월 시작일이 재직 시작일보다 빨라도 첫 달을 포함한 개월 수를 반환한다', () => {
     vi.setSystemTime(new Date(2026, 6, 1)) // (주)차트연구소 5개월
     expect(getTotalCareer()).toBe('5개월')
+  })
+
+  it.each([
+    [8, '7개월'],
+    [9, '8개월'],
+    [18, '8개월'],
+  ])('2026년 9월 %i일 기준 경력은 %s이다', (day, expected) => {
+    vi.setSystemTime(new Date(2026, 8, day))
+    expect(getTotalCareer()).toBe(expected)
   })
 
   it('누적 경력이 1년 이상이면 "N년 M개월"을 반환한다', () => {
