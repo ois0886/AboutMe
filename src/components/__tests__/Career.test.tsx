@@ -21,14 +21,23 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서의 차트연구소 경력 문구가 동일하다', () => {
+  it('이력서의 차트연구소 경력 문구가 모두 웹에 포함된다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
       resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
     ).map((item) => normalizeText(item.textContent ?? ''))
 
-    expect(resumeTasks).toEqual(careers[0].tasks.map(normalizeText))
+    expect(resumeTasks.length).toBeGreaterThan(0)
+    expect(careers[0].tasks.map(normalizeText)).toEqual(expect.arrayContaining(resumeTasks))
+  })
+
+  it('경력기술서의 감시목록·홈페이지·미팅 자료 업무가 웹에도 렌더링된다', () => {
+    render(<Career />)
+
+    expect(screen.getByText(/PowerGraphics 감시목록과 차트별 지표 데이터/)).toBeInTheDocument()
+    expect(screen.getByText(/React·Vite·SCSS 기반 자사 반응형 홈페이지/)).toBeInTheDocument()
+    expect(screen.getByText('삼성증권 미팅용 PPT 자료 제작')).toBeInTheDocument()
   })
 
   it('이력서 기준일의 총 경력이 웹 자동 계산 결과와 동일하다', () => {
