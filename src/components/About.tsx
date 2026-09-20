@@ -26,7 +26,7 @@ function About() {
           <div className={styles.infoBlock}>
             <h3 className={styles.subtitle}>Introduction</h3>
             <ul className={styles.introList}>
-              <li><strong className={styles.emphasis}>Android/Kotlin</strong>을 중심으로 사용자 경험과 유지보수성을 고민하며, 화면 구현을 넘어 <strong className={styles.emphasis}>고객 문제를 안정적인 제품 흐름</strong>으로 풀어내는 개발자를 지향합니다.</li>
+              <li>사용자 경험과 유지보수성을 고민하며, 구현을 넘어 <strong className={styles.emphasis}>고객 문제를 안정적인 제품 흐름</strong>으로 풀어내는 개발자를 지향합니다.</li>
               <li><strong className={styles.emphasis}>Java·Spring Boot와 SQL</strong>로 주문·트랜잭션 흐름을 구현하고, 다양한 조회·실시간 데이터를 연동 검증하며 <strong className={styles.emphasis}>서비스 간 데이터 흐름과 안정성</strong>에 대한 이해를 넓혀가고 있습니다.</li>
               <li>팀의 성장에 기여하기 위해 <strong className={styles.emphasis}>코드 리뷰</strong>와 <strong className={styles.emphasis}>AI 기반 개발 흐름 개선</strong>을 적극적으로 활용하고, <strong className={styles.emphasis}>테스트 가능한 구조와 읽기 쉬운 코드</strong>를 작성하려 노력합니다.</li>
               <li>학습한 내용과 문제 해결 과정을 <strong className={styles.emphasis}>블로그</strong>에 기록하며, 부족했던 부분을 <strong className={styles.emphasis}>재현 가능한 지식</strong>으로 정리해 다음 프로젝트의 기준으로 발전시키고 있습니다.</li>
