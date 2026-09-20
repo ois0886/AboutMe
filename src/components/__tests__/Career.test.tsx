@@ -40,22 +40,20 @@ describe('Career', () => {
     expect(screen.getByText('삼성증권 미팅용 PPT 자료 제작')).toBeInTheDocument()
   })
 
-  it('이력서 기준일의 총 경력이 웹 자동 계산 결과와 동일하다', () => {
+  it('이력서는 기준일 표기 없이 총 경력만 표시하고 웹 계산과 일치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const careerSection = resumeDocument.querySelector('[data-career-id="chartlab"]')?.closest('section')
-    const snapshotDate = careerSection?.querySelector('time')?.getAttribute('datetime')
-
-    expect(snapshotDate).toMatch(/^\d{4}-\d{2}-\d{2}$/)
     vi.useFakeTimers()
     try {
-      vi.setSystemTime(new Date(`${snapshotDate}T12:00:00`))
+      // 정적 이력서의 경력 갱신 시점으로 고정해 웹 자동 계산과 비교한다.
+      vi.setSystemTime(new Date(2026, 8, 18, 12))
       render(<Career />)
 
       const totalCareer = `총 경력 ${getTotalCareer()}`
       expect(screen.getByText(totalCareer)).toBeInTheDocument()
       expect(careerSection?.querySelector('.section-heading .right-meta')?.textContent)
-        .toBe(`${totalCareer} · ${snapshotDate?.replaceAll('-', '.')} 기준`)
+        .toBe(totalCareer)
     } finally {
       vi.useRealTimers()
     }
