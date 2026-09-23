@@ -36,7 +36,7 @@ describe('projects 데이터 무결성', () => {
     ['mo-re', '2025.08.25 ~ 2025.09.29', '2025.08 ~ 2025.09'],
     ['glim', '2025.07.07 ~ 2025.08.18', '2025.07 ~ 2025.08'],
     ['pubburi', '2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15', '2025.05 ~ 2025.05 / 2026.07 ~ 2026.07'],
-  ])('%s의 개발 기간은 이력서에서 월 단위, 포트폴리오에서 일 단위로 표시한다', (id, period, resumePeriod) => {
+  ])('%s의 개발 기간은 웹에서 일 단위, 이력서에서 월 단위로 표시한다', (id, period, resumePeriod) => {
     const project = projects.find((item) => item.id === id)!
     expect(project.period).toBe(period)
 
@@ -47,16 +47,37 @@ describe('projects 데이터 무결성', () => {
     )
     expect(normalizeText(resumePeriodElement?.textContent ?? '')).toBe(resumePeriod)
     expect(resumePeriodElement?.querySelector('br')).toBeNull()
+  })
 
-    for (const filename of ['portfolio.html']) {
-      const html = readFileSync(resolve(process.cwd(), filename), 'utf8')
+  it.each(['naenun-kiosk', 'mo-re', 'glim'])(
+    '%s의 PDF 포트폴리오 개발 기간은 웹과 동일하다',
+    (id) => {
+      const project = projects.find((item) => item.id === id)!
+      const html = readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8')
       const document = new DOMParser().parseFromString(html, 'text/html')
       const title = project.title.split(' - ')[0]
       const heading = Array.from(document.querySelectorAll('h2')).find(
         (element) => element.textContent === title,
       )
-      expect(heading?.nextElementSibling?.textContent, filename).toContain(`${period} · `)
-    }
+      expect(heading?.nextElementSibling?.textContent).toContain(`${project.period} · `)
+    },
+  )
+
+  it('PDF 포트폴리오는 주점부리를 제외한 세 프로젝트를 19페이지로 구성한다', () => {
+    const html = readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8')
+    const document = new DOMParser().parseFromString(html, 'text/html')
+
+    expect(document.body.innerHTML).not.toMatch(/주점부리|pubburi/i)
+    expect(Array.from(document.querySelectorAll('.toc-name'), (item) => item.textContent))
+      .toEqual(['내눈 키오스크', '모리, Mo-Re', 'Glim'])
+
+    const slides = Array.from(document.querySelectorAll('section.slide'))
+    expect(slides).toHaveLength(19)
+    slides.forEach((slide, index) => {
+      const page = String(index + 1).padStart(2, '0')
+      expect(slide.id).toBe(`slide-${page}`)
+      expect(slide.querySelector('.slide-no')?.textContent).toBe(page)
+    })
   })
 
   it('모든 프로젝트에 스크린샷이 1개 이상 있다', () => {
