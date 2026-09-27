@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>오인성 | Android Developer</title>
+  <title>Oh InSeong</title>
   <style>
     @page {
       size: A4;
-      margin: 14mm;
+      margin: 14mm 13mm;
     }
 
     * {
@@ -16,44 +16,59 @@
 
     body {
       margin: 0;
-      color: #172033;
+      color: #111827;
       background: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
-      font-size: 13.3px;
-      line-height: 1.5;
+      font-size: 11.8px;
+      line-height: 1.52;
       word-break: keep-all;
       overflow-wrap: anywhere;
       orphans: 3;
       widows: 3;
     }
 
-    .resume-page {
-      display: flex;
-      flex-direction: column;
-      min-height: 268mm;
-    }
-
-    .resume-page + .resume-page {
-      break-before: page;
-      page-break-before: always;
+    main {
+      width: 100%;
     }
 
     section {
-      margin-bottom: 20px;
-    }
-
-    .resume-page > section:last-child {
-      margin-bottom: 0;
+      margin-bottom: 16px;
     }
 
     .project {
       break-inside: avoid;
       page-break-inside: avoid;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      padding-top: 2px;
     }
 
-    .project:last-child {
+    .project-fit {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .project-pair {
+      margin: 0;
+    }
+
+    .project-section .project {
+      margin-bottom: 9px;
+    }
+
+    .project-section .row-title {
+      margin: 5px 0 2px;
+    }
+
+    .project-section .meta,
+    .project-section .link-row {
+      margin-bottom: 2px;
+      font-size: 10.8px;
+      line-height: 1.42;
+    }
+
+    .project-section li {
       margin-bottom: 0;
+      line-height: 1.42;
     }
 
     h1,
@@ -65,21 +80,21 @@
     }
 
     .resume-header {
-      margin-bottom: 16px;
-      padding-bottom: 14px;
-      border-bottom: 2px solid #46627f;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #111827;
     }
 
     h1 {
       color: #0f172a;
-      font-size: 28px;
+      font-size: 25px;
       line-height: 1.2;
       letter-spacing: 0;
     }
 
     .headline {
       margin-top: 4px;
-      color: #46627f;
+      color: #374151;
       font-size: 15px;
       font-weight: 700;
     }
@@ -89,8 +104,8 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 9px;
-      padding-bottom: 5px;
+      margin-bottom: 7px;
+      padding-bottom: 3px;
       border-bottom: 1px solid #d1d5db;
       break-after: avoid;
       page-break-after: avoid;
@@ -98,25 +113,33 @@
 
     h2 {
       color: #0f172a;
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.2;
     }
 
     h3 {
+      margin: 7px 0 4px;
       color: #111827;
-      font-size: 14px;
+      font-size: 13.4px;
       line-height: 1.3;
+    }
+
+    .subhead {
+      margin-bottom: 3px;
+      color: #374151;
+      font-weight: 700;
     }
 
     .meta {
       margin-bottom: 4px;
       color: #374151;
-      font-size: 12px;
+      font-size: 11.2px;
+      font-weight: 600;
     }
 
     .line-list {
       display: grid;
-      gap: 4px;
+      gap: 2px;
       padding-left: 0;
       list-style: none;
     }
@@ -124,10 +147,12 @@
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      margin-top: 10px;
-      column-gap: 16px;
-      row-gap: 4px;
-      font-size: 12px;
+      column-gap: 24px;
+      row-gap: 3px;
+    }
+
+    .contact-section {
+      margin-top: -6px;
     }
 
     .contact-item {
@@ -135,15 +160,15 @@
     }
 
     ul {
-      padding-left: 17px;
+      padding-left: 15px;
     }
 
     li {
-      margin-bottom: 4px;
+      margin-bottom: 1px;
     }
 
     a {
-      color: #385979;
+      color: #2563eb;
       text-decoration: none;
     }
 
@@ -152,7 +177,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 5px;
+      margin: 7px 0 4px;
     }
 
     .row-title h3 {
@@ -162,284 +187,400 @@
     .right-meta {
       flex: 0 0 auto;
       color: #374151;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.2px;
+      font-weight: 700;
       text-align: right;
       white-space: nowrap;
     }
 
-    strong {
+    .link-row {
+      margin: 2px 0 5px;
+      color: #374151;
+      font-size: 11.2px;
       font-weight: 700;
     }
 
-    .introduction {
-      margin-bottom: 18px;
+    strong {
+      font-weight: 800;
     }
 
-    .career-item li,
-    .education-item {
+    .compact {
+      margin-bottom: 8px;
+    }
+
+    .education-item,
+    .career-item {
       break-inside: avoid;
       page-break-inside: avoid;
+      margin-bottom: 8px;
     }
 
-    .career-item li {
-      margin-bottom: 9px;
+    .one-line {
+      margin-bottom: 3px;
     }
 
-    .career-item li p + p {
-      margin-top: 4px;
-    }
-
-    .skills-list li {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 10px;
-      margin: 0;
-      font-size: 12px;
-    }
-
-    .education-item + .education-item {
-      margin-top: 9px;
-    }
-
-    .link-row {
-      margin-top: 4px;
-      font-size: 12px;
-    }
-
-    @media screen {
-      body {
-        background: #eef2f6;
-      }
-
-      main {
-        max-width: 210mm;
-        margin: 24px auto;
-      }
-
-      .resume-page {
-        min-height: 297mm;
-        margin-bottom: 24px;
-        padding: 14mm;
-        background: #ffffff;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      main {
-        margin: 0;
-      }
-
-      .resume-page {
-        min-height: auto;
-        padding: 24px 18px;
-      }
-
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .row-title {
-        flex-wrap: wrap;
-        gap: 4px;
-      }
-
-      .skills-list li {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
+    .group {
+      margin-top: 6px;
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
   </style>
 </head>
 <body>
   <main>
-    <article class="resume-page" aria-label="이력서 1페이지">
-      <header class="resume-header">
-        <h1>오인성 <span class="meta">Oh InSeong</span></h1>
-        <p class="headline">Android Developer</p>
-        <div class="contact-grid">
-          <div class="contact-item"><strong>Email.</strong> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></div>
-          <div class="contact-item"><strong>GitHub.</strong> <a href="https://github.com/ois0886">https://github.com/ois0886</a></div>
-          <div class="contact-item"><strong>Blog.</strong> <a href="https://superohinsung.tistory.com">https://superohinsung.tistory.com</a></div>
-          <div class="contact-item"><strong>LinkedIn.</strong> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">https://www.linkedin.com/in/인성-오</a></div>
-        </div>
-      </header>
+    <header class="resume-header">
+      <h1>Oh InSeong(오인성)</h1>
+      <p class="headline">Software Engineer</p>
+    </header>
 
-      <p class="introduction">금융 차트 UI 개발과 Java·Kotlin 연동, 조회·실시간 데이터 검증을 경험한 <strong>Android 개발자</strong>입니다. Compose 기반 UI와 테스트 가능한 구조를 설계하고, 성능과 유지보수성을 개선해 왔습니다.</p>
+    <section class="contact-section">
+      <div class="contact-grid">
+        <div class="contact-item"><strong>Blog.</strong> <a href="https://superohinsung.tistory.com">superohinsung.tistory.com</a></div>
+        <div class="contact-item"><strong>LinkedIn.</strong> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4">www.linkedin.com/in/인성-오</a></div>
+        <div class="contact-item"><strong>Email.</strong> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></div>
+        <div class="contact-item"><strong>GitHub.</strong> <a href="https://github.com/ois0886">github.com/ois0886</a></div>
+        <div class="contact-item"><strong>Phone.</strong> <a href="tel:+821059059620">010-5905-9620</a></div>
+        <div class="contact-item"><strong>Birth.</strong> 1996.06</div>
+      </div>
+    </section>
 
-      <section>
-        <div class="section-heading">
-          <h2>Skills</h2>
+    <section>
+      <div class="section-heading">
+        <h2>Introduction</h2>
+      </div>
+      <ul>
+        <li>사용자 경험과 유지보수성을 고민하며, 구현을 넘어 <strong>고객 문제를 안정적인 제품 흐름</strong>으로 풀어내는 개발자를 지향합니다.</li>
+        <li><strong>Java·Spring Boot와 SQL</strong>로 주문·트랜잭션 흐름을 구현하고, 다양한 조회·실시간 데이터를 연동 검증하며 <strong>서비스 간 데이터 흐름과 안정성</strong>에 대한 이해를 넓혀가고 있습니다.</li>
+        <li>팀의 성장에 기여하기 위해 <strong>코드 리뷰</strong>와 <strong>AI 기반 개발 흐름 개선</strong>을 적극적으로 활용하고, <strong>테스트 가능한 구조와 읽기 쉬운 코드</strong>를 작성하려 노력합니다.</li>
+        <li>학습한 내용과 문제 해결 과정을 <strong>블로그</strong>에 기록하며, 부족했던 부분을 <strong>재현 가능한 지식</strong>으로 정리해 다음 프로젝트의 기준으로 발전시키고 있습니다.</li>
+        <li>의견을 제시할 때는 <strong>감이 아닌 근거</strong>를 바탕으로 소통하며, 더 나은 방향을 함께 찾는 <strong>협업</strong>을 지향합니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Career</h2>
+        <span class="right-meta">총 경력 8개월</span>
+      </div>
+      <div class="career-item" data-career-id="chartlab">
+        <div class="row-title">
+          <h3>(주)차트연구소</h3>
+          <span class="right-meta">2026.02 ~ 재직 중</span>
         </div>
-        <ul class="line-list skills-list">
-          <li><strong>Android</strong><span>Kotlin, Java, Jetpack Compose, XML·ViewBinding, Coroutines·Flow</span></li>
-          <li><strong>Architecture</strong><span>MVVM·MVI, 멀티 모듈, Clean Architecture, ViewModel·StateFlow</span></li>
-          <li><strong>Test &amp; Build</strong><span>JUnit·MockK, Gradle Convention Plugin, GitHub Actions</span></li>
-          <li><strong>Backend &amp; Web</strong><span>Spring Boot, MyBatis·MySQL, React·Vue, Vite<br />REST API·트랜잭션 처리, 공통 응답·예외 처리, 화면·상태 관리</span></li>
-          <li><strong>Workflow</strong><span>GitHub·JIRA, 코드 리뷰, AI Agent 기반 구현·테스트·문서화<br />작업 분리·병렬화, 자동 테스트·피드백 루프 기반 결과 검증</span></li>
+        <p class="meta">Android Developer · 연구원/정규직 | 서울시 강서구</p>
+        <ul>
+          <li>PowerGraphics Android용 간편 차트(EasyChart)의 21개 화면·제어 구성요소를 개발하고, 선·봉·영역·막대 4종 차트와 종목·조회 주기·지표 설정 기능 구현</li>
+          <li>고객사 LS증권의 모바일 주식거래 앱(MTS) 투혼에서 기존 Java 시스템과 Android 차트 기능 모듈 간 연동 상태를 점검하고, 조회 데이터·실시간 데이터를 시장·조회 주기별로 검증</li>
+          <li>화면과 차트 설정 불일치, 한글 데이터 형식 호환, 재사용 화면의 상태 오류, 테마·입력 범위 문제를 해결하고 여러 운영 버전의 수정·검증 절차 관리</li>
         </ul>
-      </section>
+      </div>
+    </section>
 
-      <section>
-        <div class="section-heading">
-          <h2>Career</h2>
-          <span class="right-meta">총 경력 8개월</span>
-        </div>
-        <div class="career-item" data-career-id="chartlab">
-          <div class="row-title">
-            <h3>(주)차트연구소</h3>
-            <span class="right-meta">2026.02 ~ 재직 중</span>
-          </div>
-          <p class="meta">Android Developer · 연구원/정규직 | 서울시 강서구</p>
-          <ul>
-            <li>
-              <p>PowerGraphics Android용 간편 차트(EasyChart)의 <strong>21개 화면·제어 구성요소</strong>를 개발하고, 선·봉·영역·막대 4종 차트와 종목·조회 주기·지표 설정 기능 구현</p>
-            </li>
-            <li>
-              <p>Kotlin·Java, Android XML·ViewBinding 기반으로 차트 화면을 개발하고, <strong>ViewModel·LiveData·StateFlow</strong>를 활용해 설정 저장·초기화·재진입 시 화면 상태 관리</p>
-              <p>화면과 차트 설정 불일치, 한글 데이터 형식 호환, 재사용 화면의 상태 오류, 테마·입력 범위 문제를 해결하고 여러 운영 버전의 수정·검증 절차 관리</p>
-            </li>
-            <li>
-              <p>고객사 <strong>LS증권의 모바일 주식거래 앱(MTS) 투혼</strong>에서 기존 Java 시스템과 Android 차트 기능 모듈 간 연동 상태를 점검하고, 조회 데이터·실시간 데이터를 시장·조회 주기별로 검증</p>
-              <p>LS증권 차트의 지표·분석도구·수치조회 화면을 개선하고, 숫자 입력 저장·소수점 처리·화면 방향 오류 수정. 기존 Java 앱과 Kotlin 차트 라이브러리의 스크립트 연동, 고객사 데이터 규격 변경 및 라이브러리 업데이트를 반영하고 개발·샘플 매뉴얼 정비</p>
-            </li>
-            <li>
-              <p>PowerGraphics 감시목록과 차트별 지표 데이터를 연결하고 수치·등락률·지표값을 표시하는 <strong>커스텀 그리드 개발</strong>. 변경된 셀만 갱신하고 중복 갱신을 정리해 불필요한 화면 갱신과 스크롤 위치 변동 완화</p>
-            </li>
-            <li>
-              <p><strong>React·Vite·SCSS 기반 자사 반응형 홈페이지 제작</strong>. 회사·제품 소개, 공지사항, 문의 화면과 콘텐츠 관리·지도·문의 접수 기능을 연동하고 라우팅·리소스 경로를 보완하며 배포·운영 가이드 작성</p>
-            </li>
-          </ul>
-        </div>
-      </section>
+    <section>
+      <div class="section-heading">
+        <h2>Skills</h2>
+      </div>
+      <div class="group">
+        <h3>Android & Kotlin</h3>
+        <ul>
+          <li>Jetpack Compose 기반 선언형 UI 개발 및 시계열 차트, GitHub 잔디밭 등 복잡한 컴포넌트 직접 구현</li>
+          <li>멀티 모듈 아키텍처, Clean Architecture, MVVM, MVI 패턴을 활용한 확장 가능한 앱 구조 설계 및 적용 경험</li>
+          <li>Coroutines 기반 병렬 API 처리(56% 개선), Room 캐싱(85% 개선), Paging3 도입을 통한 앱 성능 개선 경험</li>
+          <li>JUnit5·MockK 기반 단위 테스트로 ViewModel 비즈니스 로직 검증 경험</li>
+          <li>Flow, StateFlow 기반 UI 상태 스트림 설계로 화면 상태와 이벤트 흐름 관리 경험</li>
+          <li>Gradle Convention Plugin 기반 build-logic 구축 및 멀티모듈 설정 표준화 경험</li>
+          <li>오픈소스 UI 라이브러리 개발 및 Maven Central 배포 경험</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Backend & Frontend</h3>
+        <ul>
+          <li>Spring Boot 기반 REST API 설계 및 계층형 구조로 요청/응답 흐름 구성 경험</li>
+          <li>MyBatis와 MySQL을 활용한 SQL 매핑, join, pagination, 검색 조건 처리 경험</li>
+          <li>트랜잭션 경계를 고려한 도메인 상태 변경 처리 및 예외/검증 흐름 설계 경험</li>
+          <li>공통 응답 형식, 에러 처리, pagination contract를 정리해 클라이언트 연동 일관성 확보 경험</li>
+          <li>Vue 3, Vite 기반 화면 구성과 라우팅, 상태 관리, 컴포넌트 분리 경험</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>AI Agent</h3>
+        <ul>
+          <li>AI Agent 개발 워크플로우를 적용해 기능 구현, 리팩토링, 테스트 작성, 문서화 과정을 반복 가능하게 정리</li>
+          <li>독립적으로 수행 가능한 작업을 서브에이전트에 분리·병렬화하고, 결과를 통합 검증해 복잡한 작업의 처리 효율과 품질 향상</li>
+          <li>AI Agent 작업을 계획·구현·검증 레이어로 분리하고, 단계별 입력·출력과 검증 기준을 정의해 결과의 일관성 향상</li>
+          <li>코드베이스 컨텍스트와 컨벤션을 문서화해 AI 도구의 반복 작업 수행 품질 개선</li>
+          <li>코드 리뷰, 테스트 생성, 리팩토링 후보 탐색 등 반복 개발 작업 자동화</li>
+          <li>검증 게이트, 자동 테스트, 피드백 루프를 설계해 AI 에이전트 기반 개발 흐름 안정화</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Communication</h3>
+        <ul>
+          <li>JIRA와 GitHub를 활용하여 이슈 관리 및 개발 진행 현황 공유</li>
+          <li>코드 리뷰를 통한 아키텍처 일관성 유지 및 팀 이해도 동기화</li>
+        </ul>
+      </div>
+    </section>
 
-      <section>
-        <div class="section-heading">
-          <h2>Open Source</h2>
-          <span class="right-meta">Maven Central 배포</span>
+    <section>
+      <div class="section-heading">
+        <h2>Education</h2>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>삼성 청년 AI·SW 아카데미 13기 <span class="meta">Mobile Track</span></h3>
+          <span class="right-meta">2025.01 ~ 2025.12</span>
         </div>
-        <div class="project">
-          <div class="row-title">
-            <h3>Compose-Chart</h3>
-            <span class="right-meta">2026.02 ~ 2026.03</span>
-          </div>
-          <p>Canvas API만으로 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar)를 구현한 Jetpack Compose 라이브러리</p>
-          <p class="link-row">GitHub. <a href="https://github.com/ois0886/compose-chart">https://github.com/ois0886/compose-chart</a></p>
+        <ul>
+          <li>삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램</li>
+          <li>1학기 학습 과정에서 Java, SpringBoot, Vue.js, Html, CSS, Javascript, Flutter, Kotlin, Android 강의 수강 및 학습</li>
+          <li>2학기 프로젝트 과정에서 팀 프로젝트 기반 서비스 기획·개발·발표 경험</li>
+          <li>전현직 개발자 멘토링 및 프로젝트 프로세스 경험</li>
+          <li>CS·Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)</li>
+        </ul>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>주식회사 코드프레소 웹 개발 기초완성</h3>
+          <span class="right-meta">2023.10 ~ 2023.11</span>
         </div>
-        <div class="project">
-          <div class="row-title">
-            <h3>Compose-Git-Grass</h3>
-            <span class="right-meta">2026.02</span>
-          </div>
-          <p>Compose 기본 요소만으로 구현한 GitHub 잔디(contribution graph) 범용 UI 라이브러리</p>
-          <p class="link-row">GitHub. <a href="https://github.com/ois0886/compose-git-grass">https://github.com/ois0886/compose-git-grass</a></p>
+        <ul>
+          <li>Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 프로그램 이수</li>
+        </ul>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>한성대학교 컴퓨터공학과 졸업</h3>
+          <span class="right-meta">2018.03 ~ 2024.02</span>
         </div>
-      </section>
+        <ul>
+          <li>모바일소프트웨어 트랙 / 빅데이터 트랙</li>
+          <li>GPA 3.18 / 4.5</li>
+        </ul>
+      </div>
+    </section>
 
-    </article>
-
-    <article class="resume-page" aria-label="이력서 2페이지">
-      <section class="project-section">
-        <div class="section-heading">
-          <h2>Project</h2>
+    <section>
+      <div class="section-heading">
+        <h2>병역사항</h2>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>사회복무요원 소집해제</h3>
+          <span class="right-meta">2020.01 ~ 2021.11</span>
         </div>
+        <ul>
+          <li>금천고등학교 특수반 복무</li>
+          <li>사회복무요원 근로 우수상 수상</li>
+        </ul>
+      </div>
+    </section>
 
-        <div class="project" data-project-id="naenun-kiosk">
-          <div class="row-title">
-            <h3>내눈 키오스크</h3>
-            <span class="right-meta">2025.10 ~ 2025.11</span>
-          </div>
-          <p class="meta">생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스</p>
-          <p class="meta">6명 (IoT 1명, Android 5명) · Android 키오스크 코드 개선 및 리팩토링 · 기업연계 프로젝트</p>
-          <ul>
-            <li><strong>상용 키오스크 앱</strong>의 XML·Compose 혼용 UI를 Compose 중심 구조로 정리하고 Route-Screen-Component 책임 분리</li>
-            <li>Activity Context 참조, Listener 미해제, Singleton 참조 구조를 개선해 장시간 실행 환경의 <strong>메모리 누수 위험 요소 제거</strong></li>
-            <li>기능·계층 기준 패키지 재편과 공통 UI 컴포넌트 분리로 수정 영향 범위와 중복 수정 비용 감소</li>
-          </ul>
-          <p class="meta">SSAFY 자율 프로젝트 우수상 · 코드 반출 불가</p>
+    <section class="project-section">
+      <div class="section-heading">
+        <h2>Project</h2>
+      </div>
+
+      <div class="project" data-project-id="naenun-kiosk">
+        <div class="row-title">
+          <h3>내눈 키오스크 - Android</h3>
+          <span class="right-meta">2025.10 ~ 2025.11</span>
         </div>
+        <p class="meta">생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스 · 기업연계 프로젝트 특성상 코드 반출 불가</p>
+        <ul>
+          <li><strong>상용 키오스크 앱</strong>의 XML·Compose 혼용 UI를 Compose 중심 구조로 정리하고 Route-Screen-Component 책임 분리</li>
+          <li>Activity Context 참조, Listener 미해제, Singleton 참조 구조를 개선해 장시간 실행 환경의 메모리 누수 위험 요소 제거</li>
+          <li>기능·계층 기준 패키지 재편과 공통 UI 컴포넌트 분리로 수정 영향 범위와 중복 수정 비용 감소</li>
+          <li><strong>SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상</strong></li>
+        </ul>
+      </div>
 
-        <div class="project" data-project-id="mo-re">
-          <div class="row-title">
-            <h3>모리, Mo-Re</h3>
-            <span class="right-meta">2025.08 ~ 2025.09</span>
-          </div>
-          <p class="meta">누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리·운영 효율성을 높이는 앱 서비스</p>
-          <p class="meta">6명 (Backend 4명, Android 2명) · Android 개발(기여도 80%)</p>
-          <ul>
-            <li><strong>Kotlin Coroutine async/await</strong>를 활용한 6개 API 비동기 처리로 <strong>데이터 로딩 시간 56% 단축</strong></li>
-            <li><strong>멀티 모듈 아키텍처</strong> 설계 및 <strong>Convention Plugin 기반 Build-logic</strong> 구축</li>
-            <li><strong>Custom Compose UI</strong>로 시계열 차트(LineChart) 구현</li>
-          </ul>
-          <p class="meta">코드 반출 불가</p>
+      <div class="project" data-project-id="mo-re">
+        <div class="row-title">
+          <h3>모리, Mo-Re - Android</h3>
+          <span class="right-meta">2025.08 ~ 2025.09</span>
         </div>
+        <p class="meta">누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리·운영 효율성을 높이는 앱 서비스 · 코드 반출 불가</p>
+        <ul>
+          <li><strong>멀티 모듈 아키텍처</strong> 설계 및 <strong>Convention Plugin 기반 Build-logic</strong> 구축</li>
+          <li><strong>Custom Compose UI</strong>로 시계열 차트(LineChart) 구현</li>
+          <li><strong>Kotlin Coroutine async/await</strong>를 활용한 6개 API 비동기 처리로 <strong>데이터 로딩 시간 56% 단축</strong></li>
+        </ul>
+      </div>
 
+      <div class="project-pair">
         <div class="project" data-project-id="glim">
           <div class="row-title">
-            <h3>Glim</h3>
+            <h3>Glim - Android</h3>
             <span class="right-meta">2025.07 ~ 2025.08</span>
           </div>
-          <p class="meta">글귀를 숏폼으로 공유하는 앱 · Android 로그인·회원가입·마이페이지 개발</p>
+          <p class="meta">글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱</p>
+          <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
           <ul>
             <li><strong>Orbit MVI</strong> 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계</li>
             <li><strong>Kotlin Coroutine</strong>과 <strong>DataStore</strong>를 활용한 Session, Refresh Token 관리 시스템 구현</li>
             <li><strong>Channel 기반 Navigator</strong> 패턴 도입으로 Screen과 Navigation 로직 완전 분리</li>
             <li><strong>JUnit, MockK 기반 ViewModelTest</strong>를 <strong>130+ 케이스</strong> 구현으로 안정적인 단위 테스트 구축</li>
             <li>GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 <strong>잔디밭 형태의 Custom Compose UI 컴포넌트</strong>로 구현</li>
+            <li><strong>SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상</strong></li>
           </ul>
-          <p class="meta">SSAFY 공통 프로젝트 우수상</p>
-          <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
         </div>
-      </section>
 
-      <section>
-        <div class="section-heading">
-          <h2>Education</h2>
-        </div>
-        <div class="education-item">
+        <div class="project" data-project-id="pubburi">
           <div class="row-title">
-            <h3>삼성 청년 AI·SW 아카데미 13기</h3>
-            <span class="right-meta">2025.01 ~ 2025.12</span>
+            <h3>주점부리 - Backend & Frontend</h3>
+            <span class="right-meta">2025.05 ~ 2025.05 / 2026.07 ~ 2026.07</span>
           </div>
-          <p class="meta">Mobile Track · CS·Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)</p>
-          <p class="meta">삼성전자 주관 1년 과정 · 팀 프로젝트 기반 서비스 기획·개발·발표 및 개발자 멘토링</p>
+          <p class="meta">SSAFY 1학기 학습 기술(Java, Spring Boot, MyBatis, MySQL, Vue)을 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스</p>
+          <p class="link-row">GitHub. <a href="https://github.com/ois0886/Pubburi-Refactor">https://github.com/ois0886/Pubburi-Refactor</a></p>
+          <ul>
+            <li>주문·상세·상품 주문 수·스탬프 적립의 처리 결과를 검증하고 실패 시 전체 rollback하도록 구성</li>
+            <li>주문 목록 API의 상세 데이터를 일괄 조회하도록 개선해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 <strong>95% 절감</strong></li>
+            <li><strong>Backend & Frontend 개발</strong>로 사용자, 상품, 주문, 댓글, 매장 API와 고객/관리자 화면 구현</li>
+            <li><strong>ApiResponse/PageResponse</strong>, 입력 검증, 공통 예외 처리와 <strong>AccessGuard</strong>로 API 응답·권한 규칙 통일</li>
+          </ul>
         </div>
-        <div class="education-item">
-          <div class="row-title">
-            <h3>주식회사 코드프레소 웹 개발 기초완성</h3>
-            <span class="right-meta">2023.10 ~ 2023.11</span>
-          </div>
-          <p class="meta">Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 프로그램 이수</p>
-        </div>
-        <div class="education-item">
-          <div class="row-title">
-            <h3>한성대학교 컴퓨터공학과 졸업</h3>
-            <span class="right-meta">2018.03 ~ 2024.02</span>
-          </div>
-          <p class="meta">모바일소프트웨어 / 빅데이터 트랙 · GPA 3.18 / 4.5</p>
-        </div>
-      </section>
+      </div>
 
-      <section>
-        <div class="section-heading">
-          <h2>Certificates</h2>
+      <div class="project project-fit" data-project-id="quiz-cafe">
+        <div class="row-title">
+          <h3>Quiz Cafe - Android</h3>
+          <span class="right-meta">2025.04 ~ 2025.06</span>
         </div>
-        <p>정보처리기사 (2024.12) · SQLD (2026.03) · ADsP (2024.11) · Claude Code in Action (2026.04)</p>
-      </section>
-
-      <section>
-        <div class="section-heading">
-          <h2>Writing &amp; Activities</h2>
-        </div>
+        <p class="meta">다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼.</p>
+        <p class="link-row">GitHub. <a href="https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android">https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android</a></p>
         <ul>
-          <li>2021년부터 Kotlin·Android·CS·Algorithm 등 <strong>220+개 포스팅</strong> 작성 · <a href="https://superohinsung.tistory.com">https://superohinsung.tistory.com</a></li>
-          <li>한성대학교 전공 소모임 <strong>안드로이드 멘토</strong> (2022.09 ~ 2023.09)</li>
-          <li>한성대학교 LBT 지식 나눔 프로젝트 · “알고리즘을 공부하는 방법” 발표 (2023.07)</li>
+          <li><strong>Android 앱 개발</strong> (메인 및 마이페이지 개발) 및 <strong>1차 MVP 개발 완료</strong></li>
+          <li>모든 화면의 구성요소를 재사용 가능한 <strong>Jetpack Compose UI 디자인 시스템</strong> 구축</li>
+          <li><strong>Compose UI 100%</strong>로 화면 구현</li>
+          <li><strong>UiState–Intent–SideEffect MVI 구조</strong>를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축</li>
+          <li><strong>DataStore</strong> 활용 자동로그인 및 보안 세션 관리 구현, <strong>Retrofit + Coroutine</strong> 기반 비동기 통신 및 예외 처리 구조 설계</li>
         </ul>
-      </section>
+      </div>
 
-    </article>
+      <div class="project" data-project-id="bong">
+        <div class="row-title">
+          <h3>Bong # - Android</h3>
+          <span class="right-meta">2022.12 ~ 2023.06</span>
+        </div>
+        <p class="meta">한성대학교 캡스톤디자인(졸업작품) 출품 프로젝트. 기존에 재능과 재화를 교환하던 방식에서 벗어나 재능과 재능을 교환하는 앱 서비스</p>
+        <p class="link-row">GitHub. <a href="https://github.com/GrapeBongBong/Android">https://github.com/GrapeBongBong/Android</a></p>
+        <ul>
+          <li><strong>팀장</strong>, 안드로이드 개발 전담 (1인)</li>
+          <li><strong>presentation/domain/data 모듈 구성</strong>과 33개 UseCase 기반으로 기능별 책임 분리</li>
+          <li><strong>OkHttp WebSocket</strong> 기반 1:1 거래 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리</li>
+          <li><strong>ListAdapter/DiffUtil</strong>과 RecyclerView multiple view type으로 내 메시지/상대 메시지 UI 분리</li>
+          <li><strong>EncryptedSharedPreferences</strong> 기반 인증 토큰 저장 및 OkHttp Interceptor를 통한 Authorization 헤더 주입</li>
+        </ul>
+      </div>
+
+      <div class="project" data-project-id="didimdol">
+        <div class="row-title">
+          <h3>Didimdol - Android</h3>
+          <span class="right-meta">2023.01 ~ 2023.06</span>
+        </div>
+        <p class="meta">(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱</p>
+        <p class="link-row">GitHub. <a href="https://github.com/HSU-Didimdol/Android_PickNumber">https://github.com/HSU-Didimdol/Android_PickNumber</a></p>
+        <ul>
+          <li><strong>Android 팀 리드 개발자</strong> (3인 팀 중 Android 전담)</li>
+          <li>업체 마스터 데이터를 <strong>Room</strong>에 동기화하고 검색을 로컬 DB 조회로 전환해 <strong>검색 응답시간 85% 단축</strong> (3~5초 → 0.5초 이하)</li>
+          <li>조회된 업체에 대해서만 <strong>Direction5 API</strong>로 거리·소요시간을 계산하고 <strong>RecyclerView</strong>에 거리순 정렬 결과 표시</li>
+          <li><strong>Naver Map</strong> 마커, <strong>SearchView</strong>, <strong>예약 WebView</strong>를 연결해 검색 → 위치 확인 → 예약 흐름 구현</li>
+          <li><strong>ViewBinding</strong> 추상 베이스 클래스와 <strong>Extension Function</strong>으로 Activity/Fragment 반복 코드 축소</li>
+        </ul>
+      </div>
+
+      <div class="project" data-project-id="pocs">
+        <div class="row-title">
+          <h3>POCS - Android</h3>
+          <span class="right-meta">2022.06 ~ 2022.09</span>
+        </div>
+        <p class="meta">한성대학교 전공 소모임 POCS 회원들을 위한 원활한 스터디 모집 및 정보 공유를 위한 커뮤니티 앱</p>
+        <p class="link-row">GitHub. <a href="https://github.com/hansung-pocs/blog-android">https://github.com/hansung-pocs/blog-android</a></p>
+        <ul>
+          <li><strong>안드로이드 앱 개발</strong> (스터디·커뮤니티, 프로필 기능 개발)</li>
+          <li>기존 XML View를 Jetpack Compose로 <strong>70% 이상 전환</strong>하여 코드 재사용성과 개발 효율성 개선</li>
+          <li><strong>Paging3</strong> 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화</li>
+          <li><strong>GitHub Actions</strong>를 활용해 <strong>Android CI/CD</strong> (자동 빌드, 테스트, Play Store 배포) 환경 구축</li>
+          <li><strong>Play Store 정식 배포 완료</strong>로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Blog</h2>
+      </div>
+      <p class="meta">인성의 개발 공부 노트 · <a href="https://superohinsung.tistory.com">https://superohinsung.tistory.com</a></p>
+      <ul>
+        <li><strong>2021년부터 5년동안</strong> Kotlin, Android, CS, Algorithm 등 <strong>220+개의 포스팅</strong> 작성</li>
+        <li>Jetpack Compose 렌더링/Recomposition, Android 아키텍처(MVVM, MVI), 네트워크/직렬화 라이브러리 비교 학습 내용 정리</li>
+        <li>Android 시리즈: Compose UI, 인텐트/4대 컴포넌트, 멀티모듈 등 안드로이드 전반 정리</li>
+        <li>Kotlin 시리즈: 코루틴, 컬렉션/람다 등 언어와 라이브러리 특성 정리</li>
+        <li>CS 시리즈: 운영체제, 자료구조, 알고리즘 개념 정리</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Open Source</h2>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Compose-Chart</h3>
+          <span class="right-meta">2026.02 ~ 2026.03</span>
+        </div>
+        <p class="meta">Canvas API만으로 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar)를 구현한 Jetpack Compose 라이브러리 · Maven Central 배포 (v1.3.2)</p>
+        <p class="link-row">GitHub. <a href="https://github.com/ois0886/compose-chart">https://github.com/ois0886/compose-chart</a></p>
+      </div>
+
+      <div class="project">
+        <div class="row-title">
+          <h3>Compose-Git-Grass</h3>
+          <span class="right-meta">2026.02</span>
+        </div>
+        <p class="meta">Compose 기본 요소만으로 구현한 GitHub 잔디(contribution graph) 범용 UI 라이브러리 · Maven Central 배포 (v1.2.0)</p>
+        <p class="link-row">GitHub. <a href="https://github.com/ois0886/compose-git-grass">https://github.com/ois0886/compose-git-grass</a></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Awards</h2>
+      </div>
+      <div class="row-title"><p class="one-line">SSAFY 자율 프로젝트 우수상 | 삼성전자 | 2025-23-050154</p><span class="right-meta">2025.11</span></div>
+      <div class="row-title"><p class="one-line">SSAFY 공통 프로젝트 우수상 | 삼성전자 | 2025-23-050065</p><span class="right-meta">2025.08</span></div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Certificates</h2>
+      </div>
+      <div class="row-title"><p class="one-line">Claude Code in Action | Anthropic | po6dwyvk5zs7</p><span class="right-meta">2026.04</span></div>
+      <div class="row-title"><p class="one-line">SQLD | 한국데이터산업진흥원 | SQLD-060003832</p><span class="right-meta">2026.03</span></div>
+      <div class="row-title"><p class="one-line">정보처리기사 | 한국산업인력공단 | 24203011265G</p><span class="right-meta">2024.12</span></div>
+      <div class="row-title"><p class="one-line">ADsP | 한국데이터산업진흥원 | ADsP-043007180</p><span class="right-meta">2024.11</span></div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Activity</h2>
+      </div>
+      <div class="row-title"><p class="one-line">한성대학교 LBT 지식 나눔 프로젝트 — "알고리즘을 공부하는 방법" 발표</p><span class="right-meta">2023.07</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 새싹 SW교육 캠프 조교</p><span class="right-meta">2023.01 ~ 2023.02</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 전공 소모임 안드로이드 멘토</p><span class="right-meta">2022.09 ~ 2023.09</span></div>
+      <div class="group">
+        <div class="row-title"><p class="one-line">한성대학교 교내 전공동아리 DC&M</p><span class="right-meta">2022.06 ~ 2023.12</span></div>
+        <ul>
+          <li>알고리즘 스터디 주최 및 활동 (2023.06 ~ 2023.12)</li>
+          <li>(주)PickNumber 산학 협력 프로젝트 참여 — 전국 업체 예약 및 위치 서비스 앱 개발 (2023.01 ~ 2023.06)</li>
+        </ul>
+      </div>
+      <div class="row-title"><p class="one-line">한성대학교 교내 전공 소모임 POCS</p><span class="right-meta">2022.06 ~ 2023.12</span></div>
+      <div class="row-title"><p class="one-line">한성대학교 교내 PIG 사진동아리 부회장 활동</p><span class="right-meta">2019.03 ~ 2019.12</span></div>
+    </section>
   </main>
 </body>
 </html>

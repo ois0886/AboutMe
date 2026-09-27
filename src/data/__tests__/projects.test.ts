@@ -36,18 +36,17 @@ describe('projects 데이터 무결성', () => {
     ['mo-re', '2025.08.25 ~ 2025.09.29', '2025.08 ~ 2025.09'],
     ['glim', '2025.07.07 ~ 2025.08.18', '2025.07 ~ 2025.08'],
     ['pubburi', '2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15', '2025.05 ~ 2025.05 / 2026.07 ~ 2026.07'],
-  ])('%s의 개발 기간은 웹에서 일 단위, 이력서에 선별되면 월 단위로 표시한다', (id, period, resumePeriod) => {
+  ])('%s의 개발 기간은 웹에서 일 단위, 이력서에서 월 단위로 표시한다', (id, period, resumePeriod) => {
     const project = projects.find((item) => item.id === id)!
     expect(project.period).toBe(period)
 
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
-    const resumeProject = resumeDocument.querySelector(`[data-project-id="${id}"]`)
-    if (resumeProject) {
-      const resumePeriodElement = resumeProject.querySelector('.right-meta')
-      expect(normalizeText(resumePeriodElement?.textContent ?? '')).toBe(resumePeriod)
-      expect(resumePeriodElement?.querySelector('br')).toBeNull()
-    }
+    const resumePeriodElement = resumeDocument.querySelector(
+      `[data-project-id="${id}"] .right-meta`,
+    )
+    expect(normalizeText(resumePeriodElement?.textContent ?? '')).toBe(resumePeriod)
+    expect(resumePeriodElement?.querySelector('br')).toBeNull()
   })
 
   it.each(['naenun-kiosk', 'mo-re', 'glim'])(
@@ -139,28 +138,19 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('이력서는 대표 프로젝트 3개를 선별하고 성과는 웹에 있는 내용만 포함한다', () => {
+  it('웹 프로젝트 성과와 이력서 프로젝트 성과가 동일하다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
-    const resumeProjects = Array.from(resumeDocument.querySelectorAll('[data-project-id]'))
-    expect(resumeProjects.map((item) => item.getAttribute('data-project-id'))).toEqual([
-      'naenun-kiosk', 'mo-re', 'glim',
-    ])
-
-    resumeProjects.forEach((resumeProject) => {
-      const project = projects.find((item) => item.id === resumeProject.getAttribute('data-project-id'))!
-      expect(project).toBeDefined()
+    projects.forEach((project) => {
       const resumeAchievements = Array.from(
-        resumeProject.querySelectorAll(':scope > ul > li'),
+        resumeDocument.querySelectorAll(`[data-project-id="${project.id}"] > ul > li`),
       ).map((item) => normalizeText(item.textContent ?? ''))
       const webAchievements = project.achievements
         .map(richTextToText)
         .map(normalizeText)
 
-      expect(resumeAchievements.length, project.id).toBeGreaterThanOrEqual(2)
-      expect(resumeAchievements.length, project.id).toBeLessThanOrEqual(webAchievements.length)
-      expect(webAchievements, project.id).toEqual(expect.arrayContaining(resumeAchievements))
+      expect(resumeAchievements, project.id).toEqual(webAchievements)
     })
   })
 })
