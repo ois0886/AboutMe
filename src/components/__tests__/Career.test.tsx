@@ -25,7 +25,7 @@ describe('Career', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
-      resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
+      resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li > p'),
     ).map((item) => normalizeText(item.textContent ?? ''))
 
     expect(resumeTasks.length).toBeGreaterThan(0)
