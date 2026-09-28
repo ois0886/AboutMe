@@ -40,8 +40,8 @@ function getCareerMonths(start: Date, end: Date) {
 
   if (end < start) return 0
 
-  // 재직 첫 달을 1개월로 포함해서 표시한다.
-  return totalMonths + 1
+  // 완전히 경과한 개월 수만 계산하고 남은 일수는 올림하지 않는다.
+  return totalMonths
 }
 
 export function getTotalCareer() {

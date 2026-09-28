@@ -138,11 +138,20 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('웹 프로젝트 성과와 이력서 프로젝트 성과가 동일하다', () => {
+  it('이력서는 모든 프로젝트를 포함하고 상세 프로젝트 3개의 성과는 웹과 동일하다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
-    projects.forEach((project) => {
+    const resumeProjects = Array.from(resumeDocument.querySelectorAll('[data-project-id]'))
+    expect(resumeProjects.map((item) => item.getAttribute('data-project-id')).sort())
+      .toEqual(projects.map((project) => project.id).sort())
+
+    const detailedProjects = resumeProjects.filter((item) => item.querySelector('ul'))
+    expect(detailedProjects.map((item) => item.getAttribute('data-project-id')))
+      .toEqual(['naenun-kiosk', 'mo-re', 'glim'])
+
+    detailedProjects.forEach((item) => {
+      const project = projects.find((project) => project.id === item.getAttribute('data-project-id'))!
       const resumeAchievements = Array.from(
         resumeDocument.querySelectorAll(`[data-project-id="${project.id}"] > ul > li`),
       ).map((item) => normalizeText(item.textContent ?? ''))

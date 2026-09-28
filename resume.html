@@ -71,6 +71,18 @@
       line-height: 1.42;
     }
 
+    .project-summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: 0 12px;
+      padding-top: 0;
+    }
+
+    .project-summary .link-row {
+      grid-column: 1 / -1;
+    }
+
     h1,
     h2,
     h3,
@@ -215,6 +227,11 @@
       margin-bottom: 8px;
     }
 
+    .awards-section {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
     .one-line {
       margin-bottom: 3px;
     }
@@ -261,18 +278,23 @@
     <section>
       <div class="section-heading">
         <h2>Career</h2>
-        <span class="right-meta">총 경력 8개월</span>
+        <span class="right-meta">총 경력 7개월</span>
       </div>
       <div class="career-item" data-career-id="chartlab">
         <div class="row-title">
           <h3>(주)차트연구소</h3>
-          <span class="right-meta">2026.02 ~ 재직 중</span>
+          <span class="right-meta">2026.02.09 ~ 재직 중</span>
         </div>
         <p class="meta">Android Developer · 연구원/정규직 | 서울시 강서구</p>
         <ul>
           <li>PowerGraphics Android용 간편 차트(EasyChart)의 21개 화면·제어 구성요소를 개발하고, 선·봉·영역·막대 4종 차트와 종목·조회 주기·지표 설정 기능 구현</li>
           <li>고객사 LS증권의 모바일 주식거래 앱(MTS) 투혼에서 기존 Java 시스템과 Android 차트 기능 모듈 간 연동 상태를 점검하고, 조회 데이터·실시간 데이터를 시장·조회 주기별로 검증</li>
           <li>화면과 차트 설정 불일치, 한글 데이터 형식 호환, 재사용 화면의 상태 오류, 테마·입력 범위 문제를 해결하고 여러 운영 버전의 수정·검증 절차 관리</li>
+          <li>Kotlin·Java, Android XML·ViewBinding 기반으로 차트 화면을 개발하고, ViewModel·LiveData·StateFlow를 활용해 설정 저장·초기화·재진입 시 화면 상태 관리</li>
+          <li>LS증권 차트의 지표·분석도구·수치조회 화면을 개선하고, 숫자 입력 저장·소수점 처리·화면 방향 오류 수정. 기존 Java 앱과 Kotlin 차트 라이브러리의 스크립트 연동, 고객사 데이터 규격 변경 및 라이브러리 업데이트를 반영하고 개발·샘플 매뉴얼 정비</li>
+          <li>PowerGraphics 감시목록과 차트별 지표 데이터를 연결하고 수치·등락률·지표값을 표시하는 커스텀 그리드 개발. 변경된 셀만 갱신하고 중복 갱신을 정리해 불필요한 화면 갱신과 스크롤 위치 변동 완화</li>
+          <li>React·Vite·SCSS 기반 자사 반응형 홈페이지 제작. 회사·제품 소개, 공지사항, 문의 화면과 콘텐츠 관리·지도·문의 접수 기능을 연동하고 라우팅·리소스 경로를 보완하며 배포·운영 가이드 작성</li>
+          <li>삼성증권 미팅용 PPT 자료 제작</li>
         </ul>
       </div>
     </section>
@@ -281,46 +303,12 @@
       <div class="section-heading">
         <h2>Skills</h2>
       </div>
-      <div class="group">
-        <h3>Android & Kotlin</h3>
-        <ul>
-          <li>Jetpack Compose 기반 선언형 UI 개발 및 시계열 차트, GitHub 잔디밭 등 복잡한 컴포넌트 직접 구현</li>
-          <li>멀티 모듈 아키텍처, Clean Architecture, MVVM, MVI 패턴을 활용한 확장 가능한 앱 구조 설계 및 적용 경험</li>
-          <li>Coroutines 기반 병렬 API 처리(56% 개선), Room 캐싱(85% 개선), Paging3 도입을 통한 앱 성능 개선 경험</li>
-          <li>JUnit5·MockK 기반 단위 테스트로 ViewModel 비즈니스 로직 검증 경험</li>
-          <li>Flow, StateFlow 기반 UI 상태 스트림 설계로 화면 상태와 이벤트 흐름 관리 경험</li>
-          <li>Gradle Convention Plugin 기반 build-logic 구축 및 멀티모듈 설정 표준화 경험</li>
-          <li>오픈소스 UI 라이브러리 개발 및 Maven Central 배포 경험</li>
-        </ul>
-      </div>
-      <div class="group">
-        <h3>Backend & Frontend</h3>
-        <ul>
-          <li>Spring Boot 기반 REST API 설계 및 계층형 구조로 요청/응답 흐름 구성 경험</li>
-          <li>MyBatis와 MySQL을 활용한 SQL 매핑, join, pagination, 검색 조건 처리 경험</li>
-          <li>트랜잭션 경계를 고려한 도메인 상태 변경 처리 및 예외/검증 흐름 설계 경험</li>
-          <li>공통 응답 형식, 에러 처리, pagination contract를 정리해 클라이언트 연동 일관성 확보 경험</li>
-          <li>Vue 3, Vite 기반 화면 구성과 라우팅, 상태 관리, 컴포넌트 분리 경험</li>
-        </ul>
-      </div>
-      <div class="group">
-        <h3>AI Agent</h3>
-        <ul>
-          <li>AI Agent 개발 워크플로우를 적용해 기능 구현, 리팩토링, 테스트 작성, 문서화 과정을 반복 가능하게 정리</li>
-          <li>독립적으로 수행 가능한 작업을 서브에이전트에 분리·병렬화하고, 결과를 통합 검증해 복잡한 작업의 처리 효율과 품질 향상</li>
-          <li>AI Agent 작업을 계획·구현·검증 레이어로 분리하고, 단계별 입력·출력과 검증 기준을 정의해 결과의 일관성 향상</li>
-          <li>코드베이스 컨텍스트와 컨벤션을 문서화해 AI 도구의 반복 작업 수행 품질 개선</li>
-          <li>코드 리뷰, 테스트 생성, 리팩토링 후보 탐색 등 반복 개발 작업 자동화</li>
-          <li>검증 게이트, 자동 테스트, 피드백 루프를 설계해 AI 에이전트 기반 개발 흐름 안정화</li>
-        </ul>
-      </div>
-      <div class="group">
-        <h3>Communication</h3>
-        <ul>
-          <li>JIRA와 GitHub를 활용하여 이슈 관리 및 개발 진행 현황 공유</li>
-          <li>코드 리뷰를 통한 아키텍처 일관성 유지 및 팀 이해도 동기화</li>
-        </ul>
-      </div>
+      <ul class="line-list">
+        <li><strong>Android &amp; Kotlin</strong> · Kotlin·Java, Compose·XML, Coroutines·Flow, MVVM·MVI·멀티 모듈, Room·Paging3, JUnit5·MockK</li>
+        <li><strong>Backend &amp; Frontend</strong> · Spring Boot·MyBatis·MySQL, REST API·트랜잭션, Vue 3·Vite</li>
+        <li><strong>AI Agent</strong> · 작업 분리·병렬화, 구현·테스트·리뷰·문서화 자동화</li>
+        <li><strong>Communication</strong> · GitHub·JIRA, 코드 리뷰</li>
+      </ul>
     </section>
 
     <section>
@@ -357,22 +345,7 @@
         <ul>
           <li>모바일소프트웨어 트랙 / 빅데이터 트랙</li>
           <li>GPA 3.18 / 4.5</li>
-        </ul>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-heading">
-        <h2>병역사항</h2>
-      </div>
-      <div class="education-item">
-        <div class="row-title">
-          <h3>사회복무요원 소집해제</h3>
-          <span class="right-meta">2020.01 ~ 2021.11</span>
-        </div>
-        <ul>
-          <li>금천고등학교 특수반 복무</li>
-          <li>사회복무요원 근로 우수상 수상</li>
+          <li>병역: 사회복무요원 소집해제 (2020.01 ~ 2021.11) · 금천고등학교 특수반 복무 · 근로 우수상 수상</li>
         </ul>
       </div>
     </section>
@@ -427,99 +400,36 @@
           </ul>
         </div>
 
-        <div class="project" data-project-id="pubburi">
-          <div class="row-title">
-            <h3>주점부리 - Backend & Frontend</h3>
-            <span class="right-meta">2025.05 ~ 2025.05 / 2026.07 ~ 2026.07</span>
-          </div>
-          <p class="meta">SSAFY 1학기 학습 기술(Java, Spring Boot, MyBatis, MySQL, Vue)을 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스</p>
+        <div class="project project-summary" data-project-id="pubburi">
+          <p><strong>주점부리</strong> · Spring Boot·Vue 주문 서비스, 상세 조회 쿼리 95% 절감</p>
+          <span class="right-meta">2025.05 ~ 2025.05 / 2026.07 ~ 2026.07</span>
           <p class="link-row">GitHub. <a href="https://github.com/ois0886/Pubburi-Refactor">https://github.com/ois0886/Pubburi-Refactor</a></p>
-          <ul>
-            <li>주문·상세·상품 주문 수·스탬프 적립의 처리 결과를 검증하고 실패 시 전체 rollback하도록 구성</li>
-            <li>주문 목록 API의 상세 데이터를 일괄 조회하도록 개선해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 <strong>95% 절감</strong></li>
-            <li><strong>Backend & Frontend 개발</strong>로 사용자, 상품, 주문, 댓글, 매장 API와 고객/관리자 화면 구현</li>
-            <li><strong>ApiResponse/PageResponse</strong>, 입력 검증, 공통 예외 처리와 <strong>AccessGuard</strong>로 API 응답·권한 규칙 통일</li>
-          </ul>
         </div>
       </div>
 
-      <div class="project project-fit" data-project-id="quiz-cafe">
-        <div class="row-title">
-          <h3>Quiz Cafe - Android</h3>
-          <span class="right-meta">2025.04 ~ 2025.06</span>
-        </div>
-        <p class="meta">다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼.</p>
+      <div class="project project-summary" data-project-id="quiz-cafe">
+        <p><strong>Quiz Cafe</strong> · Compose UI·MVI 기반 개발 지식 퀴즈 앱 MVP 개발</p>
+        <span class="right-meta">2025.04 ~ 2025.06</span>
         <p class="link-row">GitHub. <a href="https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android">https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android</a></p>
-        <ul>
-          <li><strong>Android 앱 개발</strong> (메인 및 마이페이지 개발) 및 <strong>1차 MVP 개발 완료</strong></li>
-          <li>모든 화면의 구성요소를 재사용 가능한 <strong>Jetpack Compose UI 디자인 시스템</strong> 구축</li>
-          <li><strong>Compose UI 100%</strong>로 화면 구현</li>
-          <li><strong>UiState–Intent–SideEffect MVI 구조</strong>를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축</li>
-          <li><strong>DataStore</strong> 활용 자동로그인 및 보안 세션 관리 구현, <strong>Retrofit + Coroutine</strong> 기반 비동기 통신 및 예외 처리 구조 설계</li>
-        </ul>
       </div>
 
-      <div class="project" data-project-id="bong">
-        <div class="row-title">
-          <h3>Bong # - Android</h3>
-          <span class="right-meta">2022.12 ~ 2023.06</span>
-        </div>
-        <p class="meta">한성대학교 캡스톤디자인(졸업작품) 출품 프로젝트. 기존에 재능과 재화를 교환하던 방식에서 벗어나 재능과 재능을 교환하는 앱 서비스</p>
+      <div class="project project-summary" data-project-id="bong">
+        <p><strong>Bong #</strong> · Android 전담 개발, WebSocket 기반 1:1 거래 채팅 구현</p>
+        <span class="right-meta">2022.12 ~ 2023.06</span>
         <p class="link-row">GitHub. <a href="https://github.com/GrapeBongBong/Android">https://github.com/GrapeBongBong/Android</a></p>
-        <ul>
-          <li><strong>팀장</strong>, 안드로이드 개발 전담 (1인)</li>
-          <li><strong>presentation/domain/data 모듈 구성</strong>과 33개 UseCase 기반으로 기능별 책임 분리</li>
-          <li><strong>OkHttp WebSocket</strong> 기반 1:1 거래 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리</li>
-          <li><strong>ListAdapter/DiffUtil</strong>과 RecyclerView multiple view type으로 내 메시지/상대 메시지 UI 분리</li>
-          <li><strong>EncryptedSharedPreferences</strong> 기반 인증 토큰 저장 및 OkHttp Interceptor를 통한 Authorization 헤더 주입</li>
-        </ul>
       </div>
 
-      <div class="project" data-project-id="didimdol">
-        <div class="row-title">
-          <h3>Didimdol - Android</h3>
-          <span class="right-meta">2023.01 ~ 2023.06</span>
-        </div>
-        <p class="meta">(주)PickNumber와 한성대학교 DC&M 동아리 산학 협력 프로젝트 - 전국 업체 예약 및 위치 서비스 제공 앱</p>
+      <div class="project project-summary" data-project-id="didimdol">
+        <p><strong>Didimdol</strong> · 업체 예약·위치 서비스, Room 캐싱으로 검색 응답시간 85% 단축</p>
+        <span class="right-meta">2023.01 ~ 2023.06</span>
         <p class="link-row">GitHub. <a href="https://github.com/HSU-Didimdol/Android_PickNumber">https://github.com/HSU-Didimdol/Android_PickNumber</a></p>
-        <ul>
-          <li><strong>Android 팀 리드 개발자</strong> (3인 팀 중 Android 전담)</li>
-          <li>업체 마스터 데이터를 <strong>Room</strong>에 동기화하고 검색을 로컬 DB 조회로 전환해 <strong>검색 응답시간 85% 단축</strong> (3~5초 → 0.5초 이하)</li>
-          <li>조회된 업체에 대해서만 <strong>Direction5 API</strong>로 거리·소요시간을 계산하고 <strong>RecyclerView</strong>에 거리순 정렬 결과 표시</li>
-          <li><strong>Naver Map</strong> 마커, <strong>SearchView</strong>, <strong>예약 WebView</strong>를 연결해 검색 → 위치 확인 → 예약 흐름 구현</li>
-          <li><strong>ViewBinding</strong> 추상 베이스 클래스와 <strong>Extension Function</strong>으로 Activity/Fragment 반복 코드 축소</li>
-        </ul>
       </div>
 
-      <div class="project" data-project-id="pocs">
-        <div class="row-title">
-          <h3>POCS - Android</h3>
-          <span class="right-meta">2022.06 ~ 2022.09</span>
-        </div>
-        <p class="meta">한성대학교 전공 소모임 POCS 회원들을 위한 원활한 스터디 모집 및 정보 공유를 위한 커뮤니티 앱</p>
+      <div class="project project-summary" data-project-id="pocs">
+        <p><strong>POCS</strong> · 커뮤니티 앱, Compose 70% 이상 전환·Play Store 배포</p>
+        <span class="right-meta">2022.06 ~ 2022.09</span>
         <p class="link-row">GitHub. <a href="https://github.com/hansung-pocs/blog-android">https://github.com/hansung-pocs/blog-android</a></p>
-        <ul>
-          <li><strong>안드로이드 앱 개발</strong> (스터디·커뮤니티, 프로필 기능 개발)</li>
-          <li>기존 XML View를 Jetpack Compose로 <strong>70% 이상 전환</strong>하여 코드 재사용성과 개발 효율성 개선</li>
-          <li><strong>Paging3</strong> 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화</li>
-          <li><strong>GitHub Actions</strong>를 활용해 <strong>Android CI/CD</strong> (자동 빌드, 테스트, Play Store 배포) 환경 구축</li>
-          <li><strong>Play Store 정식 배포 완료</strong>로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험</li>
-        </ul>
       </div>
-    </section>
-
-    <section>
-      <div class="section-heading">
-        <h2>Blog</h2>
-      </div>
-      <p class="meta">인성의 개발 공부 노트 · <a href="https://superohinsung.tistory.com">https://superohinsung.tistory.com</a></p>
-      <ul>
-        <li><strong>2021년부터 5년동안</strong> Kotlin, Android, CS, Algorithm 등 <strong>220+개의 포스팅</strong> 작성</li>
-        <li>Jetpack Compose 렌더링/Recomposition, Android 아키텍처(MVVM, MVI), 네트워크/직렬화 라이브러리 비교 학습 내용 정리</li>
-        <li>Android 시리즈: Compose UI, 인텐트/4대 컴포넌트, 멀티모듈 등 안드로이드 전반 정리</li>
-        <li>Kotlin 시리즈: 코루틴, 컬렉션/람다 등 언어와 라이브러리 특성 정리</li>
-        <li>CS 시리즈: 운영체제, 자료구조, 알고리즘 개념 정리</li>
-      </ul>
     </section>
 
     <section>
@@ -546,7 +456,7 @@
       </div>
     </section>
 
-    <section>
+    <section class="awards-section">
       <div class="section-heading">
         <h2>Awards</h2>
       </div>

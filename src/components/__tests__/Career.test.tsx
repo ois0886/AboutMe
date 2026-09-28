@@ -47,7 +47,7 @@ describe('Career', () => {
     vi.useFakeTimers()
     try {
       // 정적 이력서의 경력 갱신 시점으로 고정해 웹 자동 계산과 비교한다.
-      vi.setSystemTime(new Date(2026, 8, 18, 12))
+      vi.setSystemTime(new Date(2026, 8, 28, 12))
       render(<Career />)
 
       const totalCareer = `총 경력 ${getTotalCareer()}`
@@ -138,38 +138,51 @@ describe('getTotalCareer', () => {
     vi.useRealTimers()
   })
 
-  it('재직 시작일이면 1개월을 반환한다', () => {
-    vi.setSystemTime(new Date(2026, 1, 9))
+  it.each([
+    ['입사 전', new Date(2026, 1, 8)],
+    ['입사 당일', new Date(2026, 1, 9)],
+    ['한 달을 채우기 전', new Date(2026, 2, 8)],
+  ])('%s에는 1개월 미만을 반환한다', (_, date) => {
+    vi.setSystemTime(date)
+    expect(getTotalCareer()).toBe('1개월 미만')
+  })
+
+  it('입사일로부터 한 달을 채우면 1개월을 반환한다', () => {
+    vi.setSystemTime(new Date(2026, 2, 9))
     expect(getTotalCareer()).toBe('1개월')
   })
 
-  it('재직 개월 수가 늘어나면 첫 달을 포함한 개월 수를 반환한다', () => {
-    vi.setSystemTime(new Date(2026, 4, 15)) // (주)차트연구소 4개월
+  it('완전히 경과한 개월 수만 반환하고 남은 일수는 올림하지 않는다', () => {
+    vi.setSystemTime(new Date(2026, 4, 15)) // (주)차트연구소 3개월 6일
+    expect(getTotalCareer()).toBe('3개월')
+  })
+
+  it('달이 바뀌어도 입사일에 도달하기 전에는 개월 수가 늘어나지 않는다', () => {
+    vi.setSystemTime(new Date(2026, 6, 1)) // (주)차트연구소 4개월 22일
     expect(getTotalCareer()).toBe('4개월')
   })
 
-  it('월 시작일이 재직 시작일보다 빨라도 첫 달을 포함한 개월 수를 반환한다', () => {
-    vi.setSystemTime(new Date(2026, 6, 1)) // (주)차트연구소 5개월
-    expect(getTotalCareer()).toBe('5개월')
-  })
-
   it.each([
-    [8, '7개월'],
-    [9, '8개월'],
-    [18, '8개월'],
+    [8, '6개월'],
+    [9, '7개월'],
+    [18, '7개월'],
+    [28, '7개월'],
   ])('2026년 9월 %i일 기준 경력은 %s이다', (day, expected) => {
     vi.setSystemTime(new Date(2026, 8, day))
     expect(getTotalCareer()).toBe(expected)
   })
 
-  it('누적 경력이 1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 1, 9)) // (주)차트연구소 1년 1개월
-    expect(getTotalCareer()).toBe('1년 1개월')
+  it.each([
+    [8, '11개월'],
+    [9, '1년'],
+  ])('2027년 2월 %i일 기준으로 12개월을 채웠을 때만 연 단위로 표시한다', (day, expected) => {
+    vi.setSystemTime(new Date(2027, 1, day))
+    expect(getTotalCareer()).toBe(expected)
   })
 
   it('1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 7, 15)) // (주)차트연구소 1년 7개월
-    expect(getTotalCareer()).toBe('1년 7개월')
+    vi.setSystemTime(new Date(2027, 7, 15)) // (주)차트연구소 1년 6개월 6일
+    expect(getTotalCareer()).toBe('1년 6개월')
   })
 
   it('Career 데이터에 (주)차트연구소만 등록되어 있다', () => {
