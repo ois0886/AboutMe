@@ -1,5 +1,5 @@
-import { render, screen, within } from '@testing-library/react'
-import { readFileSync } from 'node:fs'
+import { fireEvent, render, screen, within } from '@testing-library/react'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import Activity from '../Activity'
 import Career from '../Career'
@@ -109,6 +109,31 @@ describe('Activity', () => {
 })
 
 describe('Education', () => {
+  it('코드프레소 교육 카드에서만 수료증을 펼치고 접을 수 있다', () => {
+    render(<Education />)
+
+    const heading = screen.getByRole('heading', { name: '주식회사 코드프레소 웹 개발 기초완성' })
+    const card = within(heading.closest('div')!.parentElement!.parentElement!)
+    const imageName = '주식회사 코드프레소 웹 개발 기초완성 수료증'
+    const button = card.getByRole('button', { name: '수료증 보기' })
+
+    expect(screen.getAllByRole('button', { name: '수료증 보기' })).toHaveLength(1)
+    expect(button).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByRole('img', { name: imageName })).not.toBeInTheDocument()
+
+    fireEvent.click(button)
+
+    const image = card.getByRole('img', { name: imageName })
+    expect(card.getByRole('button', { name: '수료증 접기' })).toHaveAttribute('aria-expanded', 'true')
+    expect(image).toHaveAttribute('src', 'screenshot/codepresso-certificate.png')
+    expect(existsSync(resolve(process.cwd(), 'public', image.getAttribute('src')!))).toBe(true)
+
+    fireEvent.click(card.getByRole('button', { name: '수료증 접기' }))
+
+    expect(card.getByRole('button', { name: '수료증 보기' })).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByRole('img', { name: imageName })).not.toBeInTheDocument()
+  })
+
   it('SSAFY 스터디 내용과 링크를 교육 이력으로 옮기고 독립 활동 카드를 제거한다', () => {
     render(<><Education /><Activity /></>)
 

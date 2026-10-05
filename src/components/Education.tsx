@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import styles from './Education.module.css'
 
@@ -28,6 +29,7 @@ const educations = [
     title: '주식회사 코드프레소 웹 개발 기초완성',
     subtitle: '',
     period: '2023.10 ~ 2023.11',
+    certificateImage: 'screenshot/codepresso-certificate.png',
     details: [
       'Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 프로그램 이수',
     ],
@@ -61,6 +63,7 @@ const educations = [
 
 function Education() {
   const ref = useScrollReveal<HTMLElement>()
+  const [openCertificate, setOpenCertificate] = useState<string | null>(null)
 
   return (
     <section id="education" className="section reveal" ref={ref}>
@@ -82,6 +85,30 @@ function Education() {
                 <li key={detail} className={styles.detail}>{detail}</li>
               ))}
             </ul>
+            {edu.certificateImage && (
+              <div className={styles.toggleArea}>
+                <button
+                  className={styles.imageToggle}
+                  onClick={() => setOpenCertificate((current) => current === edu.title ? null : edu.title)}
+                  aria-expanded={openCertificate === edu.title}
+                >
+                  {openCertificate === edu.title ? '수료증 접기' : '수료증 보기'}
+                  <span
+                    className={`${styles.arrow} ${openCertificate === edu.title ? styles.arrowUp : ''}`}
+                    aria-hidden="true"
+                  />
+                </button>
+                {openCertificate === edu.title && (
+                  <div className={styles.imageWrap}>
+                    <img
+                      src={edu.certificateImage}
+                      alt={`${edu.title} 수료증`}
+                      className={styles.image}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
             {edu.links.length > 0 && (
               <div className={styles.links}>
                 {edu.links.map((link) => (
