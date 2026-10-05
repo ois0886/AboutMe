@@ -138,7 +138,7 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('이력서는 모든 프로젝트를 포함하고 상세 프로젝트 3개의 성과는 웹과 동일하다', () => {
+  it('이력서는 Glim 아래 프로젝트를 소개·링크·성과 2줄로 요약하고 웹의 성과만 사용한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
@@ -146,11 +146,11 @@ describe('projects 데이터 무결성', () => {
     expect(resumeProjects.map((item) => item.getAttribute('data-project-id')).sort())
       .toEqual(projects.map((project) => project.id).sort())
 
-    const detailedProjects = resumeProjects.filter((item) => item.querySelector('ul'))
-    expect(detailedProjects.map((item) => item.getAttribute('data-project-id')))
-      .toEqual(['naenun-kiosk', 'mo-re', 'glim'])
+    expect(resumeProjects.filter((item) => item.classList.contains('project-compact'))
+      .map((item) => item.getAttribute('data-project-id')))
+      .toEqual(['pubburi', 'quiz-cafe', 'bong', 'didimdol', 'pocs'])
 
-    detailedProjects.forEach((item) => {
+    resumeProjects.forEach((item) => {
       const project = projects.find((project) => project.id === item.getAttribute('data-project-id'))!
       const resumeAchievements = Array.from(
         resumeDocument.querySelectorAll(`[data-project-id="${project.id}"] > ul > li`),
@@ -159,7 +159,16 @@ describe('projects 데이터 무결성', () => {
         .map(richTextToText)
         .map(normalizeText)
 
-      expect(resumeAchievements, project.id).toEqual(webAchievements)
+      if (item.classList.contains('project-compact')) {
+        expect(item.querySelector('.row-title h3')?.textContent).toBe(project.title)
+        expect(item.querySelector('.meta')?.textContent).toBeTruthy()
+        expect(item.querySelector('.link-row a')?.getAttribute('href'))
+          .toBe(project.links.find((link) => link.url.includes('github.com'))?.url)
+        expect(resumeAchievements, project.id).toHaveLength(2)
+        expect(webAchievements, project.id).toEqual(expect.arrayContaining(resumeAchievements))
+      } else {
+        expect(resumeAchievements, project.id).toEqual(webAchievements)
+      }
     })
   })
 })

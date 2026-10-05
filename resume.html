@@ -71,18 +71,6 @@
       line-height: 1.42;
     }
 
-    .project-summary {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: baseline;
-      gap: 0 12px;
-      padding-top: 0;
-    }
-
-    .project-summary .link-row {
-      grid-column: 1 / -1;
-    }
-
     h1,
     h2,
     h3,
@@ -227,11 +215,6 @@
       margin-bottom: 8px;
     }
 
-    .awards-section {
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-
     .one-line {
       margin-bottom: 3px;
     }
@@ -345,7 +328,22 @@
         <ul>
           <li>모바일소프트웨어 트랙 / 빅데이터 트랙</li>
           <li>GPA 3.18 / 4.5</li>
-          <li>병역: 사회복무요원 소집해제 (2020.01 ~ 2021.11) · 금천고등학교 특수반 복무 · 근로 우수상 수상</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>병역사항</h2>
+      </div>
+      <div class="education-item">
+        <div class="row-title">
+          <h3>사회복무요원 소집해제</h3>
+          <span class="right-meta">2020.01 ~ 2021.11</span>
+        </div>
+        <ul>
+          <li>금천고등학교 특수반 복무</li>
+          <li>사회복무요원 근로 우수상 수상</li>
         </ul>
       </div>
     </section>
@@ -400,36 +398,82 @@
           </ul>
         </div>
 
-        <div class="project project-summary" data-project-id="pubburi">
-          <p><strong>주점부리</strong> · Spring Boot·Vue 주문 서비스, 상세 조회 쿼리 95% 절감</p>
-          <span class="right-meta">2025.05 ~ 2025.05 / 2026.07 ~ 2026.07</span>
+        <div class="project project-compact" data-project-id="pubburi">
+          <div class="row-title">
+            <h3>주점부리 - Backend & Frontend</h3>
+            <span class="right-meta">2025.05 ~ 2025.05 / 2026.07 ~ 2026.07</span>
+          </div>
+          <p class="meta">주류 상품 탐색·주문·스탬프·관리자 기능을 제공하는 Spring Boot·Vue 웹 서비스</p>
           <p class="link-row">GitHub. <a href="https://github.com/ois0886/Pubburi-Refactor">https://github.com/ois0886/Pubburi-Refactor</a></p>
+          <ul>
+            <li>주문·상세·상품 주문 수·스탬프 적립의 처리 결과를 검증하고 실패 시 전체 rollback하도록 구성</li>
+            <li>주문 목록 API의 상세 데이터를 일괄 조회하도록 개선해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 <strong>95% 절감</strong></li>
+          </ul>
         </div>
       </div>
 
-      <div class="project project-summary" data-project-id="quiz-cafe">
-        <p><strong>Quiz Cafe</strong> · Compose UI·MVI 기반 개발 지식 퀴즈 앱 MVP 개발</p>
-        <span class="right-meta">2025.04 ~ 2025.06</span>
+      <div class="project project-compact" data-project-id="quiz-cafe">
+        <div class="row-title">
+          <h3>Quiz Cafe - Android</h3>
+          <span class="right-meta">2025.04 ~ 2025.06</span>
+        </div>
+        <p class="meta">개발 지식을 퀴즈로 학습하는 Android 앱 플랫폼</p>
         <p class="link-row">GitHub. <a href="https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android">https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android</a></p>
+        <ul>
+          <li><strong>Android 앱 개발</strong> (메인 및 마이페이지 개발) 및 <strong>1차 MVP 개발 완료</strong></li>
+          <li><strong>UiState–Intent–SideEffect MVI 구조</strong>를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축</li>
+        </ul>
       </div>
 
-      <div class="project project-summary" data-project-id="bong">
-        <p><strong>Bong #</strong> · Android 전담 개발, WebSocket 기반 1:1 거래 채팅 구현</p>
-        <span class="right-meta">2022.12 ~ 2023.06</span>
+      <div class="project project-compact" data-project-id="bong">
+        <div class="row-title">
+          <h3>Bong # - Android</h3>
+          <span class="right-meta">2022.12 ~ 2023.06</span>
+        </div>
+        <p class="meta">재능과 재능을 교환하는 한성대학교 캡스톤디자인 앱 서비스</p>
         <p class="link-row">GitHub. <a href="https://github.com/GrapeBongBong/Android">https://github.com/GrapeBongBong/Android</a></p>
+        <ul>
+          <li><strong>presentation/domain/data 모듈 구성</strong>과 33개 UseCase 기반으로 기능별 책임 분리</li>
+          <li><strong>OkHttp WebSocket</strong> 기반 1:1 거래 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리</li>
+        </ul>
       </div>
 
-      <div class="project project-summary" data-project-id="didimdol">
-        <p><strong>Didimdol</strong> · 업체 예약·위치 서비스, Room 캐싱으로 검색 응답시간 85% 단축</p>
-        <span class="right-meta">2023.01 ~ 2023.06</span>
+      <div class="project project-compact" data-project-id="didimdol">
+        <div class="row-title">
+          <h3>Didimdol - Android</h3>
+          <span class="right-meta">2023.01 ~ 2023.06</span>
+        </div>
+        <p class="meta">전국 업체 예약·위치 정보를 제공하는 (주)PickNumber 산학 협력 Android 앱</p>
         <p class="link-row">GitHub. <a href="https://github.com/HSU-Didimdol/Android_PickNumber">https://github.com/HSU-Didimdol/Android_PickNumber</a></p>
+        <ul>
+          <li>업체 마스터 데이터를 <strong>Room</strong>에 동기화하고 검색을 로컬 DB 조회로 전환해 <strong>검색 응답시간 85% 단축</strong> (3~5초 → 0.5초 이하)</li>
+          <li><strong>Naver Map</strong> 마커, <strong>SearchView</strong>, <strong>예약 WebView</strong>를 연결해 검색 → 위치 확인 → 예약 흐름 구현</li>
+        </ul>
       </div>
 
-      <div class="project project-summary" data-project-id="pocs">
-        <p><strong>POCS</strong> · 커뮤니티 앱, Compose 70% 이상 전환·Play Store 배포</p>
-        <span class="right-meta">2022.06 ~ 2022.09</span>
+      <div class="project project-compact" data-project-id="pocs">
+        <div class="row-title">
+          <h3>POCS - Android</h3>
+          <span class="right-meta">2022.06 ~ 2022.09</span>
+        </div>
+        <p class="meta">한성대학교 POCS 회원의 스터디 모집·정보 공유를 위한 커뮤니티 앱</p>
         <p class="link-row">GitHub. <a href="https://github.com/hansung-pocs/blog-android">https://github.com/hansung-pocs/blog-android</a></p>
+        <ul>
+          <li>기존 XML View를 Jetpack Compose로 <strong>70% 이상 전환</strong>하여 코드 재사용성과 개발 효율성 개선</li>
+          <li><strong>Play Store 정식 배포 완료</strong>로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험</li>
+        </ul>
       </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Blog</h2>
+      </div>
+      <p class="meta">인성의 개발 공부 노트 · <a href="https://superohinsung.tistory.com">https://superohinsung.tistory.com</a></p>
+      <ul>
+        <li><strong>2021년부터 220+개 포스팅 작성</strong> · Kotlin, Android, CS, Algorithm 학습 기록</li>
+        <li>Jetpack Compose·MVVM/MVI·네트워크/직렬화 라이브러리, 코루틴·운영체제·자료구조·알고리즘 정리</li>
+      </ul>
     </section>
 
     <section>
@@ -456,7 +500,7 @@
       </div>
     </section>
 
-    <section class="awards-section">
+    <section>
       <div class="section-heading">
         <h2>Awards</h2>
       </div>
