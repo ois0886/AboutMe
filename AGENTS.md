@@ -153,6 +153,7 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 - 컴포넌트: 함수형 컴포넌트 + default export
 - 스타일: CSS Modules (*.module.css), 색상·간격은 `global.css`의 CSS 변수 사용
 - 언어: 한국어 콘텐츠, 영어 코드
+- 경력·프로젝트 성과는 단순한 기능·항목 개수보다 개선율(%)을 우선해 표현합니다. 개선 전·후 값이나 측정 자료로 확인 가능한 수치만 사용하며, 실측 근거가 없는 개선율은 만들지 않고 담당 업무로 설명합니다.
 - 들여쓰기: 2 spaces, 세미콜론 없음, 작은따옴표
 - 카드 스타일: border + `--radius-card` + `--shadow-card` + hover 효과 통일
 - 이미지 토글: useState + 토글 버튼 패턴 (Activity, Awards에서 공통 사용)

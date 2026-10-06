@@ -21,23 +21,28 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('보강된 차트연구소 경력 8개 문구가 웹과 이력서에서 일치한다', () => {
+  it('차트연구소 핵심 경력 5개 문구가 웹과 이력서에서 일치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
       resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
     ).map((item) => normalizeText(item.textContent ?? ''))
 
-    expect(resumeTasks).toHaveLength(8)
+    expect(resumeTasks).toHaveLength(5)
     expect(careers[0].tasks.map(normalizeText)).toEqual(resumeTasks)
   })
 
-  it('경력기술서의 감시목록·홈페이지·미팅 자료 업무가 웹에도 렌더링된다', () => {
+  it('주요 개발 성과는 표시하고 세부 운영 업무와 삼성증권 PPT 업무는 제외한다', () => {
     render(<Career />)
 
+    expect(screen.getByText(/EasyChart.*차트 화면·설정 기능/)).toBeInTheDocument()
+    expect(screen.getByText(/시장·주기별 조회·실시간 데이터 연동/)).toBeInTheDocument()
+    expect(screen.getByText(/Script API 지원 범위를 약 80% 확대/)).toBeInTheDocument()
     expect(screen.getByText(/PowerGraphics 감시목록과 차트별 지표 데이터/)).toBeInTheDocument()
     expect(screen.getByText(/React·Vite·SCSS 기반 자사 반응형 홈페이지/)).toBeInTheDocument()
-    expect(screen.getByText('삼성증권 미팅용 PPT 자료 제작')).toBeInTheDocument()
+    expect(screen.queryByText(/개발·샘플 매뉴얼|숫자 입력 저장·소수점 처리|운영 버전의 수정·검증 절차|배포·운영 가이드/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
+    expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
   })
 
   it('이력서는 기준일 표기 없이 총 경력만 표시하고 웹 계산과 일치한다', () => {
@@ -47,7 +52,7 @@ describe('Career', () => {
     vi.useFakeTimers()
     try {
       // 정적 이력서의 경력 갱신 시점으로 고정해 웹 자동 계산과 비교한다.
-      vi.setSystemTime(new Date(2026, 8, 28, 12))
+      vi.setSystemTime(new Date(2026, 9, 6, 12))
       render(<Career />)
 
       const totalCareer = `총 경력 ${getTotalCareer()}`
@@ -194,6 +199,15 @@ describe('getTotalCareer', () => {
     [28, '7개월'],
   ])('2026년 9월 %i일 기준 경력은 %s이다', (day, expected) => {
     vi.setSystemTime(new Date(2026, 8, day))
+    expect(getTotalCareer()).toBe(expected)
+  })
+
+  it.each([
+    [6, '7개월'],
+    [8, '7개월'],
+    [9, '8개월'],
+  ])('2026년 10월 %i일 기준 경력은 %s이다', (day, expected) => {
+    vi.setSystemTime(new Date(2026, 9, day))
     expect(getTotalCareer()).toBe(expected)
   })
 
