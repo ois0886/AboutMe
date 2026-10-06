@@ -32,12 +32,12 @@ describe('Career', () => {
     expect(careers[0].tasks.map(normalizeText)).toEqual(resumeTasks)
   })
 
-  it('주요 개발 성과는 표시하고 세부 운영 업무와 삼성증권 PPT 업무는 제외한다', () => {
+  it('핵심 개발 기여와 연동 규모를 표시하고 세부 운영 업무와 삼성증권 PPT 업무는 제외한다', () => {
     render(<Career />)
 
     expect(screen.getByText(/EasyChart.*차트 화면·설정 기능/)).toBeInTheDocument()
-    expect(screen.getByText(/시장·주기별 조회·실시간 데이터 연동/)).toBeInTheDocument()
-    expect(screen.getByText(/Script API 지원 범위를 약 80% 확대/)).toBeInTheDocument()
+    expect(screen.getByText(/시장·주기별 조회 61종·실시간 21종 데이터 연동/)).toBeInTheDocument()
+    expect(screen.getByText(/Java 앱에서 차트 유형·지표·실시간 기능을 호출.*Script API를 64개에서 115개로 확장/)).toBeInTheDocument()
     expect(screen.getByText(/PowerGraphics 감시목록과 차트별 지표 데이터/)).toBeInTheDocument()
     expect(screen.getByText(/React·Vite·SCSS 기반 자사 반응형 홈페이지/)).toBeInTheDocument()
     expect(screen.queryByText(/개발·샘플 매뉴얼|숫자 입력 저장·소수점 처리|운영 버전의 수정·검증 절차|배포·운영 가이드/)).not.toBeInTheDocument()
