@@ -35,7 +35,6 @@ describe('projects 데이터 무결성', () => {
     ['naenun-kiosk', '2025.10.10 ~ 2025.11.20', '2025.10 ~ 2025.11'],
     ['mo-re', '2025.08.25 ~ 2025.09.29', '2025.08 ~ 2025.09'],
     ['glim', '2025.07.07 ~ 2025.08.18', '2025.07 ~ 2025.08'],
-    ['pubburi', '2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15', '2025.05 ~ 2025.05 / 2026.07 ~ 2026.07'],
   ])('%s의 개발 기간은 웹에서 일 단위, 이력서에서 월 단위로 표시한다', (id, period, resumePeriod) => {
     const project = projects.find((item) => item.id === id)!
     expect(project.period).toBe(period)
@@ -47,6 +46,11 @@ describe('projects 데이터 무결성', () => {
     )
     expect(normalizeText(resumePeriodElement?.textContent ?? '')).toBe(resumePeriod)
     expect(resumePeriodElement?.querySelector('br')).toBeNull()
+  })
+
+  it('주점부리의 웹 개발 기간은 일 단위로 표시한다', () => {
+    expect(projects.find((project) => project.id === 'pubburi')?.period)
+      .toBe('2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15')
   })
 
   it.each(['naenun-kiosk', 'mo-re', 'glim'])(
@@ -138,17 +142,13 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('이력서는 Glim 아래 프로젝트를 소개·링크·성과 2줄로 요약하고 웹의 성과만 사용한다', () => {
+  it('이력서는 Glim까지 세 프로젝트를 포함하고 웹의 성과만 사용한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
     const resumeProjects = Array.from(resumeDocument.querySelectorAll('[data-project-id]'))
-    expect(resumeProjects.map((item) => item.getAttribute('data-project-id')).sort())
-      .toEqual(projects.map((project) => project.id).sort())
-
-    expect(resumeProjects.filter((item) => item.classList.contains('project-compact'))
-      .map((item) => item.getAttribute('data-project-id')))
-      .toEqual(['pubburi', 'quiz-cafe', 'bong', 'didimdol', 'pocs'])
+    expect(resumeProjects.map((item) => item.getAttribute('data-project-id')))
+      .toEqual(['naenun-kiosk', 'mo-re', 'glim'])
 
     resumeProjects.forEach((item) => {
       const project = projects.find((project) => project.id === item.getAttribute('data-project-id'))!
@@ -159,16 +159,32 @@ describe('projects 데이터 무결성', () => {
         .map(richTextToText)
         .map(normalizeText)
 
-      if (item.classList.contains('project-compact')) {
-        expect(item.querySelector('.row-title h3')?.textContent).toBe(project.title)
-        expect(item.querySelector('.meta')?.textContent).toBeTruthy()
-        expect(item.querySelector('.link-row a')?.getAttribute('href'))
-          .toBe(project.links.find((link) => link.url.includes('github.com'))?.url)
-        expect(resumeAchievements, project.id).toHaveLength(2)
-        expect(webAchievements, project.id).toEqual(expect.arrayContaining(resumeAchievements))
-      } else {
-        expect(resumeAchievements, project.id).toEqual(webAchievements)
-      }
+      expect(resumeAchievements, project.id).toEqual(webAchievements)
     })
+  })
+
+  it('이력서는 병역사항을 제외하고 상단에 웹 포트폴리오 링크를 제공한다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+
+    expect(resumeDocument.body.textContent).not.toMatch(/병역사항|사회복무요원|금천고등학교/)
+    expect(resumeDocument.querySelector('.contact-section a[href="https://ois0886.github.io/AboutMe/"]'))
+      .not.toBeNull()
+  })
+
+  it('이력서는 교육 바로 아래에 Blog 섹션을 배치한다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+
+    const education = Array.from(resumeDocument.querySelectorAll('section'))
+      .find((section) => section.querySelector('h2')?.textContent === 'Education')
+    const blog = education?.nextElementSibling
+
+    expect(blog?.querySelector('h2')?.textContent).toBe('Blog')
+    expect(blog?.querySelector('a')?.getAttribute('href'))
+      .toBe('https://superohinsung.tistory.com')
+    expect(blog?.nextElementSibling?.querySelector('h2')?.textContent).toBe('Project')
+    expect(resumeDocument.querySelector('.contact-section a[href*="superohinsung.tistory.com"]'))
+      .toBeNull()
   })
 })

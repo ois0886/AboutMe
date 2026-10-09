@@ -52,7 +52,7 @@ describe('Career', () => {
     vi.useFakeTimers()
     try {
       // 정적 이력서의 경력 갱신 시점으로 고정해 웹 자동 계산과 비교한다.
-      vi.setSystemTime(new Date(2026, 9, 6, 12))
+      vi.setSystemTime(new Date(2026, 9, 9, 12))
       render(<Career />)
 
       const totalCareer = `총 경력 ${getTotalCareer()}`
