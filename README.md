@@ -1,6 +1,6 @@
 # AboutMe
 
-> Software Engineer Portfolio Website
+> Android Developer Portfolio Website
 
 [![Deploy to GitHub Pages](https://github.com/ois0886/AboutMe/actions/workflows/deploy.yml/badge.svg)](https://github.com/ois0886/AboutMe/actions)
 
