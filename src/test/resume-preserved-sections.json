@@ -1,0 +1,69 @@
+{
+  "Introduction": {
+    "text": "Introduction 사용자 경험과 유지보수성을 고민하며, 구현을 넘어 고객 문제를 안정적인 제품 흐름으로 풀어내는 개발자를 지향합니다. 다양한 조회·실시간 데이터를 연동 검증하며 서비스 간 데이터 흐름과 안정성에 대한 이해를 넓혀가고 있습니다. 팀의 성장에 기여하기 위해 코드 리뷰와 AI 기반 개발 흐름 개선을 적극적으로 활용하고, 테스트 가능한 구조와 읽기 쉬운 코드를 작성하려 노력합니다. 학습한 내용과 문제 해결 과정을 블로그에 기록하며, 부족했던 부분을 재현 가능한 지식으로 정리해 다음 프로젝트의 기준으로 발전시키고 있습니다. 의견을 제시할 때는 감이 아닌 근거를 바탕으로 소통하며, 더 나은 방향을 함께 찾는 협업을 지향합니다.",
+    "emphasis": [
+      "고객 문제를 안정적인 제품 흐름",
+      "서비스 간 데이터 흐름과 안정성",
+      "코드 리뷰",
+      "AI 기반 개발 흐름 개선",
+      "테스트 가능한 구조와 읽기 쉬운 코드",
+      "블로그",
+      "재현 가능한 지식",
+      "감이 아닌 근거",
+      "협업"
+    ],
+    "items": 5,
+    "links": []
+  },
+  "Career": {
+    "text": "Career 총 경력 8개월 (주)차트연구소 2026.02.09 ~ 재직 중 Android Developer · 연구원/정규직 | 서울시 강서구 PowerGraphics Android 간편 차트(EasyChart)의 차트 화면·설정 기능 구현. ViewModel·LiveData·StateFlow 기반으로 설정 저장·초기화·재진입 시 화면 상태 관리 LS증권 투혼의 모바일 주식거래 앱(MTS)에서 Java 시스템과 Kotlin 차트 모듈을 연결하고, 시장·주기별 조회 61종·실시간 21종 데이터 연동. 종목·주기 변경 시 요청과 실시간 구독의 생명주기 관리 LS증권 투혼의 Java 앱에서 차트 유형·지표·실시간 기능을 호출할 수 있도록 Script API를 64개에서 115개로 확장하고, Android 차트 모듈과 호출 규약 검증 PowerGraphics 감시목록과 차트별 지표 데이터를 연결하는 커스텀 그리드 개발. 변경된 셀만 갱신하고 중복 갱신을 정리해 불필요한 화면 갱신과 스크롤 위치 변동 완화 React·Vite·SCSS 기반 자사 반응형 홈페이지 개발. 제품 소개·공지사항·콘텐츠 관리·문의 접수 기능 연동",
+    "emphasis": [],
+    "items": 5,
+    "links": []
+  },
+  "Skills": {
+    "text": "Skills Android & Kotlin · Kotlin·Java, Compose·XML, Coroutines·Flow, MVVM·MVI·멀티 모듈, Room·Paging3, JUnit5·MockK Backend & Frontend · Spring Boot·MyBatis·MySQL, REST API·트랜잭션, Vue 3·Vite AI Agent · 작업 분리·병렬화, 구현·테스트·리뷰·문서화 자동화 Communication · GitHub·JIRA, 코드 리뷰",
+    "emphasis": [
+      "Android & Kotlin",
+      "Backend & Frontend",
+      "AI Agent",
+      "Communication"
+    ],
+    "items": 4,
+    "links": []
+  },
+  "Blog": {
+    "text": "Blog 인성의 개발 공부 노트 · https://superohinsung.tistory.com 2021년부터 220+개 포스팅 작성 · Kotlin, Android, CS, Algorithm 학습 기록 Jetpack Compose·MVVM/MVI·네트워크/직렬화 라이브러리, 코루틴·운영체제·자료구조·알고리즘 정리",
+    "emphasis": [
+      "2021년부터 220+개 포스팅 작성"
+    ],
+    "items": 2,
+    "links": [
+      "https://superohinsung.tistory.com"
+    ]
+  },
+  "Education": {
+    "text": "Education 삼성 청년 AI·SW 아카데미 13기 Mobile Track 2025.01 ~ 2025.12 삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램 1학기 학습 과정에서 Java, SpringBoot, Vue.js, Html, CSS, Javascript, Flutter, Kotlin, Android 강의 수강 및 학습 2학기 프로젝트 과정에서 팀 프로젝트 기반 서비스 기획·개발·발표 경험 전현직 개발자 멘토링 및 프로젝트 프로세스 경험 CS·Android 스터디 주최 및 운영 (2025.02 ~ 2025.06) 주식회사 코드프레소 웹 개발 기초완성 2023.10 ~ 2023.11 Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 프로그램 이수 한성대학교 컴퓨터공학과 졸업 2018.03 ~ 2024.02 모바일소프트웨어 트랙 / 빅데이터 트랙 GPA 3.18 / 4.5",
+    "emphasis": [],
+    "items": 8,
+    "links": []
+  },
+  "Awards": {
+    "text": "Awards SSAFY 자율 프로젝트 우수상 | 삼성전자 | 2025-23-0501542025.11 SSAFY 공통 프로젝트 우수상 | 삼성전자 | 2025-23-0500652025.08",
+    "emphasis": [],
+    "items": 0,
+    "links": []
+  },
+  "Certificates": {
+    "text": "Certificates SQLD | 한국데이터산업진흥원 | SQLD-0600038322026.03 정보처리기사 | 한국산업인력공단 | 24203011265G2024.12 ADsP | 한국데이터산업진흥원 | ADsP-0430071802024.11",
+    "emphasis": [],
+    "items": 0,
+    "links": []
+  },
+  "Activity": {
+    "text": "Activity 한성대학교 LBT 지식 나눔 프로젝트 — \"알고리즘을 공부하는 방법\" 발표2023.07 한성대학교 새싹 SW교육 캠프 조교2023.01 ~ 2023.02 한성대학교 전공 소모임 안드로이드 멘토2022.09 ~ 2023.09 한성대학교 교내 전공동아리 DC&M2022.06 ~ 2023.12 알고리즘 스터디 주최 및 활동 (2023.06 ~ 2023.12) (주)PickNumber 산학 협력 프로젝트 참여 — 전국 업체 예약 및 위치 서비스 앱 개발 (2023.01 ~ 2023.06) 한성대학교 교내 전공 소모임 POCS2022.06 ~ 2023.12 한성대학교 교내 PIG 사진동아리 부회장 활동2019.03 ~ 2019.12",
+    "emphasis": [],
+    "items": 2,
+    "links": []
+  }
+}

@@ -9,6 +9,10 @@ const richTextToText = (item: (typeof projects)[number]['achievements'][number])
     ? item
     : item.map((segment) => segment.text).join('')
 
+const preservedResumeSections = JSON.parse(
+  readFileSync(resolve(process.cwd(), 'src/test/resume-preserved-sections.json'), 'utf8'),
+) as Record<string, { text: string; emphasis: string[]; items: number; links: string[] }>
+
 describe('projects 데이터 무결성', () => {
   it('프로젝트가 1개 이상 존재한다', () => {
     expect(projects.length).toBeGreaterThan(0)
@@ -63,7 +67,7 @@ describe('projects 데이터 무결성', () => {
       const heading = Array.from(document.querySelectorAll('h2')).find(
         (element) => element.textContent === title,
       )
-      expect(heading?.nextElementSibling?.textContent).toContain(`${project.period} · `)
+      expect(heading?.nextElementSibling?.textContent).toContain(project.period)
     },
   )
 
@@ -142,7 +146,7 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('이력서는 Glim까지 세 프로젝트를 포함하고 웹의 성과만 사용한다', () => {
+  it('이력서는 세 프로젝트를 요약하고 핵심 수치와 기술은 웹에 근거한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
@@ -150,16 +154,30 @@ describe('projects 데이터 무결성', () => {
     expect(resumeProjects.map((item) => item.getAttribute('data-project-id')))
       .toEqual(['naenun-kiosk', 'mo-re', 'glim'])
 
+    const projectFacts: Record<string, string[]> = {
+      'naenun-kiosk': ['Compose', 'Route', 'Screen', 'Component', 'Activity', 'Listener'],
+      'mo-re': ['6개', 'API', '356ms', '156ms', 'Convention Plugin'],
+      glim: ['Orbit MVI', 'Channel', 'Navigator', '130', 'MockK'],
+    }
+
     resumeProjects.forEach((item) => {
       const project = projects.find((project) => project.id === item.getAttribute('data-project-id'))!
-      const resumeAchievements = Array.from(
-        resumeDocument.querySelectorAll(`[data-project-id="${project.id}"] > ul > li`),
-      ).map((item) => normalizeText(item.textContent ?? ''))
-      const webAchievements = project.achievements
-        .map(richTextToText)
-        .map(normalizeText)
+      const resumeText = normalizeText(item.textContent ?? '')
+      const webText = [
+        ...project.details, ...project.contributions, ...project.achievements,
+        ...project.problemSolvings.flatMap((problem) => [
+          ...problem.problem, ...problem.solution, ...problem.result,
+          ...problem.implementation.map((block) => block.description),
+        ]),
+      ].map(richTextToText).join(' ')
 
-      expect(resumeAchievements, project.id).toEqual(webAchievements)
+      expect(item.querySelector('.project-description')?.textContent).toBeTruthy()
+      expect(item.querySelector('.project-context')?.textContent).toContain('Android')
+      expect(item.querySelector('.project-context')?.textContent).toContain(project.team.match(/\d+명/)![0])
+      projectFacts[project.id].forEach((fact) => {
+        expect(resumeText, project.id).toContain(fact)
+        expect(webText, project.id).toContain(fact)
+      })
     })
   })
 
@@ -172,19 +190,61 @@ describe('projects 데이터 무결성', () => {
       .not.toBeNull()
   })
 
-  it('이력서는 교육 바로 아래에 Blog 섹션을 배치한다', () => {
+  it('이력서는 첫쪽에 경력과 대표 프로젝트를 두고 보조 정보를 두 열로 배치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
-    const education = Array.from(resumeDocument.querySelectorAll('section'))
-      .find((section) => section.querySelector('h2')?.textContent === 'Education')
-    const blog = education?.nextElementSibling
+    const pages = Array.from(resumeDocument.querySelectorAll('[data-resume-page]'))
+    expect(pages.map((page) => page.getAttribute('data-resume-page'))).toEqual(['1', '2'])
+    expect(pages.map((page) => Array.from(page.querySelectorAll('h2'), (heading) => heading.textContent)))
+      .toEqual([
+        ['Introduction', 'Career', 'Project'],
+        ['Project', 'Skills', 'Education', 'Blog', 'Awards', 'Certificates', 'Activity'],
+      ])
+    expect(pages.map((page) => Array.from(page.querySelectorAll('[data-project-id]'), (project) => project.getAttribute('data-project-id'))))
+      .toEqual([['naenun-kiosk', 'mo-re'], ['glim']])
+    expect(pages[0].querySelector('[data-career-id="chartlab"]')).not.toBeNull()
+    const columns = Array.from(pages[1].querySelector('.supplementary-grid')!.children)
+    expect(columns.map((column) => Array.from(column.querySelectorAll('h2'), (heading) => heading.textContent)))
+      .toEqual([['Education', 'Blog'], ['Awards', 'Certificates', 'Activity']])
+    expect(resumeDocument.body.textContent).not.toMatch(/Compose-Chart|Compose-Git-Grass|Open Source/)
+  })
 
-    expect(blog?.querySelector('h2')?.textContent).toBe('Blog')
-    expect(blog?.querySelector('a')?.getAttribute('href'))
-      .toBe('https://superohinsung.tistory.com')
-    expect(blog?.nextElementSibling?.querySelector('h2')?.textContent).toBe('Project')
+  it('연락처는 전화번호와 생년월일을 제외하고 블로그 링크를 제공한다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+    const contacts = resumeDocument.querySelector('.contact-section')!
+
+    expect(contacts.textContent).not.toMatch(/Phone|Birth|010-5905-9620|1996\.06/)
+    expect(contacts.querySelector('a[href^="tel:"]')).toBeNull()
     expect(resumeDocument.querySelector('.contact-section a[href*="superohinsung.tistory.com"]'))
-      .toBeNull()
+      .not.toBeNull()
+    const links = Array.from(contacts.querySelectorAll('a'), (link) => link.getAttribute('href'))
+    expect(new Set(links).size).toBe(links.length)
+  })
+
+  it.each(Object.entries(preservedResumeSections))(
+    '이력서 %s의 기존 문구와 강조, 항목, 링크를 보존한다',
+    (heading, expected) => {
+      const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+      const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+      const section = Array.from(resumeDocument.querySelectorAll('section'))
+        .find((section) => section.querySelector('h2')?.textContent === heading)!
+
+      expect(normalizeText(section.textContent ?? '')).toBe(expected.text)
+      expect(Array.from(section.querySelectorAll('strong'), (item) => item.textContent))
+        .toEqual(expected.emphasis)
+      expect(section.querySelectorAll('li')).toHaveLength(expected.items)
+      expect(Array.from(section.querySelectorAll('a'), (item) => item.getAttribute('href')))
+        .toEqual(expected.links)
+    },
+  )
+
+  it('이력서의 이름과 직무를 보존한다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+
+    expect(resumeDocument.querySelector('.resume-header h1')?.textContent).toBe('Oh InSeong(오인성)')
+    expect(resumeDocument.querySelector('.resume-header .headline')?.textContent).toBe('Android Developer')
   })
 })

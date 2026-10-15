@@ -60,10 +60,10 @@ describe('ProjectDetail', () => {
   it('강조 세그먼트와 코드 들여쓰기가 프로젝트 상세에 유지된다', () => {
     const { container } = renderProjectDetail('mo-re')
 
-    expect(screen.getAllByText('데이터 로딩 시간 56% 단축')).toHaveLength(2)
+    expect(container.textContent).toContain('약 356ms에서 156ms로')
     expect(
       Array.from(container.querySelectorAll('strong')).some(
-        (element) => element.textContent === '데이터 로딩 시간 56% 단축',
+        (element) => element.textContent?.includes('약 356ms에서 156ms로'),
       ),
     ).toBe(true)
 
@@ -75,7 +75,7 @@ describe('ProjectDetail', () => {
   })
 
   it('주점부리 프로젝트 상세가 정상 렌더링된다', () => {
-    renderProjectDetail('pubburi')
+    const { container } = renderProjectDetail('pubburi')
 
     expect(
       screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Frontend' }),
@@ -83,9 +83,9 @@ describe('ProjectDetail', () => {
     expect(
       screen.getByText('2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15'),
     ).toBeInTheDocument()
-    expect(screen.getAllByText('Backend & Frontend 개발')).toHaveLength(2)
-    expect(screen.getByText('상세 조회 쿼리 수 95% 절감')).toBeInTheDocument()
-    expect(screen.getByText('95% 절감')).toBeInTheDocument()
-    expect(screen.getByText('전체 변경이 rollback')).toBeInTheDocument()
+    expect(screen.getByText('Backend & Frontend 개발')).toBeInTheDocument()
+    expect(container.textContent).toContain('상세 조회 쿼리 수가 95% 감소했습니다')
+    expect(screen.getAllByText('20회에서 1회로 줄였습니다')).toHaveLength(2)
+    expect(screen.getByText(/주문 생성 중 한 단계라도 실패하면 전체 변경을 되돌려/)).toBeInTheDocument()
   })
 })

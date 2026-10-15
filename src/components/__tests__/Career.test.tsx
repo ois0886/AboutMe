@@ -21,7 +21,7 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('차트연구소 핵심 경력 5개 문구가 웹과 이력서에서 일치한다', () => {
+  it('웹 경력을 교정해도 이력서의 5개 경력과 핵심 사실은 일치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
@@ -29,17 +29,30 @@ describe('Career', () => {
     ).map((item) => normalizeText(item.textContent ?? ''))
 
     expect(resumeTasks).toHaveLength(5)
-    expect(careers[0].tasks.map(normalizeText)).toEqual(resumeTasks)
+    const facts = [
+      ['EasyChart', 'ViewModel', 'LiveData', 'StateFlow'],
+      ['Java', 'Kotlin', '조회 61종', '실시간 21종'],
+      ['Script API', '64개에서 115개', '호출 규약'],
+      ['PowerGraphics', '커스텀 그리드', '변경된 셀만 갱신'],
+      ['React', 'Vite', 'SCSS', '홈페이지'],
+    ]
+    expect(careers[0].tasks).toHaveLength(facts.length)
+    facts.forEach((keywords, index) => {
+      keywords.forEach((keyword) => {
+        expect(careers[0].tasks[index]).toContain(keyword)
+        expect(resumeTasks[index]).toContain(keyword)
+      })
+    })
   })
 
   it('핵심 개발 기여와 연동 규모를 표시하고 세부 운영 업무와 삼성증권 PPT 업무는 제외한다', () => {
     render(<Career />)
 
-    expect(screen.getByText(/EasyChart.*차트 화면·설정 기능/)).toBeInTheDocument()
-    expect(screen.getByText(/시장·주기별 조회 61종·실시간 21종 데이터 연동/)).toBeInTheDocument()
-    expect(screen.getByText(/Java 앱에서 차트 유형·지표·실시간 기능을 호출.*Script API를 64개에서 115개로 확장/)).toBeInTheDocument()
-    expect(screen.getByText(/PowerGraphics 감시목록과 차트별 지표 데이터/)).toBeInTheDocument()
-    expect(screen.getByText(/React·Vite·SCSS 기반 자사 반응형 홈페이지/)).toBeInTheDocument()
+    expect(screen.getByText(/EasyChart.*차트 화면과 설정 기능/)).toBeInTheDocument()
+    expect(screen.getByText(/조회 61종과 실시간 21종/)).toBeInTheDocument()
+    expect(screen.getByText(/Java 앱에서 차트 유형과 지표, 실시간 기능을 호출.*Script API를 64개에서 115개로 확장/)).toBeInTheDocument()
+    expect(screen.getByText(/PowerGraphics 감시목록에 차트별 지표/)).toBeInTheDocument()
+    expect(screen.getByText(/React, Vite, SCSS로 자사 반응형 홈페이지/)).toBeInTheDocument()
     expect(screen.queryByText(/개발·샘플 매뉴얼|숫자 입력 저장·소수점 처리|운영 버전의 수정·검증 절차|배포·운영 가이드/)).not.toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
@@ -92,8 +105,8 @@ describe('Activity', () => {
     })
     const card = within(heading.parentElement!)
 
-    expect(card.getByText('알고리즘 스터디 주최 및 활동 (2023.06 ~ 2023.12)')).toBeInTheDocument()
-    expect(card.getByText('(주)PickNumber 산학 협력 프로젝트 참여 — 전국 업체 예약 및 위치 서비스 앱 개발 (2023.01 ~ 2023.06)')).toBeInTheDocument()
+    expect(card.getByText('알고리즘 스터디를 주최하고 참여했습니다. (2023.06 ~ 2023.12)')).toBeInTheDocument()
+    expect(card.getByText('(주)PickNumber 산학 협력 프로젝트에서 전국 업체의 예약 및 위치 서비스 앱을 개발했습니다. (2023.01 ~ 2023.06)')).toBeInTheDocument()
     expect(card.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
       'https://superohinsung.tistory.com/198',
       'https://superohinsung.tistory.com/186',
@@ -142,7 +155,7 @@ describe('Education', () => {
   it('SSAFY 스터디 내용과 링크를 교육 이력으로 옮기고 독립 활동 카드를 제거한다', () => {
     render(<><Education /><Activity /></>)
 
-    const study = screen.getByText('CS·Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)')
+    const study = screen.getByText('CS와 Android 스터디를 주최하고 운영했습니다. (2025.02 ~ 2025.06)')
     const education = within(study.closest('section')!)
 
     expect(study.closest('section')).toHaveAttribute('id', 'education')

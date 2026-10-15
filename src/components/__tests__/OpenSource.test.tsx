@@ -7,6 +7,8 @@ describe('OpenSource', () => {
 
     expect(screen.getByText(/v1\.3\.2/)).toBeInTheDocument()
     expect(screen.getByText(/v1\.2\.0/)).toBeInTheDocument()
+    expect(screen.getByText(/선, 막대, 도넛, 원형, 게이지, 레이더 차트/)).toBeInTheDocument()
+    expect(screen.queryByText(/contribution graph/)).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Compose-Chart/ })).toHaveAttribute(
       'href',
       'https://github.com/ois0886/compose-chart',

@@ -53,51 +53,51 @@ const projects: Project[] = [
   {
     id: 'naenun-kiosk',
     title: '내눈 키오스크 - Android',
-    description: '생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스',
+    description: '고령층이 건강을 측정하고 결과를 확인할 수 있는 헬스케어 키오스크입니다. 측정 결과에 맞는 광고도 제공합니다.',
     thumbnail: 'screenshot/nanoon1.png',
     tech: ['Kotlin', 'Android Jetpack', 'Jetpack Compose', 'ViewModel', 'Coroutine', 'Flow'],
     period: '2025.10.10 ~ 2025.11.20',
     team: '6명 (IoT 1명, Android 5명)',
     role: 'Android 키오스크 코드 개선 및 리팩토링',
     details: [
-      rich('(주)픽셀로의 서비스 ', strong('내눈 키오스크'), '를 운영 환경에 맞게 리팩토링 및 요구사항 개선'),
-      'SSAFY 13기 기업연계 프로젝트에 선정되어 프로젝트 진행',
-      '기업연계 프로젝트 특성상 코드 반출이 허용되지 않아 구현 구조와 문제 해결 과정 중심으로 정리',
+      '(주)픽셀로의 내눈 키오스크를 운영 요구사항에 맞게 리팩토링했습니다.',
+      'SSAFY 13기 기업연계 프로젝트로 진행했습니다.',
+      '코드 반출이 허용되지 않아 공개 가능한 구현 구조와 문제 해결 과정을 정리했습니다.',
     ],
     features: [
-      'APK 인스톨 암호화 — 무단 설치 방지 및 보안 강화',
-      'UI/UX 개선 — 고령층·외국인 친화적 화면, 글자 색상/크기 개선',
-      'BLE 연동 안정화 — 다중 기기 연결 및 장애 자동 복구',
-      '신규 BLE 기기 확장 — 체온계·뇨 검사 키트 추가로 데이터 항목 확대',
-      '광고 콘텐츠 관리 — 운영자 직접 광고·안내 영상 교체 가능',
-      '건강 연계 광고 서비스 — 측정 결과에 따른 맞춤 광고 출력·푸시',
-      'Wi-Fi 프린터 연동 — 인바디 형식 건강 리포트 전체 출력',
-      '다국어 지원 — 한·중·프·일·아·스·태·러 8개 언어 현지화',
-      '설치·운영 매뉴얼 — 텍스트 및 영상 가이드 제공',
+      '무단 설치를 막기 위해 APK 설치 과정에 암호화를 적용해야 했습니다.',
+      '고령층과 외국인이 읽기 쉽도록 화면 구성과 글자 색상, 크기를 조정해야 했습니다.',
+      '여러 BLE 기기를 연결하고 연결 장애가 발생하면 자동으로 복구해야 했습니다.',
+      '체온계와 소변 검사 키트를 추가해 측정 항목을 늘려야 했습니다.',
+      '운영자가 광고와 안내 영상을 직접 교체할 수 있어야 했습니다.',
+      '측정 결과에 맞는 광고를 화면과 푸시로 제공해야 했습니다.',
+      'Wi-Fi 프린터로 인바디 형식의 건강 리포트를 출력해야 했습니다.',
+      '한국어를 포함한 8개 언어를 지원해야 했습니다.',
+      '설치와 운영 방법을 문서와 영상으로 안내해야 했습니다.',
     ],
     contributions: [
-      rich('부분적 XML UI를 ', strong('Jetpack Compose UI 100%'), '로 전환'),
-      'Compose State Hoisting 패턴 적용으로 기존 UI 컴포넌트 재사용성 향상 및 코드 중복 제거',
-      '기존 레거시 패키지 구조를 기능·계층 기준으로 재구성해 의존성 방향을 정리하고 유지보수성 개선',
+      'XML과 Compose가 섞여 있던 화면을 모두 Jetpack Compose로 전환했습니다.',
+      'State Hoisting을 적용해 화면 상태와 UI를 분리하고 반복되는 UI를 공통 컴포넌트로 옮겼습니다.',
+      '패키지를 기능과 계층별로 나누고 의존성 방향을 정리했습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          '기존 키오스크 앱에서 화면마다 데이터 로딩, 상태 관리, 텍스트 구성, 버튼 클릭 처리 등이 하나의 화면 컴포넌트에 뒤섞여 있어, 간단한 텍스트 수정이나 버튼 추가에도 여러 파일을 동시에 수정해야 하는 유지보수 비용 증가 현상 발생',
-          'XML View와 Compose 코드, ViewModel·비즈니스 로직·네비게이션 로직이 섞여 있어, 공통 정책(다국어·폰트 크기·버튼 스타일 등)을 변경할 때 화면별로 중복 수정이 필요한 비일관적인 구조 발생',
+          '데이터 로딩, 상태 관리, 텍스트 구성과 버튼 처리가 화면 컴포넌트에 섞여 있어 간단한 문구 수정에도 여러 파일을 함께 고쳐야 했습니다.',
+          'XML과 Compose가 혼재하고 화면 이동과 비즈니스 로직의 경계도 불분명해, 언어나 글자 크기, 버튼 스타일을 화면마다 따로 수정해야 했습니다.',
         ],
         solution: [
-          'Compose State Hoisting 패턴을 도입해, 각 화면의 상태 생성·비즈니스 로직·네비게이션 의사결정을 Route/ViewModel 계층에 올리고, 실제 UI는 순수 Composable(Screen/Component)로 분리하는 구조 적용',
-          '공통 UI 패턴(타이틀, 설명, 표/리스트 영역, 확인/취소 버튼, 동의 체크 영역 등)을 재사용 가능한 컴포넌트로 분리하고, 기존 XML 기반 UI를 화면 단위로 Jetpack Compose로 점진적 마이그레이션 진행',
-          '화면을 기능 단위(feature 단위) 패키지 구조로 재편하고, 각 기능 내부를 Route/Screen/Component로 나누어 새로운 기능 추가 시에도 동일한 구조를 확장할 수 있도록 정리',
+          'State Hoisting을 적용해 상태와 비즈니스 로직, 화면 이동 처리는 Route와 ViewModel에 두고 UI는 Screen과 Component로 분리했습니다.',
+          '제목, 표, 버튼, 동의 체크 영역을 공통 컴포넌트로 만들고 XML 화면을 차례로 Compose로 옮겼습니다.',
+          '기능별 패키지 안에 Route, Screen, Component를 배치해 새 화면도 같은 구조로 추가하도록 정리했습니다.',
         ],
         result: [
-          rich('키오스크 앱 전반의 화면이 ', strong('"Route(상태·의미 결정) → Screen(레이아웃) → Component(공통 UI 조각)" 계층 구조'), '를 따르게 되어, 텍스트 교체·레이아웃 변경·버튼 추가 같은 요구사항에 대해 수정 범위 감소 및 재사용성 향상 달성'),
-          '다국어 지원, 폰트 크기 정책, 버튼 스타일 변경 등 공통 UI 정책을 상위 계층 또는 공용 컴포넌트에서 한 번만 수정하면 전체 화면에 반영되는 구조가 마련되어, 기능 확장과 유지보수 시 안정성과 일관성 확보',
+          '화면마다 상태와 이벤트는 Route, 레이아웃은 Screen, 공통 UI는 Component에서 수정하도록 책임을 나눴습니다.',
+          '언어, 글자 크기, 버튼 스타일을 공용 컴포넌트 한 곳에서 바꾸면 여러 화면에 함께 반영하도록 구성했습니다.',
         ],
         implementation: [
           {
-            description: 'Route 계층에서 화면 상태와 도메인 데이터를 한 번에 조합함.\n예: 언어 설정을 기반으로 폰트 크기를 결정하고, 동의 상태(체크 여부)와 테이블에 들어갈 텍스트 데이터를 Route 에서 UiState + TableData 형태로 구성 후, Screen 에 주입함.',
+            description: 'Route에서 언어 설정에 맞는 글자 크기와 동의 상태, 표에 표시할 문구를 조합합니다. UiState와 TableData로 묶은 값을 Screen에 전달합니다.',
             code: `val uiState = TermsOfServiceUiState(
     acceptedPersonal = acceptedPersonal,
     acceptedSensitive = acceptedSensitive,
@@ -115,7 +115,7 @@ val personalTable = remember {
 }`,
           },
           {
-            description: 'Screen 계층에서는 전달받은 상태와 콜백만으로 UI를 구성함.\n스크롤 처리, 버튼 활성화, 컴포넌트 배치 등 "어떻게 보여줄지"에 집중하고, "무엇을 할지"는 콜백을 통해 상위로 위임하는 형태로 책임 분리함.',
+            description: 'Screen은 전달받은 상태로 컴포넌트를 배치하고 스크롤과 버튼 활성화 여부를 결정합니다. 버튼을 눌렀을 때의 처리는 콜백으로 상위 계층에 전달합니다.',
             code: `PrimaryButton(
     onClick = onClickAgree,
     enabled = state.acceptedPersonal == true && state.acceptedSensitive == true,
@@ -123,89 +123,88 @@ val personalTable = remember {
 )`,
           },
           {
-            description: '공통 레이아웃 패턴과 UI 조각을 컴포넌트로 분리함.\n타이틀, 설명, 표, 체크박스 행, 기본/보조 버튼 등의 컴포넌트를 재사용 가능한 단위로 쪼개고, 여러 화면에서 동일한 빌딩 블록을 조합해서 사용하도록 구성함.\n이 구조를 약관 화면뿐 아니라 다른 설명/동의/확인 화면에도 동일하게 적용해, 화면 수가 늘어나도 복잡도 증가를 최소화함.',
+            description: '제목, 설명, 표, 체크박스 행과 버튼을 각각 공통 컴포넌트로 분리했습니다. 약관을 비롯한 설명과 동의 화면에서 같은 컴포넌트를 조합해 사용합니다.',
             code: null,
           },
         ],
         alternatives: [
-          'ViewModel 책임만 확장하고 헬퍼 클래스로 일부 UI 로직을 분리하는 대안도 있었지만, "Route/Screen/Component" 같이 계층 자체를 명확히 나누지 않으면 결국 의존 방향과 책임 경계가 모호해질 위험이 있었을 것임.',
-          'XML 뷰 바인딩을 유지한 채 Compose 를 부분 도입하는 점진적 접근도 가능하지만, 선언적 UI·State Hoisting·프리뷰 기반 개발의 장점을 충분히 활용하기에는 현재처럼 Screen/Component 중심 구조로 정리한 쪽이 더 적합했다고 판단함.',
+          'ViewModel과 보조 클래스에 로직을 옮기는 방법도 검토했지만, 상태 처리와 UI의 경계가 다시 섞이지 않도록 Route, Screen, Component로 역할을 나눴습니다.',
+          'XML을 유지하며 Compose를 일부만 도입할 수도 있었습니다. 공통 UI와 상태 전달 방식을 통일하고 프리뷰로 화면을 확인하기 위해 Compose 중심으로 정리했습니다.',
         ],
       },
       {
         problem: [
-          '기존 패키지 구조가 화면, 네비게이션, 상태 관리, 매니저, UI 모델 중심으로 뒤섞여 있어 코드 파악이 어렵고 신규 기능 추가 시 사이드 이펙트 예측이 어려웠음',
-          'ViewModel, Repository, UI 계층 간 참조 방향이 명확하지 않아 공통 로직을 분리하거나 기능별 수정 범위를 좁히기 어려운 구조였음',
+          '화면, 상태 관리, 화면 이동과 매니저 코드가 섞여 있어 기능을 추가할 때 어떤 코드가 영향을 받는지 파악하기 어려웠습니다.',
+          'ViewModel, Repository, UI 사이의 참조 방향이 불분명해 공통 로직을 분리하거나 수정 범위를 좁히기 어려웠습니다.',
         ],
         solution: [
-          '기능 단위(feature)로 패키지를 재편하고, 각 feature 내부를 Route, Screen, Component, ViewModel 계층으로 나누어 화면 책임과 상태 처리 책임을 분리',
-          '공통으로 사용되는 로직과 UI 조각은 core 영역으로 분리해 기능별 중복 구현과 순환 참조 가능성을 줄임',
-          '신규 화면을 추가할 때 동일한 패키지 구조와 의존 방향을 따르도록 정리해 기능 확장 시 수정 위치를 예측 가능하게 만듦',
+          '기능별 패키지를 만들고 내부를 Route, Screen, Component, ViewModel로 나눴습니다.',
+          '여러 기능이 사용하는 로직과 UI는 core 영역으로 옮겨 중복 구현과 기능 사이의 직접 참조를 줄였습니다.',
+          '새 화면도 같은 패키지 구조와 의존 방향을 따르도록 기준을 정했습니다.',
         ],
         result: [
-          '기존 레거시 패키지 구조를 기능·계층 기준으로 재구성해 유지보수성을 개선',
-          '신규 화면 추가 시 필요한 수정 위치가 명확해지고 사이드 이펙트 추적이 쉬워짐',
+          '기능별 코드와 공통 코드를 구분해 변경할 때 확인해야 하는 범위를 해당 기능 또는 core 영역으로 좁혔습니다.',
+          '화면을 추가할 위치와 계층별 역할을 정해 변경이 다른 화면에 미치는 영향을 추적하기 쉬워졌습니다.',
         ],
         implementation: [
           {
             description:
-              '코드 반출이 불가능한 기업연계 프로젝트였기 때문에 실제 코드는 공개하지 않고, 패키지 재편 방향을 구조 중심으로 정리함. 기존에는 화면, 네비게이션, 상태 처리, 공통 매니저가 한 흐름에 섞여 있었고, 개선 후에는 feature 내부에서 Route가 상태와 이벤트 연결을 담당하고 Screen/Component가 렌더링 책임을 맡는 방식으로 역할을 나눔.',
+              '실제 코드를 공개할 수 없어 패키지 구조로 설명합니다. 기능별 Route에서 상태와 이벤트를 연결하고 Screen과 Component에서 화면을 그리도록 나눴습니다.',
             code: null,
           },
           {
             description:
-              '반복되는 UI 조각과 공통 로직은 core 영역으로 분리해 여러 feature가 같은 규칙으로 재사용하도록 구성함. 이를 통해 기능별 코드가 서로 직접 참조하는 상황을 줄이고, 수정 범위를 해당 feature 또는 core 공통 모듈로 좁힐 수 있도록 정리함.',
+              '반복되는 UI와 공통 로직을 core 영역에 두었습니다. 각 기능은 다른 기능의 내부 코드 대신 공통 코드를 사용하도록 참조 방향을 정리했습니다.',
             code: null,
           },
         ],
         alternatives: [
-          '기존 패키지 구조를 유지한 채 공통 유틸만 분리하는 방법도 가능했지만, 구조 자체의 의존 방향이 정리되지 않으면 신규 기능 추가 시 같은 문제가 반복될 위험이 있었음.',
-          '화면 단위 파일 정리만으로도 단기적인 가독성은 좋아질 수 있지만, feature/core 기준의 책임 분리가 없으면 운영 요구사항 변경 시 수정 범위가 다시 넓어질 수 있다고 판단함.',
+          '공통 유틸만 분리하면 기존 의존 관계가 남아 새 기능에서도 같은 문제가 반복될 수 있어 패키지 구조를 함께 바꿨습니다.',
+          '파일 위치만 화면별로 나누기보다 기능 코드와 공통 코드의 책임까지 구분해야 운영 요구사항을 바꿀 때 수정 범위를 좁힐 수 있다고 판단했습니다.',
         ],
       },
       {
         problem: [
-          'Singleton 남용, Activity Context 참조, Listener 미해제 등으로 장시간 실행되는 키오스크 환경에서 메모리 누수와 성능 저하 위험이 존재함',
-          '생명주기가 긴 객체가 짧은 생명주기 객체를 보유하거나 Callback·Listener가 해제되지 않으면 화면 전환과 장시간 사용 과정에서 불필요한 참조가 남을 수 있었음',
+          '장시간 실행되는 키오스크에서 Singleton의 Activity Context 보유와 Listener 미해제가 메모리 누수로 이어질 위험이 있었습니다.',
+          '화면이 종료된 뒤에도 수명이 긴 객체에 Callback이나 Listener 참조가 남을 수 있었습니다.',
         ],
         solution: [
-          'Activity Context를 직접 보유하던 구조를 Application Context 기준으로 전환하고, Hilt 의존성 주입으로 Singleton 사용 범위를 최소화',
-          'onDispose, onCleared 등 생명주기 종료 지점에서 Listener와 리소스를 명시적으로 해제하도록 정리',
-          'Compose에서는 remember와 DisposableEffect를 활용해 등록과 해제 시점을 한곳에서 관리하고, 순환 참조 가능성이 있는 구조는 WeakReference 활용을 검토해 참조 유지 위험을 낮춤',
+          '화면 참조가 필요 없는 곳은 Application Context를 사용하고 Hilt로 객체의 보유 범위를 조정했습니다.',
+          'onDispose와 onCleared 등 생명주기 종료 지점에서 Listener와 리소스를 해제하도록 정리했습니다.',
+          'Compose의 remember와 DisposableEffect로 등록과 해제를 함께 관리하고, 순환 참조가 우려되는 곳은 WeakReference 사용을 검토했습니다.',
         ],
         result: [
-          '생명주기보다 오래 유지되던 Context·Listener 참조를 줄여 메모리 누수 가능성을 개선',
-          '패키지 구조 정리와 의존성 개선이 장시간 실행 환경의 안정성 개선으로 이어짐',
+          '화면 종료 후 남을 수 있던 Context와 Listener 참조를 정리했습니다.',
+          '객체를 보유하는 범위와 해제 지점을 구분해 장시간 실행 시 점검해야 할 참조를 명확히 했습니다.',
         ],
         implementation: [
           {
             description:
-              '코드 반출이 불가능해 실제 구현 코드는 포함하지 않음. 점검 대상은 생명주기가 긴 객체가 Activity Context, Callback, Listener 같은 짧은 생명주기 자원을 보유하는 지점이었고, 해당 참조를 Application Context 또는 생명주기 종료 시점의 명시적 해제로 전환하는 방식으로 정리함.',
+              '수명이 긴 객체가 Activity Context, Callback, Listener를 보유하는 지점을 점검했습니다. 화면 참조가 필요 없으면 Application Context로 바꾸고, 나머지는 생명주기가 끝날 때 해제하도록 정리했습니다.',
             code: null,
           },
           {
             description:
-              'Compose 화면에서는 remember로 유지되는 객체와 외부 Listener 등록 지점을 함께 점검하고, DisposableEffect의 dispose 단계나 ViewModel의 onCleared에서 해제 책임을 명확히 두는 방식으로 장시간 실행 환경의 누수 위험을 낮춤.',
+              'Compose에서는 remember로 유지하는 객체와 외부 Listener 등록 지점을 함께 확인했습니다. DisposableEffect의 dispose 단계나 ViewModel의 onCleared에서 해제하도록 책임을 정했습니다.',
             code: null,
           },
         ],
         alternatives: [
-          '문제가 발생한 객체만 개별적으로 null 처리하는 방식도 가능했지만, 참조 방향과 생명주기 경계를 정리하지 않으면 유사한 누수가 재발할 수 있었음.',
-          'Singleton을 모두 제거하는 극단적인 방식보다는, 실제로 앱 전역 생명주기가 필요한 객체와 화면 생명주기에 묶여야 하는 객체를 구분해 보유 범위를 조정하는 방향이 더 현실적이라고 판단함.',
+          '문제가 드러난 객체만 null로 바꾸면 비슷한 참조가 남을 수 있어 객체의 수명과 참조 방향을 함께 점검했습니다.',
+          'Singleton을 일괄 제거하기보다 앱 전체에서 필요한 객체와 화면 안에서만 필요한 객체를 나눠 보유 범위를 조정했습니다.',
         ],
       },
     ],
     insights: [],
     achievements: [
-      rich(strong('상용 키오스크 앱'), '의 XML·Compose 혼용 UI를 Compose 중심 구조로 정리하고 Route-Screen-Component 책임 분리'),
-      'Activity Context 참조, Listener 미해제, Singleton 참조 구조를 개선해 장시간 실행 환경의 메모리 누수 위험 요소 제거',
-      '기능·계층 기준 패키지 재편과 공통 UI 컴포넌트 분리로 수정 영향 범위와 중복 수정 비용 감소',
-      rich(strong('SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상')),
+      '상용 키오스크의 화면을 Compose로 통일하고 Route, Screen, Component의 역할을 나눴습니다.',
+      'Activity Context와 Singleton의 보유 범위를 조정하고 Listener 해제 지점을 정리했습니다.',
+      '패키지를 기능과 계층별로 나누고 반복되는 UI를 공통 컴포넌트로 옮겨 중복 수정 범위를 줄였습니다.',
+      rich('SSAFY 13기 구미캠퍼스 자율 프로젝트에서 ', strong('우수상'), '을 받았습니다.'),
     ],
     retrospective: [
-      '기업·팀 간 초반 이해도가 맞지 않아 설계를 두 번 이상 수정하는 비효율이 발생했던 점이 아쉬움',
-      '레거시 인벤토리화와 사전 설계 단계를 정식 프로세스로 두어, 범위·우선순위를 먼저 합의해야 한다는 필요성을 깨달음',
-      rich(strong('리팩토링은 단순히 화면을 예쁘게 바꾸는 작업이 아니라'), ', 상태 관리·디자인 시스템·운영 관점까지 함께 재설계해야 효과가 크다는 점을 깨달음'),
+      '초기에 기업과 팀이 이해한 요구사항이 달라 설계를 두 번 이상 수정했습니다. 기존 코드와 요구사항을 먼저 정리하고 작업 범위와 우선순위를 합의할 필요가 있었습니다.',
+      '화면을 Compose로 옮기는 과정에서 상태 관리, 공통 UI, 운영 시나리오를 함께 정리해야 반복 수정을 줄일 수 있다는 점을 배웠습니다.',
     ],
     links: [
       { label: 'Figma', url: 'https://www.figma.com/design/A8UNusvo5ANwq4rgU9aLXv/%EC%8B%B8%ED%94%BC-%EC%9E%90%EC%9C%A8-%EC%8A%A4%EB%A7%88%ED%8A%B8-%EA%B2%BD%EB%A1%9C%EB%8B%B9-%ED%82%A4%EC%98%A4%EC%8A%A4%ED%81%AC?node-id=0-1&t=iH3kiLCnJjtKTm2p-1' },
@@ -224,46 +223,46 @@ val personalTable = remember {
   {
     id: 'mo-re',
     title: '모리, Mo-Re - Android',
-    description: '누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리·운영 효율성을 높이는 앱 서비스',
+    description: '서버의 자원 사용량을 차트로 확인하고 AI 분석 리포트로 상태를 파악하는 Android 모니터링 앱입니다.',
     thumbnail: 'screenshot/more1.jpg',
     tech: ['Kotlin', 'Jetpack Compose', 'Orbit MVI', 'Hilt', 'Retrofit2', 'OkHttp3', 'Navigation3', 'DataStore', 'Coroutines', 'Flow'],
     period: '2025.08.25 ~ 2025.09.29',
     team: '6명 (Backend 4명, Android 2명)',
-    role: 'Android 개발(기여도 80%)',
+    role: 'Android 구조 설계, 시계열 차트와 메트릭 조회 개발',
     details: [
-      'Spring Boot 기반 백엔드 서버와 인스턴스의 실시간 시스템 리소스 및 애플리케이션 메트릭을 모니터링하고, AI 분석을 통해 시스템 상태를 한눈에 파악할 수 있는 Android 모니터링 애플리케이션 개발',
-      '서버 운영 시 시스템 장애나 성능 저하를 사전에 감지하고 대응하기 위해, 모바일 환경에서도 손쉽게 서버 상태를 확인할 수 있는 모니터링 도구의 필요성이 대두됨에 따라 프로젝트를 기획',
-      '코드 반출 불가로 구현 구조와 문제 해결 과정 중심으로 정리',
+      'Spring Boot 서버와 인스턴스의 자원 사용량, 애플리케이션 메트릭을 모바일에서 확인하는 앱을 개발했습니다.',
+      'PC를 사용할 수 없는 상황에서도 서버 상태를 확인하고 장애나 성능 저하에 대응할 수 있도록 기획했습니다.',
+      '코드 반출이 허용되지 않아 공개 가능한 구현 구조와 문제 해결 과정을 정리했습니다.',
     ],
     features: [
-      '인스턴스 및 서버 등록/관리 기능',
-      'CPU, 메모리, 네트워크 사용률 실시간 모니터링 및 시계열 차트 시각화',
-      'ThreadPool, Hikari Connection Pool, HTTP 요청 메트릭 분석',
-      'AI 기반 시스템 상태 요약 및 상세 분석 리포트',
-      '날짜별 메트릭 조회 및 필터링, 일일 통계 요약',
+      '모니터링할 인스턴스와 서버를 등록하고 관리할 수 있어야 했습니다.',
+      'CPU, 메모리, 네트워크 사용량을 실시간으로 확인하고 시계열 차트로 볼 수 있어야 했습니다.',
+      'ThreadPool, Hikari Connection Pool과 HTTP 요청 메트릭을 확인할 수 있어야 했습니다.',
+      'AI가 요약한 시스템 상태와 상세 분석 리포트를 제공해야 했습니다.',
+      '날짜별로 메트릭을 조회하고 일일 통계를 확인할 수 있어야 했습니다.',
     ],
     contributions: [
-      '멀티 모듈 아키텍처 설계 및 Convention Plugin 기반 Build-logic 구축',
-      'Custom Compose UI로 시계열 차트(LineChart) 구현',
-      rich('Kotlin Coroutine async/await를 활용한 6개 API 비동기 처리로 ', strong('데이터 로딩 시간 56% 단축')),
+      '기능별로 모듈을 나누고 Convention Plugin으로 공통 빌드 설정을 관리했습니다.',
+      'Jetpack Compose로 시계열 차트를 직접 구현했습니다.',
+      rich('6개 API를 병렬 호출해 로딩 시간을 ', strong('약 356ms에서 156ms로 줄였습니다'), '. 기존보다 약 56% 단축했습니다.'),
     ],
     problemSolvings: [
       {
         problem: [
-          '인스턴스 상세 화면에서 CPU, 메모리, 네트워크 수신/송신, 이벤트 요약, AI 리포트 총 6개의 API를 순차적으로 호출할 경우, 요청이 직렬로 처리되어 약 356ms 수준의 로딩 시간 발생',
-          '개별 메트릭 실패에 대한 예외 처리가 분산되어 있어, 어느 API가 실패했는지 로그 레벨에서 추적하기 어려운 디버깅 불편 발생',
+          '인스턴스 상세 화면에서 CPU, 메모리, 네트워크 수신과 송신, 이벤트 요약, AI 리포트의 6개 API를 순차 호출해 로딩에 약 356ms가 걸렸습니다.',
+          '예외 처리가 분산되어 있어 로그만으로 어느 API가 실패했는지 파악하기 어려웠습니다.',
         ],
         solution: [
-          'supervisorScope와 async를 사용해 6개의 메트릭 API를 독립적인 코루틴으로 병렬 실행',
-          '각 비동기 블록 내부에서 runCatching과 개별 로그 출력으로 실패한 메트릭 종류와 원인을 명시적으로 기록',
+          'supervisorScope와 async로 6개 API를 독립적인 코루틴에서 병렬 실행했습니다.',
+          '각 호출을 runCatching으로 감싸고 실패한 메트릭의 이름과 원인을 로그에 남겼습니다.',
         ],
         result: [
-          rich('메트릭 API를 병렬 호출하는 구조로 변경하여, ', strong('전체 로딩 시간을 약 56% 단축')),
-          'CPU/메모리/네트워크/이벤트/AI 리포트 각각에 대해 실패 로그를 남김으로써, 특정 메트릭만 실패하는 상황에서도 전체 화면은 부분 데이터로 표시하면서 디버깅 용이성 확보',
+          rich('전체 로딩 시간을 ', strong('약 356ms에서 156ms로 줄여 약 56% 단축했습니다'), '.'),
+          '일부 API가 실패해도 성공한 데이터는 화면에 표시하고, 실패한 API는 개별 로그로 추적할 수 있도록 했습니다.',
         ],
         implementation: [
           {
-            description: '데이터 로딩 진입점에서 isLoading 플래그 설정 및 오류 상태 초기화 수행.\n선택된 날짜가 없으면 기존 state.nowDate를 사용하여 재조회함.',
+            description: '로딩을 시작하면 isLoading을 설정하고 오류 상태를 초기화합니다. 선택된 날짜가 없으면 기존 state.nowDate로 다시 조회합니다.',
             code: `fun loadData(date: String? = null, instanceId: Long) = intent {
     reduce { state.copy(isLoading = true, error = null) }
 
@@ -276,7 +275,7 @@ val personalTable = remember {
         )`,
           },
           {
-            description: 'supervisorScope 내부에서 6개의 메트릭 호출을 각각 async + runCatching으로 병렬 처리함.\n실패 시 해당 메트릭 이름과 예외 메시지를 로그로 남기고, getOrNull()로 null 처리하여 이후 로직에서 부분 데이터 렌더링을 허용함.',
+            description: 'supervisorScope 안에서 6개 API를 async로 호출하고 각 결과를 runCatching으로 처리합니다. 실패하면 메트릭 이름과 예외를 기록하고 null을 반환해 나머지 결과를 계속 표시합니다.',
             code: `val cpuDeferred = async {
     runCatching {
         getCpuMetricsUseCase(instanceId, targetDate)
@@ -326,7 +325,7 @@ val aiReportDeferred = async {
 }`,
           },
           {
-            description: '모든 비동기 작업 완료 후 결과를 한 번에 await하고, 상태 로그를 남김.\n이후 타임 시리즈 데이터를 공통 TimeMetric 형태로 매핑하고, 차트용 평균값을 내부 계산하여 UiState에 반영함.',
+            description: '각 작업의 결과를 await로 받아 상태 로그를 남깁니다. 시계열 데이터는 공통 TimeMetric으로 변환하고 차트에 필요한 평균값을 계산해 UiState에 반영합니다.',
             code: `val cpuMetrics = cpuDeferred.await()
 val memoryMetrics = memoryDeferred.await()
 val networkReceiveMetrics = networkReceiveDeferred.await()
@@ -359,7 +358,7 @@ val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
 } ?: emptyList()`,
           },
           {
-            description: '타임 시리즈 기반으로 차트용 평균값을 계산하고, 요약 메트릭 및 AI 리포트를 포함해 한 번에 reduce로 상태 갱신함.\n모든 메트릭이 null인 경우 경고 로그를 남겨, 완전 실패 케이스를 명시적으로 식별함.',
+            description: '차트의 평균값과 요약 메트릭, AI 리포트를 모아 reduce로 상태를 갱신합니다. 모든 메트릭이 null이면 경고 로그를 남겨 전체 조회 실패를 구분합니다.',
             code: `        val cpuChartAvg = cpuTimeMetrics.takeIf { it.isNotEmpty() }
             ?.let { (it.sumOf { m -> m.avgValue } / it.size).toFloat() }
 
@@ -410,25 +409,25 @@ val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
           },
         ],
         alternatives: [
-          '6개 API를 하나의 집계용 UseCase로 묶어 서버 단에서 병렬 처리 후 단일 응답으로 내려받는 방식을 고려할 수 있었으나, 유연한 부분 실패 처리와 클라이언트 전용 UI 계산(차트 평균 등)에는 제약이 생겼을 가능성 있음.',
-          '네트워크 라이브러리(예: Retrofit + 코루틴 어댑터)의 동시 호출 지원을 활용해 ViewModel 밖에서 병렬 호출을 구성하는 방법도 있었지만, 상태 갱신·로그 처리·에러 집계를 한곳에서 관리하기 어렵다는 단점이 있었을 것임.',
+          '서버에서 6개 API 결과를 집계해 하나의 응답으로 제공하는 방법도 고려했습니다. 화면에서 부분 실패를 구분하고 차트 값을 계산하는 현재 요구에 맞춰 클라이언트에서 결과를 모았습니다.',
+          'ViewModel 밖에서 병렬 호출을 구성할 수도 있지만, 현재 화면에서는 상태 갱신과 실패 로그, 오류 집계를 함께 확인할 수 있는 방식을 선택했습니다.',
         ],
       },
       {
         problem: [
-          '멀티 모듈 프로젝트에서 각 모듈의 Gradle 설정이 중복되고 일관성 유지가 어려움',
+          '모듈마다 Gradle 설정이 반복되어 의존성 버전이나 빌드 옵션을 빠짐없이 맞추기 어려웠습니다.',
         ],
         solution: [
-          'build-logic 모듈에 Convention Plugin을 정의하여, 공통 빌드 설정과 의존성을 중앙에서 관리',
-          '기능별(Feature, Core, Network, Datastore, Hilt, Compose, Test, Quality 등) Gradle 플러그인을 분리 설계해, 각 기능 모듈에서는 id("mori.android.feature")와 같이 단일 플러그인 적용만으로 일관된 설정을 자동 적용',
+          'build-logic에 Convention Plugin을 정의해 공통 빌드 설정과 의존성을 한곳에서 관리했습니다.',
+          '모듈 역할과 사용 기술별로 플러그인을 나눴습니다. 기능 모듈은 mori.android.feature를 적용하면 필요한 공통 설정을 함께 받도록 구성했습니다.',
         ],
         result: [
-          '빌드 설정 수정이 필요할 때 build-logic 한 곳만 변경하면 전체 모듈에 반영되어, 버전 정합성과 코드 품질 규칙을 중앙에서 통제 가능한 구조 확보',
-          '새로운 Feature/Core 모듈 추가 시, Convention Plugin 한 줄 적용으로 네이밍 규칙, Compose/Hilt 설정, 공통 의존성이 자동 구성되어 멀티 모듈 확장성이 향상',
+          '버전이나 공통 빌드 옵션을 build-logic에서 수정하면 관련 모듈에 함께 반영하도록 바꿨습니다.',
+          '새 모듈에서도 해당 플러그인을 적용하면 이름 규칙과 Compose, Hilt, 공통 의존성을 같은 기준으로 구성할 수 있게 했습니다.',
         ],
         implementation: [
           {
-            description: 'Feature 모듈에 공통으로 필요한 라이브러리·플러그인 적용을 AndroidFeatureConventionPlugin으로 캡슐화함.\n내부에서 mori.android.library, mori.android.hilt, mori.android.compose 등을 함께 적용하고, Lifecycle/Compose/Orbit/Testing 번들을 한 번에 추가함.',
+            description: 'AndroidFeatureConventionPlugin에서 기능 모듈에 필요한 플러그인과 라이브러리를 적용합니다. Android 라이브러리, Hilt, Compose 설정과 Lifecycle, Orbit, 테스트 의존성을 한 번에 추가합니다.',
             code: `class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -458,7 +457,7 @@ val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
 }`,
           },
           {
-            description: 'Core 모듈에서 사용하는 기본 Android/Kotlin 설정과 공통 의존성을 AndroidCoreConventionPlugin에서 관리함.\nmori.android.library 플러그인과 androidx-core-ktx, appcompat, material 등을 한번에 주입하여, 모든 코어/도메인 계층 모듈의 기반 설정을 통일함.',
+            description: 'AndroidCoreConventionPlugin에서 core 모듈의 Android와 Kotlin 설정을 관리합니다. 기본 라이브러리 플러그인과 androidx-core-ktx, appcompat, material 등 공통 의존성을 적용합니다.',
             code: `class AndroidCoreConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -479,7 +478,7 @@ val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
 }`,
           },
           {
-            description: 'DataStore·네트워크·테스트·품질 관련 설정도 각각 전용 Convention Plugin으로 분리함.\n예: AndroidDatastoreConventionPlugin에서 DataStore/Coroutine 테스트 의존성, AndroidNetworkConventionPlugin에서 Retrofit/OkHttp/Gson 및 MockWebServer 설정을 중앙화함.',
+            description: 'DataStore, 네트워크, 테스트와 코드 검사 설정도 전용 플러그인으로 나눴습니다. 각 플러그인이 필요한 라이브러리와 테스트 의존성을 함께 추가합니다.',
             code: `class AndroidDatastoreConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -534,7 +533,7 @@ class AndroidNetworkConventionPlugin : Plugin<Project> {
 }`,
           },
           {
-            description: '실제 Feature 모듈에서는 Convention Plugin만 선언해 간결한 설정 유지함.\n예: feature-dashboard, feature-instance_detail에서 id("mori.android.feature")만 적용하고, 나머지 공통 설정은 모두 build-logic에서 자동 주입함.',
+            description: 'feature-dashboard와 feature-instance_detail에서는 mori.android.feature를 선언합니다. 나머지 공통 설정은 build-logic에서 적용하고 각 모듈에는 개별 의존성만 남깁니다.',
             code: `// feature-dashboard/build.gradle.kts
 plugins {
     id("mori.android.feature")
@@ -571,9 +570,9 @@ dependencies {
           },
         ],
         alternatives: [
-          '루트 build.gradle.kts에 공통 플러그인·의존성을 모두 정의하고 각 모듈에서 apply(from = …) 방식으로 스크립트를 include 하는 방법도 있었지만, 기능별로 설정을 조합하기 어렵고 점점 거대한 단일 스크립트가 되는 단점이 있었을 것임.',
-          '각 모듈에서 plugins 블록과 dependencies만 규칙적으로 맞추자는 "가이드라인 기반 수동 관리"도 가능했지만, 사람이 직접 맞춰야 하기 때문에 장기적으로 버전 불일치·옵션 누락 같은 휴먼 에러를 막기 어려웠을 것임.',
-          'Gradle Version Catalog만으로 의존성 버전만 중앙 관리하고 설정은 각 모듈에 그대로 두는 방식도 있지만, Compose/Hilt/테스트 옵션처럼 "플러그인 + 설정 + 의존성"이 묶여야 하는 항목을 일관되게 적용하기에는 Convention Plugin 방식보다 표현력이 떨어졌을 것임.',
+          '루트 스크립트를 apply로 공유하는 방법도 있지만, 기능별로 설정을 조합하기 쉽도록 Convention Plugin을 선택했습니다.',
+          '설정 규칙을 문서로만 정하면 버전이나 옵션이 누락될 수 있어 플러그인으로 공통 설정을 적용했습니다.',
+          'Version Catalog는 의존성 버전 관리에 사용하고, 플러그인과 빌드 옵션까지 함께 적용해야 하는 설정은 Convention Plugin으로 묶었습니다.',
         ],
       },
     ],
@@ -587,18 +586,14 @@ dependencies {
       { title: 'Compose가 그려지는 과정에 대해서 알아보자.', url: 'https://superohinsung.tistory.com/444' },
     ],
     achievements: [
-      rich(strong('멀티 모듈 아키텍처'), ' 설계 및 ', strong('Convention Plugin 기반 Build-logic'), ' 구축'),
-      rich(strong('Custom Compose UI'), '로 시계열 차트(LineChart) 구현'),
-      rich(strong('Kotlin Coroutine async/await'), '를 활용한 6개 API 비동기 처리로 ', strong('데이터 로딩 시간 56% 단축')),
+      '기능별 모듈과 Convention Plugin을 구성해 공통 Gradle 설정을 한곳에서 관리했습니다.',
+      'Jetpack Compose로 서버 메트릭을 표시하는 시계열 차트를 직접 구현했습니다.',
+      rich('6개 API를 병렬 호출해 로딩 시간을 ', strong('약 356ms에서 156ms로 줄였습니다'), '. 기존보다 약 56% 단축했습니다.'),
     ],
     retrospective: [
-      '팀원들의 예비군 일정으로 인해 초반 일정 관리가 원활하지 않았고, 프로젝트에 대한 이해도가 팀원 간 싱크가 맞지 않았던 점이 아쉬움',
-      '시간 제약으로 인해 Unit Test 및 UI Test를 작성하지 못한 점이 아쉬움',
-      '주 3회 정기 프로젝트 리뷰 및 회의를 도입하여 팀 내 커뮤니케이션과 프로젝트 이해도를 동기화할 필요성 인식',
-      rich('향후 프로젝트에서는 ', strong('TDD 방식'), '을 적용하여 초기부터 테스트 코드 작성 예정'),
-      '팀 프로젝트에서는 정기적인 커뮤니케이션과 명확한 역할 분담이 프로젝트 성공의 핵심임을 깨달음',
-      '멀티 모듈 아키텍처는 초기 설정 비용이 있지만 장기적으로 유지보수성과 확장성에 큰 이점이 있음을 확인',
-      '테스트 코드의 중요성을 인지하고 다음 프로젝트에서는 반드시 적용할 필요성을 느낌',
+      '팀원의 예비군 일정과 서로 다른 프로젝트 이해도로 초반 작업이 지연됐습니다. 주 3회 리뷰를 통해 진행 상황과 역할을 맞추는 방식이 필요했습니다.',
+      '일정 안에 단위 테스트와 UI 테스트를 작성하지 못했습니다. 다음 프로젝트에서는 초기부터 테스트를 작성하고 TDD도 적용해 볼 계획을 세웠습니다.',
+      '멀티 모듈과 build-logic은 초기 설정에 시간이 들었지만 기능을 나누고 공통 설정을 수정할 위치를 분명하게 만들었습니다.',
     ],
     links: [
       { label: 'Figma', url: 'https://www.figma.com/design/MWqa25LkSztu0fyAhGo9cV/%ED%8A%B9%ED%99%94-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%BC%EA%B7%B8%EB%A7%88?node-id=0-1&t=6zOEaoOnvSXfuP79-1' },
@@ -624,48 +619,48 @@ dependencies {
   {
     id: 'glim',
     title: 'Glim - Android',
-    description: '글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱',
+    description: '마음에 남은 글귀를 짧은 이미지 콘텐츠로 만들고 다른 사람과 나누는 Android 앱입니다.',
     thumbnail: 'screenshot/Glim1.png',
     tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'Firebase Messaging', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
     period: '2025.07.07 ~ 2025.08.18',
     team: '6명 (Backend 2명, Android 2명, Frontend 1명, Backend & Android 1명)',
-    role: 'Android 앱 개발(로그인/회원가입, 마이페이지 UI 및 기능 개발)',
+    role: 'Android 로그인, 회원가입과 마이페이지 개발',
     details: [
-      '\'글귀 + 울림\', \'글귀 + film\' 또는 \'glimpse(흘낏보다)\'의 조합으로, 짧지만 깊은 인상을 남기는 글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 감성을 공유하며 글림을 통해 책에 대한 관심을 유발하는 서비스',
-      '현대인의 디지털 과부하 문제에 대한 건전한 대안 제시 — 무분별한 숏폼 콘텐츠 소비로 인한 집중력 저하 및 독서량 감소에 대응하여, 완전한 차단이 아닌 글귀 기반 디지털 디톡스 접근',
+      '책에서 발견한 글귀를 이미지로 만들고 공유하는 서비스입니다. 짧은 콘텐츠를 통해 책에 관심을 갖도록 기획했습니다.',
+      '숏폼을 소비하는 익숙한 방식에 글귀를 담아 독서로 이어질 계기를 만들고자 했습니다.',
     ],
     features: [
-      '글귀 입력(직접 입력/OCR) 및 AI 배경 이미지 생성, 폰트·크기·색·위치·방향 커스터마이징',
-      '글귀(글림), 도서, 작가 검색 및 관심사 기반 추천, 키워드/테마별 큐레이션',
-      '글귀 숏폼 공유(이미지), 좋아요/저장/댓글',
-      '도서 상세 정보 페이지 및 알라딘 구매 페이지 연동',
-      '마이페이지(업로드/저장 글귀 관리), 잠금화면 글귀 설정',
+      '글귀를 직접 입력하거나 OCR로 읽고, AI 배경 이미지와 글꼴, 크기, 색상, 배치를 조정할 수 있어야 했습니다.',
+      '글귀와 도서, 작가를 검색하고 관심사나 주제에 맞는 콘텐츠를 추천해야 했습니다.',
+      '글귀 이미지를 공유하고 좋아요, 저장, 댓글을 남길 수 있어야 했습니다.',
+      '도서 상세 정보에서 알라딘 구매 페이지로 이동할 수 있어야 했습니다.',
+      '마이페이지에서 올리거나 저장한 글귀를 관리하고 잠금화면에 설정할 수 있어야 했습니다.',
     ],
     contributions: [
-      'Orbit MVI 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계',
-      'Kotlin Coroutine과 DataStore를 활용한 Session, Refresh Token 관리 시스템 구현',
-      'Channel 기반 Navigator 패턴 도입으로 Screen과 Navigation 로직 완전 분리',
-      rich('JUnit, MockK 기반 ViewModelTest를 ', strong('130+ 케이스'), ' 구현으로 안정적인 단위 테스트 구축'),
-      rich('GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 ', strong('잔디밭 형태의 Custom Compose UI 컴포넌트'), '로 구현'),
+      'Orbit MVI로 화면 상태와 일회성 이벤트를 나누고 입력 검증을 ViewModel에서 처리했습니다.',
+      'Coroutines와 DataStore로 세션 저장과 토큰 재발급, 로그아웃 처리를 구현했습니다.',
+      'Channel 기반 Navigator를 도입해 화면 코드와 화면 이동 처리를 분리했습니다.',
+      rich('JUnit과 MockK로 ViewModel 동작을 검증하는 ', strong('테스트 130여 개'), '를 작성했습니다.'),
+      '글귀 업로드 기록을 GitHub 잔디처럼 보여주는 Compose 컴포넌트를 구현했습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          'Session, Refresh Token 만료 및 예외 상황 처리의 복잡성으로 재시도 등 여러 케이스를 일관되게 처리하기 어려움',
+          '토큰 만료, 재발급 실패, 재시도 처리가 여러 곳에 흩어져 인증 예외를 같은 방식으로 처리하기 어려웠습니다.',
         ],
         solution: [
-          '인증 관련 기능을 모듈화하고, Logout 및 토큰 만료 시 자동 재인증 플로우를 추가',
-          'AuthDataStore: 토큰/유저 정보 영속화, AuthManager: 메모리 캐시 + 로그아웃 이벤트 + Auto Login 여부 판단',
-          'AuthInterceptor: 매 요청에 Authorization 헤더 자동 추가, TokenAuthenticator: 401 응답 시 토큰 재발급 및 재시도 처리',
+          '인증 기능을 모듈로 분리하고 토큰 만료 시 재발급과 실패 시 로그아웃 흐름을 정리했습니다.',
+          'AuthDataStore에 인증 정보를 저장하고 AuthManager에서 메모리 캐시, 자동 로그인 여부와 로그아웃 이벤트를 관리했습니다.',
+          'AuthInterceptor가 인증 헤더를 추가하고 TokenAuthenticator가 401 응답의 토큰 재발급과 재시도를 담당하도록 했습니다.',
         ],
         result: [
-          '인증 로직이 AuthManager, AuthInterceptor, TokenAuthenticator 세 레이어로 명확히 분리되어, 뷰/도메인 레이어에서는 토큰 관리 코드를 완전히 제거',
-          '토큰 만료·재발급·만료된 Refresh Token 처리·최대 재시도 초과 등의 예외가 한 곳에서 제어되어, 새로운 API를 추가할 때 별도의 인증 예외 처리가 불필요',
-          '로그아웃 사유를 LogoutReason으로 통합해 UI에서 사용자의 이해를 돕는 메시지를 일관되게 노출',
+          '화면과 도메인 코드에서 토큰을 직접 다루지 않고 인증 모듈에 맡기도록 바꿨습니다.',
+          '토큰 만료, 재발급 실패와 최대 재시도 초과를 공통 처리해 새 API마다 같은 예외 처리를 반복하지 않도록 했습니다.',
+          '로그아웃 사유를 LogoutReason으로 구분하고 화면에 그에 맞는 안내 메시지를 표시했습니다.',
         ],
         implementation: [
           {
-            description: '인증 정보는 DataStore 위에 AuthDataStore 추상화를 두고, AuthManager에서 메모리 캐시와 함께 관리하도록 설계.\n메모리 캐시 + DataStore 동기화로, 네트워크 요청에서는 항상 메모리에서 빠르게 토큰을 읽기 가능하며, logout(reason)에 토큰·유저 정보 삭제 + 로그아웃 이벤트 emit를 모아 모든 레이어에서 일관된 로그아웃 플로우를 사용.',
+            description: 'AuthDataStore가 인증 정보를 저장하고 AuthManager가 메모리 캐시와 동기화합니다. 요청 시에는 메모리에서 토큰을 읽고, logout에서 저장된 정보 삭제와 로그아웃 이벤트 발행을 함께 처리합니다.',
             code: `class AuthDataStore @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
@@ -704,7 +699,7 @@ class AuthManager @Inject constructor(
 }`,
           },
           {
-            description: '매 요청마다 토큰을 수동으로 넣는 대신, OkHttp Interceptor를 통해 Authorization 헤더를 자동으로 추가.\n네트워크 레이어는 AuthManager에서 토큰을 읽기만 하고, 저장·로그아웃 책임은 갖지 않음.',
+            description: 'OkHttp Interceptor에서 Authorization 헤더를 추가합니다. 네트워크 계층은 AuthManager의 토큰을 읽고 저장과 로그아웃은 AuthManager에 맡깁니다.',
             code: `class AuthInterceptor @Inject constructor(
     private val authManager: AuthManager
 ) : Interceptor {
@@ -722,7 +717,7 @@ class AuthManager @Inject constructor(
 }`,
           },
           {
-            description: '401 응답이 발생하면 OkHttp Authenticator에서 자동으로 Refresh Token을 사용해 토큰을 재발급하고, 기존 요청을 새 토큰으로 재시도하도록 구현.\nisTokenAlreadyRefreshed로 이미 다른 요청에서 토큰이 갱신된 경우를 감지해, 중복 Refresh와 무한 루프를 방지.',
+            description: '401 응답을 받으면 Authenticator에서 Refresh Token으로 토큰을 재발급하고 기존 요청을 재시도합니다. 다른 요청이 이미 갱신한 토큰이 있으면 이를 사용해 중복 재발급을 피합니다.',
             code: `class TokenAuthenticator @Inject constructor(
     private val authManager: AuthManager,
     private val authApi: AuthApi
@@ -770,22 +765,22 @@ class AuthManager @Inject constructor(
       },
       {
         problem: [
-          '기존 MVI 구현 시 Intent/Reducer/State 클래스가 기하급수적으로 늘어나 코드베이스가 비대해짐',
-          '단순 입력 검증·로딩 처리에도 보일러플레이트 코드 증가로 변경 비용 및 회귀 위험 증가',
+          '직접 구현한 MVI에서 화면마다 Intent, Reducer, State 클래스를 만들어 관리해야 했습니다.',
+          '단순한 입력 검증과 로딩 처리에도 반복 코드가 많아 수정할 곳을 파악하기 어려웠습니다.',
         ],
         solution: [
-          'Orbit 기반 상태 관리 도입',
-          'ViewModel에 ContainerHost<UiState, SideEffect> 적용 및 container 하나로 State·SideEffect 통합 관리 구조 도입',
-          '화면 단위로 UiState, SideEffect를 분리 설계하여 책임 명확화 및 테스트 용이성 향상',
+          '반복되는 상태 관리 코드를 Orbit으로 옮겼습니다.',
+          'ViewModel에 ContainerHost를 적용하고 하나의 container에서 상태와 일회성 이벤트를 관리했습니다.',
+          '화면마다 UiState와 SideEffect를 정의해 상태 변경과 메시지 표시를 구분했습니다.',
         ],
         result: [
-          '화면별로 Intent·Reducer 클래스를 개별 정의하던 구조를 제거하고, Orbit 컨테이너 기반 단일 ViewModel 구조로 전환하여 상태 관리 코드량 감소 및 가독성 향상',
-          '입력 검증·로딩·에러 처리 로직을 테스트 가능한 ViewModel 계층에 집중시켜, 단위 테스트 작성 용이성 증가',
-          'UI 코드에서 비즈니스 로직을 분리하고, 공통 패턴 정립으로 새로운 화면 추가 시 일관된 개발 플로우 확보',
+          '별도 Intent와 Reducer 클래스에 흩어졌던 상태 변경을 ViewModel의 Orbit 컨테이너에서 확인하도록 정리했습니다.',
+          '입력 검증, 로딩과 오류 처리를 ViewModel에 모아 UI 없이 단위 테스트로 검증할 수 있게 했습니다.',
+          '새 화면에서도 UiState, SideEffect, ViewModel의 같은 구성을 사용하도록 기준을 정했습니다.',
         ],
         implementation: [
           {
-            description: 'LoginUiState에 이메일·비밀번호·에러 메시지·로딩 여부를 모두 포함하여, 로그인 화면 상태를 단일 데이터 클래스로 관리.\nisLoginEnabled 계산 프로퍼티를 통해 뷰에서 별도 조건 분기 없이 버튼 활성화 여부를 판단 가능하게 설계.\n일회성 에러 메시지 노출을 위해 LoginSideEffect.ShowError를 정의하여 상태(State)와 사이드 이펙트를 분리.',
+            description: '이메일, 비밀번호, 오류 메시지와 로딩 여부를 LoginUiState에 담았습니다. isLoginEnabled로 버튼 활성화 여부를 계산하고, 한 번만 표시할 오류 메시지는 LoginSideEffect.ShowError로 전달합니다.',
             code: `data class LoginUiState(
     val email: TextFieldValue = TextFieldValue(""),
     val password: TextFieldValue = TextFieldValue(""),
@@ -808,7 +803,7 @@ sealed interface LoginSideEffect {
 }`,
           },
           {
-            description: 'LoginViewModel에 ContainerHost<LoginUiState, LoginSideEffect> 적용 및 container 초기 상태로 LoginUiState() 설정.\n이메일·비밀번호 변경 시 intent {} 블록 안에서 Validation 유틸 호출 후 reduce { state.copy(...) } 패턴으로 상태를 갱신하여, 입력값과 에러 메시지 업데이트를 ViewModel 내부로 캡슐화.',
+            description: 'LoginViewModel에 ContainerHost를 적용했습니다. 이메일이나 비밀번호가 바뀌면 intent에서 입력값을 검증하고 reduce로 입력값과 오류 메시지를 갱신합니다.',
             code: `@HiltViewModel
 internal class LoginViewModel @Inject constructor(
     private val navigator: Navigator,
@@ -855,7 +850,7 @@ internal class LoginViewModel @Inject constructor(
         }`,
           },
           {
-            description: '로그인 버튼 클릭 시 전체 입력 검증 → 에러 상태 반영 → 오류가 있을 경우 LoginSideEffect.ShowError 발행 → 정상일 경우 로딩 상태 On/Off 및 LoginUseCase 실행·네비게이션까지 일관된 플로우로 처리.',
+            description: '로그인 버튼을 누르면 전체 입력값을 검증합니다. 오류가 있으면 상태와 안내 메시지를 갱신하고, 정상이면 로딩 상태를 표시한 뒤 LoginUseCase를 실행하고 화면 이동을 요청합니다.',
             code: `fun onLoginClicked() = intent {
     val emailValidation = ValidationUtils.validateEmail(
         email = state.email.text,
@@ -902,7 +897,7 @@ internal class LoginViewModel @Inject constructor(
 }`,
           },
           {
-            description: 'LoginRoute에서 container.stateFlow.collectAsState()로 상태를 구독하고, collectSideEffect로 일회성 이벤트만 처리.\nLoginScreen은 LoginUiState와 콜백만 주입받아 순수 UI 역할만 담당하도록 설계.',
+            description: 'LoginRoute가 상태와 일회성 이벤트를 구독합니다. LoginScreen에는 LoginUiState와 콜백만 전달해 화면을 그리는 역할을 맡깁니다.',
             code: `@Composable
 internal fun LoginRoute(
     padding: PaddingValues,
@@ -934,28 +929,28 @@ internal fun LoginRoute(
           },
         ],
         alternatives: [
-          '기존 MVI 스타일을 유지한 채 하나의 sealed Intent + 단일 reducer 함수로만 관리하는 방법도 있었지만, 화면이 늘어날수록 거대한 when 블록과 단일 reducer에 로직이 몰려 가독성이 더 떨어졌을 가능성이 있음',
-          'Orbit 없이 StateFlow + 확장 함수 조합으로 직접 MVI 유사 패턴을 구현하는 대안도 있었지만, 이미 검증된 컨테이너·SideEffect 처리 기능을 재구현해야 해 유지보수 비용이 커졌을 것임',
+          '기존 Intent와 reducer를 합치는 방법도 검토했지만, 화면이 늘어날 때 분기 처리가 커지지 않도록 Orbit의 컨테이너를 사용했습니다.',
+          'StateFlow와 확장 함수로 직접 구성할 수도 있지만, 상태와 일회성 이벤트 처리를 다시 구현하기보다 Orbit의 기능을 사용했습니다.',
         ],
       },
       {
         problem: [
-          '복잡한 화면 전환 로직을 각 Screen에서 직접 NavBackStack에 접근해 처리하면서, UI와 네비게이션 구현 상세 간 강한 결합 발생',
-          '화면 간 이동·BackStack 초기화·뒤로 가기 처리 방식이 화면마다 제각각 구현되어, 중복 코드 증가 및 일관성 저하',
+          '각 Screen이 NavBackStack을 직접 조작해 UI 변경과 화면 이동 구현을 함께 다뤄야 했습니다.',
+          '화면마다 이동, 뒤로 가기와 백스택 초기화 방식이 달라 같은 처리가 반복됐습니다.',
         ],
         solution: [
-          'Channel 기반 Navigator 패턴 도입',
-          'Navigator 인터페이스와 NavigatorImpl을 별도 모듈에 정의하고, 화면에서는 오직 이 인터페이스만 의존하도록 설계',
-          'Channel<InternalRoute>를 사용해 ViewModel에서 네비게이션 요청을 발행하고, 네비게이션 전용 ViewModel 및 Composable에서 이를 수신해 실제 NavBackStack 조작을 수행하는 간접 호출 구조 도입',
+          'Channel로 화면 이동 요청을 전달하는 Navigator를 도입했습니다.',
+          'Navigator 인터페이스와 구현체를 별도 모듈에 두고 화면에서는 인터페이스를 통해 이동을 요청하도록 했습니다.',
+          'ViewModel이 Channel에 이동 요청을 보내면 전용 ViewModel과 Composable이 받아 NavBackStack을 조작하도록 구성했습니다.',
         ],
         result: [
-          '각 Screen에서 NavBackStack/Controller에 직접 접근하던 코드를 제거하고, Channel 기반 Navigator 한 곳으로 네비게이션 로직을 집중시켜 화면과 네비게이션 구현 간 결합도 감소',
-          'ViewModel에서는 navigator.navigate(...) 호출만으로 화면 전환을 요청하고, 실제 BackStack 조작은 네비게이션 전용 Composable이 담당하도록 역할 분리',
-          'InternalRoute·RouteSideEffect·Route/BottomTabRoute 등 타입 기반 라우팅 모델을 도입하여, 문자열 기반 Route 사용 시 발생할 수 있는 오타·런타임 오류를 컴파일 타임에 검출 가능하도록 개선',
+          '화면마다 직접 백스택을 조작하던 코드를 Navigator와 전용 Composable로 모았습니다.',
+          'ViewModel은 navigator.navigate로 이동만 요청하고 백스택 처리는 전용 Composable에 맡기도록 나눴습니다.',
+          'InternalRoute와 RouteSideEffect 등 타입으로 이동 경로를 정의해 문자열 오타를 컴파일 단계에서 확인할 수 있게 했습니다.',
         ],
         implementation: [
           {
-            description: '공용 네비게이션 API로 Navigator 인터페이스를 정의하고, 구현체 NavigatorImpl에서는 Channel<InternalRoute>로 네비게이션 이벤트를 전파하는 구조 도입.\nHilt 모듈에서 Navigator와 InternalNavigator 둘 다 NavigatorImpl로 바인딩하여, UI·ViewModel 측에서는 외부 인터페이스만, 내부 네비게이션 ViewModel에서는 Internal 인터페이스만 사용하도록 의존성 분리.',
+            description: 'NavigatorImpl이 Channel로 이동 요청을 전달합니다. Hilt에서 Navigator와 InternalNavigator를 같은 구현체에 연결하고, 요청하는 쪽과 수신하는 쪽이 각각 필요한 인터페이스만 사용하도록 나눴습니다.',
             code: `interface Navigator {
     suspend fun navigate(
         route: NavKey,
@@ -990,7 +985,7 @@ class NavigatorImpl @Inject constructor() : Navigator, InternalNavigator {
 }`,
           },
           {
-            description: '실제 Channel에 흘러다니는 내부 라우트 모델로 InternalRoute를 정의하고, 이를 UI에서 소비하기 위한 RouteSideEffect로 변환하는 중간 ViewModel 설계 적용.',
+            description: 'Channel로 전달할 이동 요청을 InternalRoute로 정의했습니다. NavigatorViewModel은 이를 화면에서 처리할 RouteSideEffect로 변환합니다.',
             code: `sealed interface InternalRoute {
     data class Navigate(
         val route: NavKey, val saveState: Boolean, val launchSingleTop: Boolean
@@ -1028,7 +1023,7 @@ internal class NavigatorViewModel @Inject constructor(
 }`,
           },
           {
-            description: 'LaunchedNavigator 컴포저블에서 NavigatorViewModel.sideEffect를 수집하고, 전달받은 RouteSideEffect에 따라 NavBackStack 조작을 일괄 처리함으로써, 실제 네비게이션 책임을 단일 지점으로 집중.',
+            description: 'LaunchedNavigator가 NavigatorViewModel의 이벤트를 수집합니다. RouteSideEffect에 따라 이동, 뒤로 가기와 백스택 초기화를 한곳에서 처리합니다.',
             code: `@Composable
 fun LaunchedNavigator(navBackStack: NavBackStack) {
     InternalLaunchedNavigator(navBackStack = navBackStack)
@@ -1062,7 +1057,7 @@ private fun InternalLaunchedNavigator(
 }`,
           },
           {
-            description: 'ViewModel에서 화면 전환 시 NavBackStack·NavController에 직접 접근하지 않고, 주입받은 Navigator 인터페이스만 호출하여 화면 로직과 네비게이션 구현 간 결합 제거.',
+            description: '화면의 ViewModel은 주입받은 Navigator로 이동을 요청합니다. NavBackStack과 NavController를 직접 다루지 않아 화면 로직과 이동 구현을 따로 수정할 수 있습니다.',
             code: `@HiltViewModel
 internal class LoginViewModel @Inject constructor(
     private val navigator: Navigator,
@@ -1095,21 +1090,17 @@ internal class LoginViewModel @Inject constructor(
       { title: '안드로이드 프로젝트에서 토큰 관리는 어떻게 했나요? feat AuthManagingSystem', url: 'https://superohinsung.tistory.com/437' },
     ],
     achievements: [
-      rich(strong('Orbit MVI'), ' 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계'),
-      rich(strong('Kotlin Coroutine'), '과 ', strong('DataStore'), '를 활용한 Session, Refresh Token 관리 시스템 구현'),
-      rich(strong('Channel 기반 Navigator'), ' 패턴 도입으로 Screen과 Navigation 로직 완전 분리'),
-      rich(strong('JUnit, MockK 기반 ViewModelTest'), '를 ', strong('130+ 케이스'), ' 구현으로 안정적인 단위 테스트 구축'),
-      rich('GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 ', strong('잔디밭 형태의 Custom Compose UI 컴포넌트'), '로 구현'),
-      rich(strong('SSAFY 13th 구미캠퍼스 공통 프로젝트 우수상 수상')),
+      'Orbit MVI로 입력 검증과 상태 변경을 ViewModel에 모아 UI 없이 검증할 수 있도록 했습니다.',
+      'DataStore와 인증 모듈에서 토큰 저장, 재발급 실패와 로그아웃 사유를 공통 처리했습니다.',
+      'Channel 기반 Navigator로 화면 이동을 요청하고 전용 Composable에서 백스택을 처리하도록 분리했습니다.',
+      rich('JUnit과 MockK로 ViewModel 동작을 검증하는 ', strong('테스트 130여 개'), '를 작성했습니다.'),
+      '글귀 업로드 기록을 잔디 형태로 보여주는 Compose 컴포넌트를 구현했습니다.',
+      rich('SSAFY 13기 구미캠퍼스 공통 프로젝트에서 ', strong('우수상'), '을 받았습니다.'),
     ],
     retrospective: [
-      '주어진 개발 시간의 부족으로 인해 완전한 리팩토링 미흡',
-      '실제 사용자 테스트를 통한 UX 개선 포인트 발견 지연으로 개발 후반부 UI/UX 수정 집중',
-      '기능 개발과 병행한 지속적인 코드 품질 개선을 위한 점진적 리팩토링 프로세스 도입 필요성',
-      '초기 단계부터 프로토타이핑과 사용자 테스트를 통한 빠른 피드백 루프 구축 필요성',
-      'Orbit MVI 패턴 적용을 통한 코드 가독성과 테스트 용이성 향상 및 기능 확장 시 일관된 구조 유지 가능성 확인',
-      rich(strong('130+ 테스트 케이스 작성'), '을 통한 코드 품질 개선 및 리팩토링과 기능 수정 시 안정성 보장의 테스트 가치 인식'),
-      'Cold Stream과 Hot Stream에 대한 명확한 차이를 이해',
+      '사용자 테스트가 늦어 화면 수정이 개발 후반에 몰렸고 리팩토링을 마무리할 시간도 부족했습니다. 초기 시제품부터 사용자의 반응을 확인할 필요가 있었습니다.',
+      'Orbit으로 상태 변경을 모으고 테스트를 작성하면서 기능 수정 후 기존 동작을 확인할 기준을 만들었습니다. 기능 개발과 작은 리팩토링을 함께 진행하는 방식이 필요하다고 느꼈습니다.',
+      '상태 구독과 일회성 이벤트를 다루며 Cold Stream과 Hot Stream의 차이를 학습했습니다.',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/ois0886/Glim' },
@@ -1131,7 +1122,7 @@ internal class LoginViewModel @Inject constructor(
     id: 'pubburi',
     title: '주점부리 - Backend & Frontend',
     description:
-      'SSAFY 1학기에 학습한 Java, Spring Boot, MyBatis, MySQL, Vue를 기반으로 주류 상품 탐색부터 주문, 스탬프, 관리자 CRUD까지 구현한 웹 서비스',
+      '주류 상품을 찾고 주문하며 스탬프를 적립하는 웹 서비스입니다. 상품과 주문을 관리하는 관리자 화면도 제공합니다.',
     thumbnail: 'screenshot/pubburi-home.png',
     tech: [
       'Java',
@@ -1149,49 +1140,49 @@ internal class LoginViewModel @Inject constructor(
     team: '2명 (Backend & Frontend)',
     role: 'Backend & Frontend 개발',
     details: [
-      'SSAFY 1학기 관통 프로젝트에서 배운 Java, Spring Boot, MyBatis, MySQL, Vue 학습 내용을 실제 주류 주문 웹 서비스에 적용',
-      '주류 상품 조회, 카테고리/검색, 장바구니, 주문, 댓글, 마이페이지, 스탬프 등급, 매장 조회, 관리자 CRUD를 하나의 웹 애플리케이션으로 구현',
-      'Backend는 Spring Boot 3와 MyBatis 기반 Controller-Service-DAO 계층으로, Frontend는 Vue Router와 Pinia 기반 화면·상태 구조로 구성',
-      '리팩터링 이후 공개 저장소에서 로컬 실행과 검증이 가능하도록 Docker Compose MySQL 환경과 API·Layer·성능 문서를 정리',
+      'SSAFY 1학기 관통 프로젝트에서 학습한 Java, Spring Boot, MyBatis, MySQL, Vue로 주류 주문 서비스를 개발했습니다.',
+      '상품 검색부터 장바구니, 주문, 스탬프 적립까지 연결하고 댓글, 매장 조회와 관리자 기능을 구현했습니다.',
+      '백엔드는 Controller-Service-DAO 계층으로 나누고 프론트엔드는 Vue Router와 Pinia로 화면과 상태를 관리했습니다.',
+      '리팩토링 후 다른 사람이 실행하고 검증할 수 있도록 Docker Compose의 MySQL 환경과 API, 계층 구조, 성능 관련 문서를 공개 저장소에 정리했습니다.',
     ],
     features: [
-      '고객 화면: 상품 목록/검색/카테고리/상세, 댓글, 장바구니, 주문, 로그인, 회원가입, 마이페이지, 매장 조회',
-      '관리자 화면: 상품 CRUD, 매장 CRUD, 주문 관리, 댓글 관리, 사용자 관리',
-      '세션 기반 로그인, 사용자 프로필, 주문 내역, 스탬프 등급 계산',
-      '주문 생성, 주문 상세 조회, 사용자/관리자 주문 목록 pagination, 주문 완료/삭제 API',
-      '상품별 댓글 등록/수정/삭제 및 댓글 목록 pagination',
-      '주문 수 기반 인기 상품 조회와 상품 목록 검색/정렬',
+      '고객이 상품을 검색하고 상세 정보와 댓글을 확인한 뒤 장바구니에 담아 주문할 수 있어야 했습니다.',
+      '관리자가 상품, 매장, 주문, 댓글과 사용자를 관리할 수 있어야 했습니다.',
+      '세션 기반 로그인과 프로필, 주문 내역 조회, 스탬프 등급 계산을 지원해야 했습니다.',
+      '주문 생성과 상세 조회, 고객과 관리자의 주문 목록 페이지 조회, 완료와 삭제 API가 필요했습니다.',
+      '상품별 댓글을 등록, 수정, 삭제하고 목록을 페이지 단위로 볼 수 있어야 했습니다.',
+      '주문 수에 따른 인기 상품을 보여주고 상품 목록을 검색하거나 정렬할 수 있어야 했습니다.',
     ],
     contributions: [
-      'Spring Boot Controller-Service-DAO 계층과 MyBatis XML Mapper로 사용자, 상품, 주문, 댓글, 매장 API 구현',
-      'ApiResponse, PageResponse, 입력 검증과 GlobalExceptionHandler를 적용해 성공·실패 응답과 pagination contract 통일',
-      'AccessGuard와 SessionUser로 로그인·관리자·본인 권한 검증을 공통화하고 session에 비밀번호 필드가 남지 않도록 개선',
-      '주문 생성 시 중복 상품 수량 합산, 상세 주문 batch insert, 상품 주문 수 증가, 스탬프 적립을 하나의 트랜잭션으로 연결하고 각 처리 결과를 검증',
-      'Vue Router와 Pinia로 인증·장바구니·카탈로그·관리자 상태를 분리하고 상품 검색 조건을 route query와 동기화',
-      '고객용 catalog와 관리자용 product/market 상태를 분리하고 요청별 pending 상태를 적용해 검색 조건 충돌과 중복 요청을 방지',
-      'Bootstrap 의존성을 제거하고 공통 UI 컴포넌트, Vue 상태 기반 carousel, WebP 이미지 자산으로 화면 구조를 정리',
+      'Spring Boot와 MyBatis XML Mapper로 사용자, 상품, 주문, 댓글, 매장 API를 구현했습니다.',
+      'ApiResponse와 PageResponse, 공통 예외 처리로 성공과 실패, 페이지 조회 응답 형식을 통일했습니다.',
+      'AccessGuard와 SessionUser로 로그인, 관리자, 본인 여부를 공통 검증하고 세션에 비밀번호가 남지 않도록 했습니다.',
+      '중복 상품 수량 합산, 주문 상세 일괄 저장, 상품 주문 수 증가와 스탬프 적립을 하나의 트랜잭션으로 묶고 각 처리 결과를 검증했습니다.',
+      'Vue Router와 Pinia로 인증, 장바구니, 상품 목록과 관리자 상태를 나누고 검색 조건을 URL 쿼리와 동기화했습니다.',
+      '고객용 상품 상태와 관리자용 상품 및 매장 상태를 분리하고 요청 진행 여부를 관리해 검색 조건 충돌과 중복 요청을 막았습니다.',
+      'Bootstrap을 제거하고 공통 UI, Vue 상태로 동작하는 이미지 슬라이드와 WebP 이미지로 화면을 정리했습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          '주문 목록 API는 pagination으로 주문 20건을 가져온 뒤 각 주문의 상세 상품을 다시 조회해야 했음',
-          'MyBatis nested select나 주문별 상세 조회를 그대로 유지하면 주문 건수만큼 상세 조회 쿼리가 반복되어, page size가 커질수록 N+1 형태의 조회 비용이 증가할 수 있었음',
-          'Frontend 응답 형태는 기존처럼 각 주문이 details를 포함해야 했기 때문에, API contract를 바꾸지 않고 조회 구조만 개선해야 했음',
+          '주문 목록 20건을 가져온 뒤 주문마다 상세 상품을 다시 조회해 상세 조회 쿼리가 20회 발생했습니다.',
+          'MyBatis의 중첩 조회를 그대로 사용하면 주문이 늘어날 때마다 상세 쿼리도 반복되는 N+1 문제가 있었습니다.',
+          '화면에서 사용하는 각 주문의 details 필드는 유지해야 해 API 응답 형식을 바꾸지 않고 조회 방식을 개선해야 했습니다.',
         ],
         solution: [
-          '주문 목록을 먼저 조회한 뒤 order id 목록을 한 번에 수집하고, `order_id IN (...)` 조건으로 상세 상품을 batch 조회',
-          '조회된 상세 상품 목록은 service layer에서 `orderId` 기준으로 그룹핑한 뒤 각 OrderInfo의 details에 다시 attach',
-          '사용자 주문 목록, 관리자 주문 목록, 최근 주문 조회가 같은 attachDetails 흐름을 사용하도록 구성해 목록 API의 응답 형태를 유지',
+          '주문 목록에서 ID를 모아 order_id의 IN 조건으로 상세 상품을 한 번에 조회했습니다.',
+          '서비스 계층에서 상세 상품을 orderId별로 묶어 각 OrderInfo의 details에 넣었습니다.',
+          '고객과 관리자의 주문 목록, 최근 주문 조회가 같은 attachDetails 처리를 사용하도록 구성했습니다.',
         ],
         result: [
-          rich('20건 조회 기준 상세 조회 쿼리를 ', strong('20회에서 1회'), '로 줄이고 ', strong('상세 조회 쿼리 수 95% 절감'), '을 확인'),
-          '주문 목록 API의 응답 구조는 유지하면서 상세 상품 조회 비용이 주문 건수에 비례해 증가하던 구조를 개선',
-          '사용자/관리자 주문 목록 모두 같은 batch attach 로직을 사용해 조회 성능과 구현 일관성을 함께 확보',
+          rich('주문 20건 기준 상세 조회 쿼리를 ', strong('20회에서 1회로 줄였습니다'), '. 상세 조회 쿼리 수가 95% 감소했습니다.'),
+          '기존 응답 형식을 유지하면서 주문마다 상세 쿼리를 반복하던 구조를 없앴습니다.',
+          '고객과 관리자 목록 모두 같은 일괄 조회 로직으로 상세 데이터를 조합하도록 통일했습니다.',
         ],
         implementation: [
           {
             description:
-              '주문 목록 조회 결과에서 order id를 모아 상세 상품을 한 번에 batch 조회하고, orderId 기준으로 그룹핑한 뒤 기존 OrderInfo.details 형태로 다시 붙임.',
+              '주문 ID 목록으로 상세 상품을 일괄 조회합니다. orderId별로 결과를 묶어 기존 OrderInfo.details에 넣습니다.',
             language: 'java',
             code: `private List<OrderInfo> attachDetails(List<OrderInfo> orders) {
     if (orders == null || orders.isEmpty()) {
@@ -1210,7 +1201,7 @@ internal class LoginViewModel @Inject constructor(
           },
           {
             description:
-              'MyBatis Mapper에서는 `foreach`로 order id 목록을 `IN` 절에 바인딩해 주문 상세와 상품 정보를 한 번에 조회함.',
+              'MyBatis Mapper의 foreach로 주문 ID 목록을 IN 절에 전달해 주문 상세와 상품 정보를 한 번에 조회합니다.',
             language: 'xml',
             code: `<select id="getOrderDetailInfoByOrderIds" resultType="OrderDetailInfo">
     SELECT
@@ -1234,29 +1225,29 @@ internal class LoginViewModel @Inject constructor(
           },
         ],
         alternatives: [
-          'MyBatis nested select를 유지하면 구현은 단순하지만 주문 20건 기준 상세 조회가 20회 발생해 pagination size가 커질수록 조회 비용을 예측하기 어려웠음.',
-          'Frontend에서 주문별 상세 API를 병렬 호출하는 방식도 가능했지만, 네트워크 요청 수와 화면 조립 책임이 커지므로 Backend에서 batch 조회 후 기존 응답 형태를 유지하는 방식이 더 적합했음.',
+          'MyBatis의 중첩 조회는 구현이 단순하지만 주문 건수만큼 쿼리가 늘어나므로 일괄 조회를 선택했습니다.',
+          '화면에서 상세 API를 병렬 호출하면 요청 수와 데이터 조합 코드가 늘어납니다. 백엔드에서 일괄 조회한 결과를 기존 응답에 담는 방식을 택했습니다.',
         ],
       },
       {
         problem: [
-          '주문 생성은 단순히 주문 row를 추가하는 작업이 아니라, 상세 주문 저장, 상품별 주문 수 증가, 스탬프 적립, 사용자 스탬프 갱신까지 함께 처리되어야 하는 복합 비즈니스 흐름이었음',
-          '@Transactional을 적용하더라도 DAO가 실패를 예외가 아닌 영향 행 0건으로 반환하면 rollback이 발생하지 않아 일부 데이터만 저장될 수 있었음',
-          '존재하지 않는 상품이나 상세 주문 일부 저장 실패를 확인하지 않으면 주문, 상품 주문 수, 스탬프 데이터 사이의 일관성이 깨질 수 있었음',
+          '주문을 만들 때 주문 상세 저장, 상품별 주문 수 증가와 스탬프 적립을 모두 처리해야 했습니다.',
+          '@Transactional이 있어도 DAO가 실패를 예외 대신 영향 행 0건으로 반환하면 일부 데이터만 저장될 수 있었습니다.',
+          '존재하지 않는 상품이나 상세 저장 실패를 놓치면 주문, 상품 주문 수와 스탬프의 값이 서로 맞지 않을 수 있었습니다.',
         ],
         solution: [
-          'OrderService의 주문 생성 메서드에 @Transactional을 적용하고, 주문 상세는 productId 기준으로 수량을 합산한 뒤 batch insert로 저장',
-          '상품 주문 수 증가, 상세 주문 batch insert, 스탬프 생성, 회원 스탬프 증가의 영향 행을 단계별로 검증하고 실패 시 예외를 발생시켜 전체 rollback',
-          '회원 스탬프는 read-modify-write 대신 `stamps = stamps + quantity` 원자적 update로 처리하고 존재하지 않는 상품은 후속 저장 전에 차단',
+          'OrderService의 주문 생성에 @Transactional을 적용하고 같은 상품의 수량을 합산해 주문 상세를 일괄 저장했습니다.',
+          '상품 주문 수, 주문 상세와 스탬프 저장 결과를 단계별로 검증하고 하나라도 실패하면 예외를 던져 전체 변경을 되돌렸습니다.',
+          '스탬프는 기존 값을 읽어 덮어쓰지 않고 stamps = stamps + quantity로 갱신했습니다. 존재하지 않는 상품은 후속 저장 전에 차단했습니다.',
         ],
         result: [
-          rich('주문 생성 중 하나라도 실패하면 ', strong('전체 변경이 rollback'), '되도록 구성해 부분 저장 가능성을 차단'),
-          rich('존재하지 않는 상품 요청에서 상세 주문·스탬프·회원 적립이 남지 않는 ', strong('실패 경로 테스트'), '를 추가'),
+          '주문 생성 중 한 단계라도 실패하면 전체 변경을 되돌려 일부 데이터만 저장되지 않도록 했습니다.',
+          '존재하지 않는 상품으로 주문했을 때 주문 상세와 스탬프 적립이 남지 않는지 테스트했습니다.',
         ],
         implementation: [
           {
             description:
-              '주문 상세를 productId 기준으로 정규화한 뒤 각 저장 단계의 영향 행을 검증한다. 상품, 상세 주문, 스탬프, 회원 적립 중 하나라도 반영되지 않으면 예외를 발생시켜 전체 트랜잭션을 rollback함.',
+              'productId별 수량을 합산하고 저장 단계마다 영향 행을 확인합니다. 상품, 주문 상세와 스탬프 갱신 중 하나라도 반영되지 않으면 예외를 던져 트랜잭션 전체를 되돌립니다.',
             language: 'java',
             code: `@Override
 @Transactional
@@ -1300,26 +1291,22 @@ public int makeOrder(Order order, List<OrderDetail> details) {
           },
         ],
         alternatives: [
-          '@Transactional만 적용하고 DAO 반환값을 확인하지 않으면 영향 행 0건이 정상 흐름으로 처리되어 부분 저장을 막을 수 없었음.',
-          '실패한 단계를 별도 보상 로직으로 되돌리는 방법도 가능하지만 복구 경로가 복잡해지므로, 주문 도메인의 변경을 하나의 트랜잭션 경계에서 검증하는 방식을 선택함.',
+          '@Transactional만 적용하면 영향 행 0건을 실패로 판단하지 못하므로 DAO 반환값 검증을 함께 적용했습니다.',
+          '별도 보상 로직으로 실패를 복구하기보다 하나의 트랜잭션에서 결과를 검증하고 되돌리는 방식을 선택했습니다.',
         ],
       },
     ],
     insights: [],
     achievements: [
-      '주문·상세·상품 주문 수·스탬프 적립의 처리 결과를 검증하고 실패 시 전체 rollback하도록 구성',
-      rich('주문 목록 API의 상세 데이터를 일괄 조회하도록 개선해 20건 기준 상세 조회 쿼리 20회→1회, 쿼리 수 ', strong('95% 절감')),
-      rich(strong('Backend & Frontend 개발'), '로 사용자, 상품, 주문, 댓글, 매장 API와 고객/관리자 화면 구현'),
-      rich(strong('ApiResponse/PageResponse'), ', 입력 검증, 공통 예외 처리와 ', strong('AccessGuard'), '로 API 응답·권한 규칙 통일'),
+      '주문과 상품 주문 수, 스탬프 적립 결과를 검증하고 실패하면 전체 변경을 되돌리도록 구성했습니다.',
+      rich('주문 20건의 상세 조회 쿼리를 ', strong('20회에서 1회로 줄였습니다'), '. 상세 조회 쿼리 수가 95% 감소했습니다.'),
+      '사용자, 상품, 주문, 댓글, 매장 API와 고객 및 관리자 화면을 구현했습니다.',
+      '공통 응답과 입력 검증, 예외 및 권한 처리 규칙을 API에 적용했습니다.',
     ],
     retrospective: [
-      'SSAFY 1학기 학습 내용을 프로젝트에 적용하며, Controller-Service-DAO 계층과 SQL Mapper가 실제 화면 요구사항과 어떻게 연결되는지 체감',
-      '도메인 상태 변경이 여러 테이블에 걸쳐 발생할 때 트랜잭션 경계와 실패 처리 기준을 먼저 정리해야 한다는 점을 학습',
-      'Frontend 화면을 단순히 만드는 것에서 끝나지 않고, API 응답 wrapper, pagination, validation error 처리 기준까지 함께 설계해야 화면 구현이 안정적이라는 점을 깨달음',
-      '고객용 Android를 맡은 팀원과 Backend & Frontend 영역을 나누어 진행하며, 상품 목록, 장바구니, 주문 완료 후 스탬프 반영처럼 앱 화면이 기다리는 데이터를 계속 맞춰가야 했음',
-      '말로만 정한 규칙은 금방 흔들렸지만, DTO 필드명, PageResponse 형태, seed data를 실제 코드와 문서로 고정하자 서로의 작업을 더 편하게 믿고 이어갈 수 있었음',
-      '관리자 화면을 만들면서 상품 등록, 주문 확인, 댓글 관리가 고객 앱의 사용 경험 뒤편을 받쳐주는 흐름이라는 점을 느꼈고, Backend & Frontend 작업도 결국 같은 서비스를 함께 완성하는 일이라고 받아들이게 됨',
-      '프로젝트 이후 다시 정리하면서 실행 환경, seed data, 문서, 검증 명령을 함께 남겨야 다른 사람이 프로젝트를 재현할 수 있음을 확인',
+      '여러 테이블을 바꾸는 주문 흐름에서는 트랜잭션 경계뿐 아니라 어떤 반환값을 실패로 볼지 먼저 정해야 한다는 점을 배웠습니다.',
+      'Android 담당 팀원과 상품, 장바구니, 스탬프 응답을 맞추면서 필드명과 페이지 형식, 검증 오류 규칙을 코드와 문서로 합의했습니다.',
+      '다른 사람도 프로젝트를 실행하고 확인할 수 있도록 실행 환경, 초기 데이터와 검증 명령을 함께 남기는 일이 필요했습니다.',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/ois0886/Pubburi-Refactor' },
@@ -1335,7 +1322,7 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     id: 'quiz-cafe',
     title: 'Quiz Cafe - Android',
     description:
-      '다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼.',
+      'CS와 개발 지식을 퀴즈로 학습하고 문제집과 학습 기록을 관리하는 Android 앱입니다.',
     thumbnail: 'screenshot/QuizCafe1.png',
     tech: [
       'Kotlin',
@@ -1352,42 +1339,42 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     ],
     period: '2025.04 ~ 2025.06',
     team: '6명 (Backend 2명, Android 4명)',
-    role: 'Android 앱 개발 (메인 및 마이페이지 개발)',
+    role: 'Android 메인 화면과 마이페이지 개발',
     details: [
-      'Computer Science와 다양한 개발 분야의 지식들을 손쉽게 언제나, 어디서든 학습할 수 있도록 지원하는 퀴즈 형태의 학습 앱 플랫폼',
+      'CS와 개발 지식을 원하는 시간에 퀴즈로 학습할 수 있도록 기획했습니다. 사용자가 문제집을 만들고 풀이 결과를 확인하는 앱입니다.',
     ],
     features: [
-      '퀴즈 CRUD 및 퀴즈 풀기 기능',
-      '문제집별 퀴즈 풀기 및 좋아요 기능',
-      '카테고리 생성/분류 및 개수 제한 (3~5개)',
-      '문제집 실행/진행, 학습 결과 저장, 완료 후 피드백 제공 (점수, 정답률)',
-      '마이페이지 (내 문제집/퀴즈 관리) 및 학습 기록/진척 관리 (잔디밭 형식)',
+      '퀴즈를 만들고 수정하거나 삭제하며 직접 풀 수 있어야 했습니다.',
+      '문제집별로 퀴즈를 풀고 좋아요를 남길 수 있어야 했습니다.',
+      '카테고리를 만들어 문제집을 분류하고 항목별 개수를 3~5개로 제한해야 했습니다.',
+      '풀이 결과를 저장하고 완료 후 점수와 정답률을 제공해야 했습니다.',
+      '마이페이지에서 문제집과 퀴즈를 관리하고 학습 기록을 잔디 형태로 확인할 수 있어야 했습니다.',
     ],
     contributions: [
-      'Android 앱 개발 (메인 및 마이페이지 개발) 및 1차 MVP 개발 완료',
-      '모든 화면의 구성요소를 재사용 가능한 Jetpack Compose UI 디자인 시스템 구축',
-      rich(strong('Compose UI 100%'), '로 화면 구현'),
-      'UiState–Intent–SideEffect MVI 구조를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축',
-      'DataStore 활용 자동로그인 및 보안 세션 관리 구현, Retrofit + Coroutine 기반 비동기 통신 및 예외 처리 구조 설계',
+      '메인 화면과 마이페이지를 맡아 1차 MVP를 개발했습니다.',
+      '여러 화면에서 재사용할 수 있는 Compose 공통 UI를 만들었습니다.',
+      '모든 화면을 Jetpack Compose로 구현했습니다.',
+      'UiState, Intent, SideEffect로 나눈 MVI 구조를 직접 설계하고 적용했습니다.',
+      'DataStore로 자동 로그인과 세션 관리를 구현하고 Retrofit과 Coroutines로 비동기 통신과 예외 처리를 구성했습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          'JWT 토큰·이메일 등 사용자 세션 정보를 SharedPreferences에 저장하면서, 동기식 I/O로 인한 ANR 위험, 타입 세이프티 부족, 데이터 일관성 보장 한계 발생함.',
-          '비동기·스트림 기반으로 세션 상태를 관찰하기 어려워, 토큰 변경에 따른 전역 상태 반영 및 로그아웃 처리 흐름이 복잡해지는 문제 발생함.',
+          'JWT 토큰과 이메일을 SharedPreferences에 저장하고 있어 동기식 접근과 키별 타입 관리를 직접 다뤄야 했습니다.',
+          '세션 변경을 스트림으로 구독하기 어려워 토큰 변경과 로그아웃 상태를 앱 전체에 반영하는 처리가 복잡했습니다.',
         ],
         solution: [
-          '세션 저장소를 SharedPreferences에서 Preferences DataStore로 전환하여, 코루틴·Flow 기반 완전 비동기 I/O 및 트랜잭션 단위 업데이트를 지원하도록 개선함.',
-          'AuthDataStore + AuthManager + AuthInterceptor 조합으로, 영속 저장소·메모리 캐시·네트워크 헤더 삽입을 역할별로 분리해 타입 세이프하고 일관된 인증 상태 관리 구조 도입함.',
+          'Preferences DataStore로 세션 저장소를 옮겨 Coroutines로 값을 갱신하고 Flow로 변경을 구독했습니다.',
+          'AuthDataStore는 저장, AuthManager는 메모리 캐시와 로그아웃 이벤트, AuthInterceptor는 인증 헤더를 담당하도록 나눴습니다.',
         ],
         result: [
-          'SharedPreferences 기반 세션 관리에서 DataStore + StateFlow 기반 구조로 전환하여, 디스크 I/O의 완전 비동기 처리, 타입 세이프한 키 관리, 반응형 세션 상태 구독 등을 통해 안정성과 확장성 향상 달성함.',
-          'AuthDataStore(영속 저장소)–AuthManager(메모리 캐시/로그아웃 이벤트)–AuthInterceptor(헤더 주입)로 책임을 분리함으로써, 인증/세션 관련 코드 중복을 제거하고, 토큰 저장·로딩·삭제·로그아웃 플로우를 단일 진입점에서 관리하는 구조 확립함.',
+          '세션을 비동기로 저장하고 DataStore와 StateFlow에서 변경을 구독하도록 바꿨습니다.',
+          '토큰 저장, 읽기, 삭제와 로그아웃 진입점을 인증 모듈에 모아 화면마다 같은 처리를 반복하지 않도록 했습니다.',
         ],
         implementation: [
           {
             description:
-              'DataStore 접근을 확장 함수로 감싸 재사용성을 높이고, Access Token, Refresh Token, 사용자 이메일을 stringPreferencesKey로 정의해 키 관리 및 타입 세이프티를 확보함.',
+              'DataStore 접근을 확장 함수로 묶고 Access Token, Refresh Token, 이메일 키를 stringPreferencesKey로 정의했습니다.',
             code: `private fun Preferences.Key<String>.flowIn(store: DataStore<Preferences>) =
     store.data.map { it[this] }
 
@@ -1422,7 +1409,7 @@ class AuthDataStore @Inject constructor(
           },
           {
             description:
-              '앱 전역 applicationScope에서 DataStore Flow를 수집해, 최신 토큰·이메일을 @Volatile 메모리 캐시에 유지하고 동기 접근자를 제공함으로써, 네트워크 계층에서 빠른 조회 가능 구조 설계함.',
+              'applicationScope에서 DataStore의 Flow를 수집해 최신 토큰과 이메일을 @Volatile 메모리 캐시에 반영합니다. 네트워크 계층은 이 캐시에서 값을 읽습니다.',
             code: `class AuthManager @Inject constructor(
     private val authDataStore: AuthDataStore,
     private val googleAuthManager: GoogleAuthManager,
@@ -1506,7 +1493,7 @@ class AuthDataStore @Inject constructor(
           },
           {
             description:
-              'OkHttp Interceptor에서 AuthManager의 메모리 캐시를 통해 Access Token을 읽고, 유효한 경우에만 Authorization: Bearer 헤더를 추가하여 토큰 기반 인증을 통합 관리함.',
+              'OkHttp Interceptor가 AuthManager에서 Access Token을 읽고 유효한 값이 있을 때 Authorization 헤더를 추가합니다.',
             code: `class AuthInterceptor @Inject constructor(
     private val authManager: AuthManager
 ) : Interceptor {
@@ -1526,27 +1513,27 @@ class AuthDataStore @Inject constructor(
           },
         ],
         alternatives: [
-          '기존 SharedPreferences를 그대로 유지하면서 코루틴 디스패처로만 I/O 스레드를 분리하는 방법도 있었지만, 트랜잭션 보장·타입 세이프티·Flow 기반 관찰 같은 기능을 직접 구현해야 해 장기적인 유지보수 비용이 더 컸을 것임.',
-          '토큰을 DataStore가 아닌 Room 또는 자체 파일 저장소에 보관하는 대안도 가능하지만, 설정·세션 수준의 소량 키-값 데이터에는 DataStore가 더 단순하고, 네트워크 인터셉터와 연계하기에도 적합한 선택이었을 것임.',
+          'SharedPreferences를 유지하고 I/O 스레드만 분리할 수도 있었습니다. 저장값 변경 구독과 일괄 갱신을 함께 지원하는 DataStore를 선택했습니다.',
+          'Room이나 파일 저장소도 가능하지만 소량의 세션 값을 키와 값으로 관리하는 용도에는 DataStore가 더 간단했습니다.',
         ],
       },
       {
         problem: [
-          '기존 MVVM 구조에서 ViewModel·View·UseCase 간 의존이 느슨하지 못해, 입력 검증·로딩 플래그·네비게이션 코드가 View와 ViewModel 곳곳에 흩어지며 상태 관리 일관성 저하 발생함.',
-          '비즈니스 로직과 UI 로직이 섞여 있어, 어떤 사용자 액션이 어떤 상태 변화와 화면 전환을 일으키는지 추적 및 테스트가 어려운 상황 발생함.',
+          '입력 검증, 로딩 상태와 화면 이동 코드가 View와 ViewModel에 흩어져 화면마다 상태를 처리하는 방식이 달랐습니다.',
+          'UI와 비즈니스 로직이 섞여 사용자 동작이 어떤 상태 변경과 화면 이동을 만드는지 추적하기 어려웠습니다.',
         ],
         solution: [
-          '화면 단위로 UiState, Intent, SideEffect를 정의하는 MVI 구조를 도입해, 모든 상태 변화를 "이벤트 → 상태 감소(reduce) → 새로운 UiState/Effect" 경로로만 흐르도록 제한함.',
-          'Compose UI는 UiState 렌더링과 Intent 전파만 담당하고, 비즈니스 로직·에러 매핑·네비게이션 트리거는 ViewModel 한 곳에서 처리하도록 단방향 데이터 플로우를 설계함.',
+          '화면마다 UiState, Intent, SideEffect를 정의하고 입력 이벤트를 받아 새 상태와 일회성 이벤트를 만드는 MVI 구조를 적용했습니다.',
+          'Compose는 상태 표시와 Intent 전달을 맡기고 검증, 오류 변환과 화면 이동 요청은 ViewModel에서 처리했습니다.',
         ],
         result: [
-          '기존 MVVM에서 화면마다 달랐던 상태 관리·이벤트 처리 패턴을 MVI(UiState-Intent-SideEffect)로 통일해, 화면 수가 증가해도 구조적 복잡도 증가를 억제함.',
-          '상태 변화·사이드 이펙트가 모두 Intent/Effect 기준으로 정의되어, 로딩/성공/실패·에러 메시지·네비게이션에 대한 단위 테스트와 리팩터링이 용이해지고, Compose UI와 상태 간 동기화 신뢰성이 향상됨.',
+          '화면마다 달랐던 상태 관리 방식을 UiState, Intent, SideEffect 구조로 통일했습니다.',
+          '로딩, 성공과 실패, 오류 메시지와 화면 이동을 어떤 이벤트가 만드는지 ViewModel에서 확인할 수 있게 했습니다.',
         ],
         implementation: [
           {
             description:
-              '이메일, 비밀번호, 로딩 여부, 필드별 에러 메시지를 LoginUiState에 담고, 버튼 활성 조건은 isLoginEnabled 계산 프로퍼티로 캡슐화해 View에서 조건식을 제거함.',
+              '이메일, 비밀번호, 로딩 여부와 필드별 오류를 LoginUiState에 담습니다. 버튼 활성 조건은 isLoginEnabled에서 계산해 화면에서 조건을 중복 정의하지 않도록 했습니다.',
             code: `data class LoginUiState(
     val email: String = "",
     val password: String = "",
@@ -1564,7 +1551,7 @@ class AuthDataStore @Inject constructor(
           },
           {
             description:
-              '텍스트 변경, 버튼 클릭, 외부 로그인 성공/실패, 검증 실패 등은 모두 Intent로 정의해, 이벤트 종류와 파라미터를 한곳에서 관리함.',
+              '텍스트 변경, 버튼 클릭, 외부 로그인 결과와 검증 실패를 Intent로 정의해 이벤트와 필요한 값을 한곳에서 확인하도록 했습니다.',
             code: `sealed class LoginIntent {
     data class UpdatedEmail(val email: String) : LoginIntent()
     data class UpdatedPassword(val password: String) : LoginIntent()
@@ -1584,7 +1571,7 @@ sealed class LoginEffect {
           },
           {
             description:
-              'handleIntent에서는 UseCase 호출·외부 로그인·에러 매핑·Effect 발행을 담당하고, reduce에서는 전달받은 Intent를 기반으로 새로운 LoginUiState를 생성함.',
+              'handleIntent에서 UseCase와 외부 로그인을 호출하고 오류를 변환하거나 Effect를 발행합니다. reduce는 Intent에 맞는 새 LoginUiState를 만듭니다.',
             code: `override suspend fun handleIntent(intent: LoginIntent) {
     when (intent) {
         LoginIntent.ClickLogin -> {
@@ -1626,13 +1613,13 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
           },
           {
             description:
-              'Route에서 state와 effect를 수집하고, Effect에 따라 네비게이션·Toast를 처리하며, Screen은 UiState 렌더링과 sendIntent 호출만 담당해 View가 비즈니스 로직을 알지 않도록 유지함.',
+              'Route가 상태와 Effect를 구독하고 화면 이동과 Toast를 처리합니다. Screen은 UiState를 표시하고 사용자 동작을 sendIntent로 전달합니다.',
             code: null,
           },
         ],
         alternatives: [
-          '기존 MVVM 구조를 유지한 채 ViewModel 내부에서만 "이벤트 → 상태 갱신" 패턴을 자율적으로 맞추고, 팀 규칙으로 일관성을 강제하는 방법도 있었겠지만, 화면이 늘어날수록 규칙 위반·예외 케이스가 생기기 쉬웠을 것임.',
-          'sealed 클래스 Intent 대신 단순 콜백 함수(onEmailChanged, onLoginClicked 등)만으로 흐름을 구성하는 방식도 가능하지만, 어떤 이벤트가 어떤 상태/네비게이션을 유발하는지 명시적으로 추적·테스트하기는 지금보다 더 어려웠을 것임.',
+          '기존 MVVM에 상태 갱신 규칙만 맞출 수도 있었지만, 화면별 이벤트와 상태를 같은 형식으로 확인하기 위해 MVI 구조를 명시했습니다.',
+          '콜백만으로 구성할 수도 있지만 이벤트의 종류와 필요한 값을 함께 확인할 수 있도록 sealed Intent를 사용했습니다.',
         ],
       },
     ],
@@ -1663,16 +1650,15 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
       },
     ],
     achievements: [
-      rich(strong('Android 앱 개발'), ' (메인 및 마이페이지 개발) 및 ', strong('1차 MVP 개발 완료')),
-      rich('모든 화면의 구성요소를 재사용 가능한 ', strong('Jetpack Compose UI 디자인 시스템'), ' 구축'),
-      rich(strong('Compose UI 100%'), '로 화면 구현'),
-      rich(strong('UiState–Intent–SideEffect MVI 구조'), '를 자체 설계·적용해 예측 가능한 상태 관리 체계 구축'),
-      rich(strong('DataStore'), ' 활용 자동로그인 및 보안 세션 관리 구현, ', strong('Retrofit + Coroutine'), ' 기반 비동기 통신 및 예외 처리 구조 설계'),
+      '메인 화면과 마이페이지를 맡아 1차 MVP를 완성했습니다.',
+      '모든 화면을 Compose로 구현하고 재사용할 수 있는 공통 UI를 만들었습니다.',
+      'UiState, Intent, SideEffect로 상태와 이벤트를 나누는 MVI 구조를 직접 적용했습니다.',
+      'DataStore 기반 자동 로그인과 세션 관리, Retrofit과 Coroutines 기반 비동기 통신과 예외 처리를 구현했습니다.',
     ],
     retrospective: [
-      'MVI 구조 설계 과정에서 OrbitMVI 등 검증된 라이브러리 활용 기회 부족, 다음 버전에서는 OrbitMVI, ReduxKotlin 등 검증된 MVI 프레임워크 도입 검토 필요성 인식',
-      '개발 초기 멀티모듈 구조 미적용으로 인한 기능 확장 시 의존성 관리 복잡성 발생, 프로젝트 시작 단계부터 feature, data, domain 모듈 분리를 통한 확장성 있는 아키텍처 구성 필요성 인식',
-      'MVI 패턴 적용을 통한 코드 가독성과 테스트 용이성 향상 및 기능 확장 시 일관된 구조 유지 가능성 확인, 완벽한 아키텍처를 한 번에 구축하려 하기보다 지속적인 리팩토링과 개선을 통한 코드 품질 향상의 점진적 개선 효과성 깨달음',
+      'MVI를 직접 구현하며 상태와 이벤트의 흐름을 익혔습니다. 반복 구현이 필요한 부분은 Orbit 같은 라이브러리와 비교해 볼 필요가 있었습니다.',
+      '기능이 늘면서 의존 관계 관리가 복잡해졌습니다. 다음에는 기능, 데이터, 도메인 모듈의 경계를 초기에 정하고 필요한 만큼 나눌 계획입니다.',
+      '구조를 한 번에 완성하려 하기보다 실제 기능을 추가하며 반복 코드와 책임이 섞인 지점을 조금씩 정리하는 편이 도움이 됐습니다.',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/Kotlin-Android-Study-with-SSAFY/Quiz-Cafe-Android' },
@@ -1686,7 +1672,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     id: 'didimdol',
     title: 'Didimdol - Android',
     description:
-      '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트',
+      '주변 업체를 검색하고 지도에서 위치를 확인한 뒤 온라인으로 예약하는 Android 앱입니다.',
     thumbnail: 'screenshot/didim1.png',
     tech: [
       'Kotlin',
@@ -1702,47 +1688,47 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     ],
     period: '2023.01 ~ 2023.06',
     team: '3명 (Android 3명)',
-    role: 'Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
+    role: 'Android 팀 리드 개발자',
     details: [
-      '위치 기반 서비스 업체의 온라인 예약 시스템 구축을 통한 고객 편의성 향상 및 업체 운영 효율성 증대',
-      '한성대학교 DC&M 동아리와 (주)PickNumber 간 산학협력 프로젝트로, 기존 오프라인 중심의 예약 시스템을 디지털화하여 언제 어디서나 접근 가능한 통합 예약 플랫폼 구축',
+      '업체 검색부터 위치 확인, 예약까지 앱에서 이어지는 온라인 예약 서비스를 개발했습니다.',
+      '한성대학교 DC&M과 (주)PickNumber의 산학협력 프로젝트로, 오프라인으로 진행하던 예약을 모바일에서 처리하도록 만들었습니다.',
     ],
     features: [
-      '위치 기반 서비스 업체 검색 및 정보 제공, 실시간 거리/소요시간 계산 (Direction5 API 연동)',
-      '네이버 지도 연동 길찾기 서비스 및 거리순 정렬/최적 경로 안내',
-      '웹뷰 기반 온라인 예약/취소 및 예약 내역 조회/관리',
-      'SMS 인증을 통한 본인 확인, 업체별 예약 상태 실시간 확인',
-      '네이버 지도 기반 업체 위치 표시, 마커 선택 및 상세 정보 제공',
-      '현재 위치 기반 주변 업체 탐색',
+      '업체를 검색하고 Direction5 API로 거리와 소요 시간을 확인할 수 있어야 했습니다.',
+      '네이버 지도에서 길찾기와 거리순 정렬, 경로 안내를 제공해야 했습니다.',
+      'WebView에서 예약, 취소와 예약 내역 관리를 지원해야 했습니다.',
+      'SMS로 본인을 확인하고 업체별 예약 상태를 실시간으로 볼 수 있어야 했습니다.',
+      '지도에 업체 위치를 표시하고 마커를 선택하면 상세 정보를 보여줘야 했습니다.',
+      '현재 위치를 기준으로 주변 업체를 찾을 수 있어야 했습니다.',
     ],
     contributions: [
-      'Android 팀 리드 개발자 (3인 팀 중 Android 전담)',
-      rich('업체 마스터 데이터를 Room에 동기화하고 검색을 로컬 DB 조회로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
-      '조회된 업체에 대해서만 Direction5 API로 거리·소요시간을 계산하고 RecyclerView에 거리순 정렬 결과 표시',
-      'Naver Map 마커, SearchView, 예약 WebView를 연결해 검색 → 위치 확인 → 예약 흐름 구현',
-      'Hilt로 DB, DAO, Repository, Remote/Local DataSource 의존성 구성',
-      'EncryptedSharedPreferences 기반 로그인 정보 저장 및 자동 로그인 흐름 구현',
-      'ViewBinding 추상 베이스 클래스와 Extension Function으로 Activity/Fragment 반복 코드 축소',
+      'Android 팀 리드를 맡아 검색, 지도와 예약 기능을 개발했습니다.',
+      rich('업체 데이터를 Room에 동기화하고 로컬에서 검색하도록 바꿔 응답시간을 ', strong('3~5초에서 0.5초 이하로 줄였습니다'), '.'),
+      '검색된 업체만 Direction5 API로 거리와 소요 시간을 계산하고 RecyclerView에 거리순으로 표시했습니다.',
+      'Naver Map의 마커, SearchView와 예약 WebView를 연결해 검색 후 위치 확인과 예약으로 이어지도록 했습니다.',
+      'Hilt에서 DB, DAO, Repository와 원격 및 로컬 DataSource 의존성을 구성했습니다.',
+      'EncryptedSharedPreferences로 로그인 정보를 저장하고 자동 로그인을 구현했습니다.',
+      'ViewBinding 추상 클래스와 확장 함수로 Activity와 Fragment의 반복 코드를 줄였습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          '업체 검색 시 서버 API와 외부 API 의존도가 높아 결과 표시까지 평균 3~5초가 걸리는 성능 이슈 발생',
-          '업체 정보 조회와 거리·소요시간 계산이 하나의 검색 흐름에 묶여 있어, 외부 API 지연이 전체 검색 UX를 직접 늦추는 구조 발생',
+          '업체 검색마다 서버와 외부 API를 호출해 결과를 표시하기까지 3~5초가 걸렸습니다.',
+          '업체 목록 조회와 거리 계산이 묶여 있어 외부 API가 늦어지면 검색 결과도 함께 늦게 표시됐습니다.',
         ],
         solution: [
-          '앱 시작 시 업체 마스터 데이터를 Room DB에 동기화하고, SearchView 검색은 Room 기반 로컬 DB 조회로 전환',
-          '로컬 DB에서 조회된 업체에 대해서만 Direction5 API를 호출해 거리·소요시간을 보강하고, RecyclerView에 거리순으로 정렬해 표시',
-          'CompanyRepository에서 업체 목록 조회, 거리 계산, 예외 처리를 Result 기반으로 캡슐화하여 ViewModel의 UI 상태 갱신 흐름 단순화',
+          '앱 시작 시 업체 데이터를 Room에 동기화하고 SearchView에서는 로컬 DB를 검색하도록 바꿨습니다.',
+          '검색된 업체에 대해서만 Direction5 API로 거리와 소요 시간을 구하고 거리순으로 정렬해 표시했습니다.',
+          'CompanyRepository에 목록 조회, 거리 계산과 예외 처리를 모으고 ViewModel에는 Result로 결과를 전달했습니다.',
         ],
         result: [
-          rich('업체 목록 검색 응답시간을 ', strong('3~5초에서 0.5초 이하로 줄여 약 85% 단축'), '하고, 사용자가 검색 결과를 기다리는 체감 시간을 크게 줄임'),
-          '업체 목록 조회와 거리 계산 책임을 분리해 검색 흐름을 단순화하고, 외부 API 지연이 전체 검색 UX에 미치는 영향을 줄임',
+          rich('업체 목록 검색 응답시간을 ', strong('3~5초에서 0.5초 이하로 줄였습니다'), '.'),
+          '업체 목록 검색을 로컬에서 처리하고 거리 계산을 분리해 외부 API를 호출해야 하는 범위를 줄였습니다.',
         ],
         implementation: [
           {
             description:
-              '앱 시작 시 서버에서 업체 마스터 데이터를 한 번 받아 Room DB에 저장함. 이후 검색 화면은 서버 목록 API를 매번 호출하지 않고 로컬 DB를 우선 조회하는 구조로 전환함.',
+              '앱 시작 시 서버의 업체 데이터를 받아 Room에 저장합니다. 검색 화면은 서버 목록 API 대신 로컬 DB를 먼저 조회합니다.',
             code: `override suspend fun getAllCompanyEntityList(): Result<Unit> {
     return runCatching {
         val response = companyRemoteDataSource.getCompanyList()
@@ -1753,7 +1739,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
           },
           {
             description:
-              'Room DAO에서는 업체 마스터 데이터 저장과 검색어 기반 로컬 조회를 분리함. SearchView에서 전달된 검색어는 searchQuery 컬럼에 대한 LIKE 조회로 처리함.',
+              'Room DAO에서 업체 저장과 검색을 나눴습니다. SearchView가 전달한 검색어로 searchQuery 컬럼을 LIKE 조회합니다.',
             code: `@Dao
 interface CompanyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -1768,7 +1754,7 @@ interface CompanyDao {
           },
           {
             description:
-              '검색 요청이 들어오면 먼저 companyDao.searchQuery(query)를 통해 Room DB에서 업체 리스트를 가져오고, 각 업체에 대해서만 Direction5 API로 거리·소요시간을 계산해 결과를 복사·갱신함.',
+              'companyDao.searchQuery로 업체를 검색한 다음 결과에 포함된 업체의 거리와 소요 시간을 Direction5 API로 계산해 덧붙입니다.',
             code: `override suspend fun searchCompanyListByQuery(
     query: String,
     myLocation: String
@@ -1793,29 +1779,29 @@ interface CompanyDao {
           },
         ],
         alternatives: [
-          '서버 아키텍처와 로직을 변경할 수 없는 제약이 있어, 거리·시간 계산 방식을 서버 측에서 미리 계산하는 구조로 바꾸는 대안은 현실적으로 선택할 수 없었음.',
-          '최근 검색어·인기 업체 위주의 부분 캐싱도 대안이지만, 전국 업체 검색이라는 요구사항에서 일관된 응답성을 보장하기 어렵고 캐시 무효화 정책이 복잡해지는 trade-off가 있었을 것임.',
+          '서버 구조를 바꿀 수 없어 거리와 소요 시간을 서버에서 미리 계산하는 방법은 선택할 수 없었습니다.',
+          '최근 검색어나 인기 업체만 캐시하면 처음 검색하는 업체는 여전히 서버를 기다려야 하므로 전체 업체 데이터를 로컬에서 검색하는 방식을 택했습니다.',
         ],
       },
       {
         problem: [
-          '검색, 지도, 예약, 인증 화면이 각각 DB·인증 저장소·네트워크 결과 처리를 직접 다루면 화면 책임이 커지고 동일 흐름을 재사용하기 어려운 구조가 될 수 있었음',
-          '로그인 정보를 일반 SharedPreferences에 저장하면 로컬 데이터 보호 측면에서 취약하고, 자동 로그인 흐름이 화면 로직과 강하게 결합될 위험이 있었음',
+          '검색, 지도, 예약과 인증 화면에서 DB나 네트워크 결과를 직접 다루면 데이터 처리 코드가 화면마다 반복될 수 있었습니다.',
+          '로그인 정보를 보호해 저장하고 자동 로그인 처리를 화면 코드에서 분리할 필요가 있었습니다.',
         ],
         solution: [
-          'Hilt 모듈에서 Room DB/DAO, Repository, Remote/Local DataSource, EncryptedSharedPreferences 의존성을 구성',
-          '인증 데이터 읽기/쓰기는 AuthLocalDataSource로 캡슐화하고, 화면은 ViewModel을 통해 Repository 결과만 구독하도록 분리',
-          'ViewModel에서는 Repository가 반환한 Result를 기준으로 StateFlow UI 상태를 갱신해 로딩, 검색 결과, 사용자 메시지를 한 곳에서 관리',
+          'Hilt 모듈에서 Room DB, DAO, Repository, DataSource와 EncryptedSharedPreferences를 제공했습니다.',
+          '인증 정보 읽기와 쓰기는 AuthLocalDataSource에 모으고 화면은 ViewModel을 통해 Repository의 결과를 받도록 했습니다.',
+          'ViewModel이 Result를 받아 StateFlow의 로딩, 검색 결과와 안내 메시지를 갱신하도록 했습니다.',
         ],
         result: [
-          'Fragment와 Activity는 렌더링과 사용자 이벤트 전달에 집중하고, 데이터 접근·인증 저장·예외 처리는 하위 계층으로 분리함',
-          '검색, 지도, 예약 화면에서 동일한 Repository/DataSource 흐름을 재사용할 수 있는 구조 확보',
-          'EncryptedSharedPreferences 기반 저장으로 자동 로그인에 필요한 로컬 인증 데이터 관리 방식을 명확히 함',
+          'Fragment와 Activity는 상태를 표시하고 사용자 이벤트를 전달하며, 데이터 접근과 인증 저장, 예외 처리는 하위 계층에 맡겼습니다.',
+          '검색, 지도와 예약 화면에서 같은 Repository와 DataSource를 사용할 수 있도록 했습니다.',
+          '자동 로그인에 필요한 인증 정보를 EncryptedSharedPreferences에서 관리하도록 통일했습니다.',
         ],
         implementation: [
           {
             description:
-              'ViewModel에서는 Repository가 반환한 Result를 기준으로 StateFlow UI 상태를 갱신함. 로딩 상태, 검색 결과, 사용자 메시지를 한 곳에서 관리해 Fragment의 책임을 렌더링 중심으로 줄임.',
+              'ViewModel은 Repository의 Result를 받아 로딩, 검색 결과와 안내 메시지를 StateFlow에 반영합니다. Fragment는 이 상태를 구독해 화면에 표시합니다.',
             code: `fun bind(query: String, myLocation: String) {
     viewModelScope.launch {
         _uiState.update { it.copy(isLoading = true) }
@@ -1833,7 +1819,7 @@ interface CompanyDao {
           },
           {
             description:
-              '인증 정보는 EncryptedSharedPreferences로 저장하고, Hilt 모듈에서 DB/DAO/Repository/DataSource 의존성을 주입해 검색·지도·예약 화면에서 동일한 데이터 흐름을 재사용함.',
+              '인증 정보는 EncryptedSharedPreferences에 저장합니다. Hilt에서 데이터 계층의 의존성을 제공해 여러 화면이 같은 저장소와 Repository를 사용하도록 했습니다.',
             code: `@Singleton
 @Provides
 @Named("auth")
@@ -1855,8 +1841,8 @@ fun provideEncryptedSharedPreferences(
           },
         ],
         alternatives: [
-          'Activity/Fragment에서 DB와 인증 저장소를 직접 생성해 사용할 수도 있었지만, 화면 생명주기와 데이터 접근 책임이 섞여 수정 범위가 커질 위험이 있었음.',
-          '일반 SharedPreferences로 자동 로그인을 구현할 수도 있었지만, 인증 데이터를 다루는 기능 특성상 EncryptedSharedPreferences를 사용하는 쪽이 더 적합하다고 판단함.',
+          '화면에서 DB와 인증 저장소를 직접 생성하는 대신 Hilt로 제공해 화면 생명주기와 데이터 접근 책임을 나눴습니다.',
+          '일반 SharedPreferences도 사용할 수 있지만 인증 정보를 저장하는 용도에 맞춰 EncryptedSharedPreferences를 선택했습니다.',
         ],
       },
     ],
@@ -1883,16 +1869,16 @@ fun provideEncryptedSharedPreferences(
       },
     ],
     achievements: [
-      rich(strong('Android 팀 리드 개발자'), ' (3인 팀 중 Android 전담)'),
-      rich('업체 마스터 데이터를 ', strong('Room'), '에 동기화하고 검색을 로컬 DB 조회로 전환해 ', strong('검색 응답시간 85% 단축'), ' (3~5초 → 0.5초 이하)'),
-      rich('조회된 업체에 대해서만 ', strong('Direction5 API'), '로 거리·소요시간을 계산하고 ', strong('RecyclerView'), '에 거리순 정렬 결과 표시'),
-      rich(strong('Naver Map'), ' 마커, ', strong('SearchView'), ', ', strong('예약 WebView'), '를 연결해 검색 → 위치 확인 → 예약 흐름 구현'),
-      rich(strong('ViewBinding'), ' 추상 베이스 클래스와 ', strong('Extension Function'), '으로 Activity/Fragment 반복 코드 축소'),
+      'Android 팀 리드를 맡아 검색, 지도와 예약 기능을 연결했습니다.',
+      rich('Room 기반 로컬 검색으로 업체 목록 응답시간을 ', strong('3~5초에서 0.5초 이하로 줄였습니다'), '.'),
+      '검색된 업체에만 Direction5 API를 호출하고 거리순으로 정렬한 결과를 표시했습니다.',
+      '업체 검색 후 지도 마커로 위치를 확인하고 WebView에서 예약하도록 연결했습니다.',
+      'ViewBinding 추상 클래스와 확장 함수로 Activity와 Fragment의 반복 코드를 줄였습니다.',
     ],
     retrospective: [
-      '단위 테스트 및 UI 테스트 코드 부재로 품질 검증 프로세스 부족, JUnit/Mockito 기반 단위 테스트 및 Espresso UI 테스트 도입 계획 수립',
-      '졸업 작품과 병행하여 절대적 시간이 부족, 한번에 하나의 프로젝트만 집중하는 것이 가장 좋다는 깨달음',
-      '사용자 경험 우선 개발, 산학협력 멘토링의 중요성, 초기 설계에서의 확장성 고려가 장기적 유지보수에 미치는 임팩트 실감',
+      '단위 테스트와 UI 테스트가 없어 수정 후 동작을 수동으로 확인해야 했습니다. JUnit과 Mockito, Espresso를 활용한 검증을 계획했습니다.',
+      '졸업 작품과 병행해 개발 시간이 부족했습니다. 동시에 진행할 작업의 범위와 우선순위를 조정할 필요가 있었습니다.',
+      '산학협력 멘토링과 검색 지연 개선을 통해 기술 선택을 실제 사용 흐름과 운영 제약에 맞춰 판단하는 경험을 했습니다.',
     ],
     links: [
       { label: 'Android', url: 'https://github.com/HSU-Didimdol/Android_PickNumber' },
@@ -1907,7 +1893,7 @@ fun provideEncryptedSharedPreferences(
     id: 'bong',
     title: 'Bong # - Android',
     description:
-      '한성대학교 캡스톤디자인(졸업작품) 출품 프로젝트. 기존에 재능과 재화를 교환하던 방식에서 벗어나 재능과 재능을 교환하는 앱 서비스',
+      '대학생이 서로의 재능을 교환하고 거래 채팅으로 일정을 조율하는 Android 앱입니다.',
     thumbnail: 'screenshot/Bong1.png',
     tech: [
       'Kotlin',
@@ -1924,48 +1910,48 @@ fun provideEncryptedSharedPreferences(
     ],
     period: '2022.12 ~ 2023.06',
     team: '4명 (Backend 2명, Android 1명, iOS 1명)',
-    role: '팀장, 안드로이드 개발 전담 (1인)',
+    role: '팀장, Android 개발 전담',
     details: [
-      '기존의 재화 중심 교환이 아닌, 재능과 재능을 교환할 수 있는 모바일 앱 서비스 개발',
-      '한성대학교 캡스톤디자인(졸업작품) 프로젝트로, 대학생들이 재화 부족 때문에 원하는 재능을 배우기 어려운 현실을 개선하고자 기획함',
+      '자신이 가진 재능을 제공하고 다른 사람의 재능을 배우는 모바일 서비스를 개발했습니다.',
+      '한성대학교 캡스톤디자인 프로젝트로, 비용 부담 때문에 배우고 싶은 것을 시도하기 어려운 대학생을 위해 기획했습니다.',
     ],
     features: [
-      '재능 등록 및 신청 (게시글 CRUD), 관심 거래/거래 진행 현황 관리',
-      'OkHttp WebSocket 기반 1:1 거래 채팅 및 채팅방 목록 관리',
-      '자유게시판/질문답변 게시판 (익명 지원), 댓글·좋아요·태그 기능',
-      '이미지 업로드, 프로필 수정, 제공/받은 재능 관리, 거래/커뮤니티 활동 내역 조회',
-      '거래 성사, 평점 등록, 회원 정보, 자동 로그인, 외부 링크 관리',
+      '재능을 등록하거나 신청하고 관심 거래와 진행 상황을 관리할 수 있어야 했습니다.',
+      'WebSocket 기반 1:1 거래 채팅과 채팅방 목록을 제공해야 했습니다.',
+      '익명으로 글을 쓸 수 있는 자유게시판과 질문 게시판, 댓글, 좋아요와 태그가 필요했습니다.',
+      '이미지와 프로필을 수정하고 제공하거나 받은 재능, 거래와 커뮤니티 활동 내역을 볼 수 있어야 했습니다.',
+      '거래 성사 후 평점을 등록하고 회원 정보, 자동 로그인과 외부 링크를 관리할 수 있어야 했습니다.',
     ],
     contributions: [
-      rich(strong('팀장'), ', 안드로이드 개발 전담 (1인)'),
-      '앱 전체 화면·API 연동·상태 관리 구현',
-      'presentation/domain/data 멀티 모듈 구조와 MVVM + Clean Architecture 적용',
-      'Repository, DataSource, UseCase, Mapper를 분리해 계층별 책임과 의존 방향 명확화',
-      'OkHttp WebSocket 기반 1:1 실시간 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리',
-      'ChattingViewModel에서 StateFlow로 채팅 메시지, 로딩 상태, 평점 등록 상태 관리',
-      'RecyclerView multiple view type, ListAdapter, DiffUtil을 활용해 내 메시지/상대 메시지 UI와 리스트 갱신 처리',
-      'EncryptedSharedPreferences 기반 인증 토큰 저장 및 OkHttp Interceptor를 통한 Authorization 헤더 주입',
+      '팀장을 맡고 Android 앱 개발을 혼자 담당했습니다.',
+      '앱 전체 화면과 API 연동, 상태 관리를 구현했습니다.',
+      'presentation, domain, data 모듈을 나누고 MVVM과 Clean Architecture를 적용했습니다.',
+      'Repository, DataSource, UseCase, Mapper로 데이터 처리 책임과 의존 방향을 구분했습니다.',
+      'OkHttp WebSocket으로 1:1 채팅을 구현하고 연결, 해제와 메시지 전송은 DataSource에 모았습니다.',
+      'ChattingViewModel의 StateFlow에서 메시지, 로딩과 평점 등록 상태를 관리했습니다.',
+      'RecyclerView의 뷰 타입을 나눠 내 메시지와 상대 메시지를 표시하고 ListAdapter와 DiffUtil로 변경된 항목을 갱신했습니다.',
+      'EncryptedSharedPreferences에 인증 토큰을 저장하고 OkHttp Interceptor에서 인증 헤더를 추가했습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          'Android 1인 전담 상황에서 채팅, 게시글, 댓글, 좋아요, 프로필, 평점 등 기능 범위가 넓어 화면·도메인 규칙·데이터 접근 코드가 한 모듈에 섞일 위험이 있었음',
-          'ViewModel이 Retrofit API, DTO, 로컬 인증 저장소를 직접 다루면 기능 추가 시 화면 코드까지 연쇄 수정되는 구조가 될 수 있었음',
+          'Android를 혼자 맡아 채팅부터 게시글, 프로필, 평점까지 구현해야 했습니다. 기능이 늘어도 UI와 데이터 처리가 섞이지 않는 구조가 필요했습니다.',
+          'ViewModel이 Retrofit API와 DTO, 인증 저장소를 직접 다루면 데이터 구조 변경이 화면 코드 수정으로 이어질 수 있었습니다.',
         ],
         solution: [
-          'Android 저장소를 presentation/domain/data 3모듈로 나누고, UI·도메인 규칙·데이터 접근 구현의 책임을 모듈 단위로 분리',
-          'domain 모듈에 Repository 인터페이스와 UseCase를 두고, data 모듈에서 RepositoryImpl/DataSource/Mapper를 구현하는 구조 적용',
-          'presentation 모듈은 ViewModel과 UiState 중심으로 화면 상태를 관리하고, 세부 네트워크 구현은 하위 계층으로 위임',
+          'presentation, domain, data의 3개 모듈로 UI, 도메인 규칙과 데이터 접근을 나눴습니다.',
+          'domain에는 Repository 인터페이스와 UseCase를 두고 data에는 Repository 구현체, DataSource와 Mapper를 배치했습니다.',
+          'presentation은 ViewModel과 UiState로 화면 상태를 관리하고 네트워크 세부 구현은 데이터 계층에 맡겼습니다.',
         ],
         result: [
-          '게시글·댓글·좋아요·프로필·채팅 등 주요 기능을 동일한 계층 구조로 확장할 수 있는 기반 확보',
-          'presentation/domain/data 모듈 구성과 33개 UseCase 기반으로 기능별 책임을 나누어 수정 범위 예측 가능성 향상',
-          'API DTO 변경, 데이터 소스 변경, 화면 상태 변경이 서로 다른 계층에 머물도록 하여 앱 전체 유지보수성을 개선',
+          '게시글, 댓글, 좋아요, 프로필과 채팅을 같은 계층 구조로 구현했습니다.',
+          '33개 UseCase로 기능별 동작을 구분해 ViewModel에서 데이터 처리의 세부 구현을 직접 다루지 않도록 했습니다.',
+          'DTO와 데이터 소스 변경은 데이터 계층에서, 화면 상태 변경은 화면 계층에서 처리하도록 경계를 정했습니다.',
         ],
         implementation: [
           {
             description:
-              'Android 저장소는 presentation/domain/data 3모듈로 구성함. UI, 도메인 규칙, 데이터 접근 구현을 모듈 단위로 나누어 의존 방향을 명확히 함.',
+              'presentation, domain, data의 3개 모듈을 구성했습니다. UI는 도메인 인터페이스를 사용하고 데이터 계층이 이를 구현하도록 의존 방향을 정했습니다.',
             code: `rootProject.name = "Android_Bong"
 include ':presentation'
 include ':domain'
@@ -1973,7 +1959,7 @@ include ':data'`,
           },
           {
             description:
-              'domain 모듈에는 기능별 UseCase를 두고, ViewModel은 Repository 세부 구현이 아니라 UseCase를 호출하는 방식으로 동작하도록 구성함.',
+              'domain에 기능별 UseCase를 두었습니다. ViewModel은 Repository의 세부 구현 대신 UseCase를 호출합니다.',
             code: `class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
@@ -1983,29 +1969,29 @@ include ':data'`,
           },
         ],
         alternatives: [
-          '단일 app 모듈 안에서 패키지만 나누는 방식도 가능했지만, 컴파일 경계가 약해 UI·도메인·데이터 코드가 쉽게 섞일 수 있다고 판단함.',
-          'ViewModel에서 Retrofit API와 DTO를 직접 다루는 방식은 초기 구현은 빠르지만, 기능 수가 늘수록 화면 코드가 데이터 구조 변경에 직접 영향받는 문제가 생길 수 있었음.',
+          '단일 app 모듈에서 패키지만 나눌 수도 있지만, 계층 사이의 참조를 빌드 단계에서 제한하기 위해 모듈을 분리했습니다.',
+          'ViewModel에서 API와 DTO를 직접 다루면 구현은 빠르지만 데이터 구조가 바뀔 때 화면도 고쳐야 하므로 Repository와 UseCase를 거치도록 했습니다.',
         ],
       },
       {
         problem: [
-          '재능 교환 과정에서 사용자 간 실시간 대화가 필요했지만, 채팅 메시지 송수신·기존 메시지 조회·연결 상태·UI 상태가 한 화면에 섞이면 유지보수가 어려워지는 구조적 위험이 있었음',
-          '채팅은 연결 유지, 메시지 파싱, 메시지 전송, 내 메시지/상대 메시지 UI 분리까지 한 번에 다뤄야 해 화면 상태 관리가 복잡해질 수 있었음',
+          '재능 교환을 조율할 실시간 채팅이 필요했습니다. 메시지 송수신과 기존 대화 조회, 연결 상태와 화면 상태를 구분해야 했습니다.',
+          '연결 유지, 메시지 파싱과 전송, 발신자별 UI까지 한 화면에서 처리하면 상태 관리 코드가 복잡해질 수 있었습니다.',
         ],
         solution: [
-          'OkHttp WebSocket으로 채팅방별 연결을 유지하고, 메시지 수신·전송을 단일 연결에서 처리하는 실시간 채팅 구조 적용',
-          'WebSocket 연결/해제·메시지 전송은 Data 레이어(WebSocketDataSource → ChattingRepository)에서 담당하고, ViewModel은 Repository 인터페이스에만 의존하도록 분리',
-          'ChattingViewModel에서 StateFlow로 메시지 목록, 입력 메시지, 로딩 여부, 평점 등록 상태를 관리하고, RecyclerView multiple view type으로 내 메시지/상대 메시지 UI 분리',
+          'OkHttp WebSocket으로 채팅방 연결을 유지하고 같은 연결에서 메시지를 주고받았습니다.',
+          '연결, 해제와 전송은 WebSocketDataSource와 ChattingRepository에 두고 ViewModel에서는 Repository 인터페이스를 사용했습니다.',
+          'StateFlow로 메시지 목록, 입력값, 로딩과 평점 등록 상태를 관리하고 RecyclerView의 뷰 타입으로 발신자별 UI를 나눴습니다.',
         ],
         result: [
-          '실시간 채팅 기능을 앱 구조 안에 통합하고, 네트워크 통신·도메인 인터페이스·UI 상태 관리 책임을 분리함',
-          '채팅 화면이 WebSocket 구현체에 직접 의존하지 않도록 만들어 추후 통신 방식 변경, 메시지 파싱 정책 변경, 테스트 대역 추가가 쉬운 구조 확보',
-          'ListAdapter와 DiffUtil 기반 채팅 리스트 갱신으로 메시지 타입별 UI를 안정적으로 분리하고 불필요한 RecyclerView 갱신 비용을 줄임',
+          '네트워크 통신, 도메인 인터페이스와 UI 상태 관리를 나눠 기존 앱 구조에 채팅을 추가했습니다.',
+          '화면이 WebSocket 구현체를 직접 참조하지 않아 통신과 메시지 파싱 코드를 화면과 따로 바꿀 수 있도록 했습니다.',
+          '내 메시지와 상대 메시지를 다른 레이아웃으로 표시하고 DiffUtil로 변경된 목록 항목을 갱신했습니다.',
         ],
         implementation: [
           {
             description:
-              'OkHttp WebSocket 생성·해제·메시지 전송을 전담하는 WebSocketDataSourceImpl을 두어, 네트워크 상세 구현을 네트워크 구현 계층에 캡슐화함.',
+              'WebSocketDataSourceImpl에 OkHttp WebSocket 생성, 해제와 메시지 전송을 모았습니다.',
             code: `class WebSocketDataSourceImpl @Inject constructor(
     private val client: OkHttpClient
 ) : WebSocketDataSource {
@@ -2037,7 +2023,7 @@ include ':data'`,
           },
           {
             description:
-              '도메인 레이어에서는 ChattingRepository 인터페이스만 바라보도록 하고, 실제 구현체 ChattingRepositoryImpl에서 WebSocket DataSource를 위임 호출하는 구조 설계함.',
+              '도메인 계층에는 ChattingRepository 인터페이스를 두고 구현체에서 WebSocketDataSource를 호출하도록 했습니다.',
             code: `class ChattingRepositoryImpl @Inject constructor(
     private val webSocketDataSource: WebSocketDataSource
 ) : ChattingRepository {
@@ -2053,7 +2039,7 @@ include ':data'`,
           },
           {
             description:
-              'ChattingViewModel에 MutableStateFlow(ChattingUiState())를 두고, WebSocket 이벤트를 수신할 때마다 UI 상태(로딩 여부, 채팅 리스트)를 직접 갱신하는 구조 도입함.',
+              'ChattingViewModel에서 ChattingUiState를 StateFlow로 관리합니다. WebSocket 이벤트를 받으면 로딩 여부와 메시지 목록을 갱신합니다.',
             code: `@HiltViewModel
 class ChattingViewModel @Inject constructor(
     private val successMatchingUseCase: SuccessMatchingUseCase,
@@ -2126,7 +2112,7 @@ class ChattingViewModel @Inject constructor(
           },
           {
             description:
-              '채팅 리스트는 ListAdapter와 multiple view type을 활용해 내 메시지와 상대 메시지를 서로 다른 레이아웃으로 분리함. 메시지 소유자 판단은 senderId 기준으로 처리함.',
+              'senderId로 메시지 발신자를 구분하고 서로 다른 뷰 타입을 적용합니다. ListAdapter로 목록 변경을 반영합니다.',
             code: `class ChattingAdapter(private val myUsrId: String) :
     ListAdapter<ChatMessage, RecyclerView.ViewHolder>(diffCallback) {
 
@@ -2151,9 +2137,9 @@ class ChattingViewModel @Inject constructor(
           },
         ],
         alternatives: [
-          'HTTP polling으로 주기 조회하는 방식도 가능했지만, 채팅방 입장 중 지속적인 양방향 대화가 필요한 요구사항에는 연결 유지형 WebSocket이 더 단순하고 자연스러운 선택이라고 판단함.',
-          'Server-Sent Events(SSE)를 사용하는 방법도 있었지만, 단방향 스트림 특성상 클라이언트→서버 메시지 전송을 별도 채널로 유지해야 해서 구조가 더 복잡해졌을 것임.',
-          'MQTT 같은 메시지 브로커 기반 프로토콜로 전환하는 방안도 있지만, 현재 요구사항(앱 내 1:1/소규모 채팅) 대비 운영 구성 복잡도가 커져 WebSocket 대비 과한 선택이 되었을 가능성이 큼.',
+          'HTTP로 주기 조회하는 방법보다 연결을 유지하며 양방향으로 메시지를 주고받는 WebSocket이 거래 채팅에 적합하다고 판단했습니다.',
+          'SSE는 서버에서 클라이언트로 보내는 단방향 스트림이어서 메시지 전송 경로를 별도로 구성해야 했습니다.',
+          'MQTT는 메시지 브로커 운영이 추가로 필요해 앱 안의 1:1 채팅에는 WebSocket을 선택했습니다.',
         ],
       },
     ],
@@ -2193,15 +2179,15 @@ class ChattingViewModel @Inject constructor(
     ],
     insightImages: ['screenshot/Bong+.png'],
     achievements: [
-      rich(strong('팀장'), ', 안드로이드 개발 전담 (1인)'),
-      rich(strong('presentation/domain/data 모듈 구성'), '과 33개 UseCase 기반으로 기능별 책임 분리'),
-      rich(strong('OkHttp WebSocket'), ' 기반 1:1 거래 채팅 구현 및 연결·해제·메시지 전송 책임을 DataSource로 분리'),
-      rich(strong('ListAdapter/DiffUtil'), '과 RecyclerView multiple view type으로 내 메시지/상대 메시지 UI 분리'),
-      rich(strong('EncryptedSharedPreferences'), ' 기반 인증 토큰 저장 및 OkHttp Interceptor를 통한 Authorization 헤더 주입'),
+      '팀장을 맡고 Android 앱의 전체 화면과 API 연동을 혼자 구현했습니다.',
+      'presentation, domain, data 모듈과 33개 UseCase로 화면, 도메인 규칙과 데이터 접근을 나눴습니다.',
+      'WebSocket으로 1:1 거래 채팅을 구현하고 연결, 해제와 메시지 전송을 데이터 계층에 모았습니다.',
+      '발신자에 따라 메시지 UI를 구분하고 ListAdapter와 DiffUtil로 목록 변경을 반영했습니다.',
+      '인증 토큰을 암호화해 저장하고 Interceptor에서 요청의 인증 헤더를 추가했습니다.',
     ],
     retrospective: [
-      '개발 일정에 집중하다 보니 UI/UX 세부 튜닝, 접근성 지원 등은 미흡, 상태 관리 체계 강화(State 도입 필요성 인식)',
-      '"잘 만든 구조가 좋은 코드보다 유지보수에 더 큰 가치를 준다"는 점, 테스트/유지보수/사용자 피드백의 중요성 체감',
+      '기능 구현에 집중해 화면의 세부 동작과 접근성을 충분히 점검하지 못했습니다. 상태를 명확히 정의하고 사용자 피드백으로 동작을 확인할 필요가 있었습니다.',
+      '넓은 기능을 혼자 구현하며 계층별 역할과 수정 위치를 정해 두는 것이 이후 유지보수에 도움이 된다는 점을 배웠습니다.',
     ],
     links: [
       { label: 'Android', url: 'https://github.com/GrapeBongBong/Android' },
@@ -2221,7 +2207,7 @@ class ChattingViewModel @Inject constructor(
     id: 'pocs',
     title: 'POCS - Android',
     description:
-      '한성대학교 전공 소모임 POCS 회원들을 위한 원활한 스터디 모집 및 정보 공유를 위한 커뮤니티 앱',
+      '한성대학교 전공 소모임 POCS 회원이 스터디를 모집하고 정보를 공유하는 커뮤니티 앱입니다.',
     thumbnail: 'screenshot/POCS1.png',
     tech: [
       'Kotlin',
@@ -2239,44 +2225,44 @@ class ChattingViewModel @Inject constructor(
     ],
     period: '2022.06 ~ 2022.09',
     team: '11명 (Backend 2명, Android 2명, Frontend 5명, PM 2명)',
-    role: '안드로이드 앱 개발 (스터디·커뮤니티, 프로필 기능 개발)',
+    role: 'Android 스터디, 커뮤니티와 프로필 기능 개발',
     details: [
-      '전공 소모임 POCS 회원들이 스터디 모집과 정보 공유를 편리하게 할 수 있는 커뮤니티 앱 개발',
-      '코로나로 침체한 전공 소모임을 활성화하기 위해 스터디 모집과 정보 전달을 효율화하기 위한 전용 플랫폼 개발',
+      'POCS 회원이 스터디를 모집하고 게시글로 정보를 나누는 전용 커뮤니티를 개발했습니다.',
+      '코로나로 줄어든 소모임 활동을 다시 이어갈 수 있도록 스터디 모집과 공지, 정보 공유를 한곳에 모았습니다.',
     ],
     features: [
-      '로그인 및 회원가입 (익명/정회원), 관리자/일반 회원 모드',
-      '스터디/커뮤니티 포스팅 및 댓글 CRUD, 카테고리별 게시글 등록 및 관리',
-      '이미지 첨부, Markdown 편집 지원',
-      '프로필 이미지 및 정보 수정, 나의 게시글·댓글 관리, 외부 링크 관리',
-      '관리자 기능: 회원 관리, 권한 부여',
-      '게시글·댓글 좋아요/저장, 검색 및 필터 기능',
+      '익명과 정회원 로그인, 회원가입과 관리자 모드를 지원해야 했습니다.',
+      '카테고리별로 스터디와 커뮤니티 글을 올리고 게시글과 댓글을 수정하거나 삭제할 수 있어야 했습니다.',
+      '이미지를 첨부하고 Markdown으로 글을 편집할 수 있어야 했습니다.',
+      '프로필과 외부 링크를 수정하고 자신이 작성한 게시글과 댓글을 관리할 수 있어야 했습니다.',
+      '관리자는 회원과 권한을 관리할 수 있어야 했습니다.',
+      '게시글과 댓글의 좋아요, 저장, 검색과 필터 기능을 제공해야 했습니다.',
     ],
     contributions: [
-      '안드로이드 앱 개발 (스터디·커뮤니티, 프로필 기능 개발)',
-      rich('기존 XML View를 Jetpack Compose로 ', strong('70% 이상 전환'), '하여 코드 재사용성과 개발 효율성 개선'),
-      'Paging3 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화',
-      'GitHub Actions를 활용해 Android CI/CD (자동 빌드, 테스트, Play Store 배포) 환경 구축',
-      rich(strong('Play Store 정식 배포 완료'), '로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험'),
+      '스터디와 커뮤니티, 프로필 기능을 개발했습니다.',
+      rich('기존 XML 화면의 ', strong('70% 이상을 Jetpack Compose로 전환했습니다'), '.'),
+      'Paging3로 스크롤 위치에 따라 필요한 게시글을 페이지 단위로 불러오도록 바꿨습니다.',
+      'GitHub Actions로 빌드, 테스트와 Play Store 내부 테스트 트랙 배포를 자동화했습니다.',
+      '앱을 Play Store에 정식 배포하고 운영과 유지보수를 경험했습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          '대량의 JSON 데이터를 한 번에 로딩하여 리스트에 바인딩하면서, 스크롤 시 프레임 드랍·UI 끊김 현상 발생함.',
-          '페이지네이션 미적용으로 동일 데이터를 반복해서 요청하거나, 불필요한 데이터까지 메모리에 적재하는 비효율 발생함.',
+          'JSON 데이터를 한 번에 불러와 목록에 넣으면서 스크롤할 때 화면이 끊겼습니다.',
+          '페이지 구분 없이 같은 데이터를 다시 요청하거나 당장 표시하지 않을 데이터까지 메모리에 올렸습니다.',
         ],
         solution: [
-          'Android Paging3 라이브러리 도입으로 네트워크 기반 페이지네이션을 구현하고, 스크롤 위치에 따라 필요한 페이지만 순차적으로 로딩하는 구조 적용함.',
-          'PagingSource, Pager, PagingData 기반으로 Data 레이어에 페이지 단위 데이터 공급 책임을 부여하여, UI에서는 스트림만 구독하도록 역할 분리함.',
+          'Paging3로 네트워크 페이지 조회를 구현하고 스크롤 위치에 따라 다음 페이지를 불러오도록 했습니다.',
+          '데이터 계층에서 PagingSource와 Pager를 구성하고 UI에는 PagingData 스트림을 전달했습니다.',
         ],
         result: [
-          '기존 JSON 전체 로딩 방식에서 Paging3 기반 페이지네이션으로 전환하여, 초기 로딩 시 데이터·렌더링 부담 감소 및 스크롤 시 렉 현상 완화 달성함.',
-          '네트워크 요청·페이지 키 관리·에러 처리 로직을 PostPagingSource 한 곳에 모으고, 상위 레이어에는 Flow<PagingData<Post>>만 제공함으로써, UI 레이어 변경 없이도 페이징 전략 수정·튜닝 가능성 확보함.',
+          '처음부터 전체 데이터를 불러오지 않고 필요한 페이지를 나눠 받아 초기 로딩과 스크롤의 부담을 줄였습니다.',
+          '요청, 페이지 키와 오류 처리를 PostPagingSource에 모아 화면 코드와 따로 수정할 수 있게 했습니다.',
         ],
         implementation: [
           {
             description:
-              'PostPagingSource를 도입하여, JSON 응답을 페이지 단위로 로딩하고, 응답을 Domain 모델 Post로 매핑하여 UI에 공급하는 책임을 분리함.',
+              'PostPagingSource가 페이지별 JSON 응답을 받아 도메인 모델 Post로 변환합니다.',
             code: `class PostPagingSource @Inject constructor(
     private val api: PostApi,
     private val filterType: PostFilterType
@@ -2318,7 +2304,7 @@ class ChattingViewModel @Inject constructor(
           },
           {
             description:
-              'PostRepositoryImpl에서 Pager를 생성해 PagingData<Post> 스트림을 반환함으로써, UI·ViewModel에서 Paging3 상세 구현을 몰라도 되도록 추상화 계층 구성함.',
+              'PostRepositoryImpl에서 Pager를 구성해 PagingData 스트림을 반환합니다. ViewModel과 UI는 데이터 요청의 세부 구현 대신 이 스트림을 사용합니다.',
             code: `class PostRepositoryImpl @Inject constructor(
     private val dataSource: PostRemoteDataSource,
     private val api: PostApi
@@ -2334,28 +2320,28 @@ class ChattingViewModel @Inject constructor(
           },
         ],
         alternatives: [
-          '클라이언트에서만 in-memory paging(배열 슬라이싱)이나 LazyColumn의 item/itemsIndexed 조합으로 가상 페이징을 구현하는 방법도 있었을 것임.',
-          'RecyclerView + ListAdapter로 전환하고 DiffUtil 최적화, 이미지 썸네일/placeholder 적용 등 렌더링 쪽만 튜닝하는 접근도 가능했지만, 한 번에 내려받는 데이터 양 자체를 줄이지 못해 근본적인 메모리·네트워크 부담은 남았을 것임.',
-          '자체 커스텀 페이징 로직을 구현하는 방법도 있었지만, 이미 검증된 Paging3를 활용하는 쪽이 중복 코드와 버그 가능성을 줄이고 라이프사이클·캐싱 지원을 그대로 가져올 수 있다는 점에서 더 현실적인 선택이었음.',
+          '받은 배열을 나누거나 LazyColumn에서 일부만 그리는 방법은 한 번에 내려받는 데이터양을 줄이지 못했습니다.',
+          'DiffUtil과 이미지 썸네일로 렌더링을 조정할 수도 있지만 네트워크와 메모리 사용량도 줄이기 위해 페이지 조회를 적용했습니다.',
+          '페이지 조회를 직접 구현하기보다 생명주기와 캐시를 지원하는 Paging3를 사용했습니다.',
         ],
       },
       {
         problem: [
-          '기능 개발 외에 반복적인 수동 빌드·테스트·배포 작업으로 인한 시간 소모 및 에러 발생 부담 증가함.',
-          '브랜치 전략에 따른 품질 검증(빌드/테스트/Lint)과 Play Store 배포가 일관된 프로세스 없이 수동으로 진행되어, 배포 속도 및 신뢰도 저하 현상 발생함.',
+          '빌드, 테스트와 배포를 수동으로 반복하면서 확인 항목을 빠뜨릴 수 있었습니다.',
+          '브랜치별 검증과 Play Store 배포 절차가 자동화되지 않아 매번 같은 순서를 직접 수행해야 했습니다.',
         ],
         solution: [
-          'GitHub Actions 워크플로를 도입하여 main 브랜치에 대한 빌드·Lint·UI 테스트를 자동화하고, release 브랜치에서 Play Store Internal Track까지 자동 배포되는 CI/CD 파이프라인 설계 및 구축함.',
-          '서버 URL, 서명 키, 서비스 계정 키 등 민감 정보를 GitHub Secrets로 관리하고, 워크플로 실행 시 환경 변수 및 파일로 주입하는 보안 중심 구성 적용함.',
+          'GitHub Actions에서 main 브랜치의 빌드, Lint와 UI 테스트를 실행하고 release 브랜치는 Play Store 내부 테스트 트랙까지 배포하도록 구성했습니다.',
+          '서버 URL과 서명 키, 서비스 계정 키는 GitHub Secrets에 저장하고 실행 시 환경 변수와 파일로 전달했습니다.',
         ],
         result: [
-          'main 브랜치에 대한 빌드·Lint·UI 테스트가 자동으로 실행되어, 코드 병합 전 품질 검증을 일관된 파이프라인으로 수행함으로써 수동 검증 부담 감소 및 신뢰도 향상 달성함.',
-          'release 브랜치 push만으로 서명된 AAB 빌드부터 Play Store Internal Track 배포까지 자동화하여, 배포 속도 향상과 함께 서명/업로드 과정에서의 에러 발생 가능성 감소 효과 확보함.',
+          'main 브랜치의 push와 Pull Request에서 같은 빌드와 코드 검사, UI 테스트를 실행하도록 했습니다.',
+          'release 브랜치에 push하면 AAB 빌드와 서명, 내부 테스트 트랙 업로드를 이어서 수행하도록 자동화했습니다.',
         ],
         implementation: [
           {
             description:
-              'Android CI 워크플로를 정의하여 main 브랜치 push/pull request 시 자동으로 빌드, ktlint 체크를 수행함. SERVER_URL을 GitHub Secrets에서 읽어 apikey.properties 파일로 생성하여 환경 구성 자동화 수행함.',
+              'main 브랜치의 push와 Pull Request에서 빌드와 ktlint를 실행합니다. GitHub Secrets의 SERVER_URL로 apikey.properties 파일을 만듭니다.',
             code: `name: Android CI
 
 on:
@@ -2393,7 +2379,7 @@ jobs:
           },
           {
             description:
-              'matrix.api-level 전략으로 23·30·31 버전 에뮬레이터에서 connectedCheck를 실행함으로써, 다양한 OS 버전에서 UI 회귀 테스트 자동화 환경 구축함.',
+              '에뮬레이터의 API 레벨을 23, 30, 31로 나눠 connectedCheck를 실행합니다.',
             code: `ui-test:
   name: UI tests on Android (API level \${{ matrix.api-level }})
   runs-on: macos-latest
@@ -2424,7 +2410,7 @@ jobs:
           },
           {
             description:
-              'release 브랜치 push 시 Play Store Internal Track까지 자동 배포하는 CD 워크플로. Gradle로 Release AAB를 빌드하고, GitHub Secrets 기반 서명 후 Google Play Console에 업로드함.',
+              'release 브랜치에 push하면 Gradle로 릴리스 AAB를 빌드합니다. GitHub Secrets의 키로 서명한 뒤 Google Play Console의 내부 테스트 트랙에 올립니다.',
             code: `name: Build and Publish to Play Store
 on:
   push:
@@ -2461,9 +2447,9 @@ jobs:
           },
         ],
         alternatives: [
-          'Jenkins, GitLab CI 같은 사내 CI 서버를 구축해 파이프라인을 운영하는 방법도 있었지만, 별도 서버 관리 비용과 초기 설정 부담이 커서 GitHub 저장소와 밀접하게 연동되는 현재 구조보다 효율이 떨어졌을 가능성이 있음.',
-          '로컬 Git 훅(pre-push 등)과 IDE 플러그인만으로 빌드·Lint 검사를 강제하는 방식도 가능했지만, 개발자 환경마다 설정 편차가 생기고, Pull Request 단위로 일관된 품질 검증을 보장하기 어려웠을 것임.',
-          'Play Store 배포만 별도 수동 스크립트(예: fastlane)로 처리하고 나머지 검증은 수동으로 남겨두는 절충안도 있었지만, 사람이 개입하는 구간이 많은 만큼 릴리스 속도와 신뢰도를 끌어올리기에는 한계가 있었을 것임.',
+          'Jenkins나 GitLab CI도 사용할 수 있지만 별도 서버 운영 없이 GitHub 저장소와 연결할 수 있는 GitHub Actions를 선택했습니다.',
+          '로컬 Git 훅과 IDE 검사만 사용하면 개발자 환경에 따라 실행 결과가 달라질 수 있어 Pull Request에서 공통 검증을 수행하도록 했습니다.',
+          '배포 스크립트만 자동화하기보다 빌드와 테스트부터 업로드까지 연결해 수동으로 수행할 단계를 줄였습니다.',
         ],
       },
     ],
@@ -2498,15 +2484,15 @@ jobs:
       'screenshot/POCS+2.png',
     ],
     achievements: [
-      rich(strong('안드로이드 앱 개발'), ' (스터디·커뮤니티, 프로필 기능 개발)'),
-      rich('기존 XML View를 Jetpack Compose로 ', strong('70% 이상 전환'), '하여 코드 재사용성과 개발 효율성 개선'),
-      rich(strong('Paging3'), ' 도입으로 스크롤 시 지연 로드하여 초기 화면 렌더링 지연 최소화'),
-      rich(strong('GitHub Actions'), '를 활용해 ', strong('Android CI/CD'), ' (자동 빌드, 테스트, Play Store 배포) 환경 구축'),
-      rich(strong('Play Store 정식 배포 완료'), '로 실제 프로덕션 환경에서의 앱 운영 및 유지보수 경험'),
+      '스터디, 커뮤니티와 프로필 기능을 개발했습니다.',
+      rich('기존 XML 화면의 ', strong('70% 이상을 Jetpack Compose로 전환했습니다'), '.'),
+      'Paging3로 게시글을 페이지 단위로 불러와 처음부터 전체 데이터를 받지 않도록 바꿨습니다.',
+      'GitHub Actions로 빌드, 테스트와 Play Store 내부 테스트 트랙 배포를 자동화했습니다.',
+      rich('앱을 ', strong('Play Store에 정식 배포'), '하고 운영과 유지보수를 경험했습니다.'),
     ],
     retrospective: [
-      'MVP에 집중하다 보니 초반 UI/UX 세부 설계가 부족함, UI/UX 설계 초기부터 더 많은 리소스와 시간 투자 필요성 인식',
-      '유지보수와 확장성 있는 개발의 중요성, 팀원과 코드 리뷰/지식 공유의 소중함, 사용자 피드백을 통한 서비스 개선의 보람 깨달음',
+      'MVP 기능에 집중하면서 화면의 세부 동작을 충분히 설계하지 못했습니다. 초기부터 사용자 흐름을 확인할 시간을 따로 확보할 필요가 있었습니다.',
+      '배포 후 사용자 피드백을 반영하고 팀원과 코드를 검토하면서 기능 구현 이후에도 유지보수와 지식 공유가 이어져야 한다는 점을 배웠습니다.',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/hansung-pocs/blog-android' },

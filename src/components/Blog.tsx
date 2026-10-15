@@ -4,15 +4,15 @@ import styles from './Blog.module.css'
 const series = [
   {
     name: 'Android 시리즈',
-    description: 'ComposeUI, 인텐트·4대 컴포넌트, 멀티모듈 등 안드로이드 전반을 정리',
+    description: 'Compose UI, 인텐트와 4대 컴포넌트, 멀티 모듈 등 Android 개발 내용을 정리합니다.',
   },
   {
     name: 'Kotlin 시리즈',
-    description: '코루틴, 컬렉션/람다 등 언어·라이브러리 특성을 정리',
+    description: '코루틴과 컬렉션, 람다 등 Kotlin 문법과 라이브러리 사용법을 정리합니다.',
   },
   {
     name: 'CS 시리즈',
-    description: '운영체제(Deadlock, 뮤텍스/세마포어, 페이징), 자료구조·알고리즘(DP, 재귀, 0-1 BFS, LIS 등) 개념을 정리',
+    description: '교착상태와 동기화, 페이징 같은 운영체제 개념과 자료구조, 동적 계획법, 그래프 탐색 등을 정리합니다.',
   },
 ]
 
@@ -33,10 +33,10 @@ function Blog() {
         </a>
         <p className={styles.blogName}>인성의 개발 공부 노트</p>
         <p className={styles.blogDesc}>
-          <strong className={styles.emphasis}>2021년부터 5년동안</strong> Kotlin, Android, CS, Algorithm 등 <strong className={styles.emphasis}>현재 220+개의 포스팅</strong>을 작성
+          2021년부터 Kotlin, Android, CS와 알고리즘을 공부하며 <strong className={styles.emphasis}>220개 이상의 글</strong>을 작성했습니다.
         </p>
         <p className={styles.blogDesc}>
-          <strong className={styles.emphasis}>Jetpack Compose 렌더링/Recomposition</strong>, <strong className={styles.emphasis}>안드로이드 아키텍처(MVVM, MVI)</strong>, 네트워크/직렬화 라이브러리 비교 학습 내용을 정리
+          Compose 렌더링과 리컴포지션, MVVM과 MVI, 네트워크 및 직렬화 라이브러리를 학습하고 비교한 내용을 기록합니다.
         </p>
       </div>
       <div className={styles.seriesGrid}>
