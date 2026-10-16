@@ -54,7 +54,8 @@
       padding-top: 2px;
     }
 
-    .blog-section {
+    .blog-section,
+    .activity-section {
       break-inside: avoid;
       page-break-inside: avoid;
     }
@@ -251,30 +252,6 @@
       page-break-inside: avoid;
     }
 
-    .supplementary-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
-      gap: 22px;
-    }
-
-    .supplementary-grid .row-title {
-      gap: 8px;
-    }
-
-    .supplementary-grid section:last-child {
-      margin-bottom: 0;
-    }
-
-    .recognition-sections .row-title {
-      display: block;
-    }
-
-    .recognition-sections .right-meta {
-      display: block;
-      text-align: left;
-    }
-
     @media screen {
       body {
         padding: 28px 20px;
@@ -430,8 +407,6 @@
       </ul>
     </section>
 
-    <div class="supplementary-grid">
-      <div>
     <section>
       <div class="section-heading">
         <h2>Education</h2>
@@ -480,9 +455,7 @@
         <li>Jetpack Compose·MVVM/MVI·네트워크/직렬화 라이브러리, 코루틴·운영체제·자료구조·알고리즘 정리</li>
       </ul>
     </section>
-      </div>
-      <div>
-        <div class="recognition-sections">
+
     <section>
       <div class="section-heading">
         <h2>Awards</h2>
@@ -499,9 +472,8 @@
       <div class="row-title"><p class="one-line">정보처리기사 | 한국산업인력공단 | 24203011265G</p><span class="right-meta">2024.12</span></div>
       <div class="row-title"><p class="one-line">ADsP | 한국데이터산업진흥원 | ADsP-043007180</p><span class="right-meta">2024.11</span></div>
     </section>
-        </div>
 
-    <section>
+    <section class="activity-section">
       <div class="section-heading">
         <h2>Activity</h2>
       </div>
@@ -518,8 +490,6 @@
       <div class="row-title"><p class="one-line">한성대학교 교내 전공 소모임 POCS</p><span class="right-meta">2022.06 ~ 2023.12</span></div>
       <div class="row-title"><p class="one-line">한성대학교 교내 PIG 사진동아리 부회장 활동</p><span class="right-meta">2019.03 ~ 2019.12</span></div>
     </section>
-      </div>
-    </div>
     </div>
   </main>
 </body>

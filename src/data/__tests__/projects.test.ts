@@ -190,7 +190,7 @@ describe('projects 데이터 무결성', () => {
       .not.toBeNull()
   })
 
-  it('이력서는 첫쪽에 경력과 대표 프로젝트를 두고 보조 정보를 두 열로 배치한다', () => {
+  it('이력서는 첫쪽에 경력과 대표 프로젝트를 두고 이후 섹션을 한 흐름으로 배치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
@@ -204,9 +204,7 @@ describe('projects 데이터 무결성', () => {
     expect(pages.map((page) => Array.from(page.querySelectorAll('[data-project-id]'), (project) => project.getAttribute('data-project-id'))))
       .toEqual([['naenun-kiosk', 'mo-re'], ['glim']])
     expect(pages[0].querySelector('[data-career-id="chartlab"]')).not.toBeNull()
-    const columns = Array.from(pages[1].querySelector('.supplementary-grid')!.children)
-    expect(columns.map((column) => Array.from(column.querySelectorAll('h2'), (heading) => heading.textContent)))
-      .toEqual([['Education', 'Blog'], ['Awards', 'Certificates', 'Activity']])
+    expect(Array.from(pages[1].children)).toEqual(Array.from(pages[1].querySelectorAll('section')))
     expect(resumeDocument.body.textContent).not.toMatch(/Compose-Chart|Compose-Git-Grass|Open Source/)
   })
 
