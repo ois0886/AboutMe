@@ -4,7 +4,7 @@ import styles from './Education.module.css'
 
 const educations = [
   {
-    title: '삼성 청년 AI·SW 아카데미 13기',
+    title: '삼성 청년 AI SW 아카데미 13기',
     subtitle: 'Mobile Track',
     period: '2025.01.20 ~ 2025.12.11',
     details: [

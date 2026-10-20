@@ -15,12 +15,13 @@ type CareerEntry = {
 export const careers: CareerEntry[] = [
   {
     company: '(주)차트연구소',
-    role: 'Android Developer · 연구원/정규직',
+    role: 'Android Developer | 연구원/정규직',
     location: '서울시 강서구',
     periodLabel: '2026.02.09 ~ 재직 중',
     start: new Date(2026, 1, 9),
     tasks: [
       'PowerGraphics의 Android 간편 차트인 EasyChart에서 차트 화면과 설정 기능을 개발했습니다. ViewModel, LiveData, StateFlow로 설정 저장과 초기화, 화면 재진입 시 상태를 관리했습니다.',
+      'PowerGraphics의 MarketMap 설정 화면을 개발했습니다. 데이터 깊이와 카테고리, 표시 옵션과 테두리 스타일을 편집하도록 구현하고, 깊이 전환 시 편집값을 보존하며 저장과 초기화, 재조회에 따른 화면 상태와 엔진 속성을 관리했습니다.',
       'React, Vite, SCSS로 자사 반응형 홈페이지를 개발하고 제품 소개, 공지사항, 콘텐츠 관리, 문의 접수 기능을 연동했습니다.',
     ],
   },

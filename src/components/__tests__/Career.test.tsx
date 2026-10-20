@@ -21,7 +21,7 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서에는 EasyChart와 자사 홈페이지 개발 경력만 표시한다', () => {
+  it('웹과 이력서의 EasyChart, MarketMap, 자사 홈페이지 개발 경력이 일치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
@@ -30,6 +30,7 @@ describe('Career', () => {
 
     const facts = [
       ['EasyChart', 'ViewModel', 'LiveData', 'StateFlow'],
+      ['MarketMap', '데이터 깊이', '카테고리', '테두리 스타일', '편집값', '저장', '초기화', '재조회', '엔진 속성'],
       ['React', 'Vite', 'SCSS', '홈페이지'],
     ]
     expect(resumeTasks).toHaveLength(facts.length)
@@ -50,9 +51,10 @@ describe('Career', () => {
     render(<Career />)
 
     expect(screen.getByText(/EasyChart.*차트 화면과 설정 기능/)).toBeInTheDocument()
+    expect(screen.getByText(/MarketMap 설정 화면.*깊이 전환 시 편집값을 보존/)).toBeInTheDocument()
     expect(screen.queryByText(/LS증권|투혼|조회 61종|실시간 21종|Script API|커스텀 그리드/)).not.toBeInTheDocument()
     expect(screen.getByText(/React, Vite, SCSS로 자사 반응형 홈페이지/)).toBeInTheDocument()
-    expect(screen.queryByText(/개발·샘플 매뉴얼|숫자 입력 저장·소수점 처리|운영 버전의 수정·검증 절차|배포·운영 가이드/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/개발, 샘플 매뉴얼|숫자 입력 저장, 소수점 처리|운영 버전의 수정, 검증 절차|배포, 운영 가이드/)).not.toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
   })
@@ -158,7 +160,7 @@ describe('Education', () => {
     const education = within(study.closest('section')!)
 
     expect(study.closest('section')).toHaveAttribute('id', 'education')
-    expect(education.getByRole('heading', { level: 3, name: /삼성 청년 AI·SW 아카데미 13기/ })).toBeInTheDocument()
+    expect(education.getByRole('heading', { level: 3, name: /삼성 청년 AI SW 아카데미 13기/ })).toBeInTheDocument()
     expect(education.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
       'https://github.com/Kotlin-Android-Study-with-SSAFY',
       'https://superohinsung.tistory.com/73',

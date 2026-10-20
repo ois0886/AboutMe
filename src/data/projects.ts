@@ -1637,7 +1637,7 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
         url: 'https://superohinsung.tistory.com/393',
       },
       {
-        title: 'UiState–Intent–SideEffect MVI 구조를 자체 설계·적용해보자',
+        title: 'UiState–Intent–SideEffect MVI 구조를 직접 설계하고 적용해보자',
         url: 'https://superohinsung.tistory.com/432',
       },
       {

@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import projects from '../projects'
 
@@ -174,6 +174,8 @@ describe('projects 데이터 무결성', () => {
       expect(item.querySelector('.project-description')?.textContent).toBeTruthy()
       expect(item.querySelector('.project-context')?.textContent).toContain('Android')
       expect(item.querySelector('.project-context')?.textContent).toContain(project.team.match(/\d+명/)![0])
+      expect(item.querySelector('.project-context')?.textContent)
+        .not.toMatch(/Kotlin|Jetpack Compose|ViewModel|Coroutines|Flow|Hilt|Retrofit|DataStore|JUnit/)
       projectFacts[project.id].forEach((fact) => {
         expect(resumeText, project.id).toContain(fact)
         expect(webText, project.id).toContain(fact)
@@ -190,7 +192,7 @@ describe('projects 데이터 무결성', () => {
       .not.toBeNull()
   })
 
-  it('이력서는 첫쪽에 경력과 대표 프로젝트를 두고 이후 섹션을 한 흐름으로 배치한다', () => {
+  it('이력서는 첫쪽에 경력과 세 프로젝트를 모으고 둘째 쪽에 나머지 섹션을 배치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
@@ -199,13 +201,24 @@ describe('projects 데이터 무결성', () => {
     expect(pages.map((page) => Array.from(page.querySelectorAll('h2'), (heading) => heading.textContent)))
       .toEqual([
         ['Introduction', 'Career', 'Project'],
-        ['Project', 'Skills', 'Education', 'Blog', 'Awards', 'Certificates', 'Activity'],
+        ['Skills', 'Education', 'Blog', 'Awards', 'Certificates', 'Activity'],
       ])
     expect(pages.map((page) => Array.from(page.querySelectorAll('[data-project-id]'), (project) => project.getAttribute('data-project-id'))))
-      .toEqual([['naenun-kiosk', 'mo-re'], ['glim']])
+      .toEqual([['naenun-kiosk', 'mo-re', 'glim'], []])
     expect(pages[0].querySelector('[data-career-id="chartlab"]')).not.toBeNull()
     expect(Array.from(pages[1].children)).toEqual(Array.from(pages[1].querySelectorAll('section')))
     expect(resumeDocument.body.textContent).not.toMatch(/Compose-Chart|Compose-Git-Grass|Open Source/)
+  })
+
+  it('웹과 정적 문서의 텍스트 소스에는 중앙점을 사용하지 않는다', () => {
+    const sourceRoot = resolve(process.cwd(), 'src')
+    const sourceFiles = readdirSync(sourceRoot, { recursive: true, encoding: 'utf8' })
+      .filter((file) => /\.(?:tsx?|json)$/.test(file))
+      .map((file) => resolve(sourceRoot, file))
+
+    for (const file of [...sourceFiles, resolve(process.cwd(), 'resume.html'), resolve(process.cwd(), 'portfolio.html')]) {
+      expect(readFileSync(file, 'utf8'), file).not.toMatch(/[\u00b7\u318d\u2027\u30fb]/u)
+    }
   })
 
   it('연락처는 전화번호와 생년월일을 제외하고 블로그 링크를 제공한다', () => {

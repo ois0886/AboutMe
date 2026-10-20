@@ -6,7 +6,7 @@
 ## 작업 원칙
 
 - 요청 범위 안에서 최소한의 변경만 수행하고, 기존 사용자 변경 사항은 보존합니다.
-- 관련 소스와 테스트를 먼저 확인한 뒤 구현하며, 데이터·컴포넌트 변경 시 관련 테스트도 함께 갱신합니다.
+- 관련 소스와 테스트를 먼저 확인한 뒤 구현하며, 데이터와 컴포넌트 변경 시 관련 테스트도 함께 갱신합니다.
 - 파일 수정은 적용 가능한 작은 패치로 수행하고, 변경 후 `npm run test`, `npm run build`, `npm run lint`를 상황에 맞게 실행합니다.
 - 콘텐츠를 수정할 때는 웹 포트폴리오(`src/`, `public/`)를 기준으로 정적 문서와의 싱크 규칙을 지킵니다.
 
@@ -101,7 +101,7 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 
 ## 프로젝트 상세 페이지 구조
 
-헤더(제목·설명·기간/인원/역할·기술 태그) → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights(+ insightImages) → 담당 역할 및 기여 → 문제 해결(문제/해결 방법/결과/구체적인 구현 설명/대체안, 복수 블록 시 번호 구분) → 스크린샷(첫 장 전체 폭 + 나머지 그리드 + 마지막 1장 단독) → 프로젝트 회고
+헤더(제목, 설명, 기간/인원/역할, 기술 태그) → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights(+ insightImages) → 담당 역할 및 기여 → 문제 해결(문제/해결 방법/결과/구체적인 구현 설명/대체안, 복수 블록 시 번호 구분) → 스크린샷(첫 장 전체 폭 + 나머지 그리드 + 마지막 1장 단독) → 프로젝트 회고
 
 내용이 비어 있는 섹션은 렌더링하지 않습니다.
 
@@ -120,8 +120,8 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 
 ## 등록된 오픈소스
 
-- **Compose-Chart**: Canvas API 기반 6종 차트(Line·Bar·Donut·Pie·Gauge·Radar) Compose 라이브러리 · Maven Central 배포
-- **Compose-Git-Grass**: GitHub 잔디(contribution graph) Compose UI 라이브러리 · Maven Central 배포
+- **Compose-Chart**: Canvas API 기반 6종 차트(Line, Bar, Donut, Pie, Gauge, Radar) Compose 라이브러리 / Maven Central 배포
+- **Compose-Git-Grass**: GitHub 잔디(contribution graph) Compose UI 라이브러리 / Maven Central 배포
 
 두 카드 모두 클릭 시 GitHub 저장소로 이동합니다.
 
@@ -151,10 +151,11 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 ## 코딩 컨벤션
 
 - 컴포넌트: 함수형 컴포넌트 + default export
-- 스타일: CSS Modules (*.module.css), 색상·간격은 `global.css`의 CSS 변수 사용
+- 스타일: CSS Modules (*.module.css), 색상과 간격은 `global.css`의 CSS 변수 사용
 - 언어: 한국어 콘텐츠, 영어 코드
-- 경력·프로젝트 내용은 지원 직무에서 의미 있는 기여인지, 해결한 문제와 결과가 설득력 있게 드러나는지 판단해 선별합니다. 중요도가 낮은 세부 업무와 중복 설명은 줄입니다.
-- 코드 라인·모듈·API·데이터 유형 등의 규모 수치는 업무의 복잡도나 책임 범위를 설명할 때 사용해도 됩니다. 단순한 개수 증가를 품질·성능 개선으로 표현하지 않으며, 개선율(%)은 개선 전·후 값이나 측정 자료로 확인 가능한 경우에만 사용합니다.
+- 웹, 이력서, 포트폴리오, 경력기술서와 작업 문서에서 중앙점을 사용하지 않습니다. 나열은 쉼표나 슬래시로 구분하거나 자연스러운 연결어로 풀어 씁니다.
+- 경력과 프로젝트 내용은 지원 직무에서 의미 있는 기여인지, 해결한 문제와 결과가 설득력 있게 드러나는지 판단해 선별합니다. 중요도가 낮은 세부 업무와 중복 설명은 줄입니다.
+- 코드 라인, 모듈, API, 데이터 유형 등의 규모 수치는 업무의 복잡도나 책임 범위를 설명할 때 사용해도 됩니다. 단순한 개수 증가를 품질이나 성능 개선으로 표현하지 않으며, 개선율(%)은 개선 전후 값이나 측정 자료로 확인 가능한 경우에만 사용합니다.
 - 들여쓰기: 2 spaces, 세미콜론 없음, 작은따옴표
 - 카드 스타일: border + `--radius-card` + `--shadow-card` + hover 효과 통일
 - 이미지 토글: useState + 토글 버튼 패턴 (Activity, Awards에서 공통 사용)

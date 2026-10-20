@@ -131,7 +131,7 @@ npm run preview
 
 Vitest + React Testing Library 기반으로 7개 파일 / 44개 테스트가 있습니다.
 
-- `src/components/__tests__/` — Career(총 경력 계산), Header(네비게이션·테마), OpenSource, Projects
+- `src/components/__tests__/` — Career(총 경력 계산), Header(네비게이션과 테마), OpenSource, Projects
 - `src/data/__tests__/` — projects 데이터 무결성 검증
 - `src/hooks/__tests__/` — useScrollReveal
 - `src/pages/__tests__/` — ProjectDetail 렌더링
