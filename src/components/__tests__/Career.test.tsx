@@ -21,21 +21,18 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('웹 경력을 교정해도 이력서의 5개 경력과 핵심 사실은 일치한다', () => {
+  it('웹과 이력서에는 EasyChart와 자사 홈페이지 개발 경력만 표시한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
       resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
     ).map((item) => normalizeText(item.textContent ?? ''))
 
-    expect(resumeTasks).toHaveLength(5)
     const facts = [
       ['EasyChart', 'ViewModel', 'LiveData', 'StateFlow'],
-      ['Java', 'Kotlin', '조회 61종', '실시간 21종'],
-      ['Script API', '64개에서 115개', '호출 규약'],
-      ['PowerGraphics', '커스텀 그리드', '변경된 셀만 갱신'],
       ['React', 'Vite', 'SCSS', '홈페이지'],
     ]
+    expect(resumeTasks).toHaveLength(facts.length)
     expect(careers[0].tasks).toHaveLength(facts.length)
     facts.forEach((keywords, index) => {
       keywords.forEach((keyword) => {
@@ -43,15 +40,17 @@ describe('Career', () => {
         expect(resumeTasks[index]).toContain(keyword)
       })
     })
+
+    for (const tasks of [careers[0].tasks, resumeTasks]) {
+      expect(tasks.join(' ')).not.toMatch(/LS증권|투혼|조회 61종|실시간 21종|Script API|커스텀 그리드|변경된 셀만 갱신|스크롤 위치 변동/)
+    }
   })
 
-  it('핵심 개발 기여와 연동 규모를 표시하고 세부 운영 업무와 삼성증권 PPT 업무는 제외한다', () => {
+  it('요청한 LS증권 업무와 미완성 업무, 세부 운영 업무는 제외한다', () => {
     render(<Career />)
 
     expect(screen.getByText(/EasyChart.*차트 화면과 설정 기능/)).toBeInTheDocument()
-    expect(screen.getByText(/조회 61종과 실시간 21종/)).toBeInTheDocument()
-    expect(screen.getByText(/Java 앱에서 차트 유형과 지표, 실시간 기능을 호출.*Script API를 64개에서 115개로 확장/)).toBeInTheDocument()
-    expect(screen.getByText(/PowerGraphics 감시목록에 차트별 지표/)).toBeInTheDocument()
+    expect(screen.queryByText(/LS증권|투혼|조회 61종|실시간 21종|Script API|커스텀 그리드/)).not.toBeInTheDocument()
     expect(screen.getByText(/React, Vite, SCSS로 자사 반응형 홈페이지/)).toBeInTheDocument()
     expect(screen.queryByText(/개발·샘플 매뉴얼|숫자 입력 저장·소수점 처리|운영 버전의 수정·검증 절차|배포·운영 가이드/)).not.toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
