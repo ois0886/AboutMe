@@ -7,7 +7,9 @@ const skills = [
     items: [
       'Jetpack Compose 화면 개발, 시계열 차트와 GitHub 잔디 형태의 UI 컴포넌트 직접 구현',
       '멀티 모듈, Clean Architecture, MVVM, MVI를 적용해 화면과 상태 처리, 데이터 접근의 책임 분리',
-      'Coroutines로 6개 API를 병렬 호출해 로딩 시간을 약 356ms에서 156ms로 단축. Room 캐싱으로 반복 조회 시간을 3~5초에서 0.5초 이하로 단축하고, Paging3로 목록 분할 로딩',
+      'Coroutines로 독립적인 요청을 병렬 실행하고, 요청별 예외 처리로 일부 실패에도 성공한 데이터를 표시하는 비동기 처리 구현 (로딩 시간 약 356ms → 156ms)',
+      'Room으로 원격 데이터를 로컬에 동기화하고 검색에 활용해, 반복적인 목록 API 호출을 줄이는 조회 흐름 구현 (검색 응답 3~5초 → 0.5초 이하)',
+      'Paging3로 스크롤에 따라 필요한 데이터를 페이지 단위로 불러와, 초기 로딩과 메모리 부담을 줄이는 목록 구현',
       'JUnit5와 MockK로 ViewModel의 상태 변화와 비즈니스 로직을 단위 테스트로 검증',
       'Flow와 StateFlow를 통한 화면 상태 전달과 사용자 입력에 따른 이벤트 흐름 관리',
       'Gradle Convention Plugin으로 공통 build-logic을 구성해 모듈마다 반복되던 빌드 설정을 한곳에서 관리',
