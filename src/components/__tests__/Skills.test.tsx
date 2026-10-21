@@ -14,10 +14,15 @@ describe('Skills', () => {
     })
 
     expect(new Set(matchedItems).size).toBe(technologies.length)
+    const parallelReduction = Math.round((356 - 156) / 356 * 100)
+    const localReductionLowerBound = Math.floor((3 - 0.5) / 3 * 100)
+    expect(matchedItems[0]).toHaveTextContent(`약 ${parallelReduction}% 단축`)
     expect(matchedItems[0]).toHaveTextContent(/356ms.*156ms/)
     expect(matchedItems[0]).not.toHaveTextContent(/3~5초|0\.5초/)
+    expect(matchedItems[1]).toHaveTextContent(`${localReductionLowerBound}% 이상 단축`)
     expect(matchedItems[1]).toHaveTextContent(/3~5초.*0\.5초/)
     expect(matchedItems[1]).not.toHaveTextContent(/356ms|156ms/)
+    expect(matchedItems[2]).not.toHaveTextContent(/%/)
     const androidSkills = screen.getByRole('heading', { name: 'Android & Kotlin' }).parentElement!
     expect(androidSkills).not.toHaveTextContent(/Mo-Re|Didimdol|POCS/)
   })
