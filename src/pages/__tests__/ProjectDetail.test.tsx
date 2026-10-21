@@ -26,6 +26,7 @@ describe('ProjectDetail', () => {
   it('유효한 프로젝트 ID로 접근하면 설명이 렌더링된다', () => {
     renderProjectDetail(firstProject.id)
     expect(screen.getByText(firstProject.description)).toBeInTheDocument()
+    expect(screen.queryByText(firstProject.cardSummary.description)).not.toBeInTheDocument()
   })
 
   it('유효한 프로젝트 ID로 접근하면 기간, 팀 구성, 역할이 렌더링된다', () => {
@@ -61,6 +62,7 @@ describe('ProjectDetail', () => {
     const { container } = renderProjectDetail('mo-re')
 
     expect(container.textContent).toContain('약 356ms에서 156ms로')
+    expect(container.textContent).toContain('기능별 모듈과 Convention Plugin을 구성해 공통 Gradle 설정을 한곳에서 관리했습니다.')
     expect(
       Array.from(container.querySelectorAll('strong')).some(
         (element) => element.textContent?.includes('약 356ms에서 156ms로'),

@@ -24,7 +24,7 @@ function Projects() {
   return (
     <section id="projects" className="section reveal" ref={ref}>
       <h2 className="section__title">Projects</h2>
-      <p className={styles.subtitle}>프로젝트를 클릭하면 상세페이지로 이동합니다.</p>
+      <p className={styles.subtitle}>프로젝트 선택 시 상세페이지로 이동</p>
       <div className={styles.grid}>
         {projects.map((project) => (
           <Link
@@ -41,10 +41,10 @@ function Projects() {
             <div className={styles.info}>
               <h3 className={styles.title}>{project.title}</h3>
               <p className={styles.period}>{project.period}</p>
-              <p className={styles.description}>{project.description}</p>
-              {project.achievements.length > 0 && (
+              <p className={styles.description}>{project.cardSummary.description}</p>
+              {project.cardSummary.achievements.length > 0 && (
                 <ul className={styles.highlights}>
-                  {project.achievements.slice(0, 3).map((item) => (
+                  {project.cardSummary.achievements.slice(0, 3).map((item) => (
                     <li
                       key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')}
                       className={styles.highlight}

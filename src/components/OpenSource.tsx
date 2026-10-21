@@ -15,7 +15,7 @@ const openSourceProjects: OpenSourceProject[] = [
     title: 'Compose-Chart',
     period: '2026.02 ~ 2026.03 (Android 1인)',
     description:
-      'Canvas API로 선, 막대, 도넛, 원형, 게이지, 레이더 차트를 구현한 Jetpack Compose 라이브러리입니다. Maven Central에 v1.3.2를 배포했습니다.',
+      'Canvas API로 선, 막대, 도넛, 원형, 게이지, 레이더 차트를 구현한 Jetpack Compose 라이브러리. Maven Central v1.3.2 배포',
     image: 'screenshot/chart.png',
     tech: ['Kotlin', 'Jetpack Compose', 'Canvas API'],
     github: 'https://github.com/ois0886/compose-chart',
@@ -24,7 +24,7 @@ const openSourceProjects: OpenSourceProject[] = [
     title: 'Compose-Git-Grass',
     period: '2026.02 (Android 1인)',
     description:
-      'Compose 기본 요소로 GitHub 잔디 형태의 UI를 구현한 라이브러리입니다. Maven Central에 v1.2.0을 배포했습니다.',
+      'Compose 기본 요소로 GitHub 잔디 형태의 UI를 구현한 라이브러리. Maven Central v1.2.0 배포',
     image: 'screenshot/Grass1.png',
     tech: ['Kotlin', 'Jetpack Compose'],
     github: 'https://github.com/ois0886/compose-git-grass',
@@ -37,7 +37,7 @@ function OpenSource() {
   return (
     <section id="opensource" className="section reveal" ref={ref}>
       <h2 className="section__title">Open Source</h2>
-      <p className={styles.subtitle}>라이브러리를 선택하면 GitHub 저장소로 이동합니다.</p>
+      <p className={styles.subtitle}>라이브러리 선택 시 GitHub 저장소로 이동</p>
       <div className={styles.grid}>
         {openSourceProjects.map((project) => {
           const content = (

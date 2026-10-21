@@ -23,6 +23,10 @@ export interface Project {
   id: string
   title: string
   description: string
+  cardSummary: {
+    description: string
+    achievements: RichText[]
+  }
   thumbnail: string | null
   tech: string[]
   period: string
@@ -54,6 +58,14 @@ const projects: Project[] = [
     id: 'naenun-kiosk',
     title: '내눈 키오스크 - Android',
     description: '고령층이 건강을 측정하고 결과를 확인할 수 있는 헬스케어 키오스크입니다. 측정 결과에 맞는 광고도 제공합니다.',
+    cardSummary: {
+      description: '고령층의 건강 측정과 결과 확인, 측정 결과에 맞는 광고를 제공하는 헬스케어 키오스크',
+      achievements: [
+        '상용 키오스크 화면의 Compose 통일, Route, Screen, Component 역할 분리',
+        'Activity Context와 Singleton의 보유 범위 조정, Listener 해제 지점 정리',
+        '기능과 계층별 패키지 분리, 반복 UI의 공통 컴포넌트화로 중복 수정 범위 축소',
+      ],
+    },
     thumbnail: 'screenshot/nanoon1.png',
     tech: ['Kotlin', 'Android Jetpack', 'Jetpack Compose', 'ViewModel', 'Coroutine', 'Flow'],
     period: '2025.10.10 ~ 2025.11.20',
@@ -224,6 +236,14 @@ val personalTable = remember {
     id: 'mo-re',
     title: '모리, Mo-Re - Android',
     description: '서버의 자원 사용량을 차트로 확인하고 AI 분석 리포트로 상태를 파악하는 Android 모니터링 앱입니다.',
+    cardSummary: {
+      description: '서버 자원 사용량 차트와 AI 분석 리포트로 상태를 파악하는 Android 모니터링 앱',
+      achievements: [
+        '기능별 모듈과 Convention Plugin을 구성해 공통 Gradle 설정을 한곳에서 관리',
+        'Jetpack Compose로 서버 메트릭을 표시하는 시계열 차트 직접 구현',
+        rich('6개 API 병렬 호출로 로딩 시간 ', strong('약 356ms에서 156ms로 단축'), ' (약 56% 단축)'),
+      ],
+    },
     thumbnail: 'screenshot/more1.jpg',
     tech: ['Kotlin', 'Jetpack Compose', 'Orbit MVI', 'Hilt', 'Retrofit2', 'OkHttp3', 'Navigation3', 'DataStore', 'Coroutines', 'Flow'],
     period: '2025.08.25 ~ 2025.09.29',
@@ -620,6 +640,14 @@ dependencies {
     id: 'glim',
     title: 'Glim - Android',
     description: '마음에 남은 글귀를 짧은 이미지 콘텐츠로 만들고 다른 사람과 나누는 Android 앱입니다.',
+    cardSummary: {
+      description: '마음에 남은 글귀를 짧은 이미지 콘텐츠로 만들고 공유하는 Android 앱',
+      achievements: [
+        'Orbit MVI로 입력 검증과 상태 변경을 ViewModel에 모아 UI 없이 검증 가능한 구조 구성',
+        'DataStore와 인증 모듈에서 토큰 저장, 재발급 실패와 로그아웃 사유 공통 처리',
+        'Channel 기반 Navigator로 화면 이동 요청, 전용 Composable로 백스택 처리 분리',
+      ],
+    },
     thumbnail: 'screenshot/Glim1.png',
     tech: ['Kotlin', 'Jetpack Compose', 'Hilt', 'Orbit MVI', 'Coroutine', 'Retrofit3', 'Coil', 'Firebase Messaging', 'DataStore', 'Navigation', 'MockK', 'Turbine', 'JUnit'],
     period: '2025.07.07 ~ 2025.08.18',
@@ -1123,6 +1151,14 @@ internal class LoginViewModel @Inject constructor(
     title: '주점부리 - Backend & Frontend',
     description:
       '주류 상품을 찾고 주문하며 스탬프를 적립하는 웹 서비스입니다. 상품과 주문을 관리하는 관리자 화면도 제공합니다.',
+    cardSummary: {
+      description: '주류 상품 검색과 주문, 스탬프 적립 및 상품과 주문 관리 화면을 제공하는 웹 서비스',
+      achievements: [
+        '주문과 상품 주문 수, 스탬프 적립 결과 검증 및 실패 시 전체 변경 롤백',
+        rich('주문 20건의 상세 조회 쿼리를 ', strong('20회에서 1회로 축소'), ', 상세 조회 쿼리 수 95% 감소'),
+        '사용자, 상품, 주문, 댓글, 매장 API와 고객 및 관리자 화면 구현',
+      ],
+    },
     thumbnail: 'screenshot/pubburi-home.png',
     tech: [
       'Java',
@@ -1323,6 +1359,14 @@ public int makeOrder(Order order, List<OrderDetail> details) {
     title: 'Quiz Cafe - Android',
     description:
       'CS와 개발 지식을 퀴즈로 학습하고 문제집과 학습 기록을 관리하는 Android 앱입니다.',
+    cardSummary: {
+      description: 'CS와 개발 지식을 퀴즈로 학습하고 문제집과 학습 기록을 관리하는 Android 앱',
+      achievements: [
+        '메인 화면과 마이페이지 개발을 통한 1차 MVP 완성',
+        '전체 화면의 Compose 구현과 재사용 가능한 공통 UI 개발',
+        'UiState, Intent, SideEffect로 상태와 이벤트를 분리하는 MVI 구조 직접 적용',
+      ],
+    },
     thumbnail: 'screenshot/QuizCafe1.png',
     tech: [
       'Kotlin',
@@ -1673,6 +1717,14 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     title: 'Didimdol - Android',
     description:
       '주변 업체를 검색하고 지도에서 위치를 확인한 뒤 온라인으로 예약하는 Android 앱입니다.',
+    cardSummary: {
+      description: '주변 업체 검색, 지도 위치 확인과 온라인 예약을 제공하는 Android 앱',
+      achievements: [
+        'Android 팀 리드로 검색, 지도와 예약 기능 연결',
+        rich('Room 기반 로컬 검색으로 업체 목록 응답시간을 ', strong('3~5초에서 0.5초 이하로 단축')),
+        '검색된 업체에만 Direction5 API를 호출하고 거리순 정렬 결과 표시',
+      ],
+    },
     thumbnail: 'screenshot/didim1.png',
     tech: [
       'Kotlin',
@@ -1894,6 +1946,14 @@ fun provideEncryptedSharedPreferences(
     title: 'Bong # - Android',
     description:
       '대학생이 서로의 재능을 교환하고 거래 채팅으로 일정을 조율하는 Android 앱입니다.',
+    cardSummary: {
+      description: '대학생의 재능 교환과 거래 채팅을 통한 일정 조율을 지원하는 Android 앱',
+      achievements: [
+        '팀장 및 Android 개발 담당, 앱 전체 화면과 API 연동 단독 구현',
+        'presentation, domain, data 모듈과 33개 UseCase로 화면, 도메인 규칙과 데이터 접근 분리',
+        'WebSocket 1:1 거래 채팅 구현, 연결과 해제 및 메시지 전송의 데이터 계층 통합',
+      ],
+    },
     thumbnail: 'screenshot/Bong1.png',
     tech: [
       'Kotlin',
@@ -2208,6 +2268,14 @@ class ChattingViewModel @Inject constructor(
     title: 'POCS - Android',
     description:
       '한성대학교 전공 소모임 POCS 회원이 스터디를 모집하고 정보를 공유하는 커뮤니티 앱입니다.',
+    cardSummary: {
+      description: '한성대학교 전공 소모임 POCS 회원의 스터디 모집과 정보 공유를 위한 커뮤니티 앱',
+      achievements: [
+        '스터디, 커뮤니티와 프로필 기능 개발',
+        rich('기존 XML 화면의 ', strong('70% 이상을 Jetpack Compose로 전환')),
+        'Paging3로 게시글을 페이지 단위로 불러와 초기 전체 데이터 로딩 방지',
+      ],
+    },
     thumbnail: 'screenshot/POCS1.png',
     tech: [
       'Kotlin',

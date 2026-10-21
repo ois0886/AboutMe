@@ -8,11 +8,11 @@ const educations = [
     subtitle: 'Mobile Track',
     period: '2025.01.20 ~ 2025.12.11',
     details: [
-      '삼성전자가 주관하는 1년 과정의 소프트웨어 개발자 양성 교육을 이수했습니다.',
-      '1학기에 Java, Spring Boot, Vue.js, HTML, CSS, JavaScript, Flutter, Kotlin과 Android를 학습했습니다.',
-      '2학기에는 팀 프로젝트로 서비스를 기획하고 개발한 뒤 결과를 발표했습니다.',
-      '전현직 개발자의 멘토링을 받으며 프로젝트를 진행했습니다.',
-      'CS와 Android 스터디를 주최하고 운영했습니다. (2025.02 ~ 2025.06)',
+      '삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 이수',
+      '1학기 Java, Spring Boot, Vue.js, HTML, CSS, JavaScript, Flutter, Kotlin과 Android 학습',
+      '2학기 팀 프로젝트 기반 서비스 기획과 개발, 결과 발표',
+      '전현직 개발자 멘토링을 통한 프로젝트 진행',
+      'CS와 Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)',
     ],
     links: [
       { label: 'GitHub', url: 'https://github.com/Kotlin-Android-Study-with-SSAFY' },
@@ -31,7 +31,7 @@ const educations = [
     period: '2023.10 ~ 2023.11',
     certificateImage: 'screenshot/codepresso-certificate.png',
     details: [
-      'Java, SQL, Spring Boot, Git 등 웹 개발 기초를 다루는 비대면 교육을 이수했습니다.',
+      'Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 이수',
     ],
     links: [],
     gpa: '',

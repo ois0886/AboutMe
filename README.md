@@ -49,6 +49,7 @@
 ## Projects
 
 프로젝트 데이터는 `src/data/projects.ts` 한 곳에서 목록 카드와 상세 페이지가 함께 사용합니다.
+메인 카드는 `cardSummary`의 항목형 소개와 성과를 사용하고, 상세 페이지는 기존 `description`과 `achievements` 원문을 사용합니다.
 
 | id | Title | Screenshots | Problem Solving | Insights |
 |----|-------|-------------|-----------------|----------|

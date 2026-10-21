@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import Projects from '../Projects'
 import projects from '../../data/projects'
@@ -32,6 +32,27 @@ describe('Projects', () => {
     })
   })
 
+  it('카드 전용 소개와 성과를 표시하고 상세페이지 원문은 사용하지 않는다', () => {
+    renderProjects()
+
+    projects.forEach((project) => {
+      const card = within(screen.getByText(project.title).closest('a')!)
+      expect(card.getByText(project.cardSummary.description)).toBeInTheDocument()
+      expect(card.queryByText(project.description)).not.toBeInTheDocument()
+
+      const highlights = card.getAllByRole('list')[0]
+      expect(Array.from(highlights.querySelectorAll('li'), (item) => item.textContent))
+        .toEqual(project.cardSummary.achievements.slice(0, 3).map((item) =>
+          typeof item === 'string' ? item : item.map((segment) => segment.text).join(''),
+        ))
+      const emphasizedText = project.cardSummary.achievements.slice(0, 3)
+        .flatMap((item) => typeof item === 'string' ? [] : item.filter((segment) => segment.strong))
+        .map((segment) => segment.text)
+      expect(Array.from(highlights.querySelectorAll('strong'), (item) => item.textContent))
+        .toEqual(emphasizedText)
+    })
+  })
+
   it('프로젝트 기술 태그가 렌더링된다', () => {
     renderProjects()
     projects.forEach((project) => {
@@ -49,7 +70,7 @@ describe('Projects', () => {
       const achievementList = card?.querySelector('ul')
 
       expect(achievementList?.querySelectorAll('li')).toHaveLength(
-        Math.min(project.achievements.length, 3),
+        Math.min(project.cardSummary.achievements.length, 3),
       )
     })
   })

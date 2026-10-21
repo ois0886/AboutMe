@@ -24,7 +24,7 @@ function Career() {
                 <span className={styles.period}>{career.periodLabel}</span>
               </div>
               <ul className={styles.tasks}>
-                {career.tasks.map((task) => (
+                {(career.summary ?? career.tasks).map((task) => (
                   <li key={task} className={styles.task}>{task}</li>
                 ))}
               </ul>

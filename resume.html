@@ -317,9 +317,11 @@
         </div>
         <p class="meta">Android Developer | 연구원/정규직 | 서울시 강서구</p>
         <ul>
-          <li>PowerGraphics Android 간편 차트(EasyChart)의 차트 화면과 설정 기능 구현. ViewModel, LiveData, StateFlow 기반으로 설정 저장과 초기화, 재진입 시 화면 상태 관리</li>
-          <li>PowerGraphics MarketMap의 데이터 깊이, 카테고리, 표시 옵션과 테두리 스타일을 편집하는 설정 화면 개발. 깊이 전환 시 편집값 보존, 설정 저장과 초기화, 재조회 시 화면 상태와 엔진 속성 관리</li>
-          <li>React, Vite, SCSS 기반 자사 반응형 홈페이지 개발. 제품 소개, 공지사항, 콘텐츠 관리, 문의 접수 기능 연동</li>
+          <li>LS증권 차트 라이브러리의 연속 편집값 누락과 소수점/음수 저장 오류 해결. 키패드 종료 시 결과 전달과 숫자 파싱 보완</li>
+          <li>LS 이동평균선 체크 상태와 Signal 기간/이평 설정, 분석도구 속성 반영 및 테마 예외 처리 보완. 개발/샘플 매뉴얼 작성</li>
+          <li>EasyChart 화면과 지표 설정 개발. ViewModel, LiveData로 편집 상태 공유, 저장/초기화/재진입 시 차트 상태 반영</li>
+          <li>MarketMap 깊이/카테고리 설정 화면 개발. 깊이 전환 시 편집값 보존, 로딩 이벤트 구분과 엔진 속성 반영</li>
+          <li>React, Vite, SCSS 자사 홈페이지 개발. Sanity 공지 조회/검색과 첨부파일 문의 연동</li>
         </ul>
       </div>
     </section>
@@ -333,16 +335,16 @@
           <h3>내눈 키오스크 - Android</h3>
           <span class="right-meta">2025.10 ~ 2025.11</span>
         </div>
-        <p class="project-description">고령층의 건강 측정과 관리를 돕는 상용 스마트 헬스케어 키오스크 앱을 리팩토링했습니다.</p>
+        <p class="project-description">고령층의 건강 측정과 관리를 돕는 상용 스마트 헬스케어 키오스크 앱 리팩토링</p>
         <div class="project-context">
           <p>SSAFY 기업연계 프로젝트 / 6명: IoT 1명, Android 5명 / Android 코드 개선 및 리팩토링</p>
           <p>기업연계 프로젝트로 코드 반출 불가</p>
         </div>
         <ul>
-          <li>화면에 뒤섞인 상태 처리와 UI를 Route, Screen, Component로 나눠 텍스트나 버튼을 바꿀 때 수정할 위치를 구분했습니다.</li>
-          <li>화면마다 반복되던 레이아웃과 버튼을 공통 Compose 컴포넌트로 분리해 다국어와 글자 크기 정책을 한곳에서 바꾸도록 했습니다.</li>
-          <li>기능별 패키지와 공통 계층을 나눠 의존성을 정리하고, 기능을 수정할 때 다른 화면으로 영향이 번지는 범위를 줄였습니다.</li>
-          <li>화면 종료 후 남을 수 있는 Activity와 Listener 참조를 정리하고 생명주기 종료 시 리소스를 해제해 메모리 누수 위험을 줄였습니다.</li>
+          <li>화면에 뒤섞인 상태 처리와 UI를 Route, Screen, Component로 나눠 텍스트나 버튼 변경 시 수정 위치 구분</li>
+          <li>반복되던 레이아웃과 버튼을 공통 Compose 컴포넌트로 분리해 다국어와 글자 크기 정책을 한곳에서 관리</li>
+          <li>기능별 패키지와 공통 계층의 의존성을 정리해 기능 수정 시 다른 화면으로 영향이 번지는 범위 축소</li>
+          <li>Activity와 Listener 참조 정리, 생명주기 종료 시 리소스 해제로 화면 종료 후 메모리 누수 위험 완화</li>
         </ul>
       </div>
 
@@ -351,16 +353,16 @@
           <h3>모리, Mo-Re - Android</h3>
           <span class="right-meta">2025.08 ~ 2025.09</span>
         </div>
-        <p class="project-description">서버의 자원 사용량과 AI 분석 리포트를 모바일에서 확인하는 Android 모니터링 앱입니다.</p>
+        <p class="project-description">서버의 자원 사용량과 AI 분석 리포트를 모바일에서 확인하는 Android 모니터링 앱</p>
         <div class="project-context">
           <p>6명: Backend 4명, Android 2명 / Android 개발</p>
           <p>코드 반출 불가</p>
         </div>
         <ul>
-          <li>상세 화면에서 순차 호출하던 6개 API를 Coroutines로 병렬 실행해 로딩 시간을 <strong>356ms에서 156ms로 약 56% 줄였습니다.</strong></li>
-          <li>각 API의 실패를 따로 처리하고 원인을 로그로 남겨, 일부 요청이 실패해도 성공한 데이터로 리포트를 표시했습니다.</li>
-          <li>모듈마다 반복되던 빌드 설정을 Convention Plugin으로 모아 여러 모듈의 플러그인과 의존성을 한곳에서 관리했습니다.</li>
-          <li>Compose로 시계열 차트를 직접 구현해 CPU, 메모리, 네트워크 사용량의 시간별 변화를 표시했습니다.</li>
+          <li>상세 화면에서 순차 호출하던 6개 API를 Coroutines로 병렬 실행해 로딩 시간 <strong>356ms에서 156ms로 약 56% 단축</strong></li>
+          <li>각 API의 실패를 개별 처리하고 원인을 로그로 기록, 일부 요청 실패 시에도 성공한 데이터로 리포트 표시</li>
+          <li>반복되던 빌드 설정을 Convention Plugin으로 모아 여러 모듈의 플러그인과 의존성을 한곳에서 관리</li>
+          <li>Compose로 시계열 차트를 직접 구현해 CPU, 메모리, 네트워크 사용량의 시간별 변화 표시</li>
         </ul>
       </div>
       <div class="project" data-project-id="glim">
@@ -368,17 +370,17 @@
           <h3>Glim - Android</h3>
           <span class="right-meta">2025.07 ~ 2025.08</span>
         </div>
-        <p class="project-description">글귀를 이미지 숏폼으로 만들고 공유하는 Android 앱입니다.</p>
+        <p class="project-description">글귀를 이미지 숏폼으로 만들고 공유하는 Android 앱</p>
         <div class="project-context">
           <p>6명: Backend 2명, Android 2명, Frontend 1명, Backend 겸 Android 1명</p>
           <p>Android 앱 개발: 로그인과 회원가입, 마이페이지 UI 및 기능</p>
         </div>
         <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
         <ul>
-          <li>화면마다 흩어진 인증 처리를 전용 계층으로 모아 토큰 저장과 재발급, 재시도, 로그아웃을 같은 흐름으로 처리했습니다.</li>
-          <li>Orbit MVI로 입력 검증과 로딩, 오류 상태를 ViewModel에 모아 UI에서 비즈니스 로직을 분리했습니다.</li>
-          <li>화면 전환 요청을 Channel 기반 Navigator로 전달해 각 화면이 화면 스택을 직접 변경하지 않도록 했습니다.</li>
-          <li>JUnit과 MockK로 <strong>ViewModel 테스트 130개 이상</strong>을 작성해 입력 검증과 상태 변경, 예외 흐름을 확인했습니다.</li>
+          <li>분산된 인증 처리를 전용 계층으로 모아 토큰 저장과 재발급, 재시도, 로그아웃을 공통 흐름으로 처리</li>
+          <li>Orbit MVI로 입력 검증과 로딩, 오류 상태를 ViewModel에 모아 UI에서 비즈니스 로직 분리</li>
+          <li>화면 전환 요청을 Channel 기반 Navigator로 전달해 각 화면의 직접적인 화면 스택 변경 방지</li>
+          <li>JUnit과 MockK로 <strong>ViewModel 테스트 130개 이상</strong>을 작성해 입력 검증과 상태 변경, 예외 흐름 검증</li>
         </ul>
       </div>
     </section>

@@ -21,7 +21,7 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서의 EasyChart, MarketMap, 자사 홈페이지 개발 경력이 일치한다', () => {
+  it('웹과 이력서의 LS 문제 해결, EasyChart, MarketMap, 홈페이지 기여가 일치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
@@ -29,9 +29,11 @@ describe('Career', () => {
     ).map((item) => normalizeText(item.textContent ?? ''))
 
     const facts = [
-      ['EasyChart', 'ViewModel', 'LiveData', 'StateFlow'],
-      ['MarketMap', '데이터 깊이', '카테고리', '테두리 스타일', '편집값', '저장', '초기화', '재조회', '엔진 속성'],
-      ['React', 'Vite', 'SCSS', '홈페이지'],
+      ['LS증권', '연속 편집', '키패드 종료', '결과 전달', '소수점', '음수', '숫자 파싱'],
+      ['LS', '이동평균선 체크 상태', 'Signal 기간', '테마', '매뉴얼'],
+      ['EasyChart', 'ViewModel', 'LiveData'],
+      ['MarketMap', '깊이', '카테고리', '편집값', '엔진 속성'],
+      ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '검색', '첨부파일'],
     ]
     expect(resumeTasks).toHaveLength(facts.length)
     expect(careers[0].tasks).toHaveLength(facts.length)
@@ -43,20 +45,34 @@ describe('Career', () => {
     })
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
-      expect(tasks.join(' ')).not.toMatch(/LS증권|투혼|조회 61종|실시간 21종|Script API|커스텀 그리드|변경된 셀만 갱신|스크롤 위치 변동/)
+      expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API|그리드|Grid Alert|PowerAlert|3분할 API 구현|차트 엔진 개발/)
     }
   })
 
-  it('요청한 LS증권 업무와 미완성 업무, 세부 운영 업무는 제외한다', () => {
+  it('검증된 기여를 표시하고 미완성 그리드와 제공받은 API 구현은 제외한다', () => {
     render(<Career />)
 
-    expect(screen.getByText(/EasyChart.*차트 화면과 설정 기능/)).toBeInTheDocument()
-    expect(screen.getByText(/MarketMap 설정 화면.*깊이 전환 시 편집값을 보존/)).toBeInTheDocument()
-    expect(screen.queryByText(/LS증권|투혼|조회 61종|실시간 21종|Script API|커스텀 그리드/)).not.toBeInTheDocument()
-    expect(screen.getByText(/React, Vite, SCSS로 자사 반응형 홈페이지/)).toBeInTheDocument()
-    expect(screen.queryByText(/개발, 샘플 매뉴얼|숫자 입력 저장, 소수점 처리|운영 버전의 수정, 검증 절차|배포, 운영 가이드/)).not.toBeInTheDocument()
+    expect(screen.getByText(/LS증권.*연속 편집값 누락/)).toBeInTheDocument()
+    expect(screen.getByText(/EasyChart.*차트 화면과 지표 설정 기능/)).toBeInTheDocument()
+    expect(screen.getByText(/MarketMap 설정 화면.*깊이 전환 시 편집값 보존/)).toBeInTheDocument()
+    expect(screen.queryByText(/그리드|Grid Alert|PowerAlert|3분할 API 구현/)).not.toBeInTheDocument()
+    expect(screen.getByText(/React 기반 자사 반응형 홈페이지/)).toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
+  })
+
+  it('웹에는 핵심 기여 네 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
+    render(<Career />)
+
+    const section = screen.getByRole('heading', { name: 'Career' }).closest('section')!
+    expect(within(section).getAllByRole('listitem')).toHaveLength(4)
+    for (const task of careers[0].tasks) {
+      expect(screen.queryByText(task)).not.toBeInTheDocument()
+    }
+    for (const problemSolving of careers[0].problemSolvings ?? []) {
+      expect(screen.queryByText(problemSolving.title)).not.toBeInTheDocument()
+    }
+    expect(section.querySelector('details')).toBeNull()
   })
 
   it('이력서는 기준일 표기 없이 총 경력만 표시하고 웹 계산과 일치한다', () => {
@@ -106,8 +122,8 @@ describe('Activity', () => {
     })
     const card = within(heading.parentElement!)
 
-    expect(card.getByText('알고리즘 스터디를 주최하고 참여했습니다. (2023.06 ~ 2023.12)')).toBeInTheDocument()
-    expect(card.getByText('(주)PickNumber 산학 협력 프로젝트에서 전국 업체의 예약 및 위치 서비스 앱을 개발했습니다. (2023.01 ~ 2023.06)')).toBeInTheDocument()
+    expect(card.getByText('알고리즘 스터디 주최 및 참여 (2023.06 ~ 2023.12)')).toBeInTheDocument()
+    expect(card.getByText('(주)PickNumber 산학 협력 프로젝트에서 전국 업체 예약 및 위치 서비스 앱 개발 (2023.01 ~ 2023.06)')).toBeInTheDocument()
     expect(card.getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
       'https://superohinsung.tistory.com/198',
       'https://superohinsung.tistory.com/186',
@@ -156,7 +172,7 @@ describe('Education', () => {
   it('SSAFY 스터디 내용과 링크를 교육 이력으로 옮기고 독립 활동 카드를 제거한다', () => {
     render(<><Education /><Activity /></>)
 
-    const study = screen.getByText('CS와 Android 스터디를 주최하고 운영했습니다. (2025.02 ~ 2025.06)')
+    const study = screen.getByText('CS와 Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)')
     const education = within(study.closest('section')!)
 
     expect(study.closest('section')).toHaveAttribute('id', 'education')

@@ -35,6 +35,19 @@ describe('projects 데이터 무결성', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
+  it('카드 요약은 기존 표시 항목 수와 성과 수치를 유지한다', () => {
+    projects.forEach((project) => {
+      expect(project.cardSummary.description).toBeTruthy()
+      expect(project.cardSummary.achievements).toHaveLength(Math.min(project.achievements.length, 3))
+      project.achievements.slice(0, 3).forEach((item, index) => {
+        const numbers = richTextToText(item).match(/\d+(?:\.\d+)?/g) ?? []
+        const cardNumbers = richTextToText(project.cardSummary.achievements[index])
+          .match(/\d+(?:\.\d+)?/g) ?? []
+        expect(cardNumbers, project.id).toEqual(numbers)
+      })
+    })
+  })
+
   it.each([
     ['naenun-kiosk', '2025.10.10 ~ 2025.11.20', '2025.10 ~ 2025.11'],
     ['mo-re', '2025.08.25 ~ 2025.09.29', '2025.08 ~ 2025.09'],
@@ -172,6 +185,11 @@ describe('projects 데이터 무결성', () => {
       ].map(richTextToText).join(' ')
 
       expect(item.querySelector('.project-description')?.textContent).toBeTruthy()
+      expect(item.querySelectorAll('ul > li')).toHaveLength(4)
+      for (const text of item.querySelectorAll('.project-description, ul > li')) {
+        expect(text.textContent).not.toMatch(/(?:습니다|합니다|입니다|됩니다)(?:[.!?]|\s|$)/u)
+        expect(text.textContent).not.toMatch(/[.!?]$/u)
+      }
       expect(item.querySelector('.project-context')?.textContent).toContain('Android')
       expect(item.querySelector('.project-context')?.textContent).toContain(project.team.match(/\d+명/)![0])
       expect(item.querySelector('.project-context')?.textContent)
