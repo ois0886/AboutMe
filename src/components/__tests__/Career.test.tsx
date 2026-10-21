@@ -30,7 +30,7 @@ describe('Career', () => {
 
     const facts = [
       ['LS증권', '연속 편집', '키패드 종료', '결과 전달', '소수점', '음수', '숫자 파싱'],
-      ['LS', '이동평균선 체크 상태', 'Signal 기간', '테마', '매뉴얼'],
+      ['LS', '이동평균선', '체크 상태', 'Signal 기간', '테마', '매뉴얼'],
       ['EasyChart', 'ViewModel', 'LiveData'],
       ['MarketMap', '깊이', '카테고리', '편집값', '엔진 속성'],
       ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '검색', '첨부파일'],
@@ -52,9 +52,9 @@ describe('Career', () => {
   it('검증된 기여를 표시하고 미완성 그리드와 제공받은 API 구현은 제외한다', () => {
     render(<Career />)
 
-    expect(screen.getByText(/LS증권.*연속 편집값 누락/)).toBeInTheDocument()
+    expect(screen.getByText(/LS증권.*키패드 종료 시 결과 전달.*연속 편집값 누락/)).toBeInTheDocument()
     expect(screen.getByText(/EasyChart.*차트 화면과 지표 설정 기능/)).toBeInTheDocument()
-    expect(screen.getByText(/MarketMap 설정 화면.*깊이 전환 시 편집값 보존/)).toBeInTheDocument()
+    expect(screen.getByText(/MarketMap 설정 화면.*깊이 전환 시 편집값 보존.*로딩 이벤트와 사용자 변경/)).toBeInTheDocument()
     expect(screen.queryByText(/그리드|Grid Alert|PowerAlert|3분할 API 구현/)).not.toBeInTheDocument()
     expect(screen.getByText(/React 기반 자사 반응형 홈페이지/)).toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
@@ -66,6 +66,8 @@ describe('Career', () => {
 
     const section = screen.getByRole('heading', { name: 'Career' }).closest('section')!
     expect(within(section).getAllByRole('listitem')).toHaveLength(4)
+    expect(within(section).getByText(/ViewModel과 LiveData.*탭 간 편집 상태.*재진입/)).toBeInTheDocument()
+    expect(within(section).getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의/)).toBeInTheDocument()
     for (const task of careers[0].tasks) {
       expect(screen.queryByText(task)).not.toBeInTheDocument()
     }
