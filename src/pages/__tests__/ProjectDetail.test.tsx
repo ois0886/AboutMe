@@ -90,4 +90,20 @@ describe('ProjectDetail', () => {
     expect(screen.getAllByText('20회에서 1회로 줄였습니다')).toHaveLength(2)
     expect(screen.getByText(/주문 생성 중 한 단계라도 실패하면 전체 변경을 되돌려/)).toBeInTheDocument()
   })
+
+  it('Dear My Diary는 팀장 역할과 확인된 문제 해결을 표시하고 빈 회고를 숨긴다', () => {
+    renderProjectDetail('dear-my-diary')
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Dear My Diary - Android' }))
+      .toBeInTheDocument()
+    expect(screen.getByText('Android 팀장 / 앱 기능 개발 및 통합')).toBeInTheDocument()
+    expect(screen.getByText(/일기 생성에 사용하는 GPT-2는 입력을 마지막 64토큰으로/))
+      .toBeInTheDocument()
+    expect(screen.getByText(/일기 저장 시 memo를 읽던 코드를 completion을 읽도록/))
+      .toBeInTheDocument()
+    expect(screen.getByText(/Qualcomm 재직자 멘토의 멘토링을 받으며/)).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: '링크' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: '프로젝트 회고' })).not.toBeInTheDocument()
+    expect(screen.getAllByRole('img')).toHaveLength(4)
+  })
 })

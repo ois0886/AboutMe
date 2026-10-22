@@ -1713,6 +1713,150 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     ],
   },
   {
+    id: 'dear-my-diary',
+    title: 'Dear My Diary - Android',
+    description: '사진과 메모를 바탕으로 AI가 일기를 작성하고 감정 이모지, 캘린더와 지도로 하루를 돌아보는 Android 앱입니다.',
+    cardSummary: {
+      description: '사진과 메모 기반 AI 일기, 감정 이모지와 캘린더를 제공하는 한성대학교와 Qualcomm의 산학협력 프로젝트',
+      achievements: [
+        'GPT-2의 64토큰 입력에 맞춰 프롬프트 재구성, 생성 범위 100토큰에서 40토큰으로 조정',
+        '사용자 메모와 AI 생성 문장 분리, 화면에 표시한 생성 결과를 일기 저장에 연결',
+        '일기와 일정 모델에 사용자 식별자 추가, 홈과 캘린더, 지도의 기록 조회에 반영',
+      ],
+    },
+    thumbnail: 'screenshot/dear-my-diary-overview.png',
+    tech: ['Kotlin', 'XML', 'ViewModel', 'StateFlow', 'Hilt', 'Retrofit', 'Room', 'TensorFlow Lite'],
+    period: '2024.07 ~ 2024.08',
+    team: '학생 20명 (Android 4명, Backend 4명, AI 4명, UI 5명, 기획 3명) / Qualcomm 재직자 멘토 1명, 지도교수 1명',
+    role: 'Android 팀장 / 앱 기능 개발 및 통합',
+    details: [
+      '한성대학교와 Qualcomm의 산학협력 프로젝트로, 하루의 사진과 기록을 AI 일기로 연결하는 앱을 개발했습니다.',
+      'Qualcomm 재직자 멘토의 멘토링을 받으며 기획, UI, AI, Backend 팀과 협업했습니다.',
+      '사진 분류와 GPT-2 추론 코드를 Android의 사진 선택, 메모 입력, 일기 저장 흐름에 연결했습니다.',
+    ],
+    features: [
+      '사진과 텍스트 또는 음성 메모를 입력해 일기를 작성하고 감정 이모지를 선택할 수 있어야 했습니다.',
+      '최근 일기와 날짜별 기록을 확인하고, 캘린더에서 일정을 관리할 수 있어야 했습니다.',
+      '일기 사진의 위치를 지도에 표시하고 인증된 사용자의 기록을 저장하고 조회해야 했습니다.',
+    ],
+    contributions: [
+      'Android 팀장으로 참여해 앱의 모듈 설정과 공통 데이터 계층을 구성하고 기능을 통합했습니다.',
+      'GPT-2의 고정 길이 입력에 맞춰 사진 분류 키워드, 사용자 정보와 메모 중심으로 프롬프트를 재구성했습니다.',
+      '사용자 메모와 AI 생성 문장을 별도 상태로 나누고, 생성 버튼과 저장 버튼의 표시 조건 및 저장 대상을 정리했습니다.',
+      'SpeechRecognizer의 호출 모드를 나눠 일기에서는 인식한 메모를 반환하고, 홈에서는 감정 이모지 처리로 전달하도록 구현했습니다.',
+      '일기와 일정 모델에 userEmail을 추가하고 저장, 변환과 조회 경로에 전달해 사용자별 기록을 구분했습니다.',
+      '일기와 일정의 Room 저장 및 조회 코드를 구현하고, 캘린더와 팀원이 구현한 지도 화면에 기록 데이터를 연결했습니다.',
+    ],
+    problemSolvings: [
+      {
+        problem: [
+          '일기 생성에 사용하는 GPT-2는 입력을 마지막 64토큰으로 잘라 모델에 전달하는 구조였습니다.',
+          '초기 프롬프트는 사진 분류 결과와 메모에 사용자 취향 목록, 긴 작성 지시와 감정 목록까지 덧붙여 입력 길이가 늘어나는 구성이었습니다.',
+          '길이가 입력 범위를 넘으면 앞부분의 일기 재료가 잘릴 수 있어, 모델에 전달할 정보와 출력 분량을 조정해야 했습니다.',
+        ],
+        solution: [
+          '사진 분류 결과에서 첫 번째 키워드를 사용하고, 여러 사용자 취향 목록을 모두 나열하던 방식에서 사용자 정보 일부를 선택하는 방식으로 바꿨습니다.',
+          '긴 감정 목록과 작성 지시를 제거하고, 짧은 작성 지시와 사진 키워드, 선택한 사용자 정보, 메모로 프롬프트를 구성했습니다.',
+          '텍스트 생성의 기본 반복 횟수를 100에서 40으로 조정해 생성할 분량을 줄였습니다.',
+        ],
+        result: [
+          '프롬프트를 일기 생성에 사용할 재료 중심으로 줄이고 메모를 입력의 마지막에 배치했습니다.',
+          '고정된 입력 범위를 유지하면서 생성 범위를 100토큰에서 40토큰으로 조정했습니다.',
+        ],
+        implementation: [
+          {
+            description: '기존 추론 코드는 토큰 목록의 마지막 입력 범위만 사용하고 남은 길이를 패딩했습니다. 프롬프트 길이를 조정할 때 확인한 모델 입력 구성입니다.',
+            code: `private const val SEQUENCE_LENGTH = 64
+
+val maxTokens = tokens.takeLast(SEQUENCE_LENGTH).toIntArray()
+val paddedTokens = maxTokens + IntArray(SEQUENCE_LENGTH - maxTokens.size)
+val inputIds = Array(1) { paddedTokens }`,
+          },
+          {
+            description: '취미, 영화, 음악과 성격 등의 목록을 모두 넣던 프롬프트를 줄였습니다. 아래는 사진 분류 키워드, 선택한 사용자 정보와 메모를 조합하는 변경 부분입니다.',
+            code: `val imageClassificationResult =
+    _uiState.value.imageClassificationResult.split(", ").toList()
+
+val randomInfo = listOf(
+    "$age $gender", hobbies, movies, musics,
+    personalities, travelStyle, whoToTravelWith
+).random()
+
+val memo = _uiState.value.memo
+val text = "Write three sentences like poem.\\n" +
+    "The material of the article is as follows.\\n" +
+    "\${imageClassificationResult[0]}\\n" +
+    "\${randomInfo}\\n" + memo
+
+_uiState.update { it.copy(prompt = text) }`,
+          },
+        ],
+        alternatives: [],
+      },
+      {
+        problem: [
+          '초기 구현에서는 메모 입력과 생성 문장을 같은 content 상태에 반영해 입력 재료와 출력 결과의 역할이 섞여 있었습니다.',
+          '음성 입력도 일기 메모와 홈의 감정 분석을 구분해야 했고, 생성 문장을 화면에 표시하는 값과 저장에 사용하는 값을 맞춰야 했습니다.',
+        ],
+        solution: [
+          '입력은 memo, 생성 결과는 completion으로 나누고 이미지 변경과 메모 입력 여부도 각각 관리하도록 바꿨습니다.',
+          '사진과 메모가 준비되면 생성 버튼을, 생성 결과가 있으면 저장 버튼을 표시하도록 조건을 나눴습니다.',
+          '음성 화면에 호출 모드를 전달해 일기 작성에서는 인식한 텍스트를 Activity Result로 반환하고, 홈에서는 감정 처리로 이어지도록 분기했습니다.',
+          '일기 저장 시 memo를 읽던 코드를 completion을 읽도록 바꿔 화면의 생성 문장을 저장에 사용했습니다.',
+        ],
+        result: [
+          '사진과 메모 입력, AI 생성 문장 확인, 일기 저장을 각각의 상태와 버튼 조건으로 구분했습니다.',
+          '음성 메모를 일기 입력으로 받을 수 있게 했고, 화면에 표시한 생성 결과와 저장할 내용이 같은 completion 상태를 사용하도록 맞췄습니다.',
+        ],
+        implementation: [
+          {
+            description: '메모를 갱신할 때는 입력 상태만 바꾸고, 일기 화면과 저장 로직은 생성 결과를 읽도록 변경했습니다. 아래는 각각의 변경 부분을 발췌한 코드입니다.',
+            code: `fun updateMemo(content: String) {
+    _uiState.update { it.copy(memo = content, isChangedMemo = true) }
+}
+
+// DiaryActivity.updateUi: 생성 결과 표시
+this.content.text = uiState.completion
+
+// DiaryViewModel.updateDiary: 생성 결과 저장
+val content = _uiState.value.completion`,
+          },
+          {
+            description: '사진과 메모의 준비 상태를 따로 확인합니다. 생성 결과가 있으면 저장 버튼으로 전환하도록 구현했습니다.',
+            code: `if (uiState.isChangedImage && uiState.isChangedMemo) {
+    if (uiState.completion.isNotEmpty()) {
+        saveButton.visibility = View.VISIBLE
+        startButton.visibility = View.GONE
+    } else {
+        saveButton.visibility = View.GONE
+        startButton.visibility = View.VISIBLE
+    }
+} else {
+    saveButton.visibility = View.GONE
+    startButton.visibility = View.GONE
+}`,
+          },
+        ],
+        alternatives: [],
+      },
+    ],
+    insights: [],
+    achievements: [
+      'GPT-2의 64토큰 입력에 맞춰 프롬프트를 재구성하고 생성 범위를 100토큰에서 40토큰으로 조정했습니다.',
+      '사용자 메모와 AI 생성 문장의 상태를 분리하고 화면에 표시한 생성 결과를 일기 저장에 연결했습니다.',
+      '일기와 일정 모델에 사용자 식별자를 추가하고 홈과 캘린더, 지도의 기록 조회에 반영했습니다.',
+    ],
+    retrospective: [],
+    links: [],
+    screenshots: [
+      'screenshot/dear-my-diary-overview.png',
+      'screenshot/dear-my-diary-home.png',
+      'screenshot/dear-my-diary-diary.png',
+      'screenshot/dear-my-diary-photo-memo.png',
+    ],
+    hasBottomScreenshot: false,
+  },
+  {
     id: 'didimdol',
     title: 'Didimdol - Android',
     description:

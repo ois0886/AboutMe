@@ -139,6 +139,18 @@ describe('projects 데이터 무결성', () => {
     expect(pubburi?.problemSolvings).toHaveLength(2)
   })
 
+  it('Dear My Diary는 멘토를 포함한 팀 구성을 표시하고 비공개 링크를 노출하지 않는다', () => {
+    const diary = projects.find((project) => project.id === 'dear-my-diary')!
+
+    expect(diary.role).toContain('Android 팀장')
+    expect(diary.team).toBe('학생 20명 (Android 4명, Backend 4명, AI 4명, UI 5명, 기획 3명) / Qualcomm 재직자 멘토 1명, 지도교수 1명')
+    expect(diary.period).toBe('2024.07 ~ 2024.08')
+    expect(diary.links).toEqual([])
+    for (const path of [diary.thumbnail!, ...diary.screenshots]) {
+      expect(readFileSync(resolve(process.cwd(), 'public', path)).byteLength).toBeGreaterThan(0)
+    }
+  })
+
   it('강조 세그먼트를 사용하는 항목은 텍스트를 유지한다', () => {
     const highlightedItems = projects.flatMap((project) => [
       ...project.details,

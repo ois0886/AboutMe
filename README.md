@@ -58,6 +58,7 @@
 | `glim` | Glim | 8 (3 cols) | 3 | 6 |
 | `pubburi` | 주점부리 (Backend & Frontend) | 3 (2 cols) | 2 | - |
 | `quiz-cafe` | Quiz Cafe | 1 | 2 | 6 |
+| `dear-my-diary` | Dear My Diary (Android 팀장) | 4 (2 cols) | 2 | - |
 | `didimdol` | Didimdol | 2 | 2 | 5 |
 | `bong` | Bong # | 8 (2 cols) | 2 | 8 |
 | `pocs` | POCS (Play Store 배포) | 4 (3 cols) | 2 | 6 |
