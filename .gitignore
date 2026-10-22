@@ -34,3 +34,6 @@ pnpm-debug.log*
 # AI assistant configuration
 CLAUDE.md
 Debate.md
+
+# Local project research
+docs/project-reviews/

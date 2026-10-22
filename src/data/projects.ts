@@ -1719,20 +1719,20 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
     cardSummary: {
       description: '사진과 메모 기반 AI 일기, 감정 이모지와 캘린더를 제공하는 한성대학교와 Qualcomm의 산학협력 프로젝트',
       achievements: [
-        'GPT-2의 64토큰 입력에 맞춰 프롬프트 재구성, 생성 범위 100토큰에서 40토큰으로 조정',
-        '사용자 메모와 AI 생성 문장 분리, 화면에 표시한 생성 결과를 일기 저장에 연결',
-        '일기와 일정 모델에 사용자 식별자 추가, 홈과 캘린더, 지도의 기록 조회에 반영',
+        'FP16 GPT-2의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합',
+        '이미지 분류 키워드, 음성 메모와 사용자 취향을 조합한 일기 생성 흐름 구현',
+        '음성 입력의 감정 결과를 이모지로 변환하고 사용자별 선택 상태 저장 및 복원',
       ],
     },
     thumbnail: 'screenshot/dear-my-diary-overview.png',
-    tech: ['Kotlin', 'XML', 'ViewModel', 'StateFlow', 'Hilt', 'Retrofit', 'Room', 'TensorFlow Lite'],
+    tech: ['Kotlin', 'XML', 'GPT-2', 'TensorFlow Lite', 'ViewModel', 'StateFlow', 'Coroutines', 'Hilt', 'Retrofit', 'Room'],
     period: '2024.07 ~ 2024.08',
     team: '학생 20명 (Android 4명, Backend 4명, AI 4명, UI 5명, 기획 3명) / Qualcomm 재직자 멘토 1명, 지도교수 1명',
-    role: 'Android 팀장 / 앱 기능 개발 및 통합',
+    role: 'Android 팀장 / 온디바이스 AI 기능 개발 및 앱 통합',
     details: [
       '한성대학교와 Qualcomm의 산학협력 프로젝트로, 하루의 사진과 기록을 AI 일기로 연결하는 앱을 개발했습니다.',
       'Qualcomm 재직자 멘토의 멘토링을 받으며 기획, UI, AI, Backend 팀과 협업했습니다.',
-      '사진 분류와 GPT-2 추론 코드를 Android의 사진 선택, 메모 입력, 일기 저장 흐름에 연결했습니다.',
+      'Hugging Face의 사전학습 GPT-2와 TensorFlow Lite 추론 구현을 앱에 맞게 적용해 일기 생성과 음성 기반 감정 이모지 기능으로 연결했습니다.',
     ],
     features: [
       '사진과 텍스트 또는 음성 메모를 입력해 일기를 작성하고 감정 이모지를 선택할 수 있어야 했습니다.',
@@ -1740,40 +1740,102 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
       '일기 사진의 위치를 지도에 표시하고 인증된 사용자의 기록을 저장하고 조회해야 했습니다.',
     ],
     contributions: [
-      'Android 팀장으로 참여해 앱의 모듈 설정과 공통 데이터 계층을 구성하고 기능을 통합했습니다.',
-      'GPT-2의 고정 길이 입력에 맞춰 사진 분류 키워드, 사용자 정보와 메모 중심으로 프롬프트를 재구성했습니다.',
-      '사용자 메모와 AI 생성 문장을 별도 상태로 나누고, 생성 버튼과 저장 버튼의 표시 조건 및 저장 대상을 정리했습니다.',
-      'SpeechRecognizer의 호출 모드를 나눠 일기에서는 인식한 메모를 반환하고, 홈에서는 감정 이모지 처리로 전달하도록 구현했습니다.',
-      '일기와 일정 모델에 userEmail을 추가하고 저장, 변환과 조회 경로에 전달해 사용자별 기록을 구분했습니다.',
-      '일기와 일정의 Room 저장 및 조회 코드를 구현하고, 캘린더와 팀원이 구현한 지도 화면에 기록 데이터를 연결했습니다.',
+      'Android 팀장으로 참여해 언어 모델과 이미지 분류 모듈을 분리하고 앱의 화면 및 데이터 계층에 연결했습니다.',
+      'FP16 모델과 vocabulary, merges 파일을 준비하는 구성을 추가하고 BPE 토큰화, 모델 로딩, 추론과 문장 복원 경로를 앱에 적용했습니다.',
+      'Top-K 샘플링을 사용하는 토큰별 추론 결과를 StateFlow에 누적해 생성 중인 문장을 화면에 전달했습니다.',
+      '사진 분류 결과를 텍스트 키워드로 변환하고 직접 입력하거나 음성으로 기록한 메모, 사용자 취향을 일기 생성 입력으로 조합했습니다.',
+      'GPT-2 출력에서 감정 단어를 추출해 이모지로 매핑하고, 인식한 감정이 없을 때의 기본값과 로딩 종료 처리를 보완했습니다.',
+      '감정 이모지의 선택 결과를 사용자별로 저장하고 홈 화면에 다시 반영하도록 연결했습니다.',
+      '최근 일기, 캘린더와 지도에 기록 데이터를 연결하고 Room 저장 및 조회 경로에 사용자 정보를 반영했습니다.',
     ],
     problemSolvings: [
       {
         problem: [
-          '일기 생성에 사용하는 GPT-2는 입력을 마지막 64토큰으로 잘라 모델에 전달하는 구조였습니다.',
-          '초기 프롬프트는 사진 분류 결과와 메모에 사용자 취향 목록, 긴 작성 지시와 감정 목록까지 덧붙여 입력 길이가 늘어나는 구성이었습니다.',
-          '길이가 입력 범위를 넘으면 앞부분의 일기 재료가 잘릴 수 있어, 모델에 전달할 정보와 출력 분량을 조정해야 했습니다.',
+          '초기 feature 모듈에 있던 QA 코드는 질문과 본문에서 답변 구간을 찾는 구조였고, 일기 작성에는 새로운 문장을 생성하는 실행 경로가 필요했습니다.',
+          '사전학습 GPT-2를 Android에서 사용하려면 모델과 사전 파일 준비, 토큰화, 텐서 입출력 처리와 생성 토큰의 문장 복원까지 연결해야 했습니다.',
         ],
         solution: [
-          '사진 분류 결과에서 첫 번째 키워드를 사용하고, 여러 사용자 취향 목록을 모두 나열하던 방식에서 사용자 정보 일부를 선택하는 방식으로 바꿨습니다.',
-          '긴 감정 목록과 작성 지시를 제거하고, 짧은 작성 지시와 사진 키워드, 선택한 사용자 정보, 메모로 프롬프트를 구성했습니다.',
-          '텍스트 생성의 기본 반복 횟수를 100에서 40으로 조정해 생성할 분량을 줄였습니다.',
+          'gpt2와 imageClassification 모듈을 분리하고, 사전학습 모델과 추론 구현을 앱의 ViewModel 및 Hilt 구성에 맞게 적용했습니다.',
+          'FP16 모델, vocabulary와 merges 파일을 준비하는 설정을 추가하고, 사전과 BPE 병합 순위를 읽어 tokenizer를 초기화했습니다.',
+          '모델 파일은 메모리 매핑으로 로드하고, 토큰 입력과 모델 출력을 구성해 반복 추론하도록 연결했습니다.',
+          '상위 후보를 사용하는 Top-K 샘플링으로 다음 토큰을 선택하고, 선택한 토큰을 다음 입력에 추가하면서 문장으로 복원했습니다.',
+          '파일 로드는 Dispatchers.IO, 추론은 Dispatchers.Default에서 처리하고 생성 토큰을 StateFlow에 누적해 화면에 전달했습니다.',
         ],
         result: [
-          '프롬프트를 일기 생성에 사용할 재료 중심으로 줄이고 메모를 입력의 마지막에 배치했습니다.',
-          '고정된 입력 범위를 유지하면서 생성 범위를 100토큰에서 40토큰으로 조정했습니다.',
+          '텍스트 입력부터 토큰화, 기기 내 추론과 문장 출력까지 이어지는 실행 경로를 앱에 구성했습니다.',
+          '복원한 토큰을 상태에 누적하고 화면에서 구독해 생성 중인 문장을 표시하도록 연결했습니다.',
         ],
         implementation: [
           {
-            description: '기존 추론 코드는 토큰 목록의 마지막 입력 범위만 사용하고 남은 길이를 패딩했습니다. 프롬프트 길이를 조정할 때 확인한 모델 입력 구성입니다.',
+            description: '모델과 사전을 준비한 뒤 tokenizer와 Interpreter를 초기화합니다. 사전학습 모델의 추론 구성을 앱의 ViewModel에 연결한 부분입니다.',
+            code: `initJob = viewModelScope.launch {
+    val encoder = loadEncoder()
+    val decoder = encoder.entries.associateBy({ it.value }, { it.key })
+    val bpeRanks = loadBpeRanks()
+
+    tokenizer = GPT2Tokenizer(encoder, decoder, bpeRanks)
+    tflite = loadModel()
+}`,
+          },
+          {
+            description: '토큰 시퀀스를 모델 입력에 맞게 구성하고 출력 텐서에서 마지막 유효 토큰 위치의 logits를 읽습니다. 다음 토큰은 이 값에서 Top-K 샘플링으로 선택합니다.',
             code: `private const val SEQUENCE_LENGTH = 64
+private const val VOCAB_SIZE = 50257
 
 val maxTokens = tokens.takeLast(SEQUENCE_LENGTH).toIntArray()
 val paddedTokens = maxTokens + IntArray(SEQUENCE_LENGTH - maxTokens.size)
-val inputIds = Array(1) { paddedTokens }`,
+val inputIds = Array(1) { paddedTokens }
+
+val predictions: Predictions =
+    Array(1) { Array(SEQUENCE_LENGTH) { FloatArray(VOCAB_SIZE) } }
+val outputs = mutableMapOf<Int, Any>(0 to predictions)
+
+tflite.runForMultipleInputsOutputs(arrayOf(inputIds), outputs)
+val outputLogits = predictions[0][maxTokens.size - 1]`,
           },
           {
-            description: '취미, 영화, 음악과 성격 등의 목록을 모두 넣던 프롬프트를 줄였습니다. 아래는 사진 분류 키워드, 선택한 사용자 정보와 메모를 조합하는 변경 부분입니다.',
+            description: '선택한 토큰을 다음 추론의 입력에 추가하고 문자열로 복원합니다. 추론 루프에서 결과를 StateFlow에 누적해 일기 화면이 생성 문장을 구독하도록 적용했습니다.',
+            code: `tokens.add(nextToken)
+val decodedToken = tokenizer.decode(listOf(nextToken))
+
+_uiState.update { currentState ->
+    val completion = currentState.completion + decodedToken.replace("\\n", " ")
+    currentState.copy(completion = completion)
+}
+
+yield()`,
+          },
+        ],
+        alternatives: [],
+      },
+      {
+        problem: [
+          '일기 생성에는 사진의 내용, 사용자가 기록한 사건과 취향 정보를 함께 활용해야 했습니다.',
+          '사진은 분류 키워드로, 음성은 메모 텍스트로 바꿔 언어 모델에 연결해야 했고, 길어진 입력은 고정 길이 모델에 맞게 정리해야 했습니다.',
+        ],
+        solution: [
+          '사진 크롭이 완료되면 이미지 분류기를 호출하고, 반환된 분류 결과를 텍스트 키워드로 연결했습니다.',
+          'SpeechRecognizer로 받은 메모와 사용자의 나이, 취미, 음악, 영화 등 취향 정보를 읽어 일기 생성 프롬프트에 조합했습니다.',
+          '초기에는 취향 목록을 모두 나열했지만 이후 사진 키워드와 선택한 사용자 정보, 메모 중심으로 프롬프트를 줄였습니다.',
+          '메모를 입력의 마지막에 배치하고 일기 작성 지시와 감정 이모지용 지시를 각 기능의 목적에 맞게 나눴습니다.',
+        ],
+        result: [
+          '이미지 분류 모델의 출력을 언어 모델의 입력으로 연결하고, 사용자의 기록과 취향도 일기 생성에 활용하는 흐름을 구성했습니다.',
+          '사진 선택, 직접 입력과 음성 메모 등 서로 다른 입력 경로를 일기 생성 프롬프트에 모았습니다.',
+        ],
+        implementation: [
+          {
+            description: '크롭한 사진을 분류하고 키워드가 갱신되면 프롬프트도 다시 구성합니다. 이미지 분류 결과를 일기 생성 입력으로 연결하는 부분입니다.',
+            code: `val imageClassificationResult =
+    defaultDelegateClassifier.predictClassesFromImage(resultUri.toBitmap(this))
+        .stream()
+        .collect(Collectors.joining(", "))
+
+viewModel.updateImageClassificationResult(imageClassificationResult)
+viewModel.updateGpt2Prompt()`,
+          },
+          {
+            description: '사진 분류 키워드와 취향 정보 일부, 메모를 조합한 프롬프트입니다. 사용자 정보에는 취미, 영화, 음악, 성격과 여행 취향을 활용했습니다.',
             code: `val imageClassificationResult =
     _uiState.value.imageClassificationResult.split(", ").toList()
 
@@ -1795,45 +1857,46 @@ _uiState.update { it.copy(prompt = text) }`,
       },
       {
         problem: [
-          '초기 구현에서는 메모 입력과 생성 문장을 같은 content 상태에 반영해 입력 재료와 출력 결과의 역할이 섞여 있었습니다.',
-          '음성 입력도 일기 메모와 홈의 감정 분석을 구분해야 했고, 생성 문장을 화면에 표시하는 값과 저장에 사용하는 값을 맞춰야 했습니다.',
+          '홈 캐릭터는 정해진 감정 이모지로 표시해야 했지만, GPT-2의 출력은 자유로운 생성 텍스트였습니다.',
+          '음성으로 설명한 하루를 감정 이모지에 연결하려면 출력에서 사용할 감정을 찾아 이모지 식별자로 변환하고, 화면에 다시 들어왔을 때의 선택 상태도 관리해야 했습니다.',
         ],
         solution: [
-          '입력은 memo, 생성 결과는 completion으로 나누고 이미지 변경과 메모 입력 여부도 각각 관리하도록 바꿨습니다.',
-          '사진과 메모가 준비되면 생성 버튼을, 생성 결과가 있으면 저장 버튼을 표시하도록 조건을 나눴습니다.',
-          '음성 화면에 호출 모드를 전달해 일기 작성에서는 인식한 텍스트를 Activity Result로 반환하고, 홈에서는 감정 처리로 이어지도록 분기했습니다.',
-          '일기 저장 시 memo를 읽던 코드를 completion을 읽도록 바꿔 화면의 생성 문장을 저장에 사용했습니다.',
+          '음성을 텍스트로 인식한 뒤 미리 정의한 감정 목록 중 하나를 선택하도록 프롬프트를 구성했습니다.',
+          '생성 결과에서 대소문자를 구분하지 않는 단어 경계 검색으로 감정 후보를 찾고, 후보가 없거나 결과가 비어 있으면 기본 감정을 반환하도록 보완했습니다.',
+          '감정 후보를 찾지 못한 분기에서도 로딩 상태를 종료하도록 수정했습니다.',
+          '감정 결과를 Activity Result로 홈에 전달하고, 감정 이름을 이모지 식별자로 매핑해 사용자별 Room 저장과 화면 복원으로 연결했습니다.',
         ],
         result: [
-          '사진과 메모 입력, AI 생성 문장 확인, 일기 저장을 각각의 상태와 버튼 조건으로 구분했습니다.',
-          '음성 메모를 일기 입력으로 받을 수 있게 했고, 화면에 표시한 생성 결과와 저장할 내용이 같은 completion 상태를 사용하도록 맞췄습니다.',
+          'GPT-2의 텍스트 출력을 홈 캐릭터의 감정 이모지로 변환하는 후처리 경로를 구현했습니다.',
+          '감정 후보가 없는 응답에는 기본값을 적용하고, 선택된 이모지를 저장해 홈에서 다시 읽도록 연결했습니다.',
         ],
         implementation: [
           {
-            description: '메모를 갱신할 때는 입력 상태만 바꾸고, 일기 화면과 저장 로직은 생성 결과를 읽도록 변경했습니다. 아래는 각각의 변경 부분을 발췌한 코드입니다.',
-            code: `fun updateMemo(content: String) {
-    _uiState.update { it.copy(memo = content, isChangedMemo = true) }
+            description: '미리 정의한 감정 단어를 생성 결과에서 찾습니다. 일치하는 감정이 없는 경우에도 기본 감정과 로딩 종료 상태를 함께 반영하도록 보완한 부분입니다.',
+            code: `val lowerCaseCompletion = _uiState.value.completion.lowercase(Locale.ROOT)
+val foundWords = wordsToFind.filter { word ->
+    Regex("\\\\b$word\\\\b", RegexOption.IGNORE_CASE)
+        .containsMatchIn(lowerCaseCompletion)
 }
 
-// DiaryActivity.updateUi: 생성 결과 표시
-this.content.text = uiState.completion
-
-// DiaryViewModel.updateDiary: 생성 결과 저장
-val content = _uiState.value.completion`,
+if (foundWords.isNotEmpty()) {
+    _uiState.update { it.copy(emotion = foundWords[0], isLoading = false) }
+} else {
+    _uiState.update { it.copy(emotion = "Happy", isLoading = false) }
+}`,
           },
           {
-            description: '사진과 메모의 준비 상태를 따로 확인합니다. 생성 결과가 있으면 저장 버튼으로 전환하도록 구현했습니다.',
-            code: `if (uiState.isChangedImage && uiState.isChangedMemo) {
-    if (uiState.completion.isNotEmpty()) {
-        saveButton.visibility = View.VISIBLE
-        startButton.visibility = View.GONE
-    } else {
-        saveButton.visibility = View.GONE
-        startButton.visibility = View.VISIBLE
+            description: '홈에서는 감정 이름을 이모지 식별자로 바꾸고 저장 결과를 화면 상태에 반영합니다. 저장한 이모지는 홈을 다시 구성할 때 조회합니다.',
+            code: `val findSticker = diaryEmojiList.find {
+    it.emotion.equals(emotion, ignoreCase = true)
+}
+if (findSticker != null) {
+    val result = authRepository.syncSticker(findSticker.id)
+    if (result.isSuccess) {
+        result.onSuccess { sticker ->
+            _uiState.update { it.copy(stickerId = sticker.stickerId) }
+        }
     }
-} else {
-    saveButton.visibility = View.GONE
-    startButton.visibility = View.GONE
 }`,
           },
         ],
@@ -1842,9 +1905,9 @@ val content = _uiState.value.completion`,
     ],
     insights: [],
     achievements: [
-      'GPT-2의 64토큰 입력에 맞춰 프롬프트를 재구성하고 생성 범위를 100토큰에서 40토큰으로 조정했습니다.',
-      '사용자 메모와 AI 생성 문장의 상태를 분리하고 화면에 표시한 생성 결과를 일기 저장에 연결했습니다.',
-      '일기와 일정 모델에 사용자 식별자를 추가하고 홈과 캘린더, 지도의 기록 조회에 반영했습니다.',
+      'FP16 GPT-2의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합했습니다.',
+      '이미지 분류 키워드, 음성 메모와 사용자 취향을 조합한 일기 생성 흐름을 구현했습니다.',
+      '음성 입력의 감정 결과를 이모지로 변환하고 사용자별 선택 상태를 저장하고 복원하도록 연결했습니다.',
     ],
     retrospective: [],
     links: [],

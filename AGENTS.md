@@ -114,7 +114,7 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 | `glim` | Glim | 8장(3열) | 3 | 6 | GitHub, Figma |
 | `pubburi` | 주점부리 | 3장(2열) | 2 | - | Backend & Frontend 프로젝트, GitHub |
 | `quiz-cafe` | Quiz Cafe | 1장 | 2 | 6 | GitHub, Figma |
-| `dear-my-diary` | Dear My Diary | 4장(2열) | 2 | - | Qualcomm 산학협력, Android 팀장 |
+| `dear-my-diary` | Dear My Diary | 4장(2열) | 3 | - | Qualcomm 산학협력, Android 팀장, 온디바이스 AI 통합 |
 | `didimdol` | Didimdol | 2장 | 2 | 5 | Android |
 | `bong` | Bong # | 8장(2열) | 2 | 8 | insightImages 1장 |
 | `pocs` | POCS | 4장(3열) | 2 | 6 | insightImages 2장, Play Store 배포 |
