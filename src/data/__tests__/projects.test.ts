@@ -180,9 +180,30 @@ describe('projects 데이터 무결성', () => {
       .toEqual(['naenun-kiosk', 'mo-re', 'glim'])
 
     const projectFacts: Record<string, string[]> = {
-      'naenun-kiosk': ['Compose', 'Route', 'Screen', 'Component', 'Activity', 'Listener'],
-      'mo-re': ['6개', 'API', '356ms', '156ms', 'Convention Plugin'],
-      glim: ['Orbit MVI', 'Channel', 'Navigator', '130', 'MockK'],
+      'naenun-kiosk': ['Compose', 'Route', 'Screen', 'Component', 'Activity Context', 'Listener', 'Singleton', '우수상'],
+      'mo-re': ['6개', 'API', '56%', 'Convention Plugin'],
+      glim: ['Orbit MVI', 'DataStore', 'Channel', 'Navigator', '130', 'MockK', '잔디', '우수상'],
+    }
+    const projectSummaries: Record<string, { items: number; emphasis: string[] }> = {
+      'naenun-kiosk': {
+        items: 4,
+        emphasis: ['상용 키오스크 앱', 'SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상'],
+      },
+      'mo-re': {
+        items: 3,
+        emphasis: [
+          '멀티 모듈 아키텍처', 'Convention Plugin 기반 Build-logic', 'Custom Compose UI',
+          'Kotlin Coroutine async/await', '데이터 로딩 시간 56% 단축',
+        ],
+      },
+      glim: {
+        items: 6,
+        emphasis: [
+          'Orbit MVI', 'Kotlin Coroutine', 'DataStore', 'Channel 기반 Navigator',
+          'JUnit, MockK 기반 ViewModelTest를 130+ 케이스', '잔디밭 형태의 Custom Compose UI 컴포넌트',
+          'SSAFY 13기 구미캠퍼스 공통 프로젝트 우수상 수상',
+        ],
+      },
     }
 
     resumeProjects.forEach((item) => {
@@ -197,15 +218,14 @@ describe('projects 데이터 무결성', () => {
       ].map(richTextToText).join(' ')
 
       expect(item.querySelector('.project-description')?.textContent).toBeTruthy()
-      expect(item.querySelectorAll('ul > li')).toHaveLength(4)
+      expect(item.querySelectorAll('ul > li')).toHaveLength(projectSummaries[project.id].items)
+      expect(Array.from(item.querySelectorAll('strong'), (element) => element.textContent))
+        .toEqual(projectSummaries[project.id].emphasis)
       for (const text of item.querySelectorAll('.project-description, ul > li')) {
         expect(text.textContent).not.toMatch(/(?:습니다|합니다|입니다|됩니다)(?:[.!?]|\s|$)/u)
         expect(text.textContent).not.toMatch(/[.!?]$/u)
       }
-      expect(item.querySelector('.project-context')?.textContent).toContain('Android')
-      expect(item.querySelector('.project-context')?.textContent).toContain(project.team.match(/\d+명/)![0])
-      expect(item.querySelector('.project-context')?.textContent)
-        .not.toMatch(/Kotlin|Jetpack Compose|ViewModel|Coroutines|Flow|Hilt|Retrofit|DataStore|JUnit/)
+      expect(item.querySelector('.project-context')).toBeNull()
       projectFacts[project.id].forEach((fact) => {
         expect(resumeText, project.id).toContain(fact)
         expect(webText, project.id).toContain(fact)

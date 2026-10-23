@@ -82,19 +82,9 @@
 
     .project-description {
       margin-bottom: 4px;
-    }
-
-    .project-context {
-      display: grid;
-      gap: 1px;
-      margin-bottom: 4px;
       color: #374151;
       font-size: 9.25pt;
-      line-height: 1.3;
-    }
-
-    .project-context p {
-      margin: 0;
+      font-weight: 600;
     }
 
     h1,
@@ -335,16 +325,12 @@
           <h3>내눈 키오스크 - Android</h3>
           <span class="right-meta">2025.10 ~ 2025.11</span>
         </div>
-        <p class="project-description">고령층의 건강 측정과 관리를 돕는 상용 스마트 헬스케어 키오스크 앱 리팩토링</p>
-        <div class="project-context">
-          <p>SSAFY 기업연계 프로젝트 / 6명: IoT 1명, Android 5명 / Android 코드 개선 및 리팩토링</p>
-          <p>기업연계 프로젝트로 코드 반출 불가</p>
-        </div>
+        <p class="project-description">생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스 / 기업연계 프로젝트 특성상 코드 반출 불가</p>
         <ul>
-          <li>화면에 뒤섞인 상태 처리와 UI를 Route, Screen, Component로 나눠 텍스트나 버튼 변경 시 수정 위치 구분</li>
-          <li>반복되던 레이아웃과 버튼을 공통 Compose 컴포넌트로 분리해 다국어와 글자 크기 정책을 한곳에서 관리</li>
-          <li>기능별 패키지와 공통 계층의 의존성을 정리해 기능 수정 시 다른 화면으로 영향이 번지는 범위 축소</li>
-          <li>Activity와 Listener 참조 정리, 생명주기 종료 시 리소스 해제로 화면 종료 후 메모리 누수 위험 완화</li>
+          <li><strong>상용 키오스크 앱</strong>의 XML과 Compose 혼용 UI를 Compose 중심 구조로 정리하고 Route-Screen-Component 책임 분리</li>
+          <li>Activity Context 참조, Listener 미해제, Singleton 참조 구조를 개선해 장시간 실행 환경의 메모리 누수 위험 요소 제거</li>
+          <li>기능과 계층 기준 패키지 재편과 공통 UI 컴포넌트 분리로 수정 영향 범위와 중복 수정 비용 감소</li>
+          <li><strong>SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상</strong></li>
         </ul>
       </div>
 
@@ -353,16 +339,11 @@
           <h3>모리, Mo-Re - Android</h3>
           <span class="right-meta">2025.08 ~ 2025.09</span>
         </div>
-        <p class="project-description">서버의 자원 사용량과 AI 분석 리포트를 모바일에서 확인하는 Android 모니터링 앱</p>
-        <div class="project-context">
-          <p>6명: Backend 4명, Android 2명 / Android 개발</p>
-          <p>코드 반출 불가</p>
-        </div>
+        <p class="project-description">누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리와 운영 효율성을 높이는 앱 서비스 / 코드 반출 불가</p>
         <ul>
-          <li>상세 화면에서 순차 호출하던 6개 API를 Coroutines로 병렬 실행해 로딩 시간 <strong>356ms에서 156ms로 약 56% 단축</strong></li>
-          <li>각 API의 실패를 개별 처리하고 원인을 로그로 기록, 일부 요청 실패 시에도 성공한 데이터로 리포트 표시</li>
-          <li>반복되던 빌드 설정을 Convention Plugin으로 모아 여러 모듈의 플러그인과 의존성을 한곳에서 관리</li>
-          <li>Compose로 시계열 차트를 직접 구현해 CPU, 메모리, 네트워크 사용량의 시간별 변화 표시</li>
+          <li><strong>멀티 모듈 아키텍처</strong> 설계 및 <strong>Convention Plugin 기반 Build-logic</strong> 구축</li>
+          <li><strong>Custom Compose UI</strong>로 시계열 차트(LineChart) 구현</li>
+          <li><strong>Kotlin Coroutine async/await</strong>를 활용한 6개 API 비동기 처리로 <strong>데이터 로딩 시간 56% 단축</strong></li>
         </ul>
       </div>
       <div class="project" data-project-id="glim">
@@ -370,17 +351,15 @@
           <h3>Glim - Android</h3>
           <span class="right-meta">2025.07 ~ 2025.08</span>
         </div>
-        <p class="project-description">글귀를 이미지 숏폼으로 만들고 공유하는 Android 앱</p>
-        <div class="project-context">
-          <p>6명: Backend 2명, Android 2명, Frontend 1명, Backend 겸 Android 1명</p>
-          <p>Android 앱 개발: 로그인과 회원가입, 마이페이지 UI 및 기능</p>
-        </div>
+        <p class="project-description">글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱</p>
         <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
         <ul>
-          <li>분산된 인증 처리를 전용 계층으로 모아 토큰 저장과 재발급, 재시도, 로그아웃을 공통 흐름으로 처리</li>
-          <li>Orbit MVI로 입력 검증과 로딩, 오류 상태를 ViewModel에 모아 UI에서 비즈니스 로직 분리</li>
-          <li>화면 전환 요청을 Channel 기반 Navigator로 전달해 각 화면의 직접적인 화면 스택 변경 방지</li>
-          <li>JUnit과 MockK로 <strong>ViewModel 테스트 130개 이상</strong>을 작성해 입력 검증과 상태 변경, 예외 흐름 검증</li>
+          <li><strong>Orbit MVI</strong> 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계</li>
+          <li><strong>Kotlin Coroutine</strong>과 <strong>DataStore</strong>를 활용한 Session, Refresh Token 관리 시스템 구현</li>
+          <li><strong>Channel 기반 Navigator</strong> 패턴 도입으로 Screen과 Navigation 로직 완전 분리</li>
+          <li><strong>JUnit, MockK 기반 ViewModelTest를 130+ 케이스</strong> 구현으로 안정적인 단위 테스트 구축</li>
+          <li>GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 <strong>잔디밭 형태의 Custom Compose UI 컴포넌트</strong>로 구현</li>
+          <li><strong>SSAFY 13기 구미캠퍼스 공통 프로젝트 우수상 수상</strong></li>
         </ul>
       </div>
     </section>
