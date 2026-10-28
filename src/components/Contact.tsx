@@ -9,7 +9,7 @@ function Contact() {
       <div className={styles.panel}>
         <h2 className="section__title">Contact</h2>
         <p className={styles.description}>
-          포트폴리오 방문에 감사
+          포트폴리오를 방문해 주셔서 감사합니다.
         </p>
         <div className={styles.links}>
           <a href="mailto:superohinsung@naver.com" className={styles.link}>
