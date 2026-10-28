@@ -16,6 +16,12 @@ function renderProjectDetail(id: string) {
 describe('ProjectDetail', () => {
   const firstProject = projects[0]
 
+  it('한길졸업의 브랜드 이미지를 실제 앱 스크린샷과 구분한다', () => {
+    renderProjectDetail('hangil')
+    expect(screen.getByRole('heading', { name: '브랜드 이미지' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: '스크린샷' })).not.toBeInTheDocument()
+  })
+
   it('유효한 프로젝트 ID로 접근하면 제목이 렌더링된다', () => {
     renderProjectDetail(firstProject.id)
     expect(

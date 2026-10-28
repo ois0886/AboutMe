@@ -1276,34 +1276,79 @@
         <div class="toc-item">
           <div class="toc-index">프로젝트 1</div>
           <div>
-            <div class="toc-name">내눈 키오스크</div>
-            <p class="toc-desc">스마트 헬스케어 키오스크 서비스 Android 앱</p>
+            <div class="toc-name">한길졸업</div>
+            <p class="toc-desc">목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱</p>
           </div>
-          <div class="toc-pages">03p ~ 08p</div>
+          <div class="toc-pages">03p</div>
         </div>
         <div class="toc-item">
           <div class="toc-index">프로젝트 2</div>
           <div>
-            <div class="toc-name">모리, Mo-Re</div>
-            <p class="toc-desc">서버 상태와 성능을 시각화하는 Android 모니터링 앱</p>
+            <div class="toc-name">내눈 키오스크</div>
+            <p class="toc-desc">스마트 헬스케어 키오스크 서비스 Android 앱</p>
           </div>
-          <div class="toc-pages">09p ~ 13p</div>
+          <div class="toc-pages">04p ~ 09p</div>
         </div>
         <div class="toc-item">
           <div class="toc-index">프로젝트 3</div>
           <div>
+            <div class="toc-name">모리, Mo-Re</div>
+            <p class="toc-desc">서버 상태와 성능을 시각화하는 Android 모니터링 앱</p>
+          </div>
+          <div class="toc-pages">10p ~ 14p</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-index">프로젝트 4</div>
+          <div>
             <div class="toc-name">Glim</div>
             <p class="toc-desc">글귀를 짧은 이미지 콘텐츠로 공유하는 Android 앱</p>
           </div>
-          <div class="toc-pages">14p ~ 19p</div>
+          <div class="toc-pages">15p ~ 20p</div>
         </div>
       </div>
       <span class="footer-title">프로젝트 목차</span>
       <span class="slide-no">02</span>
     </section>
 
-    <section id="slide-03" class="slide">
+    <section id="slide-03" class="slide" data-project-id="hangil">
       <p class="section-label">프로젝트 1</p>
+      <h2 class="title-lg">한길졸업</h2>
+      <p class="meta">2026.10 ~ 진행 중 / Android 개발 및 검증</p>
+      <div style="display: grid; grid-template-columns: 1.65fr 1fr; gap: 0.36in; margin-top: 0.3in;">
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>초보 운전자를 위한 Pleos 차량용 앱</h3>
+            <p>목표와 시연 코스를 준비하고, 주차 화면에서 연습을 시작하거나 종료한 시각을 저장합니다.</p>
+          </div>
+          <div class="compact-card">
+            <h3>차량 상태와 화면 조작 연결</h3>
+            <ul>
+              <li>주차 상태와 UX 제한 해제를 함께 확인하는 상세 조작 잠금 구현.</li>
+              <li>끊김, 미확인, 권한 거부 시 잠금을 유지하도록 차량 SDK 상태와 연결.</li>
+              <li>Kotlin, Compose 멀티 모듈 경계 구성.</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>지도와 연습 기록 검증</h3>
+            <ul>
+              <li>MapLibre 기반 실제 지도 표시, 오류 복구와 화면 재생성을 Pleos 환경에서 검증.</li>
+              <li>Room 기반 연습 세션 저장과 복원, DB 마이그레이션과 앱 재실행 후 복원 검증.</li>
+              <li>자동 검사와 Pleos 시나리오로 화면 동작과 저장 상태 확인.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="align-self: center; text-align: center;">
+          <img src="public/screenshot/hangil-guide.svg" alt="한길졸업 브랜드 가이드 캐릭터" style="width: 100%; max-height: 3.9in;" />
+          <p class="image-credit">한길졸업 브랜드 가이드 캐릭터</p>
+          <p style="font-size: 14px; color: #49617d; line-height: 1.5; margin-top: 0.2in;">민트와 크림 색상 토큰,<br />브랜드 캐릭터와 주차 화면 안내 리소스 적용</p>
+        </div>
+      </div>
+      <span class="footer-title">한길졸업</span>
+      <span class="slide-no">03</span>
+    </section>
+
+    <section id="slide-04" class="slide">
+      <p class="section-label">프로젝트 2</p>
       <h2 class="title-lg">내눈 키오스크</h2>
       <p class="meta">2025.10.10 ~ 2025.11.20 / 6명: IoT 1명, Android 5명 / Android 키오스크 리팩토링</p>
       <div class="overview-grid" style="margin-top: 0.28in;">
@@ -1338,10 +1383,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크 소개</span>
-      <span class="slide-no">03</span>
+      <span class="slide-no">04</span>
     </section>
 
-    <section id="slide-04" class="slide">
+    <section id="slide-05" class="slide">
       <p class="section-label">앱 화면</p>
       <div class="screenshot-grid is-two is-naenun">
         <div class="screenshot-frame">
@@ -1352,10 +1397,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크 앱 화면</span>
-      <span class="slide-no">04</span>
+      <span class="slide-no">05</span>
     </section>
 
-    <section id="slide-05" class="slide">
+    <section id="slide-06" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">Compose 전환과 화면 책임 분리</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1399,10 +1444,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크</span>
-      <span class="slide-no">05</span>
+      <span class="slide-no">06</span>
     </section>
 
-    <section id="slide-06" class="slide">
+    <section id="slide-07" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">레거시 패키지 구조 재편</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1443,10 +1488,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크</span>
-      <span class="slide-no">06</span>
+      <span class="slide-no">07</span>
     </section>
 
-    <section id="slide-07" class="slide">
+    <section id="slide-08" class="slide">
       <p class="section-label">문제 해결 3</p>
       <h2 class="title-md">메모리 누수 개선</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1491,10 +1536,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크</span>
-      <span class="slide-no">07</span>
+      <span class="slide-no">08</span>
     </section>
 
-    <section id="slide-08" class="slide">
+    <section id="slide-09" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">내눈 키오스크 성과와 회고</h2>
       <div class="closing-grid with-image" style="margin-top: 0.35in;">
@@ -1521,11 +1566,11 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크 회고</span>
-      <span class="slide-no">08</span>
+      <span class="slide-no">09</span>
     </section>
 
-    <section id="slide-09" class="slide">
-      <p class="section-label">프로젝트 2</p>
+    <section id="slide-10" class="slide">
+      <p class="section-label">프로젝트 3</p>
       <h2 class="title-lg">모리, Mo-Re</h2>
       <p class="meta">2025.08.25 ~ 2025.09.29 / 6명: Backend 4명, Android 2명 / Android 구조 설계, 시계열 차트와 메트릭 조회 개발</p>
       <div class="overview-grid" style="margin-top: 0.28in;">
@@ -1560,10 +1605,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re 소개</span>
-      <span class="slide-no">09</span>
+      <span class="slide-no">10</span>
     </section>
 
-    <section id="slide-10" class="slide">
+    <section id="slide-11" class="slide">
       <p class="section-label">앱 화면</p>
       <div class="screenshot-grid is-four is-mori">
         <div class="screenshot-frame">
@@ -1580,10 +1625,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re 앱 화면</span>
-      <span class="slide-no">10</span>
+      <span class="slide-no">11</span>
     </section>
 
-    <section id="slide-11" class="slide">
+    <section id="slide-12" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">6개 API 병렬 처리와 부분 실패 대응</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1628,10 +1673,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re</span>
-      <span class="slide-no">11</span>
+      <span class="slide-no">12</span>
     </section>
 
-    <section id="slide-12" class="slide">
+    <section id="slide-13" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">Convention Plugin으로 모듈 빌드 설정 공통화</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1673,10 +1718,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re</span>
-      <span class="slide-no">12</span>
+      <span class="slide-no">13</span>
     </section>
 
-    <section id="slide-13" class="slide">
+    <section id="slide-14" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">모리, Mo-Re 성과와 회고</h2>
       <div class="closing-grid with-image" style="margin-top: 0.35in;">
@@ -1704,11 +1749,11 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re 회고</span>
-      <span class="slide-no">13</span>
+      <span class="slide-no">14</span>
     </section>
 
-    <section id="slide-14" class="slide">
-      <p class="section-label">프로젝트 3</p>
+    <section id="slide-15" class="slide">
+      <p class="section-label">프로젝트 4</p>
       <h2 class="title-lg">Glim</h2>
       <p class="meta">2025.07.07 ~ 2025.08.18 / 6명: Backend 2명, Android 2명, Frontend 1명, Backend &amp; Android 1명 / Android 앱 개발</p>
       <div class="overview-grid" style="margin-top: 0.28in;">
@@ -1744,10 +1789,10 @@
         </div>
       </div>
       <span class="footer-title">Glim 소개</span>
-      <span class="slide-no">14</span>
+      <span class="slide-no">15</span>
     </section>
 
-    <section id="slide-15" class="slide">
+    <section id="slide-16" class="slide">
       <p class="section-label">앱 화면</p>
       <div class="screenshot-grid is-four">
         <div class="screenshot-frame">
@@ -1764,10 +1809,10 @@
         </div>
       </div>
       <span class="footer-title">Glim 앱 화면</span>
-      <span class="slide-no">15</span>
+      <span class="slide-no">16</span>
     </section>
 
-    <section id="slide-16" class="slide">
+    <section id="slide-17" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">토큰 재발급과 인증 예외 처리</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1810,10 +1855,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">16</span>
+      <span class="slide-no">17</span>
     </section>
 
-    <section id="slide-17" class="slide">
+    <section id="slide-18" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">Orbit MVI로 화면 상태 관리와 테스트 정리</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1858,10 +1903,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">17</span>
+      <span class="slide-no">18</span>
     </section>
 
-    <section id="slide-18" class="slide">
+    <section id="slide-19" class="slide">
       <p class="section-label">문제 해결 3</p>
       <h2 class="title-md">Channel과 Navigator로 화면 전환 책임 분리</h2>
       <div class="problem-layout" style="margin-top: 0.24in;">
@@ -1907,10 +1952,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">18</span>
+      <span class="slide-no">19</span>
     </section>
 
-    <section id="slide-19" class="slide">
+    <section id="slide-20" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">Glim 성과와 회고</h2>
       <div class="closing-grid with-image" style="margin-top: 0.35in;">
@@ -1938,7 +1983,7 @@
         </div>
       </div>
       <span class="footer-title">Glim 회고</span>
-      <span class="slide-no">19</span>
+      <span class="slide-no">20</span>
     </section>
 
   </main>

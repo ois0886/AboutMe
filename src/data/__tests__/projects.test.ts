@@ -84,21 +84,49 @@ describe('projects 데이터 무결성', () => {
     },
   )
 
-  it('PDF 포트폴리오는 주점부리를 제외한 세 프로젝트를 19페이지로 구성한다', () => {
+  it('PDF 포트폴리오는 한길졸업을 먼저 소개하고 기존 프로젝트 순서와 내용을 보존한다', () => {
     const html = readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8')
     const document = new DOMParser().parseFromString(html, 'text/html')
 
     expect(document.body.innerHTML).not.toMatch(/주점부리|pubburi/i)
     expect(Array.from(document.querySelectorAll('.toc-name'), (item) => item.textContent))
-      .toEqual(['내눈 키오스크', '모리, Mo-Re', 'Glim'])
+      .toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
 
+    expect(Array.from(document.querySelectorAll('.toc-pages'), (item) => item.textContent))
+      .toEqual(['03p', '04p ~ 09p', '10p ~ 14p', '15p ~ 20p'])
+    const projectStarts = [3, 4, 10, 15].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
+    expect(projectStarts).toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
     const slides = Array.from(document.querySelectorAll('section.slide'))
-    expect(slides).toHaveLength(19)
+    expect(slides).toHaveLength(20)
     slides.forEach((slide, index) => {
       const page = String(index + 1).padStart(2, '0')
       expect(slide.id).toBe(`slide-${page}`)
       expect(slide.querySelector('.slide-no')?.textContent).toBe(page)
     })
+  })
+
+  it('한길졸업을 다른 프로젝트와 같은 계층에서 검증된 기여로 소개한다', () => {
+    const project = projects.find((item) => item.id === 'hangil')!
+    expect(project.period).toBe('2026.10 ~ 진행 중')
+    expect(projects[0].id).toBe('hangil')
+    expect(project.role).toBe('Android 개발 및 검증')
+    expect(project.links).toEqual([])
+    expect(project.problemSolvings).toEqual([])
+    const webText = JSON.stringify(project)
+    expect(webText).not.toMatch(/상용 운영|출품 완료|후속 작업|남은 범위|공개 전 점검|근거 링크|진행 중인 프로젝트/)
+    for (const file of ['resume.html', 'portfolio.html']) {
+      const document = new DOMParser().parseFromString(readFileSync(resolve(process.cwd(), file), 'utf8'), 'text/html')
+      const section = document.querySelector('[data-project-id="hangil"]')!
+      expect(section).not.toBeNull()
+      expect(section.querySelector('h3, h2')?.textContent).toBe('한길졸업' + (file === 'resume.html' ? ' - Android' : ''))
+      const text = normalizeText(section.textContent ?? '')
+      for (const fact of ['2026.10 ~ 진행 중', 'Android 개발 및 검증', '주차 상태와 UX 제한 해제', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
+        expect(text, `${file}: ${fact}`).toContain(fact)
+        expect(webText, `web: ${fact}`).toContain(fact)
+      }
+      expect(section.querySelector('a[href*="HanGilLab"]')).toBeNull()
+      expect(text).not.toMatch(/notion\.so|app\.notion|상용 운영|출품 완료|남은 범위|후속 작업|공개 전 점검|진행 중인 프로젝트/)
+    }
   })
 
   it('모든 프로젝트에 스크린샷이 1개 이상 있다', () => {
@@ -171,20 +199,22 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('이력서는 세 프로젝트를 요약하고 핵심 수치와 기술은 웹에 근거한다', () => {
+  it('이력서는 각 프로젝트를 요약하고 핵심 수치와 기술은 웹에 근거한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
     const resumeProjects = Array.from(resumeDocument.querySelectorAll('[data-project-id]'))
     expect(resumeProjects.map((item) => item.getAttribute('data-project-id')))
-      .toEqual(['naenun-kiosk', 'mo-re', 'glim'])
+      .toEqual(['hangil', 'naenun-kiosk', 'mo-re', 'glim'])
 
     const projectFacts: Record<string, string[]> = {
       'naenun-kiosk': ['Compose', 'Route', 'Screen', 'Component', 'Activity Context', 'Listener', 'Singleton', '우수상'],
       'mo-re': ['6개', 'API', '56%', 'Convention Plugin'],
       glim: ['Orbit MVI', 'DataStore', 'Channel', 'Navigator', '130', 'MockK', '잔디', '우수상'],
+      hangil: ['Pleos', 'UX 제한', 'MapLibre', 'Room', 'DB 마이그레이션'],
     }
     const projectSummaries: Record<string, { items: number; emphasis: string[] }> = {
+      hangil: { items: 2, emphasis: [] },
       'naenun-kiosk': {
         items: 4,
         emphasis: ['상용 키오스크 앱', 'SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상'],
@@ -242,7 +272,7 @@ describe('projects 데이터 무결성', () => {
       .not.toBeNull()
   })
 
-  it('이력서는 첫쪽에 경력과 세 프로젝트를 모으고 둘째 쪽에 나머지 섹션을 배치한다', () => {
+  it('이력서는 기존 내용을 보존하고 Project 섹션을 최신순으로 배치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
@@ -254,7 +284,7 @@ describe('projects 데이터 무결성', () => {
         ['Skills', 'Education', 'Blog', 'Awards', 'Certificates', 'Activity'],
       ])
     expect(pages.map((page) => Array.from(page.querySelectorAll('[data-project-id]'), (project) => project.getAttribute('data-project-id'))))
-      .toEqual([['naenun-kiosk', 'mo-re', 'glim'], []])
+      .toEqual([['hangil', 'naenun-kiosk', 'mo-re', 'glim'], []])
     expect(pages[0].querySelector('[data-career-id="chartlab"]')).not.toBeNull()
     expect(Array.from(pages[1].children)).toEqual(Array.from(pages[1].querySelectorAll('section')))
     expect(resumeDocument.body.textContent).not.toMatch(/Compose-Chart|Compose-Git-Grass|Open Source/)

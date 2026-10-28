@@ -42,6 +42,7 @@ export interface Project {
   retrospective: RichText[]
   links: { label: string; url: string }[]
   screenshots: string[]
+  imageSectionTitle?: string
   screenshotColumns?: number
   hasBottomScreenshot?: boolean
 }
@@ -54,6 +55,51 @@ const rich = (...segments: Array<string | TextSegment>): RichText =>
   )
 
 const projects: Project[] = [
+  {
+    id: 'hangil',
+    title: '한길졸업 - Android',
+    description: '초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱입니다.',
+    cardSummary: {
+      description: '초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱',
+      achievements: [
+        '주차 상태와 UX 제한 해제를 함께 확인하는 상세 조작 잠금',
+        '실제 지도 표시와 오류 복구, Room 기반 연습 세션 저장과 복원 검증',
+        'Kotlin, Compose 멀티 모듈 구현과 자동 검사, Pleos 시나리오 검증',
+      ],
+    },
+    thumbnail: 'screenshot/hangil-guide.svg',
+    tech: ['Kotlin', 'Jetpack Compose', 'Room', 'Coroutines', 'Flow', 'MapLibre', 'Pleos SDK'],
+    period: '2026.10 ~ 진행 중',
+    team: '공모전 프로젝트',
+    role: 'Android 개발 및 검증',
+    details: [
+      '초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.',
+      'Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다.',
+    ],
+    features: [
+      '주차 상태와 UX 제한 해제를 모두 확인했을 때만 상세 입력을 허용하고 끊김, 미확인, 권한 거부 시 잠금을 유지합니다.',
+      '목표와 시연 코스를 준비하고, 사용자가 시작하거나 종료한 연습 세션을 저장하고 복원합니다.',
+      'MapLibre로 시연 지역의 도로와 지명, 지도 출처를 표시하고 오류 발생 시 재시도할 수 있도록 구성했습니다.',
+    ],
+    contributions: [
+      'Kotlin, Compose 멀티 모듈 경계를 구성하고 차량 SDK 상태와 주차 화면의 상세 조작 제한을 연결했습니다.',
+      'MapLibre 기반 온라인 지도 표시, 오류와 재시도, 화면 재생성을 Pleos 환경에서 확인했습니다.',
+      'Room 기반 연습 시작과 종료, 준비 내용의 스냅샷 저장, DB 마이그레이션과 앱 재실행 후 복원을 구현하고 검증했습니다.',
+      '민트와 크림 색상 토큰, 브랜드 캐릭터와 주차 화면의 안내 리소스를 적용했습니다.',
+    ],
+    problemSolvings: [],
+    insights: [],
+    achievements: [
+      '주차 상태와 UX 제한 해제를 함께 확인하는 상세 조작 잠금을 구현하고 자동 검사와 Pleos 시나리오로 검증했습니다.',
+      '실제 지도 표시와 오류 복구, Room 기반 연습 세션 저장과 복원을 검증했습니다.',
+      'Kotlin, Compose 멀티 모듈 구현과 자동 검사, Pleos 시나리오 검증을 진행했습니다.',
+    ],
+    retrospective: [],
+    links: [],
+    screenshots: ['screenshot/hangil-guide.svg'],
+    imageSectionTitle: '브랜드 이미지',
+    hasBottomScreenshot: false,
+  },
   {
     id: 'naenun-kiosk',
     title: '내눈 키오스크 - Android',
@@ -2783,6 +2829,7 @@ jobs:
     screenshotColumns: 3,
     hasBottomScreenshot: false,
   },
+
 ]
 
 export default projects

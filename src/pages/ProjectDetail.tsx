@@ -268,7 +268,7 @@ function ProjectDetail() {
 
         {topScreenshots.length > 0 && (
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>스크린샷</h2>
+            <h2 className={styles.sectionTitle}>{project.imageSectionTitle ?? '스크린샷'}</h2>
             {topScreenshots[0] && (
               <div className={styles.screenshotFull}>
                 <div className={styles.screenshotWrap}>
