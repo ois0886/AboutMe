@@ -290,6 +290,31 @@ describe('projects 데이터 무결성', () => {
     expect(resumeDocument.body.textContent).not.toMatch(/Compose-Chart|Compose-Git-Grass|Open Source/)
   })
 
+  it('이력서의 프로젝트는 인쇄할 때 페이지 중간에서 나누지 않는다', () => {
+    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
+    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
+    const stylesheet = document.createElement('style')
+    stylesheet.textContent = resumeDocument.querySelector('style')?.textContent ?? ''
+    document.head.append(stylesheet)
+
+    try {
+      const projectRule = Array.from(stylesheet.sheet?.cssRules ?? [])
+        .find((rule): rule is CSSStyleRule => 'selectorText' in rule && rule.selectorText === '.project')
+      expect(projectRule).toBeDefined()
+
+      for (const property of ['break-inside', 'page-break-inside']) {
+        expect(projectRule?.style.getPropertyValue(property), property).toBe('avoid')
+        resumeDocument.querySelectorAll<HTMLElement>('[data-project-id]').forEach((project) => {
+          const effectiveValue = project.style.getPropertyValue(property)
+            || projectRule?.style.getPropertyValue(property)
+          expect(effectiveValue, `${project.dataset.projectId}: ${property}`).toBe('avoid')
+        })
+      }
+    } finally {
+      stylesheet.remove()
+    }
+  })
+
   it('웹과 정적 문서의 텍스트 소스에는 중앙점을 사용하지 않는다', () => {
     const sourceRoot = resolve(process.cwd(), 'src')
     const sourceFiles = readdirSync(sourceRoot, { recursive: true, encoding: 'utf8' })
