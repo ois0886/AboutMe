@@ -93,11 +93,11 @@ describe('projects 데이터 무결성', () => {
       .toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
 
     expect(Array.from(document.querySelectorAll('.toc-pages'), (item) => item.textContent))
-      .toEqual(['03p', '04p ~ 09p', '10p ~ 14p', '15p ~ 20p'])
-    const projectStarts = [3, 4, 10, 15].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
+      .toEqual(['03p ~ 06p', '07p ~ 12p', '13p ~ 17p', '18p ~ 23p'])
+    const projectStarts = [3, 7, 13, 18].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
     expect(projectStarts).toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
     const slides = Array.from(document.querySelectorAll('section.slide'))
-    expect(slides).toHaveLength(20)
+    expect(slides).toHaveLength(23)
     slides.forEach((slide, index) => {
       const page = String(index + 1).padStart(2, '0')
       expect(slide.id).toBe(`slide-${page}`)
@@ -110,8 +110,8 @@ describe('projects 데이터 무결성', () => {
     expect(project.period).toBe('2026.10 ~ 진행 중')
     expect(projects[0].id).toBe('hangil')
     expect(project.role).toBe('Android 개발 및 검증')
-    expect(project.links).toEqual([])
-    expect(project.problemSolvings).toEqual([])
+    expect(project.links).toEqual([{ label: 'GitHub', url: 'https://github.com/HanGilLab/Android' }])
+    expect(project.problemSolvings).toHaveLength(3)
     const webText = JSON.stringify(project)
     expect(webText).not.toMatch(/상용 운영|출품 완료|후속 작업|남은 범위|공개 전 점검|근거 링크|진행 중인 프로젝트/)
     for (const file of ['resume.html', 'portfolio.html']) {
@@ -124,9 +124,36 @@ describe('projects 데이터 무결성', () => {
         expect(text, `${file}: ${fact}`).toContain(fact)
         expect(webText, `web: ${fact}`).toContain(fact)
       }
-      expect(section.querySelector('a[href*="HanGilLab"]')).toBeNull()
+      if (file === 'portfolio.html') {
+        expect(section.querySelector('a[href="https://github.com/HanGilLab/Android"]')).not.toBeNull()
+      }
       expect(text).not.toMatch(/notion\.so|app\.notion|상용 운영|출품 완료|남은 범위|후속 작업|공개 전 점검|진행 중인 프로젝트/)
     }
+  })
+
+  it('한길졸업 상세 사례는 웹과 PDF에서 같은 세 가지 문제와 검증 범위를 설명한다', () => {
+    const project = projects.find((item) => item.id === 'hangil')!
+    const document = new DOMParser().parseFromString(
+      readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8'),
+      'text/html',
+    )
+    const cases = Array.from(document.querySelectorAll('[data-project-id="hangil"][data-case]'))
+    expect(cases.map((item) => item.getAttribute('data-case'))).toEqual(['parking', 'session', 'map'])
+    const facts = [
+      ['주차', 'UX 제한', '최신', '권한 거부', '단위 테스트', 'Pleos', '독립 조합'],
+      ['스냅샷', '트랜잭션', '롤백', '시각', 'v1', 'v2', 'Pleos'],
+      ['재시도 번호', '토큰', '콜백', '단위 테스트', '같은 프로세스', 'Pleos'],
+    ]
+    cases.forEach((section, index) => {
+      const webText = JSON.stringify(project.problemSolvings[index])
+      const pdfText = normalizeText(section.textContent ?? '')
+      facts[index].forEach((fact) => {
+        expect(webText, `web case ${index + 1}: ${fact}`).toContain(fact)
+        expect(pdfText, `PDF case ${index + 1}: ${fact}`).toContain(fact)
+      })
+      expect(Array.from(section.querySelectorAll('.compact-card > h3'), (item) => item.textContent))
+        .toEqual(['문제', '원인', '판단과 구현', '결과', '대체안 / 회고'])
+    })
   })
 
   it('모든 프로젝트에 스크린샷이 1개 이상 있다', () => {

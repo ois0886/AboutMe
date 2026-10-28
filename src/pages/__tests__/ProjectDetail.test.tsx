@@ -22,6 +22,18 @@ describe('ProjectDetail', () => {
     expect(screen.queryByRole('heading', { name: '스크린샷' })).not.toBeInTheDocument()
   })
 
+  it('한길졸업은 세 가지 상세 문제 해결과 공개 저장소 링크를 제공한다', () => {
+    renderProjectDetail('hangil')
+    for (const number of ['1', '2', '3']) {
+      expect(screen.getByRole('heading', { level: 3, name: number })).toBeInTheDocument()
+    }
+    expect(screen.queryByRole('heading', { level: 3, name: '4' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'GitHub' }))
+      .toHaveAttribute('href', 'https://github.com/HanGilLab/Android')
+    expect(screen.getByText(/UX 독립 조합과 끊김, 권한 거부의 오류 주입 실기는 미실행입니다/))
+      .toBeInTheDocument()
+  })
+
   it('유효한 프로젝트 ID로 접근하면 제목이 렌더링된다', () => {
     renderProjectDetail(firstProject.id)
     expect(

@@ -1087,62 +1087,62 @@
       background: rgba(255, 252, 244, 0.58);
     }
 
-    #slide-11 .problem-layout {
+    #slide-14 .problem-layout {
       align-items: start;
     }
 
-    #slide-11 .diagram-card {
+    #slide-14 .diagram-card {
       align-self: stretch;
       min-height: 0;
       padding: 0;
     }
 
-    #slide-11 .timeline-diagram {
+    #slide-14 .timeline-diagram {
       gap: 12px;
     }
 
-    #slide-11 .timeline-panel {
+    #slide-14 .timeline-panel {
       padding: 13px;
     }
 
-    #slide-11 .timeline-head {
+    #slide-14 .timeline-head {
       margin-bottom: 9px;
       font-size: 17px;
     }
 
-    #slide-11 .timeline-track {
+    #slide-14 .timeline-track {
       gap: 5px;
     }
 
-    #slide-11 .timeline-lane {
+    #slide-14 .timeline-lane {
       grid-template-columns: 96px 1fr;
     }
 
-    #slide-11 .lane-label {
+    #slide-14 .lane-label {
       white-space: nowrap;
       word-break: normal;
       overflow-wrap: normal;
     }
 
-    #slide-11 .lane-line {
+    #slide-14 .lane-line {
       height: 19px;
     }
 
-    #slide-11 .time-bar {
+    #slide-14 .time-bar {
       height: 17px;
     }
 
-    #slide-11 .timeline-result {
+    #slide-14 .timeline-result {
       margin-top: 8px;
       padding: 8px 12px;
       font-size: 16.5px;
     }
 
-    #slide-11 .content-stack {
+    #slide-14 .content-stack {
       gap: 0.06in;
     }
 
-    #slide-11 .compact-card {
+    #slide-14 .compact-card {
       padding: 0.08in 0.14in;
     }
 
@@ -1323,7 +1323,7 @@
             <div class="toc-name">한길졸업</div>
             <p class="toc-desc">목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱</p>
           </div>
-          <div class="toc-pages">03p</div>
+          <div class="toc-pages">03p ~ 06p</div>
         </div>
         <div class="toc-item">
           <div class="toc-index">프로젝트 2</div>
@@ -1331,7 +1331,7 @@
             <div class="toc-name">내눈 키오스크</div>
             <p class="toc-desc">스마트 헬스케어 키오스크 서비스 Android 앱</p>
           </div>
-          <div class="toc-pages">04p ~ 09p</div>
+          <div class="toc-pages">07p ~ 12p</div>
         </div>
         <div class="toc-item">
           <div class="toc-index">프로젝트 3</div>
@@ -1339,7 +1339,7 @@
             <div class="toc-name">모리, Mo-Re</div>
             <p class="toc-desc">서버 상태와 성능을 시각화하는 Android 모니터링 앱</p>
           </div>
-          <div class="toc-pages">10p ~ 14p</div>
+          <div class="toc-pages">13p ~ 17p</div>
         </div>
         <div class="toc-item">
           <div class="toc-index">프로젝트 4</div>
@@ -1347,7 +1347,7 @@
             <div class="toc-name">Glim</div>
             <p class="toc-desc">글귀를 짧은 이미지 콘텐츠로 공유하는 Android 앱</p>
           </div>
-          <div class="toc-pages">15p ~ 20p</div>
+          <div class="toc-pages">18p ~ 23p</div>
         </div>
       </div>
       <span class="footer-title">프로젝트 목차</span>
@@ -1363,6 +1363,7 @@
           <div class="compact-card">
             <h3>초보 운전자를 위한 Pleos 차량용 앱</h3>
             <p>목표와 시연 코스를 준비하고, 주차 화면에서 연습을 시작하거나 종료한 시각을 저장합니다.</p>
+            <p><a href="https://github.com/HanGilLab/Android">GitHub</a></p>
           </div>
           <div class="compact-card">
             <h3>차량 상태와 화면 조작 연결</h3>
@@ -1391,7 +1392,148 @@
       <span class="slide-no">03</span>
     </section>
 
-    <section id="slide-04" class="slide">
+    <section id="slide-04" class="slide" data-project-id="hangil" data-case="parking">
+      <p class="section-label">문제 해결 1</p>
+      <h2 class="title-md">주차와 UX 상태를 함께 확인하는 상세 조작 잠금</h2>
+      <div class="problem-layout">
+        <div class="diagram-card">
+          <div class="flow-diagram">
+            <div class="flow-node">차량 상태 확인<small>연결과 현재 기어</small></div>
+            <div class="flow-arrow" style="text-align:center">↓</div>
+            <div class="flow-node">주차 확인 + UX 제한 해제<small>두 조건을 모두 충족</small></div>
+            <div class="flow-arrow" style="text-align:center">↓</div>
+            <div class="flow-node is-accent">조작 직전 최신 상태 재확인<small>미확인과 오류는 잠금 유지</small></div>
+            <div class="flow-caption">화면 표시와 실제 처리에 같은 조건 적용</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <p>이전 주차 값을 사용하는 동안 새 D 신호가 도착하면 상세 조작이 열릴 수 있었습니다. 연결 끊김이나 권한 거부에서도 잠금을 유지해야 했습니다.</p>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>차량과 UX 제한은 별도 흐름으로 갱신됩니다. 화면에 합성된 상태와 실제 이벤트 처리 시점의 최신 값이 다를 수 있었습니다.</p>
+          </div>
+          <div class="compact-card">
+            <h3>판단과 구현</h3>
+            <ul>
+              <li>주차 확인과 UX 제한 해제를 모두 요구하고 초기 미확인 상태는 잠금으로 처리했습니다.</li>
+              <li>조작 직전 차량과 제한의 최신 값을 다시 읽고, 재연결 시 이전 값과 콜백을 무효화했습니다.</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>상태 조합, 새 D 신호 직후 조작, 끊김과 권한 거부를 단위 테스트로 확인했습니다.</li>
+              <li>Pleos에서 P→D→P의 잠금과 정상 복귀를 확인했습니다. UX 독립 조합과 끊김, 권한 거부의 오류 주입 실기는 미실행입니다.</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>UX 해제만으로 주차를 추정하거나 버튼만 비활성화하면 갱신 사이의 이벤트가 남습니다. 실제 처리 지점에서도 두 조건을 확인했습니다.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">한길졸업</span>
+      <span class="slide-no">04</span>
+    </section>
+
+    <section id="slide-05" class="slide" data-project-id="hangil" data-case="session">
+      <p class="section-label">문제 해결 2</p>
+      <h2 class="title-md">연습 세션의 저장 조건과 과거 기록 보존</h2>
+      <div class="problem-layout">
+        <div class="diagram-card">
+          <div class="flow-diagram">
+            <div class="flow-node">Room 트랜잭션 시작<small>주차와 준비 내용 확인</small></div>
+            <div class="flow-arrow" style="text-align:center">↓</div>
+            <div class="flow-node">시작 당시 스냅샷 저장<small>목표, 코스 버전과 표시명</small></div>
+            <div class="flow-arrow" style="text-align:center">↓</div>
+            <div class="flow-node is-accent">저장 후 조작 조건 재검사<small>잠금으로 바뀌면 전체 롤백</small></div>
+            <div class="flow-caption">단일 활성 세션과 명시적인 오류 결과</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <p>준비 내용을 바꿔도 과거 연습의 목표와 코스는 유지해야 했습니다. 중복 요청, 저장 중 주행 전환, 시각 역행도 정상 기록으로 저장하면 안 됐습니다.</p>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>현재 준비 내용만 참조하면 과거 기록이 달라집니다. 화면에서 시작 조건을 확인해도 비동기 DB 쓰기 중 차량 상태가 바뀔 수 있었습니다.</p>
+          </div>
+          <div class="compact-card">
+            <h3>판단과 구현</h3>
+            <ul>
+              <li>시작 당시 선택과 버전, 표시명을 스냅샷으로 저장하고 활성 세션을 하나로 제한했습니다.</li>
+              <li>Room 트랜잭션 안에서 저장 전후의 조작 허용 조건을 확인해 잠금 시 롤백하고, 중복과 시각 오류를 별도 결과로 반환했습니다.</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>DB 테스트로 v1→v2 준비 보존, 중복 처리, 시각 역행과 저장 중 잠금 롤백을 확인했습니다.</li>
+              <li>Pleos에서 시작, 앱 재실행, P와 D 전환, 종료와 재실행 뒤 실제 DB의 준비와 기록 보존을 검증했습니다.</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>버튼의 중복 클릭 방지만으로는 재실행과 동시 요청을 처리하기 어려웠습니다. 저장소에서도 상태를 검사하고 잘못된 종료 시각을 0초로 보정하지 않았습니다.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">한길졸업</span>
+      <span class="slide-no">05</span>
+    </section>
+
+    <section id="slide-06" class="slide" data-project-id="hangil" data-case="map">
+      <p class="section-label">문제 해결 3</p>
+      <h2 class="title-md">지도 재생성과 오류 복구에서 이전 콜백 차단</h2>
+      <div class="problem-layout">
+        <div class="diagram-card">
+          <div class="flow-diagram">
+            <div class="flow-node">현재 렌더 시도 구분<small>재시도 번호 + MapView 토큰</small></div>
+            <div class="flow-arrow" style="text-align:center">↓</div>
+            <div class="flow-node">스타일 로딩 + 전체 렌더 완료<small>타일과 글꼴 오류는 실패 처리</small></div>
+            <div class="flow-arrow" style="text-align:center">↓</div>
+            <div class="flow-node is-accent">현재 지도에만 상태 반영<small>이전 View와 시도는 무시</small></div>
+            <div class="flow-caption">오류 뒤 새 시도로 지도 다시 생성</div>
+          </div>
+        </div>
+        <div class="content-stack">
+          <div class="compact-card">
+            <h3>문제</h3>
+            <p>재시도나 화면 재생성 뒤 이전 MapView 콜백이 새 화면을 바꿀 수 있었습니다. 스타일이 로딩돼도 실제 타일 렌더링은 실패할 수 있었습니다.</p>
+          </div>
+          <div class="compact-card">
+            <h3>원인</h3>
+            <p>Native 지도 콜백은 비동기로 도착합니다. 재시도 번호만으로는 같은 시도에서 다시 만들어진 MapView를 구분하지 못했습니다.</p>
+          </div>
+          <div class="compact-card">
+            <h3>판단과 구현</h3>
+            <ul>
+              <li>재시도 번호와 View 생성 토큰을 함께 비교하고 현재 로딩 상태일 때만 준비 완료로 전환했습니다.</li>
+              <li>타일과 글꼴, 렌더 오류를 실패로 처리하고 화면 이탈 시 생명주기 관찰자와 리소스를 정리했습니다.</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>결과</h3>
+            <ul>
+              <li>이전 시도와 View 콜백 무시, 실패 후 재시도 상태를 단위 테스트로 확인했습니다.</li>
+              <li>Pleos에서 실제 지도, 같은 프로세스의 네트워크 오류와 재시도 복구, 화면 재생성, D 전환 시 지도 제거를 확인했습니다.</li>
+            </ul>
+          </div>
+          <div class="compact-card">
+            <h3>대체안 / 회고</h3>
+            <p>스타일 로딩만으로 완료 처리하지 않고 실제 렌더 완료를 기다렸습니다. 고정 시연 지역의 지도 표시와 현재 위치, 자체 길안내는 구분했습니다.</p>
+          </div>
+        </div>
+      </div>
+      <span class="footer-title">한길졸업</span>
+      <span class="slide-no">06</span>
+    </section>
+
+    <section id="slide-07" class="slide">
       <p class="section-label">프로젝트 2</p>
       <h2 class="title-lg">내눈 키오스크</h2>
       <p class="meta">2025.10.10 ~ 2025.11.20 / 6명: IoT 1명, Android 5명 / Android 키오스크 리팩토링</p>
@@ -1427,10 +1569,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크 소개</span>
-      <span class="slide-no">04</span>
+      <span class="slide-no">07</span>
     </section>
 
-    <section id="slide-05" class="slide">
+    <section id="slide-08" class="slide">
       <p class="section-label">앱 화면</p>
       <div class="screenshot-grid is-two is-naenun">
         <div class="screenshot-frame">
@@ -1441,10 +1583,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크 앱 화면</span>
-      <span class="slide-no">05</span>
+      <span class="slide-no">08</span>
     </section>
 
-    <section id="slide-06" class="slide">
+    <section id="slide-09" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">Compose 전환과 화면 책임 분리</h2>
       <div class="problem-layout">
@@ -1488,10 +1630,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크</span>
-      <span class="slide-no">06</span>
+      <span class="slide-no">09</span>
     </section>
 
-    <section id="slide-07" class="slide">
+    <section id="slide-10" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">레거시 패키지 구조 재편</h2>
       <div class="problem-layout">
@@ -1532,10 +1674,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크</span>
-      <span class="slide-no">07</span>
+      <span class="slide-no">10</span>
     </section>
 
-    <section id="slide-08" class="slide">
+    <section id="slide-11" class="slide">
       <p class="section-label">문제 해결 3</p>
       <h2 class="title-md">메모리 누수 개선</h2>
       <div class="problem-layout">
@@ -1580,10 +1722,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크</span>
-      <span class="slide-no">08</span>
+      <span class="slide-no">11</span>
     </section>
 
-    <section id="slide-09" class="slide">
+    <section id="slide-12" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">내눈 키오스크 성과와 회고</h2>
       <div class="closing-grid with-image">
@@ -1610,10 +1752,10 @@
         </div>
       </div>
       <span class="footer-title">내눈 키오스크 회고</span>
-      <span class="slide-no">09</span>
+      <span class="slide-no">12</span>
     </section>
 
-    <section id="slide-10" class="slide">
+    <section id="slide-13" class="slide">
       <p class="section-label">프로젝트 3</p>
       <h2 class="title-lg">모리, Mo-Re</h2>
       <p class="meta">2025.08.25 ~ 2025.09.29 / 6명: Backend 4명, Android 2명 / Android 구조 설계, 시계열 차트와 메트릭 조회 개발</p>
@@ -1649,10 +1791,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re 소개</span>
-      <span class="slide-no">10</span>
+      <span class="slide-no">13</span>
     </section>
 
-    <section id="slide-11" class="slide">
+    <section id="slide-14" class="slide">
       <p class="section-label">앱 화면</p>
       <div class="screenshot-grid is-four is-mori">
         <div class="screenshot-frame">
@@ -1669,10 +1811,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re 앱 화면</span>
-      <span class="slide-no">11</span>
+      <span class="slide-no">14</span>
     </section>
 
-    <section id="slide-12" class="slide">
+    <section id="slide-15" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">6개 API 병렬 처리와 부분 실패 대응</h2>
       <div class="problem-layout">
@@ -1717,10 +1859,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re</span>
-      <span class="slide-no">12</span>
+      <span class="slide-no">15</span>
     </section>
 
-    <section id="slide-13" class="slide">
+    <section id="slide-16" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">Convention Plugin으로 모듈 빌드 설정 공통화</h2>
       <div class="problem-layout">
@@ -1762,10 +1904,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re</span>
-      <span class="slide-no">13</span>
+      <span class="slide-no">16</span>
     </section>
 
-    <section id="slide-14" class="slide">
+    <section id="slide-17" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">모리, Mo-Re 성과와 회고</h2>
       <div class="closing-grid with-image">
@@ -1793,10 +1935,10 @@
         </div>
       </div>
       <span class="footer-title">Mo-Re 회고</span>
-      <span class="slide-no">14</span>
+      <span class="slide-no">17</span>
     </section>
 
-    <section id="slide-15" class="slide">
+    <section id="slide-18" class="slide">
       <p class="section-label">프로젝트 4</p>
       <h2 class="title-lg">Glim</h2>
       <p class="meta">2025.07.07 ~ 2025.08.18 / 6명: Backend 2명, Android 2명, Frontend 1명, Backend &amp; Android 1명 / Android 앱 개발</p>
@@ -1833,10 +1975,10 @@
         </div>
       </div>
       <span class="footer-title">Glim 소개</span>
-      <span class="slide-no">15</span>
+      <span class="slide-no">18</span>
     </section>
 
-    <section id="slide-16" class="slide">
+    <section id="slide-19" class="slide">
       <p class="section-label">앱 화면</p>
       <div class="screenshot-grid is-four">
         <div class="screenshot-frame">
@@ -1853,10 +1995,10 @@
         </div>
       </div>
       <span class="footer-title">Glim 앱 화면</span>
-      <span class="slide-no">16</span>
+      <span class="slide-no">19</span>
     </section>
 
-    <section id="slide-17" class="slide">
+    <section id="slide-20" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">토큰 재발급과 인증 예외 처리</h2>
       <div class="problem-layout">
@@ -1899,10 +2041,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">17</span>
+      <span class="slide-no">20</span>
     </section>
 
-    <section id="slide-18" class="slide">
+    <section id="slide-21" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">Orbit MVI로 화면 상태 관리와 테스트 정리</h2>
       <div class="problem-layout">
@@ -1947,10 +2089,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">18</span>
+      <span class="slide-no">21</span>
     </section>
 
-    <section id="slide-19" class="slide">
+    <section id="slide-22" class="slide">
       <p class="section-label">문제 해결 3</p>
       <h2 class="title-md">Channel과 Navigator로 화면 전환 책임 분리</h2>
       <div class="problem-layout">
@@ -1996,10 +2138,10 @@
         </div>
       </div>
       <span class="footer-title">Glim</span>
-      <span class="slide-no">19</span>
+      <span class="slide-no">22</span>
     </section>
 
-    <section id="slide-20" class="slide">
+    <section id="slide-23" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">Glim 성과와 회고</h2>
       <div class="closing-grid with-image">
@@ -2027,7 +2169,7 @@
         </div>
       </div>
       <span class="footer-title">Glim 회고</span>
-      <span class="slide-no">20</span>
+      <span class="slide-no">23</span>
     </section>
 
   </main>
