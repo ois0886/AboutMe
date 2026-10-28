@@ -10,6 +10,30 @@
       margin: 0;
     }
 
+    :root {
+      --font-cover: 82px;
+      --font-cover-role: 36px;
+      --font-page-title: 40px;
+      --font-toc-title: 30px;
+      --font-card-title: 18px;
+      --font-body: 16px;
+      --font-label: 18px;
+      --font-caption: 12px;
+      --font-credit: 10.5px;
+      --font-tag: 14px;
+      --font-footer: 14px;
+      --font-page-number: 22px;
+      --line-title: 1.2;
+      --line-heading: 1.3;
+      --line-body: 1.4;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-layout: 40px;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -25,6 +49,8 @@
     }
 
     body {
+      font-size: var(--font-body);
+      line-height: var(--line-body);
       print-color-adjust: exact;
       -webkit-print-color-adjust: exact;
     }
@@ -75,14 +101,14 @@
       right: 0.84in;
       bottom: 0.42in;
       color: #0e2b4c;
-      font-size: 22px;
+      font-size: var(--font-page-number);
       font-weight: 800;
       letter-spacing: 0;
     }
 
     .eyebrow {
       color: #49617d;
-      font-size: 18px;
+      font-size: var(--font-label);
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -98,15 +124,15 @@
 
     .title-lg {
       color: #07182d;
-      font-size: 46px;
-      line-height: 1.12;
+      font-size: var(--font-page-title);
+      line-height: var(--line-title);
       letter-spacing: 0;
     }
 
     .title-md {
       color: #07182d;
-      font-size: 33px;
-      line-height: 1.22;
+      font-size: var(--font-page-title);
+      line-height: var(--line-title);
       letter-spacing: 0;
     }
 
@@ -118,10 +144,11 @@
     }
 
     .meta {
+      margin-top: var(--space-2);
       color: #405873;
-      font-size: 18px;
+      font-size: var(--font-body);
       font-weight: 700;
-      line-height: 1.52;
+      line-height: var(--line-body);
     }
 
     .small {
@@ -133,11 +160,12 @@
     .section-label {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 0.24in;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
       color: #0e2b4c;
-      font-size: 18px;
+      font-size: var(--font-label);
       font-weight: 900;
+      line-height: var(--line-heading);
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -170,7 +198,7 @@
       justify-content: space-between;
       gap: 0.3in;
       color: #49617d;
-      font-size: 18px;
+      font-size: var(--font-label);
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -182,7 +210,7 @@
 
     .cover-name {
       color: #07182d;
-      font-size: 82px;
+      font-size: var(--font-cover);
       font-weight: 900;
       line-height: 1.12;
       letter-spacing: 0;
@@ -191,8 +219,9 @@
     .cover-role {
       margin-top: 0.18in;
       color: #203b5a;
-      font-size: 36px;
+      font-size: var(--font-cover-role);
       font-weight: 900;
+      line-height: var(--line-title);
     }
 
     .cover-divider {
@@ -213,9 +242,9 @@
     .contact-line {
       display: grid;
       grid-template-columns: 0.98in 1fr;
-      gap: 14px;
-      font-size: 18px;
-      line-height: 1.45;
+      gap: var(--space-4);
+      font-size: var(--font-body);
+      line-height: var(--line-body);
     }
 
     .contact-line span:first-child {
@@ -225,8 +254,8 @@
 
     .toc-list {
       display: grid;
-      gap: 0.3in;
-      margin-top: 0.4in;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
     }
 
     .toc-item {
@@ -234,51 +263,69 @@
       grid-template-columns: 1.55in 1fr 1.1in;
       gap: 0.28in;
       align-items: center;
-      padding: 0.22in 0.26in;
+      padding: var(--space-4) var(--space-6);
       border: 2px solid #0e2b4c;
       background: rgba(255, 252, 244, 0.55);
     }
 
     .toc-index {
       color: #0e2b4c;
-      font-size: 30px;
+      font-size: var(--font-toc-title);
       font-weight: 900;
+      line-height: var(--line-heading);
     }
 
     .toc-name {
       color: #07182d;
-      font-size: 31px;
+      font-size: var(--font-toc-title);
       font-weight: 900;
+      line-height: var(--line-heading);
     }
 
     .toc-desc {
-      margin-top: 6px;
+      margin-top: var(--space-2);
       color: #405873;
-      font-size: 18px;
-      line-height: 1.42;
+      font-size: var(--font-body);
+      line-height: var(--line-body);
     }
 
     .toc-pages {
       color: #0e2b4c;
-      font-size: 18px;
+      font-size: var(--font-body);
       font-weight: 900;
       text-align: right;
-    }
-
-    #slide-02 .toc-list {
-      gap: 0.18in;
-      margin-top: 0.32in;
-    }
-
-    #slide-02 .toc-item {
-      padding: 0.18in 0.24in;
     }
 
     .overview-grid {
       display: grid;
       grid-template-columns: 0.96fr 1.04fr;
-      gap: 0.42in;
+      gap: var(--space-layout);
+      margin-top: var(--space-6);
       align-items: stretch;
+    }
+
+    .feature-overview {
+      display: grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap: var(--space-layout);
+      margin-top: var(--space-6);
+    }
+
+    .brand-panel {
+      align-self: center;
+      text-align: center;
+    }
+
+    .brand-image {
+      width: 100%;
+      max-height: 3.9in;
+    }
+
+    .brand-caption {
+      margin-top: var(--space-4);
+      color: #49617d;
+      font-size: var(--font-caption);
+      line-height: var(--line-body);
     }
 
     .shot-panel {
@@ -365,48 +412,52 @@
 
     .info-panel {
       display: grid;
-      gap: 0.12in;
+      gap: var(--space-3);
     }
 
     .info-card {
-      padding: 0.17in 0.2in;
+      padding: var(--space-2) var(--space-4);
       border: 2px solid #0e2b4c;
       background: rgba(255, 252, 244, 0.58);
     }
 
     .info-card h3 {
-      margin-bottom: 8px;
+      margin-bottom: var(--space-2);
       color: #0e2b4c;
-      font-size: 19px;
+      font-size: var(--font-card-title);
+      font-weight: 800;
+      line-height: var(--line-heading);
     }
 
     .info-card p,
     .info-card li {
       color: #243f5e;
-      font-size: 17px;
-      line-height: 1.48;
+      font-size: var(--font-body);
+      line-height: var(--line-body);
     }
 
     .tag-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
+      gap: var(--space-2);
+      margin-top: var(--space-2);
     }
 
     .tag {
-      padding: 5px 10px;
+      padding: var(--space-1) var(--space-2);
       border: 1px solid #0e2b4c;
       color: #0e2b4c;
       background: #f7f0e2;
-      font-size: 13.5px;
+      font-size: var(--font-tag);
       font-weight: 800;
+      line-height: var(--line-heading);
     }
 
     .problem-layout {
       display: grid;
-      grid-template-columns: 0.96fr 1.04fr;
-      gap: 0.42in;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: var(--space-layout);
+      margin-top: var(--space-6);
       align-items: stretch;
     }
 
@@ -980,9 +1031,9 @@
 
     .image-credit {
       width: 100%;
-      margin: 0.055in 0 0;
+      margin: var(--space-1) 0 0;
       color: #8a96a4;
-      font-size: 10.5px;
+      font-size: var(--font-credit);
       font-weight: 500;
       line-height: 1.25;
       letter-spacing: 0;
@@ -1027,11 +1078,11 @@
 
     .content-stack {
       display: grid;
-      gap: 0.1in;
+      gap: var(--space-3);
     }
 
     .compact-card {
-      padding: 0.12in 0.16in;
+      padding: var(--space-2) var(--space-4);
       border: 2px solid #0e2b4c;
       background: rgba(255, 252, 244, 0.58);
     }
@@ -1096,77 +1147,69 @@
     }
 
     .compact-card h3 {
-      margin-bottom: 7px;
+      margin-bottom: var(--space-2);
       color: #0e2b4c;
-      font-size: 18px;
+      font-size: var(--font-card-title);
+      font-weight: 800;
+      line-height: var(--line-heading);
     }
 
     .compact-card p,
     .compact-card li {
       color: #243f5e;
-      font-size: 14.6px;
-      line-height: 1.38;
+      font-size: var(--font-body);
+      line-height: var(--line-body);
     }
 
     .compact-card ul,
     .info-card ul {
       display: grid;
-      gap: 4px;
-      padding-left: 18px;
+      gap: var(--space-1);
+      padding-left: var(--space-4);
     }
 
     .closing-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.36in;
+      gap: var(--space-layout);
+      margin-top: var(--space-6);
       align-items: stretch;
     }
 
     .closing-grid.with-image {
       grid-template-columns: 1.45fr 0.75fr;
-      gap: 0.28in;
+      gap: var(--space-layout);
     }
 
     .closing-card {
       min-height: 5.5in;
-      padding: 0.28in;
+      padding: var(--space-2) var(--space-4);
       border: 2px solid #0e2b4c;
       background: rgba(255, 252, 244, 0.58);
     }
 
     .closing-card h3 {
-      margin-bottom: 0.16in;
+      margin-bottom: var(--space-2);
       color: #0e2b4c;
-      font-size: 24px;
+      font-size: var(--font-card-title);
+      font-weight: 800;
+      line-height: var(--line-heading);
     }
 
     .closing-card ul {
       display: grid;
-      gap: 12px;
-      padding-left: 20px;
+      gap: var(--space-1);
+      padding-left: var(--space-4);
     }
 
     .closing-card li {
       color: #243f5e;
-      font-size: 18.5px;
-      line-height: 1.5;
-    }
-
-    .with-image .closing-card {
-      padding: 0.18in;
-    }
-
-    .with-image .closing-card h3 {
-      font-size: 20px;
-    }
-
-    .with-image .closing-card li {
-      font-size: 14.6px;
-      line-height: 1.34;
+      font-size: var(--font-body);
+      line-height: var(--line-body);
     }
 
     .result-block {
-      margin-bottom: 0.18in;
+      margin-bottom: var(--space-4);
     }
 
     .result-block:last-child {
@@ -1174,10 +1217,11 @@
     }
 
     .result-block h4 {
-      margin-bottom: 0.08in;
+      margin-bottom: var(--space-2);
       color: #0e2b4c;
-      font-size: 18px;
-      font-weight: 900;
+      font-size: var(--font-card-title);
+      font-weight: 800;
+      line-height: var(--line-heading);
     }
 
     .closing-image-card {
@@ -1206,7 +1250,7 @@
       left: 0.84in;
       bottom: 0.42in;
       color: #49617d;
-      font-size: 14px;
+      font-size: var(--font-footer);
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -1314,7 +1358,7 @@
       <p class="section-label">프로젝트 1</p>
       <h2 class="title-lg">한길졸업</h2>
       <p class="meta">2026.10 ~ 진행 중 / Android 개발 및 검증</p>
-      <div style="display: grid; grid-template-columns: 1.65fr 1fr; gap: 0.36in; margin-top: 0.3in;">
+      <div class="feature-overview">
         <div class="content-stack">
           <div class="compact-card">
             <h3>초보 운전자를 위한 Pleos 차량용 앱</h3>
@@ -1337,10 +1381,10 @@
             </ul>
           </div>
         </div>
-        <div style="align-self: center; text-align: center;">
-          <img src="public/screenshot/hangil-guide.svg" alt="한길졸업 브랜드 가이드 캐릭터" style="width: 100%; max-height: 3.9in;" />
+        <div class="brand-panel">
+          <img class="brand-image" src="public/screenshot/hangil-guide.svg" alt="한길졸업 브랜드 가이드 캐릭터" />
           <p class="image-credit">한길졸업 브랜드 가이드 캐릭터</p>
-          <p style="font-size: 14px; color: #49617d; line-height: 1.5; margin-top: 0.2in;">민트와 크림 색상 토큰,<br />브랜드 캐릭터와 주차 화면 안내 리소스 적용</p>
+          <p class="brand-caption">민트와 크림 색상 토큰,<br />브랜드 캐릭터와 주차 화면 안내 리소스 적용</p>
         </div>
       </div>
       <span class="footer-title">한길졸업</span>
@@ -1351,7 +1395,7 @@
       <p class="section-label">프로젝트 2</p>
       <h2 class="title-lg">내눈 키오스크</h2>
       <p class="meta">2025.10.10 ~ 2025.11.20 / 6명: IoT 1명, Android 5명 / Android 키오스크 리팩토링</p>
-      <div class="overview-grid" style="margin-top: 0.28in;">
+      <div class="overview-grid">
         <div class="shot-panel">
           <img class="phone-shot" src="public/screenshot/nanoon1.png" alt="내눈 키오스크 화면 1" />
           <img class="phone-shot" src="public/screenshot/nanoon2.png" alt="내눈 키오스크 화면 2" />
@@ -1403,7 +1447,7 @@
     <section id="slide-06" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">Compose 전환과 화면 책임 분리</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/naenun-state-hoisting-visual.png" alt="한 화면의 네 가지 책임을 외부 상태 제어와 세 계층으로 분리한 전후 이미지" />
@@ -1450,7 +1494,7 @@
     <section id="slide-07" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">레거시 패키지 구조 재편</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/naenun-package-refactor-visual.png" alt="서로 얽힌 패키지를 기능별 패키지와 공통 코드로 나눈 전후 도식" />
@@ -1494,7 +1538,7 @@
     <section id="slide-08" class="slide">
       <p class="section-label">문제 해결 3</p>
       <h2 class="title-md">메모리 누수 개선</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/naenun-memory-leak-visual.png" alt="화면 종료 후 남아 있던 Activity 참조와 Listener를 해제한 전후 도식" />
@@ -1542,7 +1586,7 @@
     <section id="slide-09" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">내눈 키오스크 성과와 회고</h2>
-      <div class="closing-grid with-image" style="margin-top: 0.35in;">
+      <div class="closing-grid with-image">
         <div class="closing-card">
           <div class="result-block">
             <h4>주요 결과</h4>
@@ -1573,7 +1617,7 @@
       <p class="section-label">프로젝트 3</p>
       <h2 class="title-lg">모리, Mo-Re</h2>
       <p class="meta">2025.08.25 ~ 2025.09.29 / 6명: Backend 4명, Android 2명 / Android 구조 설계, 시계열 차트와 메트릭 조회 개발</p>
-      <div class="overview-grid" style="margin-top: 0.28in;">
+      <div class="overview-grid">
         <div class="shot-panel">
           <img class="phone-shot" src="public/screenshot/more1.jpg" alt="모리 화면 1" />
           <img class="phone-shot" src="public/screenshot/more2.png" alt="모리 화면 2" />
@@ -1631,7 +1675,7 @@
     <section id="slide-12" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">6개 API 병렬 처리와 부분 실패 대응</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/more-parallel-api-visual.png" alt="6개 API를 순차 호출에서 병렬 호출로 바꿔 로딩 시간을 약 356ms에서 156ms로 줄인 전후 도식" />
@@ -1679,7 +1723,7 @@
     <section id="slide-13" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">Convention Plugin으로 모듈 빌드 설정 공통화</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/more-build-logic-visual.png" alt="Convention Plugin으로 공통 빌드 설정을 여러 모듈에 적용하는 도식" />
@@ -1724,7 +1768,7 @@
     <section id="slide-14" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">모리, Mo-Re 성과와 회고</h2>
-      <div class="closing-grid with-image" style="margin-top: 0.35in;">
+      <div class="closing-grid with-image">
         <div class="closing-card">
           <div class="result-block">
             <h4>주요 결과</h4>
@@ -1756,7 +1800,7 @@
       <p class="section-label">프로젝트 4</p>
       <h2 class="title-lg">Glim</h2>
       <p class="meta">2025.07.07 ~ 2025.08.18 / 6명: Backend 2명, Android 2명, Frontend 1명, Backend &amp; Android 1명 / Android 앱 개발</p>
-      <div class="overview-grid" style="margin-top: 0.28in;">
+      <div class="overview-grid">
         <div class="shot-panel">
           <img class="phone-shot" src="public/screenshot/Glim1.png" alt="Glim 화면 1" />
           <img class="phone-shot" src="public/screenshot/Glim2.png" alt="Glim 화면 2" />
@@ -1815,7 +1859,7 @@
     <section id="slide-17" class="slide">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">토큰 재발급과 인증 예외 처리</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/glim-auth-flow-visual.png" alt="Access Token 만료 시 재발급 후 재시도하고 Refresh Token 만료 시 로그아웃하는 인증 흐름" />
@@ -1861,7 +1905,7 @@
     <section id="slide-18" class="slide">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">Orbit MVI로 화면 상태 관리와 테스트 정리</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/glim-mvi-test-visual.png" alt="여러 Intent와 Reducer 클래스를 Orbit Container로 통합하고 ViewModel을 테스트하는 전후 이미지" />
@@ -1909,7 +1953,7 @@
     <section id="slide-19" class="slide">
       <p class="section-label">문제 해결 3</p>
       <h2 class="title-md">Channel과 Navigator로 화면 전환 책임 분리</h2>
-      <div class="problem-layout" style="margin-top: 0.24in;">
+      <div class="problem-layout">
         <div class="diagram-card">
           <div class="generated-visual">
             <img src="public/screenshot/glim-navigator-channel-visual.png" alt="기능별 화면의 직접 BackStack 접근을 분리하고 Channel과 Navigator로 화면 전환을 요청하는 도식" />
@@ -1958,7 +2002,7 @@
     <section id="slide-20" class="slide">
       <p class="section-label">결과</p>
       <h2 class="title-md">Glim 성과와 회고</h2>
-      <div class="closing-grid with-image" style="margin-top: 0.35in;">
+      <div class="closing-grid with-image">
         <div class="closing-card">
           <div class="result-block">
             <h4>주요 결과</h4>
