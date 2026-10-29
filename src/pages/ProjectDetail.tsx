@@ -51,6 +51,16 @@ function ProjectDetail() {
     : null
   const fromPortfolio = (location.state as { fromPortfolio?: boolean } | null)?.fromPortfolio
 
+  const renderScreenshot = (src: string) => {
+    const description = project.screenshotDescriptions?.[src]
+    return (
+      <>
+        <img src={src} alt={description?.alt ?? project.title} className={styles.screenshot} />
+        {description && <p className={styles.screenshotCaption}>{description.caption}</p>}
+      </>
+    )
+  }
+
   const handleBack = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     if (fromPortfolio) {
@@ -272,7 +282,7 @@ function ProjectDetail() {
             {topScreenshots[0] && (
               <div className={styles.screenshotFull}>
                 <div className={styles.screenshotWrap}>
-                  <img src={topScreenshots[0]} alt={project.title} className={styles.screenshot} />
+                  {renderScreenshot(topScreenshots[0])}
                 </div>
               </div>
             )}
@@ -290,7 +300,7 @@ function ProjectDetail() {
                         const img = topScreenshots[startIdx + j]
                         return img ? (
                           <div key={j} className={styles.screenshotWrap}>
-                            <img src={img} alt={project.title} className={styles.screenshot} />
+                            {renderScreenshot(img)}
                           </div>
                         ) : null
                       })}
@@ -302,7 +312,7 @@ function ProjectDetail() {
             {bottomScreenshot && (
               <div className={styles.screenshots}>
                 <div className={styles.screenshotWrap}>
-                  <img src={bottomScreenshot} alt={project.title} className={styles.screenshot} />
+                  {renderScreenshot(bottomScreenshot)}
                 </div>
               </div>
             )}

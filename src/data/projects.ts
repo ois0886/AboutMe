@@ -42,6 +42,7 @@ export interface Project {
   retrospective: RichText[]
   links: { label: string; url: string }[]
   screenshots: string[]
+  screenshotDescriptions?: Record<string, { alt: string; caption: string }>
   imageSectionTitle?: string
   screenshotColumns?: number
   hasBottomScreenshot?: boolean
@@ -192,8 +193,27 @@ const projects: Project[] = [
     ],
     retrospective: [],
     links: [{ label: 'GitHub', url: 'https://github.com/HanGilLab/Android' }],
-    screenshots: ['screenshot/hangil-guide.svg'],
-    imageSectionTitle: '브랜드 이미지',
+    screenshots: [
+      'screenshot/hangil-home.png',
+      'screenshot/hangil-briefing.png',
+      'screenshot/hangil-locked.png',
+    ],
+    screenshotDescriptions: {
+      'screenshot/hangil-home.png': {
+        alt: '주차가 확인된 한길졸업 홈에서 다음 행동과 저장된 시연 준비를 표시한 실제 앱 화면',
+        caption: '주차 홈: 저장된 준비와 다음 행동을 보여 줍니다. 코스와 과제는 고정 시연 콘텐츠입니다.',
+      },
+      'screenshot/hangil-briefing.png': {
+        alt: '한길졸업의 고정 시연 코스 브리핑과 과제 선택을 표시한 실제 앱 화면',
+        caption: '출발 전 브리핑: 고정 시연 코스와 과제 선택 화면입니다. 검증용 선택은 저장하지 않았습니다.',
+      },
+      'screenshot/hangil-locked.png': {
+        alt: '실제 SDK의 D 상태 전환 후 주차 안내만 표시하고 상세 조작을 잠근 한길졸업 앱 화면',
+        caption: '주행 잠금: 실제 SDK의 D 상태 전환 후 상세 조작을 잠근 화면입니다. 저장된 준비는 유지됩니다.',
+      },
+    },
+    imageSectionTitle: '앱 화면',
+    screenshotColumns: 1,
     hasBottomScreenshot: false,
   },
   {

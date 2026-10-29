@@ -93,11 +93,11 @@ describe('projects 데이터 무결성', () => {
       .toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
 
     expect(Array.from(document.querySelectorAll('.toc-pages'), (item) => item.textContent))
-      .toEqual(['03p ~ 06p', '07p ~ 12p', '13p ~ 17p', '18p ~ 23p'])
-    const projectStarts = [3, 7, 13, 18].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
+      .toEqual(['03p ~ 08p', '09p ~ 14p', '15p ~ 19p', '20p ~ 25p'])
+    const projectStarts = [3, 9, 15, 20].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
     expect(projectStarts).toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
     const slides = Array.from(document.querySelectorAll('section.slide'))
-    expect(slides).toHaveLength(23)
+    expect(slides).toHaveLength(25)
     slides.forEach((slide, index) => {
       const page = String(index + 1).padStart(2, '0')
       expect(slide.id).toBe(`slide-${page}`)
@@ -160,6 +160,38 @@ describe('projects 데이터 무결성', () => {
     projects.forEach((project) => {
       expect(project.screenshots.length).toBeGreaterThan(0)
     })
+  })
+
+  it('한길졸업의 실제 화면 세 장과 출처 설명은 웹과 PDF 갤러리에서 일치한다', () => {
+    const project = projects.find((item) => item.id === 'hangil')!
+    expect(project.screenshots).toEqual([
+      'screenshot/hangil-home.png',
+      'screenshot/hangil-briefing.png',
+      'screenshot/hangil-locked.png',
+    ])
+    expect(project.thumbnail).toBe('screenshot/hangil-guide.svg')
+    expect(project.screenshotColumns).toBe(1)
+    expect(Object.keys(project.screenshotDescriptions!)).toEqual(project.screenshots)
+    const document = new DOMParser().parseFromString(
+      readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8'),
+      'text/html',
+    )
+    const galleries = document.querySelectorAll('[data-project-id="hangil"][data-gallery]')
+    expect(galleries).toHaveLength(2)
+    const figures = Array.from(galleries).flatMap((gallery) => Array.from(gallery.querySelectorAll('figure')))
+    expect(figures).toHaveLength(3)
+    project.screenshots.forEach((src, index) => {
+      const description = project.screenshotDescriptions![src]
+      expect(readFileSync(resolve(process.cwd(), 'public', src)).subarray(0, 8))
+        .toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+      expect(figures[index].querySelector('img')?.getAttribute('src')).toBe(`public/${src}`)
+      expect(figures[index].querySelector('img')?.getAttribute('alt')).toBe(description.alt)
+      expect(figures[index].querySelector('figcaption')?.textContent).toBe(description.caption)
+    })
+    expect(project.screenshotDescriptions!['screenshot/hangil-home.png'].caption).toContain('고정 시연')
+    expect(project.screenshotDescriptions!['screenshot/hangil-briefing.png'].caption).toContain('저장하지 않았습니다')
+    expect(project.screenshotDescriptions!['screenshot/hangil-locked.png'].caption).toContain('실제 SDK의 D 상태')
+    expect(project.problemSolvings).toHaveLength(3)
   })
 
   it('모든 프로젝트에 상세 설명이 있다', () => {

@@ -16,10 +16,32 @@ function renderProjectDetail(id: string) {
 describe('ProjectDetail', () => {
   const firstProject = projects[0]
 
-  it('한길졸업의 브랜드 이미지를 실제 앱 스크린샷과 구분한다', () => {
-    renderProjectDetail('hangil')
-    expect(screen.getByRole('heading', { name: '브랜드 이미지' })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: '스크린샷' })).not.toBeInTheDocument()
+  it('한길졸업의 실제 앱 화면은 고정 시연 콘텐츠와 SDK 잠금의 출처를 구분한다', () => {
+    const { container } = renderProjectDetail('hangil')
+    expect(screen.getByRole('heading', { name: '앱 화면' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: '브랜드 이미지' })).not.toBeInTheDocument()
+    const project = projects.find((item) => item.id === 'hangil')!
+    for (const [src, description] of Object.entries(project.screenshotDescriptions!)) {
+      expect(screen.getByRole('img', { name: description.alt })).toHaveAttribute('src', src)
+      expect(screen.getByText(description.caption)).toBeInTheDocument()
+    }
+    expect(screen.getAllByRole('img')).toHaveLength(3)
+    const rows = container.querySelectorAll('[style*="grid-template-columns"]')
+    expect(rows).toHaveLength(2)
+    rows.forEach((row) => {
+      expect(row).toHaveStyle({ gridTemplateColumns: 'repeat(1, 1fr)' })
+      expect(row.children).toHaveLength(1)
+    })
+  })
+
+  it('캡션을 추가하지 않은 기존 프로젝트의 이미지 대체 텍스트와 구성을 유지한다', () => {
+    const project = projects.find((item) => item.id === 'naenun-kiosk')!
+    const { container } = renderProjectDetail(project.id)
+    expect(screen.getByRole('heading', { name: '스크린샷' })).toBeInTheDocument()
+    expect(screen.getAllByRole('img')).toHaveLength(project.screenshots.length)
+    expect(screen.getAllByRole('img').map((image) => image.getAttribute('alt')))
+      .toEqual(project.screenshots.map(() => project.title))
+    expect(container.querySelectorAll('[class*="screenshotCaption"]')).toHaveLength(0)
   })
 
   it('한길졸업은 세 가지 상세 문제 해결과 공개 저장소 링크를 제공한다', () => {
