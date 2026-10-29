@@ -1387,7 +1387,7 @@
     <section id="slide-03" class="slide" data-project-id="hangil">
       <p class="section-label">프로젝트 1</p>
       <h2 class="title-lg">한길졸업</h2>
-      <p class="meta">2026.10.26 ~ 진행 중 / 1명 (개인 프로젝트) / Android 앱 설계, 구현 및 검증</p>
+      <p class="meta">2026.10.26 ~ 진행 중 / 1명: Android 1명 / Android 앱 설계, 구현 및 검증</p>
       <div class="overview-grid">
         <div class="shot-panel">
           <img class="phone-shot" src="public/screenshot/hangil-home.png" alt="주차가 확인된 한길졸업 홈에서 다음 행동과 저장된 시연 준비를 표시한 실제 앱 화면" />
@@ -1396,11 +1396,11 @@
           <div class="info-card">
             <h3>서비스 소개</h3>
             <p>초보 운전자가 목표와 시연 코스를 준비하고 주차 상태에서 연습 시작과 종료 시각을 남기는 Pleos 차량용 앱입니다.</p>
-            <p><a href="https://github.com/HanGilLab/Android">GitHub</a></p>
           </div>
           <div class="info-card">
             <h3>배경</h3>
             <p>차량용 앱 공모전 출품 준비를 위한 1인 개인 프로젝트입니다. 코스와 과제는 도로 검토 전 고정 시연 콘텐츠로 구분했습니다.</p>
+            <p>GitHub. <a href="https://github.com/HanGilLab/Android">https://github.com/HanGilLab/Android</a></p>
           </div>
           <div class="info-card">
             <h3>핵심 기여</h3>
@@ -1418,22 +1418,56 @@
           </div>
         </div>
       </div>
-      <span class="footer-title">한길졸업</span>
+      <span class="footer-title">한길졸업 소개</span>
       <span class="slide-no">03</span>
     </section>
 
-    <section id="slide-04" class="slide" data-project-id="hangil" data-case="parking">
+    <section id="slide-04" class="slide" data-project-id="hangil" data-gallery="home">
+      <p class="section-label">앱 화면</p>
+      <h2 class="title-md">주차 홈에서 다음 행동과 준비 확인</h2>
+      <figure class="hangil-screen">
+        <img class="app-shot" src="public/screenshot/hangil-home.png" alt="주차가 확인된 한길졸업 홈에서 다음 행동과 저장된 시연 준비를 표시한 실제 앱 화면" />
+        <figcaption>주차 홈: 저장된 준비와 다음 행동을 보여 줍니다. 코스와 과제는 고정 시연 콘텐츠입니다.</figcaption>
+      </figure>
+      <span class="footer-title">한길졸업 앱 화면</span>
+      <span class="slide-no">04</span>
+    </section>
+
+    <section id="slide-05" class="slide" data-project-id="hangil" data-gallery="course">
+      <p class="section-label">앱 화면</p>
+      <h2 class="title-md">시연 코스 선택과 출발 준비</h2>
+      <figure class="hangil-screen">
+        <img class="app-shot" src="public/screenshot/hangil-course.png" alt="한길졸업의 고정 시연 코스 목록과 선택 상태를 표시한 실제 앱 화면" />
+        <figcaption>코스 선택: 고정 시연 코스를 고르는 실제 앱 화면입니다. 검증용 선택은 저장하지 않았습니다.</figcaption>
+      </figure>
+      <span class="footer-title">한길졸업 앱 화면</span>
+      <span class="slide-no">05</span>
+    </section>
+
+    <section id="slide-06" class="slide" data-project-id="hangil" data-gallery="briefing-locked">
+      <p class="section-label">앱 화면</p>
+      <h2 class="title-md">출발 전 브리핑과 주행 중 잠금</h2>
+      <div class="hangil-screen-pair">
+        <figure class="hangil-screen">
+          <img class="app-shot" src="public/screenshot/hangil-briefing.png" alt="한길졸업의 고정 시연 코스 브리핑과 과제 선택을 표시한 실제 앱 화면" />
+          <figcaption>출발 전 브리핑: 고정 시연 코스와 과제 선택 화면입니다. 검증용 선택은 저장하지 않았습니다.</figcaption>
+        </figure>
+        <figure class="hangil-screen">
+          <img class="app-shot" src="public/screenshot/hangil-locked.png" alt="실제 SDK의 D 상태 전환 후 주차 안내만 표시하고 상세 조작을 잠근 한길졸업 앱 화면" />
+          <figcaption>주행 잠금: 실제 SDK의 D 상태 전환 후 상세 조작을 잠근 화면입니다. 저장된 준비는 유지됩니다.</figcaption>
+        </figure>
+      </div>
+      <span class="footer-title">한길졸업 앱 화면</span>
+      <span class="slide-no">06</span>
+    </section>
+
+    <section id="slide-07" class="slide" data-project-id="hangil" data-case="parking">
       <p class="section-label">문제 해결 1</p>
       <h2 class="title-md">주차와 UX 상태를 함께 확인하는 상세 조작 잠금</h2>
       <div class="problem-layout">
         <div class="diagram-card">
           <div class="flow-diagram">
-            <div class="flow-node">차량 상태 확인<small>연결과 현재 기어</small></div>
-            <div class="flow-arrow" style="text-align:center">↓</div>
-            <div class="flow-node">주차 확인 + UX 제한 해제<small>두 조건을 모두 충족</small></div>
-            <div class="flow-arrow" style="text-align:center">↓</div>
-            <div class="flow-node is-accent">조작 직전 최신 상태 재확인<small>미확인과 오류는 잠금 유지</small></div>
-            <div class="flow-caption">화면 표시와 실제 처리에 같은 조건 적용</div>
+            <img src="public/screenshot/hangil-parking-gate-visual.svg" alt="최신 차량과 UX 상태를 함께 검사해 상세 조작 허용과 잠금으로 분기하는 도식" width="400" height="350" style="display:block;width:100%;height:auto" />
           </div>
         </div>
         <div class="content-stack">
@@ -1446,7 +1480,7 @@
             <p>차량과 UX 제한은 별도 흐름으로 갱신됩니다. 화면에 합성된 상태와 실제 이벤트 처리 시점의 최신 값이 다를 수 있었습니다.</p>
           </div>
           <div class="compact-card">
-            <h3>판단과 구현</h3>
+            <h3>해결</h3>
             <ul>
               <li>주차 확인과 UX 제한 해제를 모두 요구하고 초기 미확인 상태는 잠금으로 처리했습니다.</li>
               <li>조작 직전 차량과 제한의 최신 값을 다시 읽고, 재연결 시 이전 값과 콜백을 무효화했습니다.</li>
@@ -1461,26 +1495,21 @@
           </div>
           <div class="compact-card">
             <h3>대체안 / 회고</h3>
-            <p>UX 해제만으로 주차를 추정하거나 버튼만 비활성화하면 갱신 사이의 이벤트가 남습니다. 실제 처리 지점에서도 두 조건을 확인했습니다. <a href="https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/core/domain/src/main/kotlin/io/github/hangillab/hangil/core/domain/PracticeInteraction.kt#L4-L10">구현 코드</a></p>
+            <p>UX 해제만으로 주차를 추정하거나 버튼만 비활성화하면 갱신 사이의 이벤트가 남습니다. 실제 처리 지점에서도 두 조건을 확인했습니다.</p>
           </div>
         </div>
       </div>
       <span class="footer-title">한길졸업</span>
-      <span class="slide-no">04</span>
+      <span class="slide-no">07</span>
     </section>
 
-    <section id="slide-05" class="slide" data-project-id="hangil" data-case="session">
+    <section id="slide-08" class="slide" data-project-id="hangil" data-case="session">
       <p class="section-label">문제 해결 2</p>
       <h2 class="title-md">연습 세션의 저장 조건과 과거 기록 보존</h2>
       <div class="problem-layout">
         <div class="diagram-card">
           <div class="flow-diagram">
-            <div class="flow-node">Room 트랜잭션 시작<small>주차와 준비 내용 확인</small></div>
-            <div class="flow-arrow" style="text-align:center">↓</div>
-            <div class="flow-node">시작 당시 스냅샷 저장<small>목표, 코스 버전과 표시명</small></div>
-            <div class="flow-arrow" style="text-align:center">↓</div>
-            <div class="flow-node is-accent">저장 후 조작 조건 재검사<small>잠금으로 바뀌면 전체 롤백</small></div>
-            <div class="flow-caption">단일 활성 세션과 명시적인 오류 결과</div>
+            <img src="public/screenshot/hangil-session-transaction-visual.svg" alt="Room 트랜잭션의 쓰기 전후 허용 검사와 커밋 또는 전체 롤백 경계를 보여 주는 도식" width="400" height="350" style="display:block;width:100%;height:auto" />
           </div>
         </div>
         <div class="content-stack">
@@ -1493,7 +1522,7 @@
             <p>현재 준비 내용만 참조하면 과거 기록이 달라집니다. 화면에서 시작 조건을 확인해도 비동기 DB 쓰기 중 차량 상태가 바뀔 수 있었습니다.</p>
           </div>
           <div class="compact-card">
-            <h3>판단과 구현</h3>
+            <h3>해결</h3>
             <ul>
               <li>시작 당시 선택과 버전, 표시명을 스냅샷으로 저장하고 활성 세션을 하나로 제한했습니다.</li>
               <li>Room 트랜잭션 안에서 저장 전후의 조작 허용 조건을 확인해 잠금 시 롤백하고, 중복과 시각 오류를 별도 결과로 반환했습니다.</li>
@@ -1508,26 +1537,21 @@
           </div>
           <div class="compact-card">
             <h3>대체안 / 회고</h3>
-            <p>버튼의 중복 클릭 방지만으로는 재실행과 동시 요청을 처리하기 어려웠습니다. 저장소에서도 상태를 검사하고 잘못된 종료 시각을 0초로 보정하지 않았습니다. <a href="https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/core/database/src/main/kotlin/io/github/hangillab/hangil/core/database/RoomPracticeSessionRepository.kt#L73-L98">구현 코드</a></p>
+            <p>버튼의 중복 클릭 방지만으로는 재실행과 동시 요청을 처리하기 어려웠습니다. 저장소에서도 상태를 검사하고 잘못된 종료 시각을 0초로 보정하지 않았습니다.</p>
           </div>
         </div>
       </div>
       <span class="footer-title">한길졸업</span>
-      <span class="slide-no">05</span>
+      <span class="slide-no">08</span>
     </section>
 
-    <section id="slide-06" class="slide" data-project-id="hangil" data-case="map">
+    <section id="slide-09" class="slide" data-project-id="hangil" data-case="map">
       <p class="section-label">문제 해결 3</p>
       <h2 class="title-md">지도 재생성과 오류 복구에서 이전 콜백 차단</h2>
       <div class="problem-layout">
         <div class="diagram-card">
           <div class="flow-diagram">
-            <div class="flow-node">현재 렌더 시도 구분<small>재시도 번호 + MapView 토큰</small></div>
-            <div class="flow-arrow" style="text-align:center">↓</div>
-            <div class="flow-node">스타일 로딩 + 전체 렌더 완료<small>타일과 글꼴 오류는 실패 처리</small></div>
-            <div class="flow-arrow" style="text-align:center">↓</div>
-            <div class="flow-node is-accent">현재 지도에만 상태 반영<small>이전 View와 시도는 무시</small></div>
-            <div class="flow-caption">오류 뒤 새 시도로 지도 다시 생성</div>
+            <img src="public/screenshot/hangil-map-callback-visual.svg" alt="재시도 번호와 MapView 토큰을 비교해 이전 콜백을 무시하고 현재 렌더만 완료하는 도식" width="400" height="350" style="display:block;width:100%;height:auto" />
           </div>
         </div>
         <div class="content-stack">
@@ -1540,7 +1564,7 @@
             <p>Native 지도 콜백은 비동기로 도착합니다. 재시도 번호만으로는 같은 시도에서 다시 만들어진 MapView를 구분하지 못했습니다.</p>
           </div>
           <div class="compact-card">
-            <h3>판단과 구현</h3>
+            <h3>해결</h3>
             <ul>
               <li>재시도 번호와 View 생성 토큰을 함께 비교하고 현재 로딩 상태일 때만 준비 완료로 전환했습니다.</li>
               <li>타일과 글꼴, 렌더 오류를 실패로 처리하고 화면 이탈 시 생명주기 관찰자와 리소스를 정리했습니다.</li>
@@ -1555,48 +1579,9 @@
           </div>
           <div class="compact-card">
             <h3>대체안 / 회고</h3>
-            <p>스타일 로딩만으로 완료 처리하지 않고 실제 렌더 완료를 기다렸습니다. 고정 시연 지역의 지도 표시와 현재 위치, 자체 길안내는 구분했습니다. <a href="https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/feature/map/src/main/kotlin/io/github/hangillab/hangil/feature/map/MapViewModel.kt#L38-L46">구현 코드</a></p>
+            <p>스타일 로딩만으로 완료 처리하지 않고 실제 렌더 완료를 기다렸습니다. 고정 시연 지역의 지도 표시와 현재 위치, 자체 길안내는 구분했습니다.</p>
           </div>
         </div>
-      </div>
-      <span class="footer-title">한길졸업</span>
-      <span class="slide-no">06</span>
-    </section>
-
-    <section id="slide-07" class="slide" data-project-id="hangil" data-gallery="home">
-      <p class="section-label">앱 화면 1</p>
-      <h2 class="title-md">주차 홈에서 다음 행동과 준비 확인</h2>
-      <figure class="hangil-screen">
-        <img class="app-shot" src="public/screenshot/hangil-home.png" alt="주차가 확인된 한길졸업 홈에서 다음 행동과 저장된 시연 준비를 표시한 실제 앱 화면" />
-        <figcaption>주차 홈: 저장된 준비와 다음 행동을 보여 줍니다. 코스와 과제는 고정 시연 콘텐츠입니다.</figcaption>
-      </figure>
-      <span class="footer-title">한길졸업</span>
-      <span class="slide-no">07</span>
-    </section>
-
-    <section id="slide-08" class="slide" data-project-id="hangil" data-gallery="course">
-      <p class="section-label">앱 화면 2</p>
-      <h2 class="title-md">시연 코스 선택과 출발 준비</h2>
-      <figure class="hangil-screen">
-        <img class="app-shot" src="public/screenshot/hangil-course.png" alt="한길졸업의 고정 시연 코스 목록과 선택 상태를 표시한 실제 앱 화면" />
-        <figcaption>코스 선택: 고정 시연 코스를 고르는 실제 앱 화면입니다. 검증용 선택은 저장하지 않았습니다.</figcaption>
-      </figure>
-      <span class="footer-title">한길졸업</span>
-      <span class="slide-no">08</span>
-    </section>
-
-    <section id="slide-09" class="slide" data-project-id="hangil" data-gallery="briefing-locked">
-      <p class="section-label">앱 화면 3</p>
-      <h2 class="title-md">출발 전 브리핑과 주행 중 잠금</h2>
-      <div class="hangil-screen-pair">
-        <figure class="hangil-screen">
-          <img class="app-shot" src="public/screenshot/hangil-briefing.png" alt="한길졸업의 고정 시연 코스 브리핑과 과제 선택을 표시한 실제 앱 화면" />
-          <figcaption>출발 전 브리핑: 고정 시연 코스와 과제 선택 화면입니다. 검증용 선택은 저장하지 않았습니다.</figcaption>
-        </figure>
-        <figure class="hangil-screen">
-          <img class="app-shot" src="public/screenshot/hangil-locked.png" alt="실제 SDK의 D 상태 전환 후 주차 안내만 표시하고 상세 조작을 잠근 한길졸업 앱 화면" />
-          <figcaption>주행 잠금: 실제 SDK의 D 상태 전환 후 상세 조작을 잠근 화면입니다. 저장된 준비는 유지됩니다.</figcaption>
-        </figure>
       </div>
       <span class="footer-title">한길졸업</span>
       <span class="slide-no">09</span>

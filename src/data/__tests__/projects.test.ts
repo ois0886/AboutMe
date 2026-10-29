@@ -94,8 +94,16 @@ describe('projects 데이터 무결성', () => {
 
     expect(Array.from(document.querySelectorAll('.toc-pages'), (item) => item.textContent))
       .toEqual(['03p ~ 09p', '10p ~ 15p', '16p ~ 20p', '21p ~ 26p'])
+    expect(Array.from(document.querySelectorAll('[data-project-id="hangil"]'), (section) =>
+      section.getAttribute('data-gallery') ?? section.getAttribute('data-case') ?? 'overview',
+    )).toEqual(['overview', 'home', 'course', 'briefing-locked', 'parking', 'session', 'map'])
     const projectStarts = [3, 10, 16, 21].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
     expect(projectStarts).toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
+    expect(document.querySelector('#slide-03 .footer-title')?.textContent).toBe('한길졸업 소개')
+    document.querySelectorAll('[data-project-id="hangil"][data-gallery]').forEach((section) => {
+      expect(section.querySelector('.section-label')?.textContent).toBe('앱 화면')
+      expect(section.querySelector('.footer-title')?.textContent).toBe('한길졸업 앱 화면')
+    })
     const slides = Array.from(document.querySelectorAll('section.slide'))
     expect(slides).toHaveLength(26)
     slides.forEach((slide, index) => {
@@ -128,12 +136,17 @@ describe('projects 데이터 무결성', () => {
       expect(section).not.toBeNull()
       expect(section.querySelector('h3, h2')?.textContent).toBe('한길졸업' + (file === 'resume.html' ? ' - Android' : ''))
       const text = normalizeText(section.textContent ?? '')
-      for (const fact of ['2026.10.26 ~ 진행 중', '개인 프로젝트', 'Android 앱 설계, 구현 및 검증', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
+      for (const fact of ['2026.10.26 ~ 진행 중', 'Android 앱 설계, 구현 및 검증', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
         expect(text, `${file}: ${fact}`).toContain(fact)
         expect(webText, `web: ${fact}`).toContain(fact)
       }
       if (file === 'portfolio.html') {
-        expect(section.querySelector('a[href="https://github.com/HanGilLab/Android"]')).not.toBeNull()
+        expect(section.querySelector('a[href="https://github.com/HanGilLab/Android"]')?.textContent)
+          .toBe('https://github.com/HanGilLab/Android')
+        expect(text).toContain('1명: Android 1명')
+        expect(section.querySelector('.info-card:nth-child(1) a')).toBeNull()
+        expect(section.querySelector('.info-card:nth-child(2) a')?.getAttribute('href'))
+          .toBe('https://github.com/HanGilLab/Android')
         expect(text).toContain('주차 상태와 UX 제한 해제')
         expect(section.querySelector('.overview-grid .shot-panel img')?.getAttribute('src'))
           .toBe('public/screenshot/hangil-home.png')
@@ -142,9 +155,20 @@ describe('projects 데이터 무결성', () => {
         expect(Array.from(section.querySelectorAll('.tag-list .tag'), (item) => item.textContent))
           .toEqual(project.tech)
       } else {
-        expect(text).toContain('1인 개인 프로젝트')
+        expect(text).not.toContain('1인 개인 프로젝트')
+        const rightMeta = section.querySelector('.row-title .right-meta')
+        expect(rightMeta?.textContent).toBe('2026.10.26 ~ 진행 중')
+        expect(rightMeta?.querySelector('a, br')).toBeNull()
+        expect(section.querySelector('.project-description + .link-row')?.textContent)
+          .toBe('GitHub. https://github.com/HanGilLab/Android')
+        expect(section.querySelector('.link-row a')?.getAttribute('href'))
+          .toBe('https://github.com/HanGilLab/Android')
+        expect(section.querySelector('.project-description + .link-row + ul')).not.toBeNull()
+        expect(section.querySelector('ul > li:first-child')?.textContent)
+          .toBe('현대자동차그룹 차량용 앱 개발 공모전 출품작')
+        expect(webText).toContain('현대자동차그룹 차량용 앱 개발 공모전')
         expect(text).toContain('주차/UX')
-        expect(section.querySelectorAll('ul > li')).toHaveLength(2)
+        expect(section.querySelectorAll('ul > li')).toHaveLength(3)
       }
       expect(text).not.toMatch(/notion\.so|app\.notion|상용 운영|출품 완료|남은 범위|후속 작업|공개 전 점검|진행 중인 프로젝트/)
     }
@@ -171,16 +195,27 @@ describe('projects 데이터 무결성', () => {
         expect(pdfText, `PDF case ${index + 1}: ${fact}`).toContain(fact)
       })
       expect(Array.from(section.querySelectorAll('.compact-card > h3'), (item) => item.textContent))
-        .toEqual(['문제', '원인', '판단과 구현', '결과', '대체안 / 회고'])
+        .toEqual(['문제', '원인', '해결', '결과', '대체안 / 회고'])
     })
-    const sourcePaths = [
-      'core/domain/src/main/kotlin/io/github/hangillab/hangil/core/domain/PracticeInteraction.kt#L4-L10',
-      'core/database/src/main/kotlin/io/github/hangillab/hangil/core/database/RoomPracticeSessionRepository.kt#L73-L98',
-      'feature/map/src/main/kotlin/io/github/hangillab/hangil/feature/map/MapViewModel.kt#L38-L46',
+    const diagramFiles = [
+      'hangil-parking-gate-visual.svg',
+      'hangil-session-transaction-visual.svg',
+      'hangil-map-callback-visual.svg',
     ]
     cases.forEach((section, index) => {
-      expect(section.querySelector('a')?.getAttribute('href'))
-        .toBe(`https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/${sourcePaths[index]}`)
+      const diagram = section.querySelector('.diagram-card img')
+      expect(diagram?.getAttribute('src')).toBe(`public/screenshot/${diagramFiles[index]}`)
+      expect(diagram?.getAttribute('alt')).toBeTruthy()
+      const svg = new DOMParser().parseFromString(
+        readFileSync(resolve(process.cwd(), 'public/screenshot', diagramFiles[index]), 'utf8'),
+        'image/svg+xml',
+      )
+      expect(svg.querySelector('parsererror')).toBeNull()
+      expect(svg.documentElement.getAttribute('viewBox')).toBe('0 0 400 350')
+      expect(svg.querySelector('title')?.textContent).toBeTruthy()
+    })
+    cases.forEach((section) => {
+      expect(section.querySelector('pre, code, a')).toBeNull()
     })
   })
 
@@ -304,7 +339,7 @@ describe('projects 데이터 무결성', () => {
       hangil: ['Pleos', 'UX 제한', 'MapLibre', 'Room', 'DB 마이그레이션'],
     }
     const projectSummaries: Record<string, { items: number; emphasis: string[] }> = {
-      hangil: { items: 2, emphasis: [] },
+      hangil: { items: 3, emphasis: [] },
       'naenun-kiosk': {
         items: 4,
         emphasis: ['상용 키오스크 앱', 'SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상'],
