@@ -56,6 +56,26 @@ describe('ProjectDetail', () => {
       .toBeInTheDocument()
   })
 
+  it('한길졸업은 1인 역할과 실제 구현 코드의 상태 검사, 트랜잭션, 지도 콜백 문맥을 표시한다', () => {
+    const { container } = renderProjectDetail('hangil')
+    expect(screen.getByText('2026.10.26 ~ 진행 중')).toBeInTheDocument()
+    expect(screen.getByText('1명 (개인 프로젝트)')).toBeInTheDocument()
+    expect(screen.getByText('Android 앱 설계, 구현 및 검증')).toBeInTheDocument()
+    const code = Array.from(container.querySelectorAll('pre code'), (block) => block.textContent ?? '')
+    expect(code).toHaveLength(5)
+    expect(code[0]).toContain('ParkingState.UNKNOWN')
+    expect(code[0]).toContain('UxRestrictionState.UNKNOWN')
+    expect(code[1]).toContain('fun allowsPracticeInteraction(')
+    expect(code[1]).toContain('vehicle.toDrivingRestrictions(restrictions.uxRestrictionState)')
+    expect(code[2]).toContain('database.withTransaction {')
+    expect(code[2].match(/requirePermission\(canCommit\)/g)).toHaveLength(2)
+    expect(code[2]).toContain('SessionFinishResult.InvalidTime')
+    expect(code[3]).toContain('throw WriteBlocked()')
+    expect(code[4]).toContain('fun onMapRendered(')
+    expect(code[4]).toContain('if (!allowsInteraction()) return')
+    expect(code[4]).toContain('it.token == token')
+  })
+
   it('유효한 프로젝트 ID로 접근하면 제목이 렌더링된다', () => {
     renderProjectDetail(firstProject.id)
     expect(

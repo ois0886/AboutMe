@@ -1387,35 +1387,35 @@
     <section id="slide-03" class="slide" data-project-id="hangil">
       <p class="section-label">프로젝트 1</p>
       <h2 class="title-lg">한길졸업</h2>
-      <p class="meta">2026.10 ~ 진행 중 / Android 개발 및 검증</p>
-      <div class="feature-overview">
-        <div class="content-stack">
-          <div class="compact-card">
-            <h3>초보 운전자를 위한 Pleos 차량용 앱</h3>
-            <p>목표와 시연 코스를 준비하고, 주차 화면에서 연습을 시작하거나 종료한 시각을 저장합니다.</p>
+      <p class="meta">2026.10.26 ~ 진행 중 / 1명 (개인 프로젝트) / Android 앱 설계, 구현 및 검증</p>
+      <div class="overview-grid">
+        <div class="shot-panel">
+          <img class="phone-shot" src="public/screenshot/hangil-home.png" alt="주차가 확인된 한길졸업 홈에서 다음 행동과 저장된 시연 준비를 표시한 실제 앱 화면" />
+        </div>
+        <div class="info-panel">
+          <div class="info-card">
+            <h3>서비스 소개</h3>
+            <p>초보 운전자가 목표와 시연 코스를 준비하고 주차 상태에서 연습 시작과 종료 시각을 남기는 Pleos 차량용 앱입니다.</p>
             <p><a href="https://github.com/HanGilLab/Android">GitHub</a></p>
           </div>
-          <div class="compact-card">
-            <h3>차량 상태와 화면 조작 연결</h3>
+          <div class="info-card">
+            <h3>배경</h3>
+            <p>차량용 앱 공모전 출품 준비를 위한 1인 개인 프로젝트입니다. 코스와 과제는 도로 검토 전 고정 시연 콘텐츠로 구분했습니다.</p>
+          </div>
+          <div class="info-card">
+            <h3>핵심 기여</h3>
             <ul>
-              <li>주차 상태와 UX 제한 해제를 함께 확인하는 상세 조작 잠금 구현.</li>
-              <li>끊김, 미확인, 권한 거부 시 잠금을 유지하도록 차량 SDK 상태와 연결.</li>
-              <li>Kotlin, Compose 멀티 모듈 경계 구성.</li>
+              <li>주차 상태와 UX 제한 해제를 함께 확인하고 미확인과 오류에서는 상세 조작을 잠급니다.</li>
+              <li>MapLibre 지도 표시와 오류 복구, Room 세션 저장과 복원을 구현했습니다.</li>
+              <li>준비 스냅샷과 DB 마이그레이션을 검사하고 실제 Pleos에서 재실행 복원을 검증했습니다.</li>
             </ul>
           </div>
-          <div class="compact-card">
-            <h3>지도와 연습 기록 검증</h3>
-            <ul>
-              <li>MapLibre 기반 실제 지도 표시, 오류 복구와 화면 재생성을 Pleos 환경에서 검증.</li>
-              <li>Room 기반 연습 세션 저장과 복원, DB 마이그레이션과 앱 재실행 후 복원 검증.</li>
-              <li>자동 검사와 Pleos 시나리오로 화면 동작과 저장 상태 확인.</li>
-            </ul>
+          <div class="info-card">
+            <h3>기술 스택</h3>
+            <div class="tag-list">
+              <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Room</span><span class="tag">Coroutines</span><span class="tag">Flow</span><span class="tag">MapLibre</span><span class="tag">Pleos SDK</span>
+            </div>
           </div>
-        </div>
-        <div class="brand-panel">
-          <img class="brand-image" src="public/screenshot/hangil-guide.svg" alt="한길졸업 브랜드 가이드 캐릭터" />
-          <p class="image-credit">한길졸업 브랜드 가이드 캐릭터</p>
-          <p class="brand-caption">민트와 크림 색상 토큰,<br />브랜드 캐릭터와 주차 화면 안내 리소스 적용</p>
         </div>
       </div>
       <span class="footer-title">한길졸업</span>
@@ -1461,7 +1461,7 @@
           </div>
           <div class="compact-card">
             <h3>대체안 / 회고</h3>
-            <p>UX 해제만으로 주차를 추정하거나 버튼만 비활성화하면 갱신 사이의 이벤트가 남습니다. 실제 처리 지점에서도 두 조건을 확인했습니다.</p>
+            <p>UX 해제만으로 주차를 추정하거나 버튼만 비활성화하면 갱신 사이의 이벤트가 남습니다. 실제 처리 지점에서도 두 조건을 확인했습니다. <a href="https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/core/domain/src/main/kotlin/io/github/hangillab/hangil/core/domain/PracticeInteraction.kt#L4-L10">구현 코드</a></p>
           </div>
         </div>
       </div>
@@ -1508,7 +1508,7 @@
           </div>
           <div class="compact-card">
             <h3>대체안 / 회고</h3>
-            <p>버튼의 중복 클릭 방지만으로는 재실행과 동시 요청을 처리하기 어려웠습니다. 저장소에서도 상태를 검사하고 잘못된 종료 시각을 0초로 보정하지 않았습니다.</p>
+            <p>버튼의 중복 클릭 방지만으로는 재실행과 동시 요청을 처리하기 어려웠습니다. 저장소에서도 상태를 검사하고 잘못된 종료 시각을 0초로 보정하지 않았습니다. <a href="https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/core/database/src/main/kotlin/io/github/hangillab/hangil/core/database/RoomPracticeSessionRepository.kt#L73-L98">구현 코드</a></p>
           </div>
         </div>
       </div>
@@ -1555,7 +1555,7 @@
           </div>
           <div class="compact-card">
             <h3>대체안 / 회고</h3>
-            <p>스타일 로딩만으로 완료 처리하지 않고 실제 렌더 완료를 기다렸습니다. 고정 시연 지역의 지도 표시와 현재 위치, 자체 길안내는 구분했습니다.</p>
+            <p>스타일 로딩만으로 완료 처리하지 않고 실제 렌더 완료를 기다렸습니다. 고정 시연 지역의 지도 표시와 현재 위치, 자체 길안내는 구분했습니다. <a href="https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/feature/map/src/main/kotlin/io/github/hangillab/hangil/feature/map/MapViewModel.kt#L38-L46">구현 코드</a></p>
           </div>
         </div>
       </div>

@@ -70,12 +70,12 @@ const projects: Project[] = [
     },
     thumbnail: 'screenshot/hangil-guide.svg',
     tech: ['Kotlin', 'Jetpack Compose', 'Room', 'Coroutines', 'Flow', 'MapLibre', 'Pleos SDK'],
-    period: '2026.10 ~ 진행 중',
-    team: '공모전 프로젝트',
-    role: 'Android 개발 및 검증',
+    period: '2026.10.26 ~ 진행 중',
+    team: '1명 (개인 프로젝트)',
+    role: 'Android 앱 설계, 구현 및 검증',
     details: [
       '초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.',
-      'Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다.',
+      '차량용 앱 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다.',
     ],
     features: [
       '주차 상태와 UX 제한 해제를 모두 확인했을 때만 상세 입력을 허용하고 끊김, 미확인, 권한 거부 시 잠금을 유지합니다.',
@@ -105,14 +105,23 @@ const projects: Project[] = [
         ],
         implementation: [
           {
-            description: 'domain에서 주차와 UX 두 조건을 함께 판정합니다. 초기값은 UNKNOWN으로 두고 상태 확인 전에는 입력을 열지 않습니다.',
-            code: `val allowsDetailedInteraction: Boolean
-    get() = parkingState == ParkingState.PARKED &&
-        uxRestrictionState == UxRestrictionState.UNRESTRICTED`,
+            description: 'DrivingRestrictions.kt는 주차와 UX의 초기값을 UNKNOWN으로 두고 두 조건이 모두 확인돼야 상세 조작을 허용합니다.',
+            code: `data class DrivingRestrictions(
+    val parkingState: ParkingState = ParkingState.UNKNOWN,
+    val uxRestrictionState: UxRestrictionState = UxRestrictionState.UNKNOWN,
+) {
+    val allowsDetailedInteraction: Boolean
+        get() = parkingState == ParkingState.PARKED && uxRestrictionState == UxRestrictionState.UNRESTRICTED
+}`,
           },
           {
-            description: '조작 직전에는 VehicleGateway와 제한 제공자의 최신 값을 다시 읽습니다. 화면 상태 합성이 늦어도 새 D 신호가 도착하면 재시도와 지도 콜백을 차단합니다.',
-            code: null,
+            description: 'PracticeInteraction.kt에서 차량과 UX 제한의 상태를 함께 재판정합니다. ViewModel은 조작 직전 각 제공자의 최신 값을 전달해 이전 P 상태와 새 D 이벤트 사이의 조작을 차단합니다.',
+            code: `fun allowsPracticeInteraction(
+    vehicle: VehicleState,
+    restrictions: DrivingRestrictions,
+): Boolean =
+    restrictions.allowsDetailedInteraction &&
+        vehicle.toDrivingRestrictions(restrictions.uxRestrictionState).allowsDetailedInteraction`,
           },
         ],
         alternatives: [
@@ -136,13 +145,31 @@ const projects: Project[] = [
         ],
         implementation: [
           {
-            description: '세션을 읽고 쓰는 작업을 하나의 트랜잭션으로 묶고 저장 전후에 조작 허용 조건을 재검사합니다. 두 번째 검사에 실패하면 앞서 수행한 쓰기도 되돌립니다.',
-            code: null,
+            description: 'RoomPracticeSessionRepository.finish의 트랜잭션 본문입니다. 종료 상태와 시각을 구분하고, 쓰기 전후에 주차와 UX 조건을 재검사합니다.',
+            code: `database.withTransaction {
+    requirePermission(canCommit)
+    val entity = database.practiceSessionDao().find(sessionId)
+    val result =
+        when {
+            entity == null -> SessionFinishResult.Missing
+            entity.endedAtEpochMillis != null -> SessionFinishResult.AlreadyFinished(entity.session())
+            endedAtEpochMillis < entity.startedAtEpochMillis -> SessionFinishResult.InvalidTime
+            else -> {
+                check(database.practiceSessionDao().finish(sessionId, endedAtEpochMillis) == 1)
+                SessionFinishResult.Finished(
+                    entity.copy(endedAtEpochMillis = endedAtEpochMillis, activeSlot = null).session(),
+                )
+            }
+        }
+    requirePermission(canCommit)
+    result
+}`,
           },
           {
-            description: '종료 시각이 시작보다 앞서면 0초로 보정하지 않고 InvalidTime을 반환합니다. 기존 활성 세션을 유지하고 화면에서 오류를 구분합니다.',
-            code: `endedAtEpochMillis < entity.startedAtEpochMillis ->
-    SessionFinishResult.InvalidTime`,
+            description: '같은 저장소의 requirePermission은 저장 도중 잠금으로 바뀌면 WriteBlocked를 던집니다. 트랜잭션이 전체 쓰기를 롤백하고 호출 결과는 Blocked로 구분됩니다.',
+            code: `private fun requirePermission(canCommit: () -> Boolean) {
+    if (!canCommit()) throw WriteBlocked()
+}`,
           },
         ],
         alternatives: [
@@ -166,12 +193,15 @@ const projects: Project[] = [
         ],
         implementation: [
           {
-            description: '재시도 번호가 같아도 화면 재생성으로 MapView가 바뀔 수 있어 별도 토큰을 발급합니다. 현재 번호와 토큰, 로딩 상태가 모두 맞을 때만 READY를 반영합니다.',
-            code: `if (it.id == attempt && it.token == token &&
-    it.load == MapLoadState.LOADING) {
-    it.copy(load = MapLoadState.READY)
-} else {
-    it
+            description: 'MapViewModel.onMapRendered는 최신 조작 허용 조건을 확인한 뒤 재시도 번호, MapView 토큰과 LOADING 상태가 모두 맞을 때만 READY를 반영합니다.',
+            code: `fun onMapRendered(
+    attempt: Int,
+    token: Long,
+) {
+    if (!allowsInteraction()) return
+    render.update {
+        if (it.id == attempt && it.token == token && it.load == MapLoadState.LOADING) it.copy(load = MapLoadState.READY) else it
+    }
 }`,
           },
           {

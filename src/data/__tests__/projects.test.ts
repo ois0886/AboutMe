@@ -114,9 +114,10 @@ describe('projects 데이터 무결성', () => {
 
   it('한길졸업을 다른 프로젝트와 같은 계층에서 검증된 기여로 소개한다', () => {
     const project = projects.find((item) => item.id === 'hangil')!
-    expect(project.period).toBe('2026.10 ~ 진행 중')
+    expect(project.period).toBe('2026.10.26 ~ 진행 중')
     expect(projects[0].id).toBe('hangil')
-    expect(project.role).toBe('Android 개발 및 검증')
+    expect(project.team).toBe('1명 (개인 프로젝트)')
+    expect(project.role).toBe('Android 앱 설계, 구현 및 검증')
     expect(project.links).toEqual([{ label: 'GitHub', url: 'https://github.com/HanGilLab/Android' }])
     expect(project.problemSolvings).toHaveLength(3)
     const webText = JSON.stringify(project)
@@ -127,12 +128,23 @@ describe('projects 데이터 무결성', () => {
       expect(section).not.toBeNull()
       expect(section.querySelector('h3, h2')?.textContent).toBe('한길졸업' + (file === 'resume.html' ? ' - Android' : ''))
       const text = normalizeText(section.textContent ?? '')
-      for (const fact of ['2026.10 ~ 진행 중', 'Android 개발 및 검증', '주차 상태와 UX 제한 해제', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
+      for (const fact of ['2026.10.26 ~ 진행 중', '개인 프로젝트', 'Android 앱 설계, 구현 및 검증', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
         expect(text, `${file}: ${fact}`).toContain(fact)
         expect(webText, `web: ${fact}`).toContain(fact)
       }
       if (file === 'portfolio.html') {
         expect(section.querySelector('a[href="https://github.com/HanGilLab/Android"]')).not.toBeNull()
+        expect(text).toContain('주차 상태와 UX 제한 해제')
+        expect(section.querySelector('.overview-grid .shot-panel img')?.getAttribute('src'))
+          .toBe('public/screenshot/hangil-home.png')
+        expect(Array.from(section.querySelectorAll('.info-card > h3'), (item) => item.textContent))
+          .toEqual(['서비스 소개', '배경', '핵심 기여', '기술 스택'])
+        expect(Array.from(section.querySelectorAll('.tag-list .tag'), (item) => item.textContent))
+          .toEqual(project.tech)
+      } else {
+        expect(text).toContain('1인 개인 프로젝트')
+        expect(text).toContain('주차/UX')
+        expect(section.querySelectorAll('ul > li')).toHaveLength(2)
       }
       expect(text).not.toMatch(/notion\.so|app\.notion|상용 운영|출품 완료|남은 범위|후속 작업|공개 전 점검|진행 중인 프로젝트/)
     }
@@ -160,6 +172,15 @@ describe('projects 데이터 무결성', () => {
       })
       expect(Array.from(section.querySelectorAll('.compact-card > h3'), (item) => item.textContent))
         .toEqual(['문제', '원인', '판단과 구현', '결과', '대체안 / 회고'])
+    })
+    const sourcePaths = [
+      'core/domain/src/main/kotlin/io/github/hangillab/hangil/core/domain/PracticeInteraction.kt#L4-L10',
+      'core/database/src/main/kotlin/io/github/hangillab/hangil/core/database/RoomPracticeSessionRepository.kt#L73-L98',
+      'feature/map/src/main/kotlin/io/github/hangillab/hangil/feature/map/MapViewModel.kt#L38-L46',
+    ]
+    cases.forEach((section, index) => {
+      expect(section.querySelector('a')?.getAttribute('href'))
+        .toBe(`https://github.com/HanGilLab/Android/blob/7f64832cbc36c2a6c9eae847faf8502ec82ffe25/${sourcePaths[index]}`)
     })
   })
 
