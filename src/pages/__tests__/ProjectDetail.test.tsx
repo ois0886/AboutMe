@@ -25,9 +25,9 @@ describe('ProjectDetail', () => {
       expect(screen.getByRole('img', { name: description.alt })).toHaveAttribute('src', src)
       expect(screen.getByText(description.caption)).toBeInTheDocument()
     }
-    expect(screen.getAllByRole('img')).toHaveLength(3)
+    expect(screen.getAllByRole('img')).toHaveLength(4)
     const rows = container.querySelectorAll('[style*="grid-template-columns"]')
-    expect(rows).toHaveLength(2)
+    expect(rows).toHaveLength(3)
     rows.forEach((row) => {
       expect(row).toHaveStyle({ gridTemplateColumns: 'repeat(1, 1fr)' })
       expect(row.children).toHaveLength(1)

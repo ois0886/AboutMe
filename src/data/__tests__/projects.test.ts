@@ -93,16 +93,23 @@ describe('projects 데이터 무결성', () => {
       .toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
 
     expect(Array.from(document.querySelectorAll('.toc-pages'), (item) => item.textContent))
-      .toEqual(['03p ~ 08p', '09p ~ 14p', '15p ~ 19p', '20p ~ 25p'])
-    const projectStarts = [3, 9, 15, 20].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
+      .toEqual(['03p ~ 09p', '10p ~ 15p', '16p ~ 20p', '21p ~ 26p'])
+    const projectStarts = [3, 10, 16, 21].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
     expect(projectStarts).toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
     const slides = Array.from(document.querySelectorAll('section.slide'))
-    expect(slides).toHaveLength(25)
+    expect(slides).toHaveLength(26)
     slides.forEach((slide, index) => {
       const page = String(index + 1).padStart(2, '0')
       expect(slide.id).toBe(`slide-${page}`)
       expect(slide.querySelector('.slide-no')?.textContent).toBe(page)
     })
+    const pageStyleReferences = Array.from(
+      (document.querySelector('style')?.textContent ?? '').matchAll(/#slide-(\d+) /g),
+      (match) => match[1],
+    )
+    expect(pageStyleReferences).toHaveLength(13)
+    expect(new Set(pageStyleReferences)).toEqual(new Set(['15']))
+    expect(document.querySelector('#slide-15 > h2')?.textContent).toBe('내눈 키오스크 성과와 회고')
   })
 
   it('한길졸업을 다른 프로젝트와 같은 계층에서 검증된 기여로 소개한다', () => {
@@ -162,10 +169,11 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('한길졸업의 실제 화면 세 장과 출처 설명은 웹과 PDF 갤러리에서 일치한다', () => {
+  it('한길졸업의 실제 화면 네 장과 출처 설명은 웹과 PDF 갤러리에서 일치한다', () => {
     const project = projects.find((item) => item.id === 'hangil')!
     expect(project.screenshots).toEqual([
       'screenshot/hangil-home.png',
+      'screenshot/hangil-course.png',
       'screenshot/hangil-briefing.png',
       'screenshot/hangil-locked.png',
     ])
@@ -177,9 +185,9 @@ describe('projects 데이터 무결성', () => {
       'text/html',
     )
     const galleries = document.querySelectorAll('[data-project-id="hangil"][data-gallery]')
-    expect(galleries).toHaveLength(2)
+    expect(galleries).toHaveLength(3)
     const figures = Array.from(galleries).flatMap((gallery) => Array.from(gallery.querySelectorAll('figure')))
-    expect(figures).toHaveLength(3)
+    expect(figures).toHaveLength(4)
     project.screenshots.forEach((src, index) => {
       const description = project.screenshotDescriptions![src]
       expect(readFileSync(resolve(process.cwd(), 'public', src)).subarray(0, 8))
@@ -189,6 +197,8 @@ describe('projects 데이터 무결성', () => {
       expect(figures[index].querySelector('figcaption')?.textContent).toBe(description.caption)
     })
     expect(project.screenshotDescriptions!['screenshot/hangil-home.png'].caption).toContain('고정 시연')
+    expect(project.screenshotDescriptions!['screenshot/hangil-course.png'].caption).toContain('고정 시연')
+    expect(project.screenshotDescriptions!['screenshot/hangil-course.png'].caption).toContain('저장하지 않았습니다')
     expect(project.screenshotDescriptions!['screenshot/hangil-briefing.png'].caption).toContain('저장하지 않았습니다')
     expect(project.screenshotDescriptions!['screenshot/hangil-locked.png'].caption).toContain('실제 SDK의 D 상태')
     expect(project.problemSolvings).toHaveLength(3)

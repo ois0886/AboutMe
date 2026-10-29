@@ -195,6 +195,7 @@ const projects: Project[] = [
     links: [{ label: 'GitHub', url: 'https://github.com/HanGilLab/Android' }],
     screenshots: [
       'screenshot/hangil-home.png',
+      'screenshot/hangil-course.png',
       'screenshot/hangil-briefing.png',
       'screenshot/hangil-locked.png',
     ],
@@ -202,6 +203,10 @@ const projects: Project[] = [
       'screenshot/hangil-home.png': {
         alt: '주차가 확인된 한길졸업 홈에서 다음 행동과 저장된 시연 준비를 표시한 실제 앱 화면',
         caption: '주차 홈: 저장된 준비와 다음 행동을 보여 줍니다. 코스와 과제는 고정 시연 콘텐츠입니다.',
+      },
+      'screenshot/hangil-course.png': {
+        alt: '한길졸업의 고정 시연 코스 목록과 선택 상태를 표시한 실제 앱 화면',
+        caption: '코스 선택: 고정 시연 코스를 고르는 실제 앱 화면입니다. 검증용 선택은 저장하지 않았습니다.',
       },
       'screenshot/hangil-briefing.png': {
         alt: '한길졸업의 고정 시연 코스 브리핑과 과제 선택을 표시한 실제 앱 화면',
