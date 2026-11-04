@@ -113,6 +113,8 @@ function Awards() {
           <AwardCard key={cert.id} item={cert} toggleLabel={['자격증보기', '자격증접기']} />
         ))}
       </div>
+
+      <h3 className={`${styles.groupTitle} ${styles.groupTitleMargin}`}>Language test</h3>
     </section>
   )
 }
