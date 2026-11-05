@@ -21,7 +21,6 @@
 - Vite 7
 - CSS Modules
 - React Router v7 (HashRouter — GitHub Pages 호환)
-- react-syntax-highlighter (PrismLight — kotlin / java / xml(markup) / sql)
 - Vitest + React Testing Library + jsdom
 
 ## 프로젝트 구조
@@ -50,7 +49,7 @@ src/
     useScrollReveal # 스크롤 시 reveal 애니메이션 훅
     __tests__/
   pages/
-    ProjectDetail   # 프로젝트 상세 페이지 (구문 강조 포함)
+    ProjectDetail   # 프로젝트 상세 페이지 (문제 해결 이미지와 구현 설명 포함)
     __tests__/
   styles/
     global.css      # CSS 변수, 글로벌 스타일, 다크모드 변수, 섹션 교차 스타일
@@ -89,9 +88,10 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 
 ## 프로젝트 데이터 구조 (projects.ts)
 
-- `Project`: id, title, description, thumbnail, tech, period, team, role, details, features, contributions, problemSolvings[], insights[], insightImages?[], achievements, retrospective, links, screenshots, screenshotColumns?, hasBottomScreenshot?
-- `ProblemSolving`: problem[], solution[], result[], implementation[], alternatives[] — 각 문제해결 블록이 독립적
-- `ImplementationBlock`: description, code (문자열 또는 null), language?(`kotlin` | `java` | `xml` | `sql` | `text`, 기본 kotlin)
+- `Project`: id, title, description, cardSummary(description, achievements[]), thumbnail, tech, period, team, role, details, features, contributions, problemSolvings[], insights[], insightImages?[], achievements, retrospective, links, screenshots, screenshotColumns?, hasBottomScreenshot?
+- `ProblemSolving`: problem[], solution[], result[], visual, implementation[], alternatives[] — 각 문제해결 블록이 독립적
+- `visual`: src, alt — 각 문제 해결을 설명하는 생성형 이미지와 대체 텍스트
+- `ImplementationBlock`: description — 기존 구현 설명을 유지하며 코드와 언어 필드는 사용하지 않음
 - `RichText = string | TextSegment[]` — 문장 일부를 강조하려면 `rich('앞부분 ', strong('강조'), ' 뒷부분')` 헬퍼 사용
 - 문제해결 블록이 2개 이상이면 상세 페이지에 번호 표시
 - `screenshotColumns`: 스크린샷 그리드 열 수 (기본 2, 3열도 지원)
@@ -101,14 +101,16 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 
 ## 프로젝트 상세 페이지 구조
 
-헤더(제목, 설명, 기간/인원/역할, 기술 태그) → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights(+ insightImages) → 담당 역할 및 기여 → 문제 해결(문제/해결 방법/결과/구체적인 구현 설명/대체안, 복수 블록 시 번호 구분) → 스크린샷(첫 장 전체 폭 + 나머지 그리드 + 마지막 1장 단독) → 프로젝트 회고
+헤더(제목, 설명, 기간/인원/역할, 기술 태그) → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights(+ insightImages) → 담당 역할 및 기여 → 문제 해결(문제/해결 방법/결과/생성형 이미지/구체적인 구현 설명/대체안, 복수 블록 시 번호 구분) → 스크린샷(첫 장 전체 폭 + 나머지 그리드 + 마지막 1장 단독) → 프로젝트 회고
 
 내용이 비어 있는 섹션은 렌더링하지 않습니다.
+한길졸업은 상단 기본 정보와 프로젝트 개요 두 문장만 유지하고, 카드 성과와 상세 하위 섹션의 데이터는 빈 배열로 둡니다.
 
 ## 등록된 프로젝트
 
 | id | 이름 | 스크린샷 | 문제해결 | Insights | 비고 |
 |----|------|----------|----------|----------|------|
+| `hangil` | 한길졸업 | - | - | - | 기본 정보와 프로젝트 개요만 제공 |
 | `naenun-kiosk` | 내눈 키오스크 | 8장(2열) | 3 | - | Figma |
 | `mo-re` | 모리, Mo-Re | 14장(3열) | 2 | 7 | Figma |
 | `glim` | Glim | 8장(3열) | 3 | 6 | GitHub, Figma |
@@ -145,7 +147,7 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 ## 콘텐츠 싱크 규칙
 
 - 콘텐츠 기준(Parent)은 웹 포트폴리오(`src/`, `public/`)입니다.
-- 정적 문서(`portfolio.html`/`portfolio.pdf`, `resume.html`/`resume.pdf`, `career.html`/`career.pdf`)는 Child이며, Parent에 없는 내용을 담을 수 없습니다.
+- 정적 문서(`resume.html`/`resume.pdf`, `career.html`/`career.pdf`)는 Child이며, Parent에 없는 내용을 담을 수 없습니다.
 - HTML 문서를 수정하면 대응 PDF도 함께 재생성합니다.
 - 자세한 내용은 `README.md`의 Content Sync Rule 참고.
 
@@ -161,5 +163,4 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 - 카드 스타일: border + `--radius-card` + `--shadow-card` + hover 효과 통일
 - 이미지 토글: useState + 토글 버튼 패턴 (Activity, Awards에서 공통 사용)
 - 섹션 컴포넌트는 `useScrollReveal` 훅 + `section reveal` 클래스 사용
-- 번들 최적화: react-syntax-highlighter를 manualChunks로 분리
 - 데이터/컴포넌트를 변경하면 `src/**/__tests__`의 관련 테스트도 함께 갱신

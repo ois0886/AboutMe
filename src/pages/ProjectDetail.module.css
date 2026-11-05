@@ -304,9 +304,19 @@
   margin-bottom: 0;
 }
 
-.implBlock pre {
-  max-width: 100%;
-  overflow-x: auto;
+.implementationVisual {
+  margin: 0 0 20px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.implementationVisual img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .implDescription {

@@ -40,15 +40,21 @@ describe('Projects', () => {
       expect(card.getByText(project.cardSummary.description)).toBeInTheDocument()
       expect(card.queryByText(project.description)).not.toBeInTheDocument()
 
-      const highlights = card.getAllByRole('list')[0]
-      expect(Array.from(highlights.querySelectorAll('li'), (item) => item.textContent))
+      const highlights = screen.getByText(project.title).closest('a')!
+        .querySelector('[class*="highlights"]')
+      if (project.cardSummary.achievements.length === 0) {
+        expect(highlights).toBeNull()
+        return
+      }
+      expect(highlights).not.toBeNull()
+      expect(Array.from(highlights!.querySelectorAll('li'), (item) => item.textContent))
         .toEqual(project.cardSummary.achievements.slice(0, 3).map((item) =>
           typeof item === 'string' ? item : item.map((segment) => segment.text).join(''),
         ))
       const emphasizedText = project.cardSummary.achievements.slice(0, 3)
         .flatMap((item) => typeof item === 'string' ? [] : item.filter((segment) => segment.strong))
         .map((segment) => segment.text)
-      expect(Array.from(highlights.querySelectorAll('strong'), (item) => item.textContent))
+      expect(Array.from(highlights!.querySelectorAll('strong'), (item) => item.textContent))
         .toEqual(emphasizedText)
     })
   })
@@ -67,7 +73,13 @@ describe('Projects', () => {
 
     projects.forEach((project) => {
       const card = screen.getByText(project.title).closest('a')
-      const achievementList = card?.querySelector('ul')
+      const achievementList = card?.querySelector('[class*="highlights"]')
+
+      if (project.cardSummary.achievements.length === 0) {
+        expect(achievementList).toBeNull()
+        expect(card?.querySelectorAll('[class*="tech"] li')).toHaveLength(project.tech.length)
+        return
+      }
 
       expect(achievementList?.querySelectorAll('li')).toHaveLength(
         Math.min(project.cardSummary.achievements.length, 3),

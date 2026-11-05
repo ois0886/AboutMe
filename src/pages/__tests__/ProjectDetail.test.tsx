@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import ProjectDetail from '../ProjectDetail'
 import projects from '../../data/projects'
@@ -16,64 +16,51 @@ function renderProjectDetail(id: string) {
 describe('ProjectDetail', () => {
   const firstProject = projects[0]
 
-  it('한길졸업의 실제 앱 화면은 고정 시연 콘텐츠와 SDK 잠금의 출처를 구분한다', () => {
+  it('한길졸업은 상단 기본 정보와 프로젝트 개요만 표시한다', () => {
     const { container } = renderProjectDetail('hangil')
-    expect(screen.getByRole('heading', { name: '앱 화면' })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: '브랜드 이미지' })).not.toBeInTheDocument()
     const project = projects.find((item) => item.id === 'hangil')!
-    for (const [src, description] of Object.entries(project.screenshotDescriptions!)) {
-      expect(screen.getByRole('img', { name: description.alt })).toHaveAttribute('src', src)
-      expect(screen.getByText(description.caption)).toBeInTheDocument()
-    }
-    expect(screen.getAllByRole('img')).toHaveLength(4)
-    const rows = container.querySelectorAll('[style*="grid-template-columns"]')
-    expect(rows).toHaveLength(3)
-    rows.forEach((row) => {
-      expect(row).toHaveStyle({ gridTemplateColumns: 'repeat(1, 1fr)' })
-      expect(row.children).toHaveLength(1)
-    })
-  })
-
-  it('캡션을 추가하지 않은 기존 프로젝트의 이미지 대체 텍스트와 구성을 유지한다', () => {
-    const project = projects.find((item) => item.id === 'naenun-kiosk')!
-    const { container } = renderProjectDetail(project.id)
-    expect(screen.getByRole('heading', { name: '스크린샷' })).toBeInTheDocument()
-    expect(screen.getAllByRole('img')).toHaveLength(project.screenshots.length)
-    expect(screen.getAllByRole('img').map((image) => image.getAttribute('alt')))
-      .toEqual(project.screenshots.map(() => project.title))
-    expect(container.querySelectorAll('[class*="screenshotCaption"]')).toHaveLength(0)
-  })
-
-  it('한길졸업은 세 가지 상세 문제 해결과 공개 저장소 링크를 제공한다', () => {
-    renderProjectDetail('hangil')
-    for (const number of ['1', '2', '3']) {
-      expect(screen.getByRole('heading', { level: 3, name: number })).toBeInTheDocument()
-    }
-    expect(screen.queryByRole('heading', { level: 3, name: '4' })).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'GitHub' }))
-      .toHaveAttribute('href', 'https://github.com/HanGilLab/Android')
-    expect(screen.getByText(/UX 독립 조합과 끊김, 권한 거부의 오류 주입 실기는 미실행입니다/))
-      .toBeInTheDocument()
-  })
-
-  it('한길졸업은 1인 역할과 실제 구현 코드의 상태 검사, 트랜잭션, 지도 콜백 문맥을 표시한다', () => {
-    const { container } = renderProjectDetail('hangil')
     expect(screen.getByText('2026.10.26 ~ 진행 중')).toBeInTheDocument()
     expect(screen.getByText('1명 (개인 프로젝트)')).toBeInTheDocument()
     expect(screen.getByText('Android 앱 설계, 구현 및 검증')).toBeInTheDocument()
-    const code = Array.from(container.querySelectorAll('pre code'), (block) => block.textContent ?? '')
-    expect(code).toHaveLength(5)
-    expect(code[0]).toContain('ParkingState.UNKNOWN')
-    expect(code[0]).toContain('UxRestrictionState.UNKNOWN')
-    expect(code[1]).toContain('fun allowsPracticeInteraction(')
-    expect(code[1]).toContain('vehicle.toDrivingRestrictions(restrictions.uxRestrictionState)')
-    expect(code[2]).toContain('database.withTransaction {')
-    expect(code[2].match(/requirePermission\(canCommit\)/g)).toHaveLength(2)
-    expect(code[2]).toContain('SessionFinishResult.InvalidTime')
-    expect(code[3]).toContain('throw WriteBlocked()')
-    expect(code[4]).toContain('fun onMapRendered(')
-    expect(code[4]).toContain('if (!allowsInteraction()) return')
-    expect(code[4]).toContain('it.token == token')
+    expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent))
+      .toEqual(['프로젝트 개요'])
+    expect(within(screen.getByRole('main')).getAllByRole('listitem').map((item) => item.textContent))
+      .toEqual(project.details)
+    expect(screen.queryByRole('link', { name: 'GitHub' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    expect(container.querySelector('pre, code')).toBeNull()
+  })
+
+  it.each(projects.filter((project) => project.id !== 'hangil'))(
+    '$id는 코드 없이 문제 해결 이미지와 기존 구현 설명을 표시한다',
+    (project) => {
+      const { container } = renderProjectDetail(project.id)
+      expect(container.querySelector('pre, code')).toBeNull()
+      project.problemSolvings.forEach((ps) => {
+        expect(screen.getByRole('img', { name: ps.visual.alt }))
+          .toHaveAttribute('src', ps.visual.src)
+        ps.implementation.forEach((block) => {
+          expect(screen.getByText(block.description)).toBeInTheDocument()
+        })
+      })
+    },
+  )
+
+  it('캡션을 추가하지 않은 기존 프로젝트의 스크린샷 구성과 대체 텍스트를 유지한다', () => {
+    const project = projects.find((item) => item.id === 'naenun-kiosk')!
+    const { container } = renderProjectDetail(project.id)
+    const gallery = within(screen.getByRole('heading', { name: '스크린샷' }).closest('section')!)
+    const images = gallery.getAllByRole('img')
+    expect(images).toHaveLength(project.screenshots.length)
+    expect(images.map((image) => image.getAttribute('src'))).toEqual(project.screenshots)
+    expect(images.map((image) => image.getAttribute('alt')))
+      .toEqual(project.screenshots.map(() => project.title))
+    expect(container.querySelectorAll('[class*="screenshotCaption"]')).toHaveLength(0)
+    const rows = container.querySelectorAll('[class*="screenshotRows"] > div')
+    expect(rows).toHaveLength(3)
+    rows.forEach((row) => {
+      expect(row.children).toHaveLength(2)
+    })
   })
 
   it('유효한 프로젝트 ID로 접근하면 제목이 렌더링된다', () => {
@@ -118,7 +105,7 @@ describe('ProjectDetail', () => {
     expect(screen.getByText('← 돌아가기')).toBeInTheDocument()
   })
 
-  it('강조 세그먼트와 코드 들여쓰기가 프로젝트 상세에 유지된다', () => {
+  it('강조 세그먼트와 성과, 구현 설명이 프로젝트 상세에 유지된다', () => {
     const { container } = renderProjectDetail('mo-re')
 
     expect(container.textContent).toContain('약 356ms에서 156ms로')
@@ -129,11 +116,10 @@ describe('ProjectDetail', () => {
       ),
     ).toBe(true)
 
-    const codeBlocks = container.querySelectorAll('pre code')
-    expect(codeBlocks[1].textContent).toContain(
-      'val cpuDeferred = async {\n    runCatching {\n        getCpuMetricsUseCase(instanceId, targetDate)',
-    )
-    expect(codeBlocks[2].textContent).toMatch(/^val cpuMetrics = cpuDeferred\.await\(\)/)
+    expect(screen.getByText(/supervisorScope 안에서 6개 API를 async로 호출하고/))
+      .toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /6개 API/ }))
+      .toHaveAttribute('src', 'screenshot/more-parallel-api-visual.png')
   })
 
   it('주점부리 프로젝트 상세가 정상 렌더링된다', () => {
@@ -152,7 +138,7 @@ describe('ProjectDetail', () => {
   })
 
   it('Dear My Diary는 모델 통합과 입력 구성, 감정 후처리를 설명하고 비공개 링크를 숨긴다', () => {
-    const { container } = renderProjectDetail('dear-my-diary')
+    renderProjectDetail('dear-my-diary')
 
     expect(screen.getByRole('heading', { level: 1, name: 'Dear My Diary - Android' }))
       .toBeInTheDocument()
@@ -163,11 +149,13 @@ describe('ProjectDetail', () => {
       .toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 3, name: '3' })).toBeInTheDocument()
     expect(screen.getByText(/Qualcomm 재직자 멘토의 멘토링을 받으며/)).toBeInTheDocument()
-    const codeText = Array.from(container.querySelectorAll('pre code'), (block) => block.textContent).join('\n')
-    expect(codeText).toContain('tokenizer = GPT2Tokenizer(encoder, decoder, bpeRanks)')
-    expect(codeText).toContain('Regex("\\\\b$word\\\\b", RegexOption.IGNORE_CASE)')
+    expect(screen.getByText(/모델과 사전을 준비한 뒤 tokenizer와 Interpreter를 초기화합니다/))
+      .toBeInTheDocument()
+    expect(screen.getByText(/미리 정의한 감정 단어를 생성 결과에서 찾습니다/))
+      .toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: '링크' })).not.toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: '프로젝트 회고' })).not.toBeInTheDocument()
-    expect(screen.getAllByRole('img')).toHaveLength(4)
+    const gallery = within(screen.getByRole('heading', { name: '스크린샷' }).closest('section')!)
+    expect(gallery.getAllByRole('img')).toHaveLength(4)
   })
 })

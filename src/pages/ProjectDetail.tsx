@@ -1,18 +1,7 @@
 import type { ReactNode } from 'react'
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
-import java from 'react-syntax-highlighter/dist/esm/languages/prism/java'
-import kotlin from 'react-syntax-highlighter/dist/esm/languages/prism/kotlin'
-import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup'
-import sql from 'react-syntax-highlighter/dist/esm/languages/prism/sql'
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import projects, { type RichText } from '../data/projects'
 import styles from './ProjectDetail.module.css'
-
-SyntaxHighlighter.registerLanguage('java', java)
-SyntaxHighlighter.registerLanguage('kotlin', kotlin)
-SyntaxHighlighter.registerLanguage('xml', markup)
-SyntaxHighlighter.registerLanguage('sql', sql)
 
 function renderRichText(content: RichText): ReactNode {
   if (typeof content === 'string') return content
@@ -240,27 +229,26 @@ function ProjectDetail() {
                     ))}
                   </ul>
                 </div>
-                {ps.implementation.length > 0 && (
-                  <div className={styles.psBlock}>
-                    <h3 className={styles.psLabel}>구체적인 구현 설명</h3>
-                    {ps.implementation.map((block, idx) => (
-                      <div key={idx} className={styles.implBlock}>
-                        <blockquote className={styles.implDescription}>
-                          {block.description}
-                        </blockquote>
-                        {block.code && (
-                          <SyntaxHighlighter
-                            language={block.language || 'kotlin'}
-                            style={oneDark}
-                            customStyle={{ borderRadius: '8px', fontSize: '0.85rem', margin: 0 }}
-                          >
-                            {block.code}
-                          </SyntaxHighlighter>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <div className={styles.psBlock}>
+                  <h3 className={styles.psLabel}>구체적인 구현 설명</h3>
+                  <figure className={styles.implementationVisual}>
+                    <img
+                      src={ps.visual.src}
+                      alt={ps.visual.alt}
+                      width={1672}
+                      height={941}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  {ps.implementation.map((block, idx) => (
+                    <div key={idx} className={styles.implBlock}>
+                      <blockquote className={styles.implDescription}>
+                        {block.description}
+                      </blockquote>
+                    </div>
+                  ))}
+                </div>
                 {ps.alternatives.length > 0 && (
                   <div className={styles.psBlock}>
                     <h3 className={styles.psLabel}>대체안</h3>

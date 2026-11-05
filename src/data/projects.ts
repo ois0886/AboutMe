@@ -1,7 +1,5 @@
 export interface ImplementationBlock {
   description: string
-  code: string | null
-  language?: 'kotlin' | 'java' | 'xml' | 'sql' | 'text'
 }
 
 export interface TextSegment {
@@ -12,6 +10,7 @@ export interface TextSegment {
 export type RichText = string | TextSegment[]
 
 export interface ProblemSolving {
+  visual: { src: string; alt: string }
   problem: string[]
   solution: string[]
   result: RichText[]
@@ -62,11 +61,7 @@ const projects: Project[] = [
     description: '초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱입니다.',
     cardSummary: {
       description: '초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱',
-      achievements: [
-        '주차 상태와 UX 제한 해제를 함께 확인하는 상세 조작 잠금',
-        '실제 지도 표시와 오류 복구, Room 기반 연습 세션 저장과 복원 검증',
-        'Kotlin, Compose 멀티 모듈 구현과 자동 검사, Pleos 시나리오 검증',
-      ],
+      achievements: [],
     },
     thumbnail: 'screenshot/hangil-guide.svg',
     tech: ['Kotlin', 'Jetpack Compose', 'Room', 'Coroutines', 'Flow', 'MapLibre', 'Pleos SDK'],
@@ -77,179 +72,14 @@ const projects: Project[] = [
       '초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.',
       '현대자동차그룹 차량용 앱 개발 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다.',
     ],
-    features: [
-      '주차 상태와 UX 제한 해제를 모두 확인했을 때만 상세 입력을 허용하고 끊김, 미확인, 권한 거부 시 잠금을 유지합니다.',
-      '목표와 시연 코스를 준비하고, 사용자가 시작하거나 종료한 연습 세션을 저장하고 복원합니다.',
-      'MapLibre로 시연 지역의 도로와 지명, 지도 출처를 표시하고 오류 발생 시 재시도할 수 있도록 구성했습니다.',
-    ],
-    contributions: [
-      'Kotlin, Compose 멀티 모듈 경계를 구성하고 차량 SDK 상태와 주차 화면의 상세 조작 제한을 연결했습니다.',
-      'MapLibre 기반 온라인 지도 표시, 오류와 재시도, 화면 재생성을 Pleos 환경에서 확인했습니다.',
-      'Room 기반 연습 시작과 종료, 준비 내용의 스냅샷 저장, DB 마이그레이션과 앱 재실행 후 복원을 구현하고 검증했습니다.',
-      '민트와 크림 색상 토큰, 브랜드 캐릭터와 주차 화면의 안내 리소스를 적용했습니다.',
-    ],
-    problemSolvings: [
-      {
-        problem: [
-          '주차 상태와 UX 제한은 서로 다른 시점에 갱신됩니다. 이전 주차 값만 보고 입력을 허용하면 새 D 신호가 도착한 뒤에도 상세 조작이 열릴 수 있었습니다.',
-          '연결이 끊기거나 권한이 없을 때 마지막 정상 값을 그대로 사용하면 확인되지 않은 상태를 주차로 판단할 위험이 있었습니다.',
-        ],
-        solution: [
-          '주차 확인과 UX 제한 해제가 모두 충족돼야 상세 조작을 허용하고, 미확인과 권한 거부, 연결 끊김은 잠금 상태로 처리했습니다.',
-          '화면에 합성된 상태만 사용하지 않고 버튼 처리와 지도 콜백에서도 차량과 제한의 최신 값을 함께 확인했습니다.',
-          '차량 구독을 종료하거나 다시 연결할 때 이전 값을 초기화하고 이전 구독의 콜백을 무시하도록 구성했습니다.',
-        ],
-        result: [
-          '주차와 UX 상태 조합, 새 D 신호 직후의 조작, 연결 끊김과 권한 거부 시 잠금을 단위 테스트로 확인했습니다.',
-          'Pleos에서는 P에서 D로 전환한 뒤 P로 복귀하는 잠금과 정상 복귀를 확인했습니다. UX 독립 조합과 끊김, 권한 거부의 오류 주입 실기는 미실행입니다.',
-        ],
-        implementation: [
-          {
-            description: 'DrivingRestrictions.kt는 주차와 UX의 초기값을 UNKNOWN으로 두고 두 조건이 모두 확인돼야 상세 조작을 허용합니다.',
-            code: `data class DrivingRestrictions(
-    val parkingState: ParkingState = ParkingState.UNKNOWN,
-    val uxRestrictionState: UxRestrictionState = UxRestrictionState.UNKNOWN,
-) {
-    val allowsDetailedInteraction: Boolean
-        get() = parkingState == ParkingState.PARKED && uxRestrictionState == UxRestrictionState.UNRESTRICTED
-}`,
-          },
-          {
-            description: 'PracticeInteraction.kt에서 차량과 UX 제한의 상태를 함께 재판정합니다. ViewModel은 조작 직전 각 제공자의 최신 값을 전달해 이전 P 상태와 새 D 이벤트 사이의 조작을 차단합니다.',
-            code: `fun allowsPracticeInteraction(
-    vehicle: VehicleState,
-    restrictions: DrivingRestrictions,
-): Boolean =
-    restrictions.allowsDetailedInteraction &&
-        vehicle.toDrivingRestrictions(restrictions.uxRestrictionState).allowsDetailedInteraction`,
-          },
-        ],
-        alternatives: [
-          'UX 제한 해제만으로 주차를 판단하면 기어 상태를 확인할 수 없어 두 조건을 함께 요구했습니다.',
-          '화면의 버튼만 비활성화하는 방법은 상태 갱신 사이의 이벤트를 막지 못하므로 실제 처리 지점에서도 같은 조건을 확인했습니다.',
-        ],
-      },
-      {
-        problem: [
-          '연습을 시작한 뒤 준비 내용을 바꾸면 과거 기록의 목표와 코스가 달라질 수 있었습니다. 중복 시작과 종료, 앱 재실행에서도 같은 세션을 유지해야 했습니다.',
-          '저장 중 주행 상태로 바뀌거나 종료 시각이 시작보다 앞선 경우를 정상 기록으로 저장하지 않아야 했습니다.',
-        ],
-        solution: [
-          '시작 당시 목표와 과제, 코스 버전과 표시명을 스냅샷으로 저장하고 활성 세션을 하나로 제한했습니다.',
-          'Room 트랜잭션 안에서 저장 전후의 조작 허용 조건을 확인하고, 저장 중 잠기면 예외로 전체 쓰기를 롤백했습니다.',
-          '중복 요청, 준비 내용 변경, 잘못된 시각을 별도 결과로 처리하고 v1에서 v2로 기존 준비 데이터를 보존하는 마이그레이션을 추가했습니다.',
-        ],
-        result: [
-          'DB 단위 테스트로 마이그레이션과 준비 보존, 중복 처리, 시각 역행과 저장 중 잠금 롤백을 확인했습니다.',
-          'Pleos에서 시작 후 앱 재실행, P와 D 전환, 종료 후 재실행을 확인하고 실제 DB에 기존 준비와 종료 기록이 남는 것을 검증했습니다.',
-        ],
-        implementation: [
-          {
-            description: 'RoomPracticeSessionRepository.finish의 트랜잭션 본문입니다. 종료 상태와 시각을 구분하고, 쓰기 전후에 주차와 UX 조건을 재검사합니다.',
-            code: `database.withTransaction {
-    requirePermission(canCommit)
-    val entity = database.practiceSessionDao().find(sessionId)
-    val result =
-        when {
-            entity == null -> SessionFinishResult.Missing
-            entity.endedAtEpochMillis != null -> SessionFinishResult.AlreadyFinished(entity.session())
-            endedAtEpochMillis < entity.startedAtEpochMillis -> SessionFinishResult.InvalidTime
-            else -> {
-                check(database.practiceSessionDao().finish(sessionId, endedAtEpochMillis) == 1)
-                SessionFinishResult.Finished(
-                    entity.copy(endedAtEpochMillis = endedAtEpochMillis, activeSlot = null).session(),
-                )
-            }
-        }
-    requirePermission(canCommit)
-    result
-}`,
-          },
-          {
-            description: '같은 저장소의 requirePermission은 저장 도중 잠금으로 바뀌면 WriteBlocked를 던집니다. 트랜잭션이 전체 쓰기를 롤백하고 호출 결과는 Blocked로 구분됩니다.',
-            code: `private fun requirePermission(canCommit: () -> Boolean) {
-    if (!canCommit()) throw WriteBlocked()
-}`,
-          },
-        ],
-        alternatives: [
-          '현재 준비 테이블을 참조하는 대신 시작 시 스냅샷을 보관해 이후 선택이나 코스 버전 변경이 과거 기록에 영향을 주지 않도록 했습니다.',
-          '화면의 중복 클릭 방지만으로는 재실행과 동시 요청을 처리하기 어려워 저장소와 DB에서도 활성 세션과 종료 상태를 확인했습니다.',
-        ],
-      },
-      {
-        problem: [
-          '지도 재시도나 화면 재생성 뒤 이전 Native MapView의 콜백이 도착하면 새 화면을 준비 완료나 오류 상태로 바꿀 수 있었습니다.',
-          '스타일 로딩과 실제 지도 렌더링을 구분하지 않으면 타일이나 글꼴 로딩이 실패해도 지도가 준비됐다고 표시할 수 있었습니다.',
-        ],
-        solution: [
-          '재시도 번호와 MapView 생성 토큰을 함께 비교해 현재 지도에 속한 콜백만 상태에 반영했습니다.',
-          '스타일 로딩과 전체 렌더링이 끝난 경우에만 준비 완료로 전환하고 타일, 글꼴과 렌더 오류는 실패로 처리했습니다.',
-          'MapView를 화면 생명주기에 연결하고 이탈 시 리스너와 리소스를 정리했습니다. 오류 뒤에는 새 시도로 지도를 다시 생성했습니다.',
-        ],
-        result: [
-          '단위 테스트로 이전 시도와 이전 MapView 콜백 무시, 실패 후 재시도 상태를 확인했습니다.',
-          'Pleos에서 실제 도로와 한글 지명 표시, 네트워크 오류 뒤 같은 프로세스의 재시도 복구, 화면 재생성과 P에서 D로 바뀔 때 지도 제거를 확인했습니다.',
-        ],
-        implementation: [
-          {
-            description: 'MapViewModel.onMapRendered는 최신 조작 허용 조건을 확인한 뒤 재시도 번호, MapView 토큰과 LOADING 상태가 모두 맞을 때만 READY를 반영합니다.',
-            code: `fun onMapRendered(
-    attempt: Int,
-    token: Long,
-) {
-    if (!allowsInteraction()) return
-    render.update {
-        if (it.id == attempt && it.token == token && it.load == MapLoadState.LOADING) it.copy(load = MapLoadState.READY) else it
-    }
-}`,
-          },
-          {
-            description: 'DisposableEffect에서 생명주기 관찰자와 메모리 콜백의 등록과 해제를 묶었습니다. 화면을 떠난 MapView는 활성 상태를 해제해 이후 콜백을 무시합니다.',
-            code: null,
-          },
-        ],
-        alternatives: [
-          '재시도 번호만 비교하면 같은 시도 안의 화면 재생성을 구분하지 못해 MapView 토큰을 함께 사용했습니다.',
-          '스타일 로딩 성공만으로 완료 처리하지 않고 실제 렌더 완료를 기다렸습니다. 고정 시연 지역의 지도 표시는 현재 위치나 자체 길안내 구현과 구분했습니다.',
-        ],
-      },
-    ],
+    features: [],
+    contributions: [],
+    problemSolvings: [],
     insights: [],
-    achievements: [
-      '주차 상태와 UX 제한 해제를 함께 확인하는 상세 조작 잠금을 구현하고 자동 검사와 Pleos 시나리오로 검증했습니다.',
-      '실제 지도 표시와 오류 복구, Room 기반 연습 세션 저장과 복원을 검증했습니다.',
-      'Kotlin, Compose 멀티 모듈 구현과 자동 검사, Pleos 시나리오 검증을 진행했습니다.',
-    ],
+    achievements: [],
     retrospective: [],
-    links: [{ label: 'GitHub', url: 'https://github.com/HanGilLab/Android' }],
-    screenshots: [
-      'screenshot/hangil-home.png',
-      'screenshot/hangil-course.png',
-      'screenshot/hangil-briefing.png',
-      'screenshot/hangil-locked.png',
-    ],
-    screenshotDescriptions: {
-      'screenshot/hangil-home.png': {
-        alt: '주차가 확인된 한길졸업 홈에서 다음 행동과 저장된 시연 준비를 표시한 실제 앱 화면',
-        caption: '주차 홈: 저장된 준비와 다음 행동을 보여 줍니다. 코스와 과제는 고정 시연 콘텐츠입니다.',
-      },
-      'screenshot/hangil-course.png': {
-        alt: '한길졸업의 고정 시연 코스 목록과 선택 상태를 표시한 실제 앱 화면',
-        caption: '코스 선택: 고정 시연 코스를 고르는 실제 앱 화면입니다. 검증용 선택은 저장하지 않았습니다.',
-      },
-      'screenshot/hangil-briefing.png': {
-        alt: '한길졸업의 고정 시연 코스 브리핑과 과제 선택을 표시한 실제 앱 화면',
-        caption: '출발 전 브리핑: 고정 시연 코스와 과제 선택 화면입니다. 검증용 선택은 저장하지 않았습니다.',
-      },
-      'screenshot/hangil-locked.png': {
-        alt: '실제 SDK의 D 상태 전환 후 주차 안내만 표시하고 상세 조작을 잠근 한길졸업 앱 화면',
-        caption: '주행 잠금: 실제 SDK의 D 상태 전환 후 상세 조작을 잠근 화면입니다. 저장된 준비는 유지됩니다.',
-      },
-    },
-    imageSectionTitle: '앱 화면',
-    screenshotColumns: 1,
-    hasBottomScreenshot: false,
+    links: [],
+    screenshots: [],
   },
   {
     id: 'naenun-kiosk',
@@ -304,36 +134,19 @@ const projects: Project[] = [
           '화면마다 상태와 이벤트는 Route, 레이아웃은 Screen, 공통 UI는 Component에서 수정하도록 책임을 나눴습니다.',
           '언어, 글자 크기, 버튼 스타일을 공용 컴포넌트 한 곳에서 바꾸면 여러 화면에 함께 반영하도록 구성했습니다.',
         ],
+        visual: {
+          src: 'screenshot/naenun-state-hoisting-visual.png',
+          alt: 'Route에서 상태를 구성하고 Screen과 공통 컴포넌트에 전달하는 Compose 상태 호이스팅 구조',
+        },
         implementation: [
           {
             description: 'Route에서 언어 설정에 맞는 글자 크기와 동의 상태, 표에 표시할 문구를 조합합니다. UiState와 TableData로 묶은 값을 Screen에 전달합니다.',
-            code: `val uiState = TermsOfServiceUiState(
-    acceptedPersonal = acceptedPersonal,
-    acceptedSensitive = acceptedSensitive,
-    textSize = textSize
-)
-
-val personalTable = remember {
-    TermsTableData(
-        label = StringProvider.getString(R.string.personal_info_table_label),
-        column1 = StringProvider.getString(R.string.personal_info_table_column1),
-        column2 = StringProvider.getString(R.string.personal_info_table_column2),
-        column3 = StringProvider.getString(R.string.personal_info_table_column3),
-        evenly = false
-    )
-}`,
           },
           {
             description: 'Screen은 전달받은 상태로 컴포넌트를 배치하고 스크롤과 버튼 활성화 여부를 결정합니다. 버튼을 눌렀을 때의 처리는 콜백으로 상위 계층에 전달합니다.',
-            code: `PrimaryButton(
-    onClick = onClickAgree,
-    enabled = state.acceptedPersonal == true && state.acceptedSensitive == true,
-    text = stringResource(R.string.button_agree),
-)`,
           },
           {
             description: '제목, 설명, 표, 체크박스 행과 버튼을 각각 공통 컴포넌트로 분리했습니다. 약관을 비롯한 설명과 동의 화면에서 같은 컴포넌트를 조합해 사용합니다.',
-            code: null,
           },
         ],
         alternatives: [
@@ -355,16 +168,18 @@ val personalTable = remember {
           '기능별 코드와 공통 코드를 구분해 변경할 때 확인해야 하는 범위를 해당 기능 또는 core 영역으로 좁혔습니다.',
           '화면을 추가할 위치와 계층별 역할을 정해 변경이 다른 화면에 미치는 영향을 추적하기 쉬워졌습니다.',
         ],
+        visual: {
+          src: 'screenshot/naenun-package-refactor-visual.png',
+          alt: '계층 중심 패키지를 기능별 패키지와 공통 컴포넌트로 재편한 구조',
+        },
         implementation: [
           {
             description:
               '실제 코드를 공개할 수 없어 패키지 구조로 설명합니다. 기능별 Route에서 상태와 이벤트를 연결하고 Screen과 Component에서 화면을 그리도록 나눴습니다.',
-            code: null,
           },
           {
             description:
               '반복되는 UI와 공통 로직을 core 영역에 두었습니다. 각 기능은 다른 기능의 내부 코드 대신 공통 코드를 사용하도록 참조 방향을 정리했습니다.',
-            code: null,
           },
         ],
         alternatives: [
@@ -386,16 +201,18 @@ val personalTable = remember {
           '화면 종료 후 남을 수 있던 Context와 Listener 참조를 정리했습니다.',
           '객체를 보유하는 범위와 해제 지점을 구분해 장시간 실행 시 점검해야 할 참조를 명확히 했습니다.',
         ],
+        visual: {
+          src: 'screenshot/naenun-memory-leak-visual.png',
+          alt: 'Activity 참조와 Listener를 생명주기에 맞춰 해제하는 메모리 누수 방지 흐름',
+        },
         implementation: [
           {
             description:
               '수명이 긴 객체가 Activity Context, Callback, Listener를 보유하는 지점을 점검했습니다. 화면 참조가 필요 없으면 Application Context로 바꾸고, 나머지는 생명주기가 끝날 때 해제하도록 정리했습니다.',
-            code: null,
           },
           {
             description:
               'Compose에서는 remember로 유지하는 객체와 외부 Listener 등록 지점을 함께 확인했습니다. DisposableEffect의 dispose 단계나 ViewModel의 onCleared에서 해제하도록 책임을 정했습니다.',
-            code: null,
           },
         ],
         alternatives: [
@@ -477,152 +294,22 @@ val personalTable = remember {
           rich('전체 로딩 시간을 ', strong('약 356ms에서 156ms로 줄여 약 56% 단축했습니다'), '.'),
           '일부 API가 실패해도 성공한 데이터는 화면에 표시하고, 실패한 API는 개별 로그로 추적할 수 있도록 했습니다.',
         ],
+        visual: {
+          src: 'screenshot/more-parallel-api-visual.png',
+          alt: '6개 API를 병렬로 호출하고 일부 요청 실패에도 나머지 결과를 표시하는 흐름',
+        },
         implementation: [
           {
             description: '로딩을 시작하면 isLoading을 설정하고 오류 상태를 초기화합니다. 선택된 날짜가 없으면 기존 state.nowDate로 다시 조회합니다.',
-            code: `fun loadData(date: String? = null, instanceId: Long) = intent {
-    reduce { state.copy(isLoading = true, error = null) }
-
-    val targetDate = date ?: state.nowDate
-
-    supervisorScope {
-        Log.d(
-            "InstanceDetailViewModel",
-            "Loading data for instanceId: $instanceId, date: $targetDate"
-        )`,
           },
           {
             description: 'supervisorScope 안에서 6개 API를 async로 호출하고 각 결과를 runCatching으로 처리합니다. 실패하면 메트릭 이름과 예외를 기록하고 null을 반환해 나머지 결과를 계속 표시합니다.',
-            code: `val cpuDeferred = async {
-    runCatching {
-        getCpuMetricsUseCase(instanceId, targetDate)
-    }.onFailure {
-        Log.e("InstanceDetailViewModel", "CPU Metrics failed: \${it.message}")
-    }.getOrNull()
-}
-
-val memoryDeferred = async {
-    runCatching {
-        getMemoryMetricsUseCase(instanceId, targetDate)
-    }.onFailure {
-        Log.e("InstanceDetailViewModel", "Memory Metrics failed: \${it.message}")
-    }.getOrNull()
-}
-
-val networkReceiveDeferred = async {
-    runCatching {
-        getNetworkReceiveMetricsUseCase(instanceId, targetDate)
-    }.onFailure {
-        Log.e("InstanceDetailViewModel", "Network Receive Metrics failed: \${it.message}")
-    }.getOrNull()
-}
-
-val networkTransmitDeferred = async {
-    runCatching {
-        getNetworkTransmitMetricsUseCase(instanceId, targetDate)
-    }.onFailure {
-        Log.e("InstanceDetailViewModel", "Network Transmit Metrics failed: \${it.message}")
-    }.getOrNull()
-}
-
-val eventSummaryDeferred = async {
-    runCatching {
-        getEventSummaryUseCase(instanceId, targetDate)
-    }.onFailure {
-        Log.e("InstanceDetailViewModel", "Event Summary failed: \${it.message}")
-    }.getOrNull()
-}
-
-val aiReportDeferred = async {
-    runCatching {
-        getDetailAiReportUseCase(instanceId, targetDate)
-    }.onFailure {
-        Log.e("InstanceDetailViewModel", "AI Report failed: \${it.message}")
-    }.getOrNull()
-}`,
           },
           {
             description: '각 작업의 결과를 await로 받아 상태 로그를 남깁니다. 시계열 데이터는 공통 TimeMetric으로 변환하고 차트에 필요한 평균값을 계산해 UiState에 반영합니다.',
-            code: `val cpuMetrics = cpuDeferred.await()
-val memoryMetrics = memoryDeferred.await()
-val networkReceiveMetrics = networkReceiveDeferred.await()
-val networkTransmitMetrics = networkTransmitDeferred.await()
-val eventSummary = eventSummaryDeferred.await()
-val aiReport = aiReportDeferred.await()
-
-Log.d(
-    "InstanceDetailViewModel",
-    "Results - CPU: \${cpuMetrics != null}, Memory: \${memoryMetrics != null}, " +
-        "NetworkRcv: \${networkReceiveMetrics != null}, " +
-        "NetworkTx: \${networkTransmitMetrics != null}, " +
-        "Event: \${eventSummary != null}, AI: \${aiReport != null}"
-)
-
-val cpuTimeMetrics = cpuMetrics?.timeSeriesData?.map {
-    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-} ?: emptyList()
-
-val memoryTimeMetrics = memoryMetrics?.timeSeriesData?.map {
-    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-} ?: emptyList()
-
-val networkReceiveTimeMetrics = networkReceiveMetrics?.timeSeriesData?.map {
-    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-} ?: emptyList()
-
-val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
-    TimeMetric(timeBucket = formatTimeBucket(it.timeBucket), avgValue = it.usage)
-} ?: emptyList()`,
           },
           {
             description: '차트의 평균값과 요약 메트릭, AI 리포트를 모아 reduce로 상태를 갱신합니다. 모든 메트릭이 null이면 경고 로그를 남겨 전체 조회 실패를 구분합니다.',
-            code: `        val cpuChartAvg = cpuTimeMetrics.takeIf { it.isNotEmpty() }
-            ?.let { (it.sumOf { m -> m.avgValue } / it.size).toFloat() }
-
-        val memoryChartAvg = memoryTimeMetrics.takeIf { it.isNotEmpty() }
-            ?.let { (it.sumOf { m -> m.avgValue } / it.size).toFloat() }
-
-        val networkReceiveChartAvg = networkReceiveTimeMetrics.takeIf { it.isNotEmpty() }
-            ?.let { (it.sumOf { m -> m.avgValue } / it.size).toFloat() }
-
-        val networkTransmitChartAvg = networkTransmitTimeMetrics.takeIf { it.isNotEmpty() }
-            ?.let { (it.sumOf { m -> m.avgValue } / it.size).toFloat() }
-
-        reduce {
-            state.copy(
-                isLoading = false,
-                cpuMetrics = cpuTimeMetrics,
-                memoryMetrics = memoryTimeMetrics,
-                networkReceiveMetrics = networkReceiveTimeMetrics,
-                networkTransmitMetrics = networkTransmitTimeMetrics,
-
-                cpuChartAverage = cpuChartAvg,
-                memoryChartAverage = memoryChartAvg,
-                networkReceiveChartAverage = networkReceiveChartAvg,
-                networkTransmitChartAverage = networkTransmitChartAvg,
-
-                cpuMin = cpuMetrics?.min ?: 0.0,
-                cpuMax = cpuMetrics?.max ?: 0.0,
-                memoryAvg = memoryMetrics?.avg ?: 0.0,
-                networkReceiveAvg = networkReceiveMetrics?.avg ?: 0.0,
-                networkReceiveMin = networkReceiveMetrics?.min ?: 0.0,
-                networkReceiveMax = networkReceiveMetrics?.max ?: 0.0,
-                networkTransmitAvg = networkTransmitMetrics?.avg ?: 0.0,
-                networkTransmitMin = networkTransmitMetrics?.min ?: 0.0,
-                networkTransmitMax = networkTransmitMetrics?.max ?: 0.0,
-                eventSummary = eventSummary,
-                aiReport = aiReport?.detailReport ?: "AI \uB9AC\uD3EC\uD2B8\uB97C \uBD88\uB7EC\uC62C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
-            )
-        }
-
-        if (cpuMetrics == null && memoryMetrics == null &&
-            networkReceiveMetrics == null && networkTransmitMetrics == null &&
-            eventSummary == null && aiReport == null
-        ) {
-            Log.w("InstanceDetailViewModel", "All data loading failed")
-        }
-    }
-}`,
           },
         ],
         alternatives: [
@@ -642,148 +329,22 @@ val networkTransmitTimeMetrics = networkTransmitMetrics?.timeSeriesData?.map {
           '버전이나 공통 빌드 옵션을 build-logic에서 수정하면 관련 모듈에 함께 반영하도록 바꿨습니다.',
           '새 모듈에서도 해당 플러그인을 적용하면 이름 규칙과 Compose, Hilt, 공통 의존성을 같은 기준으로 구성할 수 있게 했습니다.',
         ],
+        visual: {
+          src: 'screenshot/more-build-logic-visual.png',
+          alt: 'Convention Plugin으로 기능 모듈과 공통 Gradle 설정을 관리하는 구조',
+        },
         implementation: [
           {
             description: 'AndroidFeatureConventionPlugin에서 기능 모듈에 필요한 플러그인과 라이브러리를 적용합니다. Android 라이브러리, Hilt, Compose 설정과 Lifecycle, Orbit, 테스트 의존성을 한 번에 추가합니다.',
-            code: `class AndroidFeatureConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            pluginManager.apply {
-                apply("mori.android.library")
-                apply("mori.android.hilt")
-                apply("mori.android.compose")
-                apply("org.jetbrains.kotlin.plugin.serialization")
-            }
-
-            val libs = extensions
-                .getByType<VersionCatalogsExtension>()
-                .named("libs")
-
-            dependencies {
-                libs.findBundle("lifecycle").ifPresent { add("implementation", it) }
-                libs.findBundle("compose").ifPresent { add("implementation", it) }
-                libs.findBundle("compose-debug").ifPresent { add("debugImplementation", it) }
-                libs.findBundle("orbit").ifPresent { add("implementation", it) }
-                libs.findBundle("testing").ifPresent { add("testImplementation", it) }
-                addSafeDependency(libs, "testImplementation", "orbit-test")
-                addSafeDependency(libs, "androidTestImplementation", "mockk-android")
-                addSafeDependency(libs, "implementation", "androidx-material-icons-extended")
-            }
-        }
-    }
-}`,
           },
           {
             description: 'AndroidCoreConventionPlugin에서 core 모듈의 Android와 Kotlin 설정을 관리합니다. 기본 라이브러리 플러그인과 androidx-core-ktx, appcompat, material 등 공통 의존성을 적용합니다.',
-            code: `class AndroidCoreConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            pluginManager.apply("mori.android.library")
-            val libs = extensions
-                .getByType<VersionCatalogsExtension>()
-                .named("libs")
-            dependencies {
-                addSafeDependency(libs, "implementation", "androidx-core-ktx")
-                addSafeDependency(libs, "implementation", "androidx-appcompat")
-                addSafeDependency(libs, "implementation", "material")
-                addSafeDependency(libs, "testImplementation", "junit")
-                addSafeDependency(libs, "androidTestImplementation", "androidx-junit")
-                addSafeDependency(libs, "androidTestImplementation", "androidx-espresso-core")
-            }
-        }
-    }
-}`,
           },
           {
             description: 'DataStore, 네트워크, 테스트와 코드 검사 설정도 전용 플러그인으로 나눴습니다. 각 플러그인이 필요한 라이브러리와 테스트 의존성을 함께 추가합니다.',
-            code: `class AndroidDatastoreConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            pluginManager.apply {
-                apply("mori.android.core")
-                apply("mori.android.hilt")
-                apply("org.jetbrains.kotlin.plugin.serialization")
-            }
-            val libs = extensions
-                .getByType<VersionCatalogsExtension>()
-                .named("libs")
-            dependencies {
-                addSafeDependency(libs, "implementation", "androidx-datastore-preferences")
-                addSafeDependency(libs, "implementation", "androidx-datastore-core")
-                addSafeDependency(libs, "implementation", "kotlinx-serialization-json")
-                addSafeDependency(libs, "implementation", "kotlinx-coroutines-android")
-                addSafeDependency(libs, "testImplementation", "kotlinx-coroutines-test")
-            }
-        }
-    }
-}
-
-// ---
-
-class AndroidNetworkConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            pluginManager.apply {
-                apply("mori.android.core")
-                apply("mori.android.hilt")
-                apply("org.jetbrains.kotlin.plugin.serialization")
-            }
-
-            val libs = extensions
-                .getByType<VersionCatalogsExtension>()
-                .named("libs")
-
-            dependencies {
-                add("implementation", "com.squareup.retrofit2:retrofit:2.9.0")
-                add("implementation", "com.squareup.retrofit2:converter-gson:2.9.0")
-                add("implementation", "com.squareup.okhttp3:okhttp:4.12.0")
-                add("implementation", "com.squareup.okhttp3:logging-interceptor:4.12.0")
-                add("implementation", "com.google.code.gson:gson:2.10.1")
-
-                libs.findBundle("network").ifPresent { add("implementation", it) }
-                addSafeDependency(libs, "implementation", "kotlinx-serialization-json")
-                addSafeDependency(libs, "testImplementation", "mockwebserver")
-                libs.findBundle("testing").ifPresent { add("testImplementation", it) }
-            }
-        }
-    }
-}`,
           },
           {
             description: 'feature-dashboard와 feature-instance_detail에서는 mori.android.feature를 선언합니다. 나머지 공통 설정은 build-logic에서 적용하고 각 모듈에는 개별 의존성만 남깁니다.',
-            code: `// feature-dashboard/build.gradle.kts
-plugins {
-    id("mori.android.feature")
-}
-
-android {
-    namespace = "com.ssafy.mori.feature.dashboard"
-}
-
-dependencies {
-    implementation(projects.core.domain)
-    implementation(projects.core.navigation)
-    implementation(projects.core.designsystem)
-    implementation(projects.core.common)
-}
-
-// ---
-
-// feature-instance_detail/build.gradle.kts
-plugins {
-    id("mori.android.feature")
-}
-
-android {
-    namespace = "com.ssafy.mori.feature.instance_detail"
-}
-
-dependencies {
-    implementation(projects.core.domain)
-    implementation(projects.core.navigation)
-    implementation(projects.core.designsystem)
-    implementation(projects.core.common)
-}`,
           },
         ],
         alternatives: [
@@ -883,107 +444,19 @@ dependencies {
           '토큰 만료, 재발급 실패와 최대 재시도 초과를 공통 처리해 새 API마다 같은 예외 처리를 반복하지 않도록 했습니다.',
           '로그아웃 사유를 LogoutReason으로 구분하고 화면에 그에 맞는 안내 메시지를 표시했습니다.',
         ],
+        visual: {
+          src: 'screenshot/glim-auth-flow-visual.png',
+          alt: '액세스 토큰 만료 시 재발급과 요청 재시도를 수행하고 갱신 토큰 만료 시 로그아웃하는 흐름',
+        },
         implementation: [
           {
             description: 'AuthDataStore가 인증 정보를 저장하고 AuthManager가 메모리 캐시와 동기화합니다. 요청 시에는 메모리에서 토큰을 읽고, logout에서 저장된 정보 삭제와 로그아웃 이벤트 발행을 함께 처리합니다.',
-            code: `class AuthDataStore @Inject constructor(
-    private val dataStore: DataStore<Preferences>
-) {
-    companion object {
-        private val ACCESS_TOKEN = stringPreferencesKey("access_token")
-        private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
-        private val USER_ID = stringPreferencesKey("user_id")
-    }
-
-    val accessTokenFlow = ACCESS_TOKEN.flowIn(dataStore)
-    // ...
-}
-
-class AuthManager @Inject constructor(
-    private val authDataStore: AuthDataStore,
-    applicationScope: CoroutineScope
-) {
-    @Volatile private var cachedAccessToken: String? = null
-    @Volatile private var cachedRefreshToken: String? = null
-    @Volatile private var cachedUserId: String? = null
-
-    init {
-        applicationScope.launch {
-            launch {
-                authDataStore.accessTokenFlow.collect { token ->
-                    cachedAccessToken = token
-                }
-            }
-            // ...
-        }
-    }
-
-    fun getAccessToken(): String? = cachedAccessToken
-    fun saveToken(accessToken: String, refreshToken: String) { /* ... */ }
-    fun logout(reason: LogoutReason, eventEmit: Boolean = true) { /* ... */ }
-}`,
           },
           {
             description: 'OkHttp Interceptor에서 Authorization 헤더를 추가합니다. 네트워크 계층은 AuthManager의 토큰을 읽고 저장과 로그아웃은 AuthManager에 맡깁니다.',
-            code: `class AuthInterceptor @Inject constructor(
-    private val authManager: AuthManager
-) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val token = authManager.getAccessToken()
-
-        val request = chain.request().newBuilder().apply {
-            if (!token.isNullOrEmpty()) {
-                addHeader("Authorization", "Bearer $token")
-            }
-        }.build()
-
-        return chain.proceed(request)
-    }
-}`,
           },
           {
             description: '401 응답을 받으면 Authenticator에서 Refresh Token으로 토큰을 재발급하고 기존 요청을 재시도합니다. 다른 요청이 이미 갱신한 토큰이 있으면 이를 사용해 중복 재발급을 피합니다.',
-            code: `class TokenAuthenticator @Inject constructor(
-    private val authManager: AuthManager,
-    private val authApi: AuthApi
-) : Authenticator {
-
-    private val retryCount = AtomicInteger(0)
-    private val maxRetryCount = 3
-
-    override fun authenticate(route: Route?, response: Response): Request? {
-        return when (val result = handleAuthentication(response)) {
-            is AuthResult.Success -> result.request
-            is AuthResult.Failure -> null
-        }
-    }
-
-    private fun handleAuthentication(response: Response): AuthResult {
-        if (retryCount.get() >= maxRetryCount) {
-            authManager.logout(LogoutReason.MaxRetryExceeded)
-            return AuthResult.Failure("Max retry exceeded")
-        }
-
-        retryCount.incrementAndGet()
-
-        return when (val tokenResult = getCurrentTokens()) {
-            is TokenResult.Success -> {
-                if (isTokenAlreadyRefreshed(response, tokenResult.tokens.accessToken)) {
-                    resetRetryCount()
-                    AuthResult.Success(
-                        createRequestWithToken(response.request, tokenResult.tokens.accessToken)
-                    )
-                } else {
-                    refreshTokenAndCreateRequest(response.request, tokenResult.tokens)
-                }
-            }
-            is TokenResult.Failure -> {
-                authManager.logout(LogoutReason.TokenNotFound)
-                AuthResult.Failure(tokenResult.reason)
-            }
-        }
-    }
-}`,
           },
         ],
         alternatives: [],
@@ -1003,154 +476,22 @@ class AuthManager @Inject constructor(
           '입력 검증, 로딩과 오류 처리를 ViewModel에 모아 UI 없이 단위 테스트로 검증할 수 있게 했습니다.',
           '새 화면에서도 UiState, SideEffect, ViewModel의 같은 구성을 사용하도록 기준을 정했습니다.',
         ],
+        visual: {
+          src: 'screenshot/glim-mvi-test-visual.png',
+          alt: 'Orbit MVI에서 입력과 상태, 일회성 이벤트를 분리하고 ViewModel을 테스트하는 구조',
+        },
         implementation: [
           {
             description: '이메일, 비밀번호, 오류 메시지와 로딩 여부를 LoginUiState에 담았습니다. isLoginEnabled로 버튼 활성화 여부를 계산하고, 한 번만 표시할 오류 메시지는 LoginSideEffect.ShowError로 전달합니다.',
-            code: `data class LoginUiState(
-    val email: TextFieldValue = TextFieldValue(""),
-    val password: TextFieldValue = TextFieldValue(""),
-    @StringRes val emailError: Int? = null,
-    @StringRes val passwordError: Int? = null,
-    val isLoading: Boolean = false,
-) {
-    val isLoginEnabled: Boolean
-        get() =
-            emailError == null &&
-            passwordError == null &&
-            email.text.isNotBlank() &&
-            password.text.isNotBlank()
-}
-
-sealed interface LoginSideEffect {
-    data class ShowError(
-        @StringRes val messageRes: Int,
-    ) : LoginSideEffect
-}`,
           },
           {
             description: 'LoginViewModel에 ContainerHost를 적용했습니다. 이메일이나 비밀번호가 바뀌면 intent에서 입력값을 검증하고 reduce로 입력값과 오류 메시지를 갱신합니다.',
-            code: `@HiltViewModel
-internal class LoginViewModel @Inject constructor(
-    private val navigator: Navigator,
-    private val loginUseCase: LoginUseCase
-) : ViewModel(), ContainerHost<LoginUiState, LoginSideEffect> {
-
-    override val container =
-        container<LoginUiState, LoginSideEffect>(initialState = LoginUiState())
-
-    fun onEmailChanged(email: TextFieldValue) =
-        intent {
-            val validationResult =
-                ValidationUtils.validateEmail(
-                    email = email.text,
-                    emptyErrorRes = R.string.error_email_empty,
-                    invalidErrorRes = R.string.error_email_invalid,
-                )
-
-            val error =
-                when (validationResult) {
-                    is ValidationResult.Valid -> null
-                    is ValidationResult.Invalid -> validationResult.errorMessageRes
-                }
-
-            reduce { state.copy(email = email, emailError = error) }
-        }
-
-    fun onPasswordChanged(password: TextFieldValue) =
-        intent {
-            val validationResult =
-                ValidationUtils.validatePassword(
-                    password = password.text,
-                    emptyErrorRes = R.string.error_password_empty,
-                    invalidErrorRes = R.string.error_password_invalid,
-                )
-
-            val error =
-                when (validationResult) {
-                    is ValidationResult.Valid -> null
-                    is ValidationResult.Invalid -> validationResult.errorMessageRes
-                }
-
-            reduce { state.copy(password = password, passwordError = error) }
-        }`,
           },
           {
             description: '로그인 버튼을 누르면 전체 입력값을 검증합니다. 오류가 있으면 상태와 안내 메시지를 갱신하고, 정상이면 로딩 상태를 표시한 뒤 LoginUseCase를 실행하고 화면 이동을 요청합니다.',
-            code: `fun onLoginClicked() = intent {
-    val emailValidation = ValidationUtils.validateEmail(
-        email = state.email.text,
-        emptyErrorRes = R.string.error_email_empty,
-        invalidErrorRes = R.string.error_email_invalid,
-    )
-
-    val passwordValidation = ValidationUtils.validatePassword(
-        password = state.password.text,
-        emptyErrorRes = R.string.error_password_empty,
-        invalidErrorRes = R.string.error_password_invalid,
-    )
-
-    val emailError = if (emailValidation is ValidationResult.Invalid) {
-        emailValidation.errorMessageRes
-    } else { null }
-
-    val passwordError = if (passwordValidation is ValidationResult.Invalid) {
-        passwordValidation.errorMessageRes
-    } else { null }
-
-    reduce { state.copy(emailError = emailError, passwordError = passwordError) }
-
-    if (emailError != null || passwordError != null) {
-        postSideEffect(LoginSideEffect.ShowError(emailError ?: passwordError!!))
-        return@intent
-    }
-
-    reduce { state.copy(isLoading = true) }
-
-    runCatching {
-        loginUseCase(
-            email = state.email.text,
-            password = state.password.text,
-        )
-    }.onSuccess {
-        reduce { state.copy(isLoading = false) }
-        navigateToHome()
-    }.onFailure { exception ->
-        reduce { state.copy(isLoading = false) }
-        Log.d("LoginViewModel", "Manual login failed: \${exception.message}")
-        postSideEffect(LoginSideEffect.ShowError(R.string.login_failed))
-    }
-}`,
           },
           {
             description: 'LoginRoute가 상태와 일회성 이벤트를 구독합니다. LoginScreen에는 LoginUiState와 콜백만 전달해 화면을 그리는 역할을 맡깁니다.',
-            code: `@Composable
-internal fun LoginRoute(
-    padding: PaddingValues,
-    viewModel: LoginViewModel = hiltViewModel(),
-) {
-    val uiState by viewModel.container.stateFlow.collectAsState()
-    val context = LocalContext.current
-
-    viewModel.collectSideEffect { effect ->
-        when (effect) {
-            is LoginSideEffect.ShowError ->
-                Toast.makeText(
-                    context,
-                    context.getString(effect.messageRes),
-                    Toast.LENGTH_SHORT
-                ).show()
-        }
-    }
-
-    LoginScreen(
-        state = uiState,
-        padding = padding,
-        onEmailChanged = viewModel::onEmailChanged,
-        onPasswordChanged = viewModel::onPasswordChanged,
-        onLoginClicked = viewModel::onLoginClicked,
-        navigateToSignUp = viewModel::navigateToSignUp
-    )
-}`,
           },
         ],
         alternatives: [
@@ -1173,134 +514,22 @@ internal fun LoginRoute(
           'ViewModel은 navigator.navigate로 이동만 요청하고 백스택 처리는 전용 Composable에 맡기도록 나눴습니다.',
           'InternalRoute와 RouteSideEffect 등 타입으로 이동 경로를 정의해 문자열 오타를 컴파일 단계에서 확인할 수 있게 했습니다.',
         ],
+        visual: {
+          src: 'screenshot/glim-navigator-channel-visual.png',
+          alt: 'ViewModel의 화면 이동 요청을 Navigator와 Channel을 통해 화면에 전달하는 구조',
+        },
         implementation: [
           {
             description: 'NavigatorImpl이 Channel로 이동 요청을 전달합니다. Hilt에서 Navigator와 InternalNavigator를 같은 구현체에 연결하고, 요청하는 쪽과 수신하는 쪽이 각각 필요한 인터페이스만 사용하도록 나눴습니다.',
-            code: `interface Navigator {
-    suspend fun navigate(
-        route: NavKey,
-        saveState: Boolean = false,
-        launchSingleTop: Boolean = true
-    )
-    suspend fun navigateBack()
-    suspend fun navigateAndClearBackStack(route: NavKey)
-}
-
-@ActivityRetainedScoped
-class NavigatorImpl @Inject constructor() : Navigator, InternalNavigator {
-    override val channel = Channel<InternalRoute>(Channel.BUFFERED)
-
-    override suspend fun navigate(
-        route: NavKey, saveState: Boolean, launchSingleTop: Boolean
-    ) {
-        channel.send(
-            InternalRoute.Navigate(
-                route = route, saveState = saveState, launchSingleTop = launchSingleTop
-            ),
-        )
-    }
-
-    override suspend fun navigateBack() {
-        channel.send(InternalRoute.NavigateBack)
-    }
-
-    override suspend fun navigateAndClearBackStack(route: NavKey) {
-        channel.send(InternalRoute.NavigateAndClearBackStack(route = route))
-    }
-}`,
           },
           {
             description: 'Channel로 전달할 이동 요청을 InternalRoute로 정의했습니다. NavigatorViewModel은 이를 화면에서 처리할 RouteSideEffect로 변환합니다.',
-            code: `sealed interface InternalRoute {
-    data class Navigate(
-        val route: NavKey, val saveState: Boolean, val launchSingleTop: Boolean
-    ) : InternalRoute
-    data object NavigateBack : InternalRoute
-    data class NavigateAndClearBackStack(val route: NavKey) : InternalRoute
-}
-
-sealed interface RouteSideEffect {
-    data class Navigate(
-        val route: NavKey, val saveState: Boolean, val launchSingleTop: Boolean
-    ) : RouteSideEffect
-    data object NavigateBack : RouteSideEffect
-    data class NavigateAndClearBackStack(val route: NavKey) : RouteSideEffect
-}
-
-@HiltViewModel
-internal class NavigatorViewModel @Inject constructor(
-    navigator: InternalNavigator,
-) : ViewModel() {
-    val sideEffect by lazy(LazyThreadSafetyMode.NONE) {
-        navigator.channel.receiveAsFlow()
-            .map { navigator ->
-                when (navigator) {
-                    is InternalRoute.Navigate ->
-                        RouteSideEffect.Navigate(
-                            navigator.route, navigator.saveState, navigator.launchSingleTop
-                        )
-                    is InternalRoute.NavigateBack -> RouteSideEffect.NavigateBack
-                    is InternalRoute.NavigateAndClearBackStack ->
-                        RouteSideEffect.NavigateAndClearBackStack(navigator.route)
-                }
-            }
-    }
-}`,
           },
           {
             description: 'LaunchedNavigator가 NavigatorViewModel의 이벤트를 수집합니다. RouteSideEffect에 따라 이동, 뒤로 가기와 백스택 초기화를 한곳에서 처리합니다.',
-            code: `@Composable
-fun LaunchedNavigator(navBackStack: NavBackStack) {
-    InternalLaunchedNavigator(navBackStack = navBackStack)
-}
-
-@Composable
-private fun InternalLaunchedNavigator(
-    navBackStack: NavBackStack,
-    routerViewModel: NavigatorViewModel = hiltViewModel(),
-) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(routerViewModel, lifecycleOwner) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            routerViewModel.sideEffect.collectLatest { sideEffect ->
-                when (sideEffect) {
-                    is RouteSideEffect.NavigateBack -> {
-                        navBackStack.removeLastOrNull()
-                    }
-                    is RouteSideEffect.Navigate -> {
-                        navBackStack.remove(sideEffect.route)
-                        navBackStack.add(sideEffect.route)
-                    }
-                    is RouteSideEffect.NavigateAndClearBackStack -> {
-                        navBackStack.clear()
-                        navBackStack.add(sideEffect.route)
-                    }
-                }
-            }
-        }
-    }
-}`,
           },
           {
             description: '화면의 ViewModel은 주입받은 Navigator로 이동을 요청합니다. NavBackStack과 NavController를 직접 다루지 않아 화면 로직과 이동 구현을 따로 수정할 수 있습니다.',
-            code: `@HiltViewModel
-internal class LoginViewModel @Inject constructor(
-    private val navigator: Navigator,
-    private val loginUseCase: LoginUseCase
-) : ViewModel(), ContainerHost<LoginUiState, LoginSideEffect> {
-
-    // ...
-
-    fun navigateToSignUp() =
-        intent {
-            navigator.navigate(Route.SignUp)
-        }
-
-    fun navigateToHome() =
-        intent {
-            navigator.navigateAndClearBackStack(BottomTabRoute.Home)
-        }
-}`,
           },
         ],
         alternatives: [],
@@ -1412,49 +641,18 @@ internal class LoginViewModel @Inject constructor(
           '기존 응답 형식을 유지하면서 주문마다 상세 쿼리를 반복하던 구조를 없앴습니다.',
           '고객과 관리자 목록 모두 같은 일괄 조회 로직으로 상세 데이터를 조합하도록 통일했습니다.',
         ],
+        visual: {
+          src: 'screenshot/pubburi-batch-query-visual.png',
+          alt: '주문별 반복 상세 조회를 주문 ID 목록을 사용하는 일괄 조회로 바꾼 구조',
+        },
         implementation: [
           {
             description:
               '주문 ID 목록으로 상세 상품을 일괄 조회합니다. orderId별로 결과를 묶어 기존 OrderInfo.details에 넣습니다.',
-            language: 'java',
-            code: `private List<OrderInfo> attachDetails(List<OrderInfo> orders) {
-    if (orders == null || orders.isEmpty()) {
-        return List.of();
-    }
-    List<Integer> orderIds = orders.stream().map(OrderInfo::getoId).toList();
-    Map<Integer, List<OrderDetailInfo>> detailsByOrderId =
-        orderDao.getOrderDetailInfoByOrderIds(orderIds).stream()
-            .collect(Collectors.groupingBy(OrderDetailInfo::getOrderId));
-
-    for (OrderInfo order : orders) {
-        order.setDetails(detailsByOrderId.getOrDefault(order.getoId(), List.of()));
-    }
-    return orders;
-}`,
           },
           {
             description:
               'MyBatis Mapper의 foreach로 주문 ID 목록을 IN 절에 전달해 주문 상세와 상품 정보를 한 번에 조회합니다.',
-            language: 'xml',
-            code: `<select id="getOrderDetailInfoByOrderIds" resultType="OrderDetailInfo">
-    SELECT
-        d.d_id AS id,
-        d.order_id AS orderId,
-        d.product_id AS productId,
-        d.quantity,
-        p.name,
-        p.type,
-        p.price AS unitPrice,
-        (p.price * d.quantity) AS sumPrice,
-        p.img
-    FROM t_order_detail d
-    JOIN t_product p ON d.product_id = p.id
-    WHERE d.order_id IN
-    <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
-        #{orderId}
-    </foreach>
-    ORDER BY d.order_id DESC, d.d_id ASC
-</select>`,
           },
         ],
         alternatives: [
@@ -1477,50 +675,14 @@ internal class LoginViewModel @Inject constructor(
           '주문 생성 중 한 단계라도 실패하면 전체 변경을 되돌려 일부 데이터만 저장되지 않도록 했습니다.',
           '존재하지 않는 상품으로 주문했을 때 주문 상세와 스탬프 적립이 남지 않는지 테스트했습니다.',
         ],
+        visual: {
+          src: 'screenshot/pubburi-transaction-visual.png',
+          alt: '주문 생성과 상품 주문 수, 스탬프 적립을 하나의 트랜잭션으로 묶고 실패 시 전체 롤백하는 흐름',
+        },
         implementation: [
           {
             description:
               'productId별 수량을 합산하고 저장 단계마다 영향 행을 확인합니다. 상품, 주문 상세와 스탬프 갱신 중 하나라도 반영되지 않으면 예외를 던져 트랜잭션 전체를 되돌립니다.',
-            language: 'java',
-            code: `@Override
-@Transactional
-public int makeOrder(Order order, List<OrderDetail> details) {
-    if (order == null || isBlank(order.getUserId()) || details == null || details.isEmpty()) {
-        return 0;
-    }
-    List<OrderDetail> normalizedDetails = normalizeDetails(details);
-    if (isBlank(order.getCompleted())) {
-        order.setCompleted("N");
-    }
-    int result = orderDao.insert(order);
-    if (result <= 0) {
-        return 0;
-    }
-    int totalQuantity = 0;
-    for (OrderDetail detail : normalizedDetails) {
-        detail.setOrderId(order.getoId());
-        if (productDao.incrementOrderCount(detail.getProductId(), detail.getQuantity()) <= 0) {
-            throw new IllegalArgumentException("Product not found: " + detail.getProductId());
-        }
-        totalQuantity += detail.getQuantity();
-    }
-    if (orderDetailDao.insertAll(normalizedDetails) != normalizedDetails.size()) {
-        throw new IllegalStateException("Order details could not be created");
-    }
-
-    Stamp stamp = new Stamp();
-    stamp.setUserId(order.getUserId());
-    stamp.setOrderId(order.getoId());
-    stamp.setQuantity(totalQuantity);
-    if (stampDao.insert(stamp) <= 0) {
-        throw new IllegalStateException("Stamp could not be created");
-    }
-
-    if (userDao.incrementStamps(order.getUserId(), totalQuantity) <= 0) {
-        throw new IllegalArgumentException("User not found: " + order.getUserId());
-    }
-    return result;
-}`,
           },
         ],
         alternatives: [
@@ -1612,145 +774,22 @@ public int makeOrder(Order order, List<OrderDetail> details) {
           '세션을 비동기로 저장하고 DataStore와 StateFlow에서 변경을 구독하도록 바꿨습니다.',
           '토큰 저장, 읽기, 삭제와 로그아웃 진입점을 인증 모듈에 모아 화면마다 같은 처리를 반복하지 않도록 했습니다.',
         ],
+        visual: {
+          src: 'screenshot/quiz-cafe-session-flow-visual.png',
+          alt: 'DataStore와 AuthManager에서 인증 정보를 관리하고 Interceptor와 로그아웃 이벤트로 전달하는 흐름',
+        },
         implementation: [
           {
             description:
               'DataStore 접근을 확장 함수로 묶고 Access Token, Refresh Token, 이메일 키를 stringPreferencesKey로 정의했습니다.',
-            code: `private fun Preferences.Key<String>.flowIn(store: DataStore<Preferences>) =
-    store.data.map { it[this] }
-
-private suspend fun Preferences.Key<String>.saveTo(store: DataStore<Preferences>, value: String) =
-    store.edit { it[this] = value }
-
-private suspend fun Preferences.Key<String>.deleteFrom(store: DataStore<Preferences>) =
-    store.edit { it.remove(this) }
-
-class AuthDataStore @Inject constructor(
-    private val dataStore: DataStore<Preferences>
-) {
-    companion object {
-        private val ACCESS_TOKEN = stringPreferencesKey("access_token")
-        private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
-        private val USER_EMAIL = stringPreferencesKey("user_email")
-    }
-
-    val accessTokenFlow = ACCESS_TOKEN.flowIn(dataStore)
-    val refreshTokenFlow = REFRESH_TOKEN.flowIn(dataStore)
-    val userEmailFlow = USER_EMAIL.flowIn(dataStore)
-
-    suspend fun saveAccessToken(token: String) = ACCESS_TOKEN.saveTo(dataStore, token)
-    suspend fun deleteAccessToken() = ACCESS_TOKEN.deleteFrom(dataStore)
-
-    suspend fun saveRefreshToken(token: String) = REFRESH_TOKEN.saveTo(dataStore, token)
-    suspend fun deleteRefreshToken() = REFRESH_TOKEN.deleteFrom(dataStore)
-
-    suspend fun saveUserEmail(email: String) = USER_EMAIL.saveTo(dataStore, email)
-    suspend fun deleteUserEmail() = USER_EMAIL.deleteFrom(dataStore)
-}`,
           },
           {
             description:
               'applicationScope에서 DataStore의 Flow를 수집해 최신 토큰과 이메일을 @Volatile 메모리 캐시에 반영합니다. 네트워크 계층은 이 캐시에서 값을 읽습니다.',
-            code: `class AuthManager @Inject constructor(
-    private val authDataStore: AuthDataStore,
-    private val googleAuthManager: GoogleAuthManager,
-    @ApplicationScope private val applicationScope: CoroutineScope
-) {
-    @Volatile
-    private var cachedAccessToken: String? = null
-
-    @Volatile
-    private var cachedRefreshToken: String? = null
-
-    @Volatile
-    private var cachedUserEmail: String? = null
-
-    private val _logoutEvent = MutableSharedFlow<LogoutReason>(extraBufferCapacity = 1)
-    val logoutEvent: SharedFlow<LogoutReason> = _logoutEvent
-
-    init {
-        applicationScope.launch {
-            launch {
-                authDataStore.accessTokenFlow.collect { token ->
-                    cachedAccessToken = token
-                }
-            }
-            launch {
-                authDataStore.refreshTokenFlow.collect { token ->
-                    cachedRefreshToken = token
-                }
-            }
-            launch {
-                authDataStore.userEmailFlow.collect { email ->
-                    cachedUserEmail = email
-                }
-            }
-        }
-    }
-
-    fun getAccessToken(): String? = cachedAccessToken
-    fun getRefreshToken(): String? = cachedRefreshToken
-    fun getUserEmail(): String? = cachedUserEmail
-
-    fun saveToken(accessToken: String, refreshToken: String) {
-        cachedAccessToken = accessToken
-        cachedRefreshToken = refreshToken
-
-        CoroutineScope(Dispatchers.IO).launch {
-            authDataStore.saveAccessToken(accessToken)
-            authDataStore.saveRefreshToken(refreshToken)
-        }
-    }
-
-    fun saveUserEmail(email: String) {
-        cachedUserEmail = email
-
-        CoroutineScope(Dispatchers.IO).launch {
-            authDataStore.saveUserEmail(email)
-        }
-    }
-
-    fun logout(reason: LogoutReason) {
-        cachedAccessToken = null
-        cachedRefreshToken = null
-
-        CoroutineScope(Dispatchers.IO).launch {
-            authDataStore.deleteAccessToken()
-            authDataStore.deleteRefreshToken()
-            authDataStore.deleteUserEmail()
-
-            _logoutEvent.emit(reason)
-        }
-    }
-
-    suspend fun signInWithGoogle(): String? {
-        return googleAuthManager.signInWithGoogle()
-    }
-
-    suspend fun googleLogout() {
-        googleAuthManager.googleLogout()
-    }
-}`,
           },
           {
             description:
               'OkHttp Interceptor가 AuthManager에서 Access Token을 읽고 유효한 값이 있을 때 Authorization 헤더를 추가합니다.',
-            code: `class AuthInterceptor @Inject constructor(
-    private val authManager: AuthManager
-) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val token = authManager.getAccessToken()
-
-        val request = chain.request().newBuilder()
-            .apply {
-                if (!token.isNullOrEmpty()) {
-                    addHeader("Authorization", "Bearer $token")
-                }
-            }
-            .build()
-        return chain.proceed(request)
-    }
-}`,
           },
         ],
         alternatives: [
@@ -1771,91 +810,26 @@ class AuthDataStore @Inject constructor(
           '화면마다 달랐던 상태 관리 방식을 UiState, Intent, SideEffect 구조로 통일했습니다.',
           '로딩, 성공과 실패, 오류 메시지와 화면 이동을 어떤 이벤트가 만드는지 ViewModel에서 확인할 수 있게 했습니다.',
         ],
+        visual: {
+          src: 'screenshot/quiz-cafe-mvi-flow-visual.png',
+          alt: '직접 설계한 MVI에서 Intent와 UiState, SideEffect로 입력과 화면 상태를 분리하는 흐름',
+        },
         implementation: [
           {
             description:
               '이메일, 비밀번호, 로딩 여부와 필드별 오류를 LoginUiState에 담습니다. 버튼 활성 조건은 isLoginEnabled에서 계산해 화면에서 조건을 중복 정의하지 않도록 했습니다.',
-            code: `data class LoginUiState(
-    val email: String = "",
-    val password: String = "",
-    val isLoading: Boolean = false,
-    val emailErrorMessage: String? = null,
-    val passwordErrorMessage: String? = null,
-) {
-    val isLoginEnabled: Boolean
-        get() =
-            email.isNotBlank() &&
-            password.isNotBlank() &&
-            emailErrorMessage == null &&
-            passwordErrorMessage == null
-}`,
           },
           {
             description:
               '텍스트 변경, 버튼 클릭, 외부 로그인 결과와 검증 실패를 Intent로 정의해 이벤트와 필요한 값을 한곳에서 확인하도록 했습니다.',
-            code: `sealed class LoginIntent {
-    data class UpdatedEmail(val email: String) : LoginIntent()
-    data class UpdatedPassword(val password: String) : LoginIntent()
-    data object ClickLogin : LoginIntent()
-    data object ClickSignUp : LoginIntent()
-    data class FailLogin(
-        val errorMessage: String? = null,
-        val targetField: ErrorTargetField
-    ) : LoginIntent()
-}
-
-sealed class LoginEffect {
-    data class ShowErrorDialog(val message: String) : LoginEffect()
-    data object NavigateToHome : LoginEffect()
-    data object NavigateToSignUp : LoginEffect()
-}`,
           },
           {
             description:
               'handleIntent에서 UseCase와 외부 로그인을 호출하고 오류를 변환하거나 Effect를 발행합니다. reduce는 Intent에 맞는 새 LoginUiState를 만듭니다.',
-            code: `override suspend fun handleIntent(intent: LoginIntent) {
-    when (intent) {
-        LoginIntent.ClickLogin -> {
-            loginUseCase(/* ... */).collect { result ->
-                when (result) {
-                    is Resource.Success -> sendIntent(LoginIntent.SuccessLogin)
-                    is Resource.Failure -> sendIntent(
-                        LoginIntent.FailLogin(
-                            errorMessage = "다시 시도해 주세요.",
-                            targetField = ErrorTargetField.PASSWORD
-                        )
-                    )
-                    else -> Unit
-                }
-            }
-        }
-        LoginIntent.ClickSignUp -> emitEffect(LoginEffect.NavigateToSignUp)
-        else -> Unit
-    }
-}
-
-override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiState =
-    when (intent) {
-        is LoginIntent.UpdatedEmail -> currentState.copy(
-            email = intent.email,
-            emailErrorMessage = null,
-            passwordErrorMessage = null
-        )
-        LoginIntent.ClickLogin -> currentState.copy(isLoading = true)
-        is LoginIntent.FailLogin -> currentState.copy(
-            isLoading = false,
-            emailErrorMessage =
-                if (intent.targetField == ErrorTargetField.EMAIL) intent.errorMessage else null,
-            passwordErrorMessage =
-                if (intent.targetField == ErrorTargetField.PASSWORD) intent.errorMessage else null
-        )
-        else -> currentState
-    }`,
           },
           {
             description:
               'Route가 상태와 Effect를 구독하고 화면 이동과 Toast를 처리합니다. Screen은 UiState를 표시하고 사용자 동작을 sendIntent로 전달합니다.',
-            code: null,
           },
         ],
         alternatives: [
@@ -1962,45 +936,19 @@ override fun reduce(currentState: LoginUiState, intent: LoginIntent): LoginUiSta
           '텍스트 입력부터 토큰화, 기기 내 추론과 문장 출력까지 이어지는 실행 경로를 앱에 구성했습니다.',
           '복원한 토큰을 상태에 누적하고 화면에서 구독해 생성 중인 문장을 표시하도록 연결했습니다.',
         ],
+        visual: {
+          src: 'screenshot/dear-my-diary-inference-visual.png',
+          alt: '사전학습 GPT-2 모델과 BPE tokenizer를 TFLite 추론에 연결하고 생성 토큰을 일기 화면에 전달하는 흐름',
+        },
         implementation: [
           {
             description: '모델과 사전을 준비한 뒤 tokenizer와 Interpreter를 초기화합니다. 사전학습 모델의 추론 구성을 앱의 ViewModel에 연결한 부분입니다.',
-            code: `initJob = viewModelScope.launch {
-    val encoder = loadEncoder()
-    val decoder = encoder.entries.associateBy({ it.value }, { it.key })
-    val bpeRanks = loadBpeRanks()
-
-    tokenizer = GPT2Tokenizer(encoder, decoder, bpeRanks)
-    tflite = loadModel()
-}`,
           },
           {
             description: '토큰 시퀀스를 모델 입력에 맞게 구성하고 출력 텐서에서 마지막 유효 토큰 위치의 logits를 읽습니다. 다음 토큰은 이 값에서 Top-K 샘플링으로 선택합니다.',
-            code: `private const val SEQUENCE_LENGTH = 64
-private const val VOCAB_SIZE = 50257
-
-val maxTokens = tokens.takeLast(SEQUENCE_LENGTH).toIntArray()
-val paddedTokens = maxTokens + IntArray(SEQUENCE_LENGTH - maxTokens.size)
-val inputIds = Array(1) { paddedTokens }
-
-val predictions: Predictions =
-    Array(1) { Array(SEQUENCE_LENGTH) { FloatArray(VOCAB_SIZE) } }
-val outputs = mutableMapOf<Int, Any>(0 to predictions)
-
-tflite.runForMultipleInputsOutputs(arrayOf(inputIds), outputs)
-val outputLogits = predictions[0][maxTokens.size - 1]`,
           },
           {
             description: '선택한 토큰을 다음 추론의 입력에 추가하고 문자열로 복원합니다. 추론 루프에서 결과를 StateFlow에 누적해 일기 화면이 생성 문장을 구독하도록 적용했습니다.',
-            code: `tokens.add(nextToken)
-val decodedToken = tokenizer.decode(listOf(nextToken))
-
-_uiState.update { currentState ->
-    val completion = currentState.completion + decodedToken.replace("\\n", " ")
-    currentState.copy(completion = completion)
-}
-
-yield()`,
           },
         ],
         alternatives: [],
@@ -2020,34 +968,16 @@ yield()`,
           '이미지 분류 모델의 출력을 언어 모델의 입력으로 연결하고, 사용자의 기록과 취향도 일기 생성에 활용하는 흐름을 구성했습니다.',
           '사진 선택, 직접 입력과 음성 메모 등 서로 다른 입력 경로를 일기 생성 프롬프트에 모았습니다.',
         ],
+        visual: {
+          src: 'screenshot/dear-my-diary-prompt-composition-visual.png',
+          alt: '사진 분류 키워드와 사용자 취향 일부, 음성 또는 직접 작성한 메모를 일기 생성 프롬프트로 조합하는 흐름',
+        },
         implementation: [
           {
             description: '크롭한 사진을 분류하고 키워드가 갱신되면 프롬프트도 다시 구성합니다. 이미지 분류 결과를 일기 생성 입력으로 연결하는 부분입니다.',
-            code: `val imageClassificationResult =
-    defaultDelegateClassifier.predictClassesFromImage(resultUri.toBitmap(this))
-        .stream()
-        .collect(Collectors.joining(", "))
-
-viewModel.updateImageClassificationResult(imageClassificationResult)
-viewModel.updateGpt2Prompt()`,
           },
           {
             description: '사진 분류 키워드와 취향 정보 일부, 메모를 조합한 프롬프트입니다. 사용자 정보에는 취미, 영화, 음악, 성격과 여행 취향을 활용했습니다.',
-            code: `val imageClassificationResult =
-    _uiState.value.imageClassificationResult.split(", ").toList()
-
-val randomInfo = listOf(
-    "$age $gender", hobbies, movies, musics,
-    personalities, travelStyle, whoToTravelWith
-).random()
-
-val memo = _uiState.value.memo
-val text = "Write three sentences like poem.\\n" +
-    "The material of the article is as follows.\\n" +
-    "\${imageClassificationResult[0]}\\n" +
-    "\${randomInfo}\\n" + memo
-
-_uiState.update { it.copy(prompt = text) }`,
           },
         ],
         alternatives: [],
@@ -2067,34 +997,16 @@ _uiState.update { it.copy(prompt = text) }`,
           'GPT-2의 텍스트 출력을 홈 캐릭터의 감정 이모지로 변환하는 후처리 경로를 구현했습니다.',
           '감정 후보가 없는 응답에는 기본값을 적용하고, 선택된 이모지를 저장해 홈에서 다시 읽도록 연결했습니다.',
         ],
+        visual: {
+          src: 'screenshot/dear-my-diary-emotion-mapping-visual.png',
+          alt: '음성 입력의 감정 응답을 감정 후보 또는 기본값으로 정규화하고 이모지로 저장하는 흐름',
+        },
         implementation: [
           {
             description: '미리 정의한 감정 단어를 생성 결과에서 찾습니다. 일치하는 감정이 없는 경우에도 기본 감정과 로딩 종료 상태를 함께 반영하도록 보완한 부분입니다.',
-            code: `val lowerCaseCompletion = _uiState.value.completion.lowercase(Locale.ROOT)
-val foundWords = wordsToFind.filter { word ->
-    Regex("\\\\b$word\\\\b", RegexOption.IGNORE_CASE)
-        .containsMatchIn(lowerCaseCompletion)
-}
-
-if (foundWords.isNotEmpty()) {
-    _uiState.update { it.copy(emotion = foundWords[0], isLoading = false) }
-} else {
-    _uiState.update { it.copy(emotion = "Happy", isLoading = false) }
-}`,
           },
           {
             description: '홈에서는 감정 이름을 이모지 식별자로 바꾸고 저장 결과를 화면 상태에 반영합니다. 저장한 이모지는 홈을 다시 구성할 때 조회합니다.',
-            code: `val findSticker = diaryEmojiList.find {
-    it.emotion.equals(emotion, ignoreCase = true)
-}
-if (findSticker != null) {
-    val result = authRepository.syncSticker(findSticker.id)
-    if (result.isSuccess) {
-        result.onSuccess { sticker ->
-            _uiState.update { it.copy(stickerId = sticker.stickerId) }
-        }
-    }
-}`,
           },
         ],
         alternatives: [],
@@ -2181,57 +1093,22 @@ if (findSticker != null) {
           rich('업체 목록 검색 응답시간을 ', strong('3~5초에서 0.5초 이하로 줄였습니다'), '.'),
           '업체 목록 검색을 로컬에서 처리하고 거리 계산을 분리해 외부 API를 호출해야 하는 범위를 줄였습니다.',
         ],
+        visual: {
+          src: 'screenshot/didimdol-room-search-visual.png',
+          alt: '서버 업체 목록을 Room에 저장해 검색하고 일치 업체의 거리와 시간을 별도로 조회하는 흐름',
+        },
         implementation: [
           {
             description:
               '앱 시작 시 서버의 업체 데이터를 받아 Room에 저장합니다. 검색 화면은 서버 목록 API 대신 로컬 DB를 먼저 조회합니다.',
-            code: `override suspend fun getAllCompanyEntityList(): Result<Unit> {
-    return runCatching {
-        val response = companyRemoteDataSource.getCompanyList()
-        val companyList = response.body()!!.results.map { it.toEntity() }
-        companyDao.insertAll(companyList)
-    }
-}`,
           },
           {
             description:
               'Room DAO에서 업체 저장과 검색을 나눴습니다. SearchView가 전달한 검색어로 searchQuery 컬럼을 LIKE 조회합니다.',
-            code: `@Dao
-interface CompanyDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(companys: List<CompanyEntity>)
-
-    @Query("SELECT * FROM company_table WHERE searchQuery LIKE :query")
-    suspend fun searchQuery(query: String): List<CompanyEntity>
-
-    @Query("SELECT * FROM company_table WHERE companyID LIKE :query")
-    suspend fun searchValidCode(query: String): CompanyEntity
-}`,
           },
           {
             description:
               'companyDao.searchQuery로 업체를 검색한 다음 결과에 포함된 업체의 거리와 소요 시간을 Direction5 API로 계산해 덧붙입니다.',
-            code: `override suspend fun searchCompanyListByQuery(
-    query: String,
-    myLocation: String
-): Result<List<CompanyEntity>> {
-    return runCatching {
-        val companyList = companyDao.searchQuery(query = query)
-        val companyListDirections = companyList.map {
-            val goal = "\${it.longitude},\${it.latitude}"
-            val directionEntity = getDistanceAndDuration(start = myLocation, goal = goal)
-            if (directionEntity.isSuccess) {
-                it.copy(
-                    duration = directionEntity.getOrNull()!!.duration.toString(),
-                    distance = directionEntity.getOrNull()!!.distance.toString()
-                )
-            } else {
-                it.copy(duration = "0", distance = "0")
-            }
-        }
-        companyListDirections
-    }
-}`,
           },
         ],
         alternatives: [
@@ -2254,46 +1131,18 @@ interface CompanyDao {
           '검색, 지도와 예약 화면에서 같은 Repository와 DataSource를 사용할 수 있도록 했습니다.',
           '자동 로그인에 필요한 인증 정보를 EncryptedSharedPreferences에서 관리하도록 통일했습니다.',
         ],
+        visual: {
+          src: 'screenshot/didimdol-data-layer-visual.png',
+          alt: 'ViewModel과 Repository, 로컬 및 원격 DataSource를 분리해 결과와 화면 상태를 전달하는 구조',
+        },
         implementation: [
           {
             description:
               'ViewModel은 Repository의 Result를 받아 로딩, 검색 결과와 안내 메시지를 StateFlow에 반영합니다. Fragment는 이 상태를 구독해 화면에 표시합니다.',
-            code: `fun bind(query: String, myLocation: String) {
-    viewModelScope.launch {
-        _uiState.update { it.copy(isLoading = true) }
-        val result = companyRepository.searchCompanyListByQuery("%$query%", myLocation)
-        if (result.isSuccess) {
-            _uiState.update { it.copy(companyListData = result.getOrThrow()) }
-        } else {
-            _uiState.update {
-                it.copy(userMessage = result.exceptionOrNull()!!.localizedMessage!!.toInt())
-            }
-        }
-        _uiState.update { it.copy(isLoading = false) }
-    }
-}`,
           },
           {
             description:
               '인증 정보는 EncryptedSharedPreferences에 저장합니다. Hilt에서 데이터 계층의 의존성을 제공해 여러 화면이 같은 저장소와 Repository를 사용하도록 했습니다.',
-            code: `@Singleton
-@Provides
-@Named("auth")
-fun provideEncryptedSharedPreferences(
-    @ApplicationContext context: Context
-): SharedPreferences {
-    val masterKeyAlias = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
-
-    return EncryptedSharedPreferences.create(
-        context,
-        "auth",
-        masterKeyAlias,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
-}`,
           },
         ],
         alternatives: [
@@ -2412,24 +1261,18 @@ fun provideEncryptedSharedPreferences(
           '33개 UseCase로 기능별 동작을 구분해 ViewModel에서 데이터 처리의 세부 구현을 직접 다루지 않도록 했습니다.',
           'DTO와 데이터 소스 변경은 데이터 계층에서, 화면 상태 변경은 화면 계층에서 처리하도록 경계를 정했습니다.',
         ],
+        visual: {
+          src: 'screenshot/bong-layered-architecture-visual.png',
+          alt: 'presentation과 data가 domain에 의존하도록 구성한 모듈 구조와 각 계층의 책임',
+        },
         implementation: [
           {
             description:
               'presentation, domain, data의 3개 모듈을 구성했습니다. UI는 도메인 인터페이스를 사용하고 데이터 계층이 이를 구현하도록 의존 방향을 정했습니다.',
-            code: `rootProject.name = "Android_Bong"
-include ':presentation'
-include ':domain'
-include ':data'`,
           },
           {
             description:
               'domain에 기능별 UseCase를 두었습니다. ViewModel은 Repository의 세부 구현 대신 UseCase를 호출합니다.',
-            code: `class LoginUseCase @Inject constructor(
-    private val authRepository: AuthRepository
-) {
-    suspend operator fun invoke(id: String, password: String) =
-        authRepository.login(id = id, password = password)
-}`,
           },
         ],
         alternatives: [
@@ -2452,152 +1295,26 @@ include ':data'`,
           '화면이 WebSocket 구현체를 직접 참조하지 않아 통신과 메시지 파싱 코드를 화면과 따로 바꿀 수 있도록 했습니다.',
           '내 메시지와 상대 메시지를 다른 레이아웃으로 표시하고 DiffUtil로 변경된 목록 항목을 갱신했습니다.',
         ],
+        visual: {
+          src: 'screenshot/bong-websocket-chat-visual.png',
+          alt: 'WebSocket으로 메시지를 송수신하고 StateFlow와 ListAdapter로 채팅 화면에 반영하는 흐름',
+        },
         implementation: [
           {
             description:
               'WebSocketDataSourceImpl에 OkHttp WebSocket 생성, 해제와 메시지 전송을 모았습니다.',
-            code: `class WebSocketDataSourceImpl @Inject constructor(
-    private val client: OkHttpClient
-) : WebSocketDataSource {
-
-    private var webSocket: WebSocket? = null
-
-    override fun connect(url: String, listener: WebSocketListener) {
-        val request = Request.Builder()
-            .url(url)
-            .build()
-        webSocket = client.newWebSocket(request, listener)
-    }
-
-    override fun disconnect() {
-        webSocket?.cancel()
-        webSocket = null
-    }
-
-    override fun sendMessage(roomId: Int, senderId: String, message: String) {
-        val messageJson = JSONObject().apply {
-            put("roomId", roomId)
-            put("senderId", senderId)
-            put("message", message)
-        }
-
-        webSocket?.send(messageJson.toString())
-    }
-}`,
           },
           {
             description:
               '도메인 계층에는 ChattingRepository 인터페이스를 두고 구현체에서 WebSocketDataSource를 호출하도록 했습니다.',
-            code: `class ChattingRepositoryImpl @Inject constructor(
-    private val webSocketDataSource: WebSocketDataSource
-) : ChattingRepository {
-
-    override fun connect(url: String, listener: WebSocketListener) =
-        webSocketDataSource.connect(url = url, listener = listener)
-
-    override fun disconnect() = webSocketDataSource.disconnect()
-
-    override fun sendMessage(roomId: Int, senderId: String, message: String) =
-        webSocketDataSource.sendMessage(roomId = roomId, senderId = senderId, message = message)
-}`,
           },
           {
             description:
               'ChattingViewModel에서 ChattingUiState를 StateFlow로 관리합니다. WebSocket 이벤트를 받으면 로딩 여부와 메시지 목록을 갱신합니다.',
-            code: `@HiltViewModel
-class ChattingViewModel @Inject constructor(
-    private val successMatchingUseCase: SuccessMatchingUseCase,
-    private val applyScoreUseCase: ApplyScoreUseCase,
-    private val getUserUseCase: GetUserUseCase,
-    private val chattingRepository: ChattingRepository
-) : ViewModel() {
-
-    private val _uiState = MutableStateFlow(ChattingUiState())
-    val uiState = _uiState.asStateFlow()
-
-    private var fetchJob: Job? = null
-
-    fun connectToWebSocket(roomId: Int) {
-        val listener = object : WebSocketListener() {
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                super.onMessage(webSocket, text)
-                try {
-                    _uiState.update { it.copy(isLoading = true) }
-                    val jsonArray = JSONArray(text)
-                    val chatMessages = ArrayList<ChatMessage>()
-
-                    for (i in 0 until jsonArray.length()) {
-                        val jsonObject = jsonArray.getJSONObject(i)
-                        chatMessages.add(
-                            ChatMessage(
-                                roomId = jsonObject.getInt("roomId"),
-                                senderId = jsonObject.getString("senderId"),
-                                message = jsonObject.getString("message"),
-                            )
-                        )
-                    }
-                    bindChatting(chatMessages)
-                    _uiState.update { it.copy(isLoading = false) }
-                } catch (e: Exception) {
-                    // 단일 메시지 수신 처리
-                    val json = JSONObject(text)
-                    val chatMessage = ChatMessage(
-                        roomId = json.getInt("roomId"),
-                        senderId = json.getString("senderId"),
-                        message = json.getString("message")
-                    )
-                    uiState.value.chatting.add(chatMessage)
-                    _uiState.update {
-                        it.copy(chatting = uiState.value.chatting, isLoading = false)
-                    }
-                }
-            }
-        }
-        chattingRepository.connect("URL", listener)
-    }
-
-    fun disconnectFromWebSocket() {
-        chattingRepository.disconnect()
-    }
-
-    fun sendMessage() {
-        val senderId = uiState.value.senderId
-        val roomId = uiState.value.roomId!!
-        val message = uiState.value.myChatMessage
-        viewModelScope.launch {
-            chattingRepository.sendMessage(
-                roomId = roomId,
-                senderId = senderId,
-                message = message
-            )
-        }
-    }
-}`,
           },
           {
             description:
               'senderId로 메시지 발신자를 구분하고 서로 다른 뷰 타입을 적용합니다. ListAdapter로 목록 변경을 반영합니다.',
-            code: `class ChattingAdapter(private val myUsrId: String) :
-    ListAdapter<ChatMessage, RecyclerView.ViewHolder>(diffCallback) {
-
-    override fun getItemViewType(position: Int): Int {
-        return if (myUsrId == currentList[position].senderId) MY_CHAT
-        else OTHER_CHAT
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return if (viewType == MY_CHAT) {
-            MyChatItemViewHolder(
-                ItemMyChatMessageBinding.inflate(layoutInflater, parent, false)
-            )
-        } else {
-            OtherChatItemViewHolder(
-                ItemOtherChatMessageBinding.inflate(layoutInflater, parent, false)
-            )
-        }
-    }
-}`,
           },
         ],
         alternatives: [
@@ -2731,64 +1448,18 @@ class ChattingViewModel @Inject constructor(
           '처음부터 전체 데이터를 불러오지 않고 필요한 페이지를 나눠 받아 초기 로딩과 스크롤의 부담을 줄였습니다.',
           '요청, 페이지 키와 오류 처리를 PostPagingSource에 모아 화면 코드와 따로 수정할 수 있게 했습니다.',
         ],
+        visual: {
+          src: 'screenshot/pocs-paging-flow-visual.png',
+          alt: '스크롤에 따라 PagingSource가 API 페이지를 조회하고 PagingData를 화면에 전달하는 흐름',
+        },
         implementation: [
           {
             description:
               'PostPagingSource가 페이지별 JSON 응답을 받아 도메인 모델 Post로 변환합니다.',
-            code: `class PostPagingSource @Inject constructor(
-    private val api: PostApi,
-    private val filterType: PostFilterType
-) : PagingSource<Int, Post>() {
-
-    companion object {
-        private const val START_PAGE = 1
-        const val PAGE_SIZE = 15
-    }
-
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Post> {
-        val page = params.key ?: START_PAGE
-        return try {
-            val response = api.getAll(filterType.toDto(), pageSize = PAGE_SIZE, page = page)
-            if (response.isSuccessful) {
-                val posts = response.body()!!.data.posts.map { it.toEntity() }
-                val isEnd = posts.isEmpty()
-
-                LoadResult.Page(
-                    data = posts,
-                    prevKey = if (page == START_PAGE) null else page - 1,
-                    nextKey = if (isEnd) null else page + 1
-                )
-            } else {
-                throw Exception(response.errorMessage)
-            }
-        } catch (e: Exception) {
-            LoadResult.Error(e)
-        }
-    }
-
-    override fun getRefreshKey(state: PagingState<Int, Post>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        }
-    }
-}`,
           },
           {
             description:
               'PostRepositoryImpl에서 Pager를 구성해 PagingData 스트림을 반환합니다. ViewModel과 UI는 데이터 요청의 세부 구현 대신 이 스트림을 사용합니다.',
-            code: `class PostRepositoryImpl @Inject constructor(
-    private val dataSource: PostRemoteDataSource,
-    private val api: PostApi
-) : PostRepository {
-
-    override fun getAll(filterType: PostFilterType): Flow<PagingData<Post>> {
-        return Pager(
-            config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { PostPagingSource(api = api, filterType = filterType) }
-        ).flow
-    }
-}`,
           },
         ],
         alternatives: [
@@ -2810,112 +1481,22 @@ class ChattingViewModel @Inject constructor(
           'main 브랜치의 push와 Pull Request에서 같은 빌드와 코드 검사, UI 테스트를 실행하도록 했습니다.',
           'release 브랜치에 push하면 AAB 빌드와 서명, 내부 테스트 트랙 업로드를 이어서 수행하도록 자동화했습니다.',
         ],
+        visual: {
+          src: 'screenshot/pocs-ci-cd-visual.png',
+          alt: 'GitHub Actions에서 빌드와 UI 테스트를 수행하고 별도 릴리스 작업으로 Play Store 내부 테스트에 업로드하는 흐름',
+        },
         implementation: [
           {
             description:
               'main 브랜치의 push와 Pull Request에서 빌드와 ktlint를 실행합니다. GitHub Secrets의 SERVER_URL로 apikey.properties 파일을 만듭니다.',
-            code: `name: Android CI
-
-on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - '**/README.md'
-  pull_request:
-    branches: [main]
-
-jobs:
-  build:
-    name: Development build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Access SERVER_URL
-        env:
-          SERVER_URL: \${{ secrets.SERVER_URL }}
-        run: echo '\${{ secrets.SERVER_URL }}' > ./apikey.properties
-
-      - name: Setup JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: gradle
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Check Lint
-        run: ./gradlew ktlintCheck`,
           },
           {
             description:
               '에뮬레이터의 API 레벨을 23, 30, 31로 나눠 connectedCheck를 실행합니다.',
-            code: `ui-test:
-  name: UI tests on Android (API level \${{ matrix.api-level }})
-  runs-on: macos-latest
-  strategy:
-    matrix:
-      api-level: [ 23, 30, 31 ]
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Setup JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
-
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
-
-    - name: Run UI test
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: \${{ matrix.api-level }}
-        disable-animations: true
-        arch: x86_64
-        script: ./gradlew connectedCheck`,
           },
           {
             description:
               'release 브랜치에 push하면 Gradle로 릴리스 AAB를 빌드합니다. GitHub Secrets의 키로 서명한 뒤 Google Play Console의 내부 테스트 트랙에 올립니다.',
-            code: `name: Build and Publish to Play Store
-on:
-  push:
-    branches:
-      - release/**
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2.4.0
-
-      - name: Build Release AAB
-        run: ./gradlew bundleRelease
-
-      - name: Sign AAB
-        id: sign
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/bundle/release
-          signingKeyBase64: \${{ secrets.KEY_STORE_BASE_64 }}
-          alias: \${{ secrets.ALIAS }}
-          keyStorePassword: \${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: \${{ secrets.KEY_PASSWORD }}
-
-      - name: Deploy to Play Store (Internal)
-        uses: r0adkll/upload-google-play@v1.0.16
-        with:
-          track: internal
-          serviceAccountJson: service_account.json
-          packageName: com.pocs.blog
-          status: completed
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab`,
           },
         ],
         alternatives: [

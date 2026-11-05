@@ -17,7 +17,6 @@
 | Build Tool | Vite 7 |
 | Styling | CSS Modules |
 | Routing | React Router v7 (HashRouter) |
-| Code Highlight | react-syntax-highlighter (PrismLight — kotlin / java / xml / sql) |
 | Testing | Vitest + React Testing Library + jsdom |
 | Deploy | GitHub Pages (GitHub Actions) |
 
@@ -50,9 +49,13 @@
 
 프로젝트 데이터는 `src/data/projects.ts` 한 곳에서 목록 카드와 상세 페이지가 함께 사용합니다.
 메인 카드는 `cardSummary`의 항목형 소개와 성과를 사용하고, 상세 페이지는 기존 `description`과 `achievements` 원문을 사용합니다.
+한길졸업은 기본 정보와 프로젝트 개요 두 문장만 제공하며, 카드 성과와 상세 하위 섹션은 비워 둡니다.
+그 외 프로젝트의 각 문제 해결은 `visual: { src, alt }` 생성형 이미지와 `implementation`의 `description` 설명으로 구성합니다. 코드 블록은 저장하거나 표시하지 않습니다.
+새 이미지의 생성 프롬프트와 검수 수정 기록은 [이미지 생성 기록](docs/project-visual-prompts.md)에 정리했습니다.
 
 | id | Title | Screenshots | Problem Solving | Insights |
 |----|-------|-------------|-----------------|----------|
+| `hangil` | 한길졸업 | - | - | - |
 | `naenun-kiosk` | 내눈 키오스크 | 8 (2 cols) | 3 | - |
 | `mo-re` | 모리, Mo-Re | 14 (3 cols) | 2 | 7 |
 | `glim` | Glim | 8 (3 cols) | 3 | 6 |
@@ -63,16 +66,16 @@
 | `bong` | Bong # | 8 (2 cols) | 2 | 8 |
 | `pocs` | POCS (Play Store 배포) | 4 (3 cols) | 2 | 6 |
 
-상세 페이지 구성: 헤더 → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights → 담당 역할 및 기여 → 문제 해결 → 스크린샷 → 프로젝트 회고 (내용이 비어 있는 섹션은 렌더링하지 않음)
+상세 페이지 구성: 헤더 → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights → 담당 역할 및 기여 → 문제 해결(이미지와 구현 설명 포함) → 스크린샷 → 프로젝트 회고 (내용이 비어 있는 섹션은 렌더링하지 않음)
 
 ## Content Sync Rule
 
 이 저장소의 콘텐츠 기준은 웹 포트폴리오입니다.
 
 - Parent: React 기반 웹 포트폴리오 (`src/`, `public/`)
-- Children: 정적 포트폴리오 문서 (`portfolio.html`/`portfolio.pdf`, `portfolio-kis.html`/`portfolio-kis.pdf`), 이력서 (`resume.html`/`resume.pdf`), 경력기술서 (`career.html`/`career.pdf`)
+- Children: 이력서 (`resume.html`/`resume.pdf`), 경력기술서 (`career.html`/`career.pdf`)
 - Parent에 있는 내용이 Children에 없는 것은 허용합니다. 웹 포트폴리오가 더 넓은 원천 콘텐츠를 담을 수 있기 때문입니다.
-- Children에 있는 내용이 Parent에 없는 것은 허용하지 않습니다. 이력서나 정적 포트폴리오에 새 내용이 들어가면 먼저 웹 포트폴리오에 반영해야 합니다.
+- Children에 있는 내용이 Parent에 없는 것은 허용하지 않습니다. 이력서나 경력기술서에 새 내용이 들어가면 먼저 웹 포트폴리오에 반영해야 합니다.
 - 이 규칙은 경력, 프로젝트, 스킬, 교육, 수상, 자격증, 활동 같은 콘텐츠 내용 기준입니다. 디자인, 레이아웃, 시각 표현 방식, 문서 길이 차이는 싱크 검사 대상에서 제외합니다.
 - HTML 문서를 수정했다면 대응되는 PDF도 함께 재생성해 싱크를 유지합니다.
 
@@ -83,7 +86,7 @@
 - Scroll reveal animations with `prefers-reduced-motion` support
 - Scroll position restore on back navigation (`sessionStorage` + `no-transition` to avoid flicker)
 - Alternating section bands and responsive timeline / card layouts
-- Project detail pages with problem-solving blocks, syntax-highlighted code, insights
+- Project detail pages with problem-solving visuals, implementation explanations, insights
 - Rich text emphasis in project copy via `rich()` / `strong()` helpers
 - Responsive media cards and screenshot galleries (2 / 3 column grids)
 - Keyboard focus states and 44px mobile touch targets
@@ -131,10 +134,10 @@ npm run preview
 
 ## Testing
 
-Vitest + React Testing Library 기반으로 7개 파일 / 44개 테스트가 있습니다.
+Vitest + React Testing Library 기반으로 컴포넌트와 데이터, 라우팅 동작을 검증합니다.
 
 - `src/components/__tests__/` — Career(총 경력 계산), Header(네비게이션과 테마), OpenSource, Projects
-- `src/data/__tests__/` — projects 데이터 무결성 검증
+- `src/data/__tests__/` — projects 데이터 무결성, 문제 해결 이미지와 정적 문서 검증
 - `src/hooks/__tests__/` — useScrollReveal
 - `src/pages/__tests__/` — ProjectDetail 렌더링
 

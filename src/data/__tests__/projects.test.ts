@@ -62,178 +62,31 @@ describe('projects 데이터 무결성', () => {
       .toBe('2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15')
   })
 
-  it.each(['naenun-kiosk', 'mo-re', 'glim'])(
-    '%s의 PDF 포트폴리오 개발 기간은 웹과 동일하다',
-    (id) => {
-      const project = projects.find((item) => item.id === id)!
-      const html = readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8')
-      const document = new DOMParser().parseFromString(html, 'text/html')
-      const title = project.title.split(' - ')[0]
-      const heading = Array.from(document.querySelectorAll('h2')).find(
-        (element) => element.textContent === title,
-      )
-      expect(heading?.nextElementSibling?.textContent).toContain(project.period)
-    },
-  )
-
-  it('PDF 포트폴리오는 한길졸업을 먼저 소개하고 기존 프로젝트 순서와 내용을 보존한다', () => {
-    const html = readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8')
-    const document = new DOMParser().parseFromString(html, 'text/html')
-
-    expect(document.body.innerHTML).not.toMatch(/주점부리|pubburi/i)
-    expect(Array.from(document.querySelectorAll('.toc-name'), (item) => item.textContent))
-      .toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
-
-    expect(Array.from(document.querySelectorAll('.toc-pages'), (item) => item.textContent))
-      .toEqual(['03p ~ 09p', '10p ~ 15p', '16p ~ 20p', '21p ~ 26p'])
-    expect(Array.from(document.querySelectorAll('[data-project-id="hangil"]'), (section) =>
-      section.getAttribute('data-gallery') ?? section.getAttribute('data-case') ?? 'overview',
-    )).toEqual(['overview', 'home', 'course', 'briefing-locked', 'parking', 'session', 'map'])
-    const projectStarts = [3, 10, 16, 21].map((page) => document.querySelector(`#slide-${String(page).padStart(2, '0')} h2`)?.textContent)
-    expect(projectStarts).toEqual(['한길졸업', '내눈 키오스크', '모리, Mo-Re', 'Glim'])
-    expect(document.querySelector('#slide-03 .footer-title')?.textContent).toBe('한길졸업 소개')
-    document.querySelectorAll('[data-project-id="hangil"][data-gallery]').forEach((section) => {
-      expect(section.querySelector('.section-label')?.textContent).toBe('앱 화면')
-      expect(section.querySelector('.footer-title')?.textContent).toBe('한길졸업 앱 화면')
-    })
-    const slides = Array.from(document.querySelectorAll('section.slide'))
-    expect(slides).toHaveLength(26)
-    slides.forEach((slide, index) => {
-      const page = String(index + 1).padStart(2, '0')
-      expect(slide.id).toBe(`slide-${page}`)
-      expect(slide.querySelector('.slide-no')?.textContent).toBe(page)
-    })
-    const pageStyleReferences = Array.from(
-      (document.querySelector('style')?.textContent ?? '').matchAll(/#slide-(\d+) /g),
-      (match) => match[1],
-    )
-    expect(pageStyleReferences).toHaveLength(13)
-    expect(new Set(pageStyleReferences)).toEqual(new Set(['15']))
-    expect(document.querySelector('#slide-15 > h2')?.textContent).toBe('내눈 키오스크 성과와 회고')
-  })
-
-  it('한길졸업을 다른 프로젝트와 같은 계층에서 검증된 기여로 소개한다', () => {
+  it('한길졸업은 기본 정보와 소개 두 문장만 보관한다', () => {
     const project = projects.find((item) => item.id === 'hangil')!
     expect(project.period).toBe('2026.10.26 ~ 진행 중')
     expect(projects[0].id).toBe('hangil')
     expect(project.team).toBe('1명 (개인 프로젝트)')
     expect(project.role).toBe('Android 앱 설계, 구현 및 검증')
-    expect(project.links).toEqual([{ label: 'GitHub', url: 'https://github.com/HanGilLab/Android' }])
-    expect(project.problemSolvings).toHaveLength(3)
-    const webText = JSON.stringify(project)
-    expect(webText).not.toMatch(/상용 운영|출품 완료|후속 작업|남은 범위|공개 전 점검|근거 링크|진행 중인 프로젝트/)
-    const document = new DOMParser().parseFromString(
-      readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8'),
-      'text/html',
-    )
-    const section = document.querySelector('[data-project-id="hangil"]')!
-    expect(section).not.toBeNull()
-    expect(section.querySelector('h3, h2')?.textContent).toBe('한길졸업')
-    const text = normalizeText(section.textContent ?? '')
-    for (const fact of ['2026.10.26 ~ 진행 중', 'Android 앱 설계, 구현 및 검증', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
-      expect(text, `portfolio.html: ${fact}`).toContain(fact)
-      expect(webText, `web: ${fact}`).toContain(fact)
+    expect(project.thumbnail).toBe('screenshot/hangil-guide.svg')
+    expect(project.details).toEqual([
+      '초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.',
+      '현대자동차그룹 차량용 앱 개발 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다.',
+    ])
+    for (const items of [project.cardSummary.achievements, project.features, project.contributions,
+      project.problemSolvings, project.insights, project.achievements, project.retrospective,
+      project.links, project.screenshots]) {
+      expect(items).toEqual([])
     }
-    expect(section.querySelector('a[href="https://github.com/HanGilLab/Android"]')?.textContent)
-      .toBe('https://github.com/HanGilLab/Android')
-    expect(text).toContain('1명: Android 1명')
-    expect(section.querySelector('.info-card:nth-child(1) a')).toBeNull()
-    expect(section.querySelector('.info-card:nth-child(2) a')?.getAttribute('href'))
-      .toBe('https://github.com/HanGilLab/Android')
-    expect(text).toContain('주차 상태와 UX 제한 해제')
-    expect(section.querySelector('.overview-grid .shot-panel img')?.getAttribute('src'))
-      .toBe('public/screenshot/hangil-home.png')
-    expect(Array.from(section.querySelectorAll('.info-card > h3'), (item) => item.textContent))
-      .toEqual(['서비스 소개', '배경', '핵심 기여', '기술 스택'])
-    expect(Array.from(section.querySelectorAll('.tag-list .tag'), (item) => item.textContent))
-      .toEqual(project.tech)
-    expect(text).not.toMatch(/notion\.so|app\.notion|상용 운영|출품 완료|남은 범위|후속 작업|공개 전 점검|진행 중인 프로젝트/)
+    expect(project.insightImages).toBeUndefined()
+    expect(project.screenshotDescriptions).toBeUndefined()
+    expect(project.imageSectionTitle).toBeUndefined()
   })
 
-  it('한길졸업 상세 사례는 웹과 PDF에서 같은 세 가지 문제와 검증 범위를 설명한다', () => {
-    const project = projects.find((item) => item.id === 'hangil')!
-    const document = new DOMParser().parseFromString(
-      readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8'),
-      'text/html',
-    )
-    const cases = Array.from(document.querySelectorAll('[data-project-id="hangil"][data-case]'))
-    expect(cases.map((item) => item.getAttribute('data-case'))).toEqual(['parking', 'session', 'map'])
-    const facts = [
-      ['주차', 'UX 제한', '최신', '권한 거부', '단위 테스트', 'Pleos', '독립 조합'],
-      ['스냅샷', '트랜잭션', '롤백', '시각', 'v1', 'v2', 'Pleos'],
-      ['재시도 번호', '토큰', '콜백', '단위 테스트', '같은 프로세스', 'Pleos'],
-    ]
-    cases.forEach((section, index) => {
-      const webText = JSON.stringify(project.problemSolvings[index])
-      const pdfText = normalizeText(section.textContent ?? '')
-      facts[index].forEach((fact) => {
-        expect(webText, `web case ${index + 1}: ${fact}`).toContain(fact)
-        expect(pdfText, `PDF case ${index + 1}: ${fact}`).toContain(fact)
-      })
-      expect(Array.from(section.querySelectorAll('.compact-card > h3'), (item) => item.textContent))
-        .toEqual(['문제', '원인', '해결', '결과', '대체안 / 회고'])
-    })
-    const diagramFiles = [
-      'hangil-parking-gate-visual.svg',
-      'hangil-session-transaction-visual.svg',
-      'hangil-map-callback-visual.svg',
-    ]
-    cases.forEach((section, index) => {
-      const diagram = section.querySelector('.diagram-card img')
-      expect(diagram?.getAttribute('src')).toBe(`public/screenshot/${diagramFiles[index]}`)
-      expect(diagram?.getAttribute('alt')).toBeTruthy()
-      const svg = new DOMParser().parseFromString(
-        readFileSync(resolve(process.cwd(), 'public/screenshot', diagramFiles[index]), 'utf8'),
-        'image/svg+xml',
-      )
-      expect(svg.querySelector('parsererror')).toBeNull()
-      expect(svg.documentElement.getAttribute('viewBox')).toBe('0 0 400 350')
-      expect(svg.querySelector('title')?.textContent).toBeTruthy()
-    })
-    cases.forEach((section) => {
-      expect(section.querySelector('pre, code, a')).toBeNull()
-    })
-  })
-
-  it('모든 프로젝트에 스크린샷이 1개 이상 있다', () => {
-    projects.forEach((project) => {
+  it('소개만 제공하는 한길졸업을 제외한 프로젝트에는 스크린샷이 있다', () => {
+    projects.filter((project) => project.id !== 'hangil').forEach((project) => {
       expect(project.screenshots.length).toBeGreaterThan(0)
     })
-  })
-
-  it('한길졸업의 실제 화면 네 장과 출처 설명은 웹과 PDF 갤러리에서 일치한다', () => {
-    const project = projects.find((item) => item.id === 'hangil')!
-    expect(project.screenshots).toEqual([
-      'screenshot/hangil-home.png',
-      'screenshot/hangil-course.png',
-      'screenshot/hangil-briefing.png',
-      'screenshot/hangil-locked.png',
-    ])
-    expect(project.thumbnail).toBe('screenshot/hangil-guide.svg')
-    expect(project.screenshotColumns).toBe(1)
-    expect(Object.keys(project.screenshotDescriptions!)).toEqual(project.screenshots)
-    const document = new DOMParser().parseFromString(
-      readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8'),
-      'text/html',
-    )
-    const galleries = document.querySelectorAll('[data-project-id="hangil"][data-gallery]')
-    expect(galleries).toHaveLength(3)
-    const figures = Array.from(galleries).flatMap((gallery) => Array.from(gallery.querySelectorAll('figure')))
-    expect(figures).toHaveLength(4)
-    project.screenshots.forEach((src, index) => {
-      const description = project.screenshotDescriptions![src]
-      expect(readFileSync(resolve(process.cwd(), 'public', src)).subarray(0, 8))
-        .toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
-      expect(figures[index].querySelector('img')?.getAttribute('src')).toBe(`public/${src}`)
-      expect(figures[index].querySelector('img')?.getAttribute('alt')).toBe(description.alt)
-      expect(figures[index].querySelector('figcaption')?.textContent).toBe(description.caption)
-    })
-    expect(project.screenshotDescriptions!['screenshot/hangil-home.png'].caption).toContain('고정 시연')
-    expect(project.screenshotDescriptions!['screenshot/hangil-course.png'].caption).toContain('고정 시연')
-    expect(project.screenshotDescriptions!['screenshot/hangil-course.png'].caption).toContain('저장하지 않았습니다')
-    expect(project.screenshotDescriptions!['screenshot/hangil-briefing.png'].caption).toContain('저장하지 않았습니다')
-    expect(project.screenshotDescriptions!['screenshot/hangil-locked.png'].caption).toContain('실제 SDK의 D 상태')
-    expect(project.problemSolvings).toHaveLength(3)
   })
 
   it('모든 프로젝트에 상세 설명이 있다', () => {
@@ -249,16 +102,38 @@ describe('projects 데이터 무결성', () => {
         expect(ps.solution.length).toBeGreaterThan(0)
         expect(ps.result.length).toBeGreaterThan(0)
         expect(Array.isArray(ps.implementation)).toBe(true)
-        ps.implementation.forEach(({ code }) => {
-          if (!code) return
-
-          const lines = code.split('\n').filter((line) => line.trim())
-          expect(lines.some((line) => /^\S/.test(line)), project.id).toBe(true)
-          expect(code, project.id).not.toMatch(/\t/)
+        ps.implementation.forEach((block) => {
+          expect(block.description.trim(), project.id).toBeTruthy()
+          expect(block).not.toHaveProperty('code')
+          expect(block).not.toHaveProperty('language')
         })
         expect(Array.isArray(ps.alternatives)).toBe(true)
       })
     })
+  })
+
+  it('21개 문제 해결에 실제 PNG 이미지와 대체 텍스트를 제공한다', () => {
+    const visuals = projects.flatMap((project) => project.problemSolvings.map((ps) => ps.visual))
+
+    expect(visuals).toHaveLength(21)
+    expect(new Set(visuals.map((visual) => visual.src)).size).toBe(21)
+    visuals.forEach((visual) => {
+      expect(visual.alt.trim(), visual.src).toBeTruthy()
+      expect(visual.src).toMatch(/^screenshot\/.+\.png$/)
+      expect(readFileSync(resolve(process.cwd(), 'public', visual.src)).subarray(0, 8))
+        .toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+    })
+  })
+
+  it.each([
+    ['naenun-kiosk', ['naenun-state-hoisting-visual.png', 'naenun-package-refactor-visual.png', 'naenun-memory-leak-visual.png']],
+    ['mo-re', ['more-parallel-api-visual.png', 'more-build-logic-visual.png']],
+    ['glim', ['glim-auth-flow-visual.png', 'glim-mvi-test-visual.png', 'glim-navigator-channel-visual.png']],
+    ['pubburi', ['pubburi-batch-query-visual.png', 'pubburi-transaction-visual.png']],
+  ])('%s는 기존 생성형 이미지를 해당 문제 해결에 재사용한다', (id, filenames) => {
+    const project = projects.find((item) => item.id === id)!
+    expect(project.problemSolvings.map((ps) => ps.visual.src))
+      .toEqual((filenames as string[]).map((filename) => `screenshot/${filename}`))
   })
 
   it('주점부리 문제 해결은 2개만 제공한다', () => {
@@ -349,7 +224,7 @@ describe('projects 데이터 무결성', () => {
       .filter((file) => /\.(?:tsx?|json)$/.test(file))
       .map((file) => resolve(sourceRoot, file))
 
-    for (const file of [...sourceFiles, resolve(process.cwd(), 'resume.html'), resolve(process.cwd(), 'portfolio.html')]) {
+    for (const file of [...sourceFiles, resolve(process.cwd(), 'resume.html'), resolve(process.cwd(), 'career.html')]) {
       expect(readFileSync(file, 'utf8'), file).not.toMatch(/[\u00b7\u318d\u2027\u30fb]/u)
     }
   })
