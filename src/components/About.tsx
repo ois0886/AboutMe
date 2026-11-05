@@ -12,6 +12,7 @@ function About() {
           <div className={styles.profileImage}>
             <img src="screenshot/profile.jpg" alt="프로필 사진" />
           </div>
+          <p className={styles.profileRole}>Software Engineer</p>
         </div>
         <div className={styles.infoArea}>
           <div className={styles.infoBlock}>

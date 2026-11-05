@@ -1,7 +1,26 @@
 import { render, screen, within } from '@testing-library/react'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import About from '../About'
 
 describe('About', () => {
+  it('프로필과 검색 및 공유 메타데이터에 Software Engineer를 표시한다', () => {
+    render(<About />)
+    expect(screen.getByText('Software Engineer')).toBeInTheDocument()
+
+    const document = new DOMParser().parseFromString(
+      readFileSync(resolve(process.cwd(), 'index.html'), 'utf8'),
+      'text/html',
+    )
+    expect(document.title).toBe('Oh In Seong | Software Engineer')
+    for (const selector of [
+      'meta[name="description"]', 'meta[property="og:title"]', 'meta[property="og:description"]',
+      'meta[name="twitter:title"]', 'meta[name="twitter:description"]',
+    ]) {
+      expect(document.querySelector(selector)?.getAttribute('content')).toContain('Software Engineer')
+    }
+  })
+
   it('웹 Introduction은 기존 문구와 항목 순서, 강조를 보존한다', () => {
     render(<About />)
 

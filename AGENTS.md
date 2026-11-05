@@ -12,7 +12,7 @@
 
 ## 프로젝트 개요
 
-오인성(Android Developer)의 개인 포트폴리오 웹사이트
+오인성(Software Engineer)의 개인 포트폴리오 웹사이트
 
 ## 기술 스택
 
@@ -145,7 +145,7 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 ## 콘텐츠 싱크 규칙
 
 - 콘텐츠 기준(Parent)은 웹 포트폴리오(`src/`, `public/`)입니다.
-- 정적 문서(`portfolio.html`/`portfolio.pdf`, `resume.html`/`resume.pdf`, `career-document/`)는 Child이며, Parent에 없는 내용을 담을 수 없습니다.
+- 정적 문서(`portfolio.html`/`portfolio.pdf`, `resume.html`/`resume.pdf`, `career.html`/`career.pdf`)는 Child이며, Parent에 없는 내용을 담을 수 없습니다.
 - HTML 문서를 수정하면 대응 PDF도 함께 재생성합니다.
 - 자세한 내용은 `README.md`의 Content Sync Rule 참고.
 

@@ -34,6 +34,13 @@
   object-position: center top;
 }
 
+.profileRole {
+  margin-top: var(--space-md);
+  color: var(--color-on-surface-strong);
+  font-size: var(--font-size-body);
+  font-weight: 750;
+}
+
 .infoArea {
   min-width: 0;
   padding: 32px 36px;
