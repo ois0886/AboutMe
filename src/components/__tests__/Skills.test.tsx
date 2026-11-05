@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 import Skills from '../Skills'
 
 describe('Skills', () => {
-  it('이력서는 기술 태그를 다섯 분류로 표시하고 추가 기술은 웹에도 반영한다', () => {
+  it('이력서는 기술 목록을 다섯 분류의 일반 텍스트로 표시하고 추가 기술은 웹에도 반영한다', () => {
     const resumeDocument = new DOMParser().parseFromString(
       readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8'),
       'text/html',
@@ -12,14 +12,13 @@ describe('Skills', () => {
     const groups = Array.from(resumeDocument.querySelectorAll('.skill-group'))
     expect(groups.map((group) => group.querySelector('.skill-category')?.textContent))
       .toEqual(['Backend', 'Frontend', 'Android', 'AI agent', 'etc'])
-    const tags = (category: string) => Array.from(
+    const technologies = (category: string) =>
       groups.find((group) => group.querySelector('.skill-category')?.textContent === category)!
-        .querySelectorAll('.skill-tag'),
-      (tag) => tag.textContent,
-    )
-    expect(tags('Frontend')).toEqual(['React', 'TypeScript', 'Vue 3', 'Vite'])
-    expect(tags('AI agent')).toEqual(['Codex', 'Claude Code'])
-    expect(tags('etc')).toEqual(['GitHub', 'Jira', 'Figma', 'Slack'])
+        .querySelector('.skill-values')!.textContent!.split(', ')
+    expect(technologies('Frontend')).toEqual(['React', 'TypeScript', 'Vue 3', 'Vite'])
+    expect(technologies('AI agent')).toEqual(['Codex', 'Claude Code'])
+    expect(technologies('etc')).toEqual(['GitHub', 'Jira', 'Figma', 'Slack'])
+    expect(resumeDocument.querySelector('.skill-tag, .skill-tags')).toBeNull()
 
     const { container } = render(<Skills />)
     for (const technology of ['React', 'TypeScript', 'Codex', 'Claude Code', 'Jira', 'Figma', 'Slack']) {
