@@ -7,16 +7,16 @@
   <style>
     :root {
       --font-title: 20pt;
-      --font-section: 12pt;
-      --font-item: 11pt;
-      --font-body: 10.25pt;
-      --font-meta: 9.25pt;
+      --font-section: 11pt;
+      --font-item: 10pt;
+      --font-body: 9.5pt;
+      --font-meta: 8.75pt;
       --line-heading: 1.2;
-      --line-body: 1.4;
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
+      --line-body: 1.3;
+      --space-1: 3px;
+      --space-2: 6px;
+      --space-3: 10px;
+      --space-4: 14px;
     }
 
     @page {
@@ -61,7 +61,6 @@
       margin-bottom: var(--space-3);
     }
 
-    .blog-section,
     .activity-section {
       break-inside: avoid;
       page-break-inside: avoid;
@@ -134,9 +133,38 @@
       line-height: var(--line-body);
     }
 
-    .line-list {
-      padding-left: 0;
-      list-style: none;
+    .skills-list {
+      display: grid;
+      gap: var(--space-1);
+      margin: 0;
+    }
+
+    .skill-group {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      align-items: baseline;
+      gap: var(--space-2);
+      break-inside: avoid;
+    }
+
+    .skill-category {
+      font-weight: 800;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      margin: 0;
+    }
+
+    .skill-tag {
+      padding: 1px 6px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      background: #f3f4f6;
+      font-size: var(--font-meta);
+      white-space: nowrap;
     }
 
     .contact-grid {
@@ -249,7 +277,7 @@
     <div class="resume-page" data-resume-page="1">
     <header class="resume-header">
       <h1>Oh InSeong(오인성)</h1>
-      <p class="headline">Android Developer</p>
+      <p class="headline">Software Engineer</p>
     </header>
 
     <section class="contact-section">
@@ -287,12 +315,61 @@
       <div class="section-heading">
         <h2>Skills</h2>
       </div>
-      <ul class="line-list">
-        <li><strong>Android &amp; Kotlin</strong>: Kotlin, Java, Compose, XML, Coroutines, Flow, MVVM, MVI, 멀티 모듈, Room, Paging3, JUnit5, MockK</li>
-        <li><strong>Backend &amp; Frontend</strong>: Spring Boot, MyBatis, MySQL, REST API, 트랜잭션, Vue 3, Vite</li>
-        <li><strong>AI Agent</strong>: 작업 분리와 병렬화, 구현, 테스트, 리뷰, 문서화 자동화</li>
-        <li><strong>Communication</strong>: GitHub, JIRA, 코드 리뷰</li>
-      </ul>
+      <dl class="skills-list">
+        <div class="skill-group">
+          <dt class="skill-category">Backend</dt>
+          <dd class="skill-tags">
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">MyBatis</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">REST API</span>
+          </dd>
+        </div>
+        <div class="skill-group">
+          <dt class="skill-category">Frontend</dt>
+          <dd class="skill-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Vue 3</span>
+            <span class="skill-tag">Vite</span>
+          </dd>
+        </div>
+        <div class="skill-group">
+          <dt class="skill-category">Android</dt>
+          <dd class="skill-tags">
+            <span class="skill-tag">Kotlin</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Compose</span>
+            <span class="skill-tag">XML</span>
+            <span class="skill-tag">Coroutines</span>
+            <span class="skill-tag">Flow</span>
+            <span class="skill-tag">MVVM</span>
+            <span class="skill-tag">MVI</span>
+            <span class="skill-tag">멀티 모듈</span>
+            <span class="skill-tag">Room</span>
+            <span class="skill-tag">Paging3</span>
+            <span class="skill-tag">JUnit5</span>
+            <span class="skill-tag">MockK</span>
+          </dd>
+        </div>
+        <div class="skill-group">
+          <dt class="skill-category">AI agent</dt>
+          <dd class="skill-tags">
+            <span class="skill-tag">Codex</span>
+            <span class="skill-tag">Claude Code</span>
+          </dd>
+        </div>
+        <div class="skill-group">
+          <dt class="skill-category">etc</dt>
+          <dd class="skill-tags">
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Jira</span>
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Slack</span>
+          </dd>
+        </div>
+      </dl>
     </section>
 
     <section>
@@ -323,21 +400,9 @@
           <span class="right-meta">2018.03 ~ 2024.02</span>
         </div>
         <ul>
-          <li>모바일소프트웨어 트랙 / 빅데이터 트랙</li>
-          <li>GPA 3.18 / 4.5</li>
+          <li>모바일소프트웨어 트랙 / 빅데이터 트랙, GPA 3.18 / 4.5</li>
         </ul>
       </div>
-    </section>
-
-    <section class="blog-section">
-      <div class="section-heading">
-        <h2>Blog</h2>
-      </div>
-      <p class="meta">인성의 개발 공부 노트 / <a href="https://superohinsung.tistory.com">https://superohinsung.tistory.com</a></p>
-      <ul>
-        <li><strong>2021년부터 220+개 포스팅 작성</strong> / Kotlin, Android, CS, Algorithm 학습 기록</li>
-        <li>Jetpack Compose, MVVM/MVI, 네트워크와 직렬화 라이브러리, 코루틴, 운영체제, 자료구조, 알고리즘 정리</li>
-      </ul>
     </section>
 
     <section>

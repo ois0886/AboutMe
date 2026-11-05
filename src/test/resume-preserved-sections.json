@@ -6,30 +6,15 @@
     "links": []
   },
   "Skills": {
-    "text": "Skills Android & Kotlin: Kotlin, Java, Compose, XML, Coroutines, Flow, MVVM, MVI, 멀티 모듈, Room, Paging3, JUnit5, MockK Backend & Frontend: Spring Boot, MyBatis, MySQL, REST API, 트랜잭션, Vue 3, Vite AI Agent: 작업 분리와 병렬화, 구현, 테스트, 리뷰, 문서화 자동화 Communication: GitHub, JIRA, 코드 리뷰",
-    "emphasis": [
-      "Android & Kotlin",
-      "Backend & Frontend",
-      "AI Agent",
-      "Communication"
-    ],
-    "items": 4,
+    "text": "Skills Backend Java Spring Boot MyBatis MySQL REST API Frontend React TypeScript Vue 3 Vite Android Kotlin Java Compose XML Coroutines Flow MVVM MVI 멀티 모듈 Room Paging3 JUnit5 MockK AI agent Codex Claude Code etc GitHub Jira Figma Slack",
+    "emphasis": [],
+    "items": 0,
     "links": []
   },
-  "Blog": {
-    "text": "Blog 인성의 개발 공부 노트 / https://superohinsung.tistory.com 2021년부터 220+개 포스팅 작성 / Kotlin, Android, CS, Algorithm 학습 기록 Jetpack Compose, MVVM/MVI, 네트워크와 직렬화 라이브러리, 코루틴, 운영체제, 자료구조, 알고리즘 정리",
-    "emphasis": [
-      "2021년부터 220+개 포스팅 작성"
-    ],
-    "items": 2,
-    "links": [
-      "https://superohinsung.tistory.com"
-    ]
-  },
   "Education": {
-    "text": "Education 삼성 청년 AI SW 아카데미 13기 Mobile Track 2025.01 ~ 2025.12 삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램 주식회사 코드프레소 웹 개발 기초완성 2023.10 ~ 2023.11 Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 프로그램 이수 한성대학교 컴퓨터공학과 졸업 2018.03 ~ 2024.02 모바일소프트웨어 트랙 / 빅데이터 트랙 GPA 3.18 / 4.5",
+    "text": "Education 삼성 청년 AI SW 아카데미 13기 Mobile Track 2025.01 ~ 2025.12 삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램 주식회사 코드프레소 웹 개발 기초완성 2023.10 ~ 2023.11 Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 프로그램 이수 한성대학교 컴퓨터공학과 졸업 2018.03 ~ 2024.02 모바일소프트웨어 트랙 / 빅데이터 트랙, GPA 3.18 / 4.5",
     "emphasis": [],
-    "items": 4,
+    "items": 3,
     "links": []
   },
   "Awards": {

@@ -326,7 +326,7 @@ describe('projects 데이터 무결성', () => {
     expect(pages.map((page) => page.getAttribute('data-resume-page'))).toEqual(['1'])
     expect(pages.map((page) => Array.from(page.querySelectorAll('h2'), (heading) => heading.textContent)))
       .toEqual([
-        ['Career', 'Skills', 'Education', 'Blog', 'Awards', 'Certificates', 'Activity'],
+        ['Career', 'Skills', 'Education', 'Awards', 'Certificates', 'Activity'],
       ])
     expect(pages[0].querySelector('[data-career-id="chartlab"]')).not.toBeNull()
     expect(resumeDocument.body.textContent).not.toMatch(/Introduction|개발자를 지향합니다|재현 가능한 지식|Compose-Chart|Compose-Git-Grass|Open Source/)
@@ -363,6 +363,10 @@ describe('projects 데이터 무결성', () => {
     expect(contacts.querySelector('a[href^="tel:"]')).toBeNull()
     expect(resumeDocument.querySelector('.contact-section a[href*="superohinsung.tistory.com"]'))
       .not.toBeNull()
+    expect(resumeDocument.querySelector('.blog-section')).toBeNull()
+    expect(Array.from(resumeDocument.querySelectorAll('h2'), (heading) => heading.textContent))
+      .not.toContain('Blog')
+    expect(resumeDocument.querySelectorAll('a[href*="superohinsung.tistory.com"]')).toHaveLength(1)
     const links = Array.from(contacts.querySelectorAll('a'), (link) => link.getAttribute('href'))
     expect(new Set(links).size).toBe(links.length)
   })
@@ -384,11 +388,11 @@ describe('projects 데이터 무결성', () => {
     },
   )
 
-  it('이력서의 이름과 직무를 보존한다', () => {
+  it('이력서의 이름을 보존하고 직무를 Software Engineer로 표시한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
     expect(resumeDocument.querySelector('.resume-header h1')?.textContent).toBe('Oh InSeong(오인성)')
-    expect(resumeDocument.querySelector('.resume-header .headline')?.textContent).toBe('Android Developer')
+    expect(resumeDocument.querySelector('.resume-header .headline')?.textContent).toBe('Software Engineer')
   })
 })
