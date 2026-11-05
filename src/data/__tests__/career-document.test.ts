@@ -6,7 +6,7 @@ const preserved = JSON.parse(
   readFileSync(resolve(process.cwd(), 'src/test/career-preserved-sections.json'), 'utf8'),
 ) as {
   header: string[]
-  sections: Array<{ title: string; role: string; items: string[] }>
+  sections: Array<{ title: string; items: string[] }>
 }
 
 function readCareerDocument() {
@@ -24,7 +24,6 @@ describe('경력기술서', () => {
     const sections = Array.from(document.querySelectorAll('.career-section'))
     expect(sections.map((section) => ({
       title: section.querySelector('h2')?.textContent,
-      role: section.querySelector('.role')?.textContent,
       items: Array.from(section.querySelectorAll('li'), (item) => item.textContent),
     }))).toEqual(preserved.sections)
   })
@@ -34,12 +33,12 @@ describe('경력기술서', () => {
     expect(document.querySelectorAll('h1')).toHaveLength(1)
     expect(document.querySelectorAll('h2')).toHaveLength(6)
     expect(document.querySelector('h3, h4, h5, h6, li ul, li ol, li p, li strong')).toBeNull()
-    expect(document.querySelectorAll('.career-section > ul > li')).toHaveLength(27)
+    expect(document.querySelectorAll('.career-section > ul > li')).toHaveLength(12)
     const pages = Array.from(document.querySelectorAll('[data-document-page]'))
+    expect(pages).toHaveLength(1)
     expect(pages.map((page) => Array.from(page.querySelectorAll('h2'), (heading) => heading.textContent)))
       .toEqual([
-        ['LS증권 Android 차트 라이브러리', 'EasyChart 화면과 설정', 'MarketMap 설정 화면'],
-        ['Alert 감시설정과 그리드 UI', '차트 API 사용 문서와 샘플', '자사 반응형 홈페이지 개발'],
+        ['LS증권 Android 차트 라이브러리', 'EasyChart 화면과 설정', 'MarketMap 설정 화면', 'Alert 감시설정과 그리드 UI', '자사 반응형 홈페이지 개발', '차트 API 사용 문서와 샘플'],
       ])
   })
 
@@ -49,7 +48,7 @@ describe('경력기술서', () => {
     const documentation = document.querySelector('[data-career-section="api-docs"]')!.textContent!
     const source = careers[0].tasks.join(' ')
 
-    for (const fact of ['감시설정 화면', '그리드', '롱클릭', '툴팁', '셀 재구성', '테마']) {
+    for (const fact of ['감시설정', '그리드', '롱클릭', '툴팁', '셀 재구성']) {
       expect(alert).toContain(fact)
       expect(source).toContain(fact)
     }
@@ -79,15 +78,16 @@ describe('경력기술서', () => {
     expect(document.querySelector('.problem-solving')).toBeNull()
   })
 
-  it('추가 확인한 LS 검색과 테마, 수량 입력 및 굵기 설정 수정은 원천 데이터와 함께 반영한다', () => {
+  it('LS의 저장 누락과 편집 상태 오류는 남기고 세부 UI 수정은 제외한다', () => {
     const document = readCareerDocument()
     const ls = document.querySelector('[data-career-section="ls-chart"]')!.textContent!
     const source = careers[0].tasks.join(' ')
 
-    for (const fact of ['지표 검색', '취소 동작', '키보드가 유지', '수치조회창의 글자색', '주문 수량 입력', '999', '6으로 되돌아가던 오류']) {
+    for (const fact of ['키패드', '연속 편집', '이동평균선', '체크 상태', '편집값']) {
       expect(ls).toContain(fact)
       expect(source).toContain(fact)
     }
+    expect(ls).not.toMatch(/999|검색어 삭제|6으로 되돌아가던|수치조회창|테마|Double|심볼/)
   })
 
   it('HTML과 PDF를 최상단에 두고 이전 Word 폴더를 제거한다', () => {

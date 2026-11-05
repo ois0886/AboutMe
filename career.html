@@ -40,16 +40,6 @@
       margin: 0;
     }
 
-    .document-page {
-      break-after: page;
-      page-break-after: always;
-    }
-
-    .document-page:last-child {
-      break-after: auto;
-      page-break-after: auto;
-    }
-
     .document-header {
       margin-bottom: 18px;
     }
@@ -109,14 +99,6 @@
       page-break-after: avoid;
     }
 
-    .role {
-      margin-bottom: 8px;
-      color: #4b5563;
-      font-size: 9.5pt;
-      break-after: avoid;
-      page-break-after: avoid;
-    }
-
     ul {
       display: grid;
       gap: 6px;
@@ -159,77 +141,54 @@
           <p class="period" data-source-header>재직 기간: 2026.02.09 ~ 재직 중</p>
           <p class="as-of" data-source-header>작성 기준일: 2026.11.05</p>
         </div>
-        <p class="intro" data-source-header>Android 차트와 감시설정 화면을 개발하고, 입력값 저장과 설정 상태 오류를 수정했습니다. 차트 API 사용 문서와 샘플을 작성했으며 자사 반응형 홈페이지를 개발했습니다.</p>
+        <p class="intro" data-source-header>Android 차트와 감시설정 화면을 개발하고 입력 및 설정 오류를 수정했으며, 자사 반응형 홈페이지를 개발했습니다.</p>
       </header>
 
       <section class="career-section" data-career-section="ls-chart">
         <h2>LS증권 Android 차트 라이브러리</h2>
-        <p class="role">역할  입력 저장과 지표 설정 오류 수정, 분석도구 속성 반영, 테마 처리</p>
         <ul>
-          <li>키패드 결과 전달을 닫기 애니메이션에서 분리하고 중복 전달을 막아, 지표 변수 연속 편집 시 일부 변경값이 저장되지 않던 오류를 수정했습니다.</li>
-          <li>이동평균선 설정 행을 다시 바인딩하기 전에 체크박스와 Spinner 리스너를 해제하고 모델 상태를 적용한 뒤 다시 연결했습니다. 색상 선택 전에 입력값을 모델에 반영해 체크 상태와 편집값이 유지되도록 수정했습니다.</li>
-          <li>이동평균선 굵기를 6보다 크게 설정해도 설정 창에서 6으로 되돌아가던 오류를 드롭다운 범위에 맞춰 수정했습니다.</li>
-          <li>Signal 기간 및 이평 설정 항목의 목록 인덱스와 엔진 파라미터 대응을 보완했습니다.</li>
-          <li>수평선과 추세선의 가격 입력이 반영되도록 연결하고, 심볼과 도형의 속성 변경이 해당 대상에 적용되도록 보완했습니다.</li>
-          <li>숫자 문자열 검사에 막히던 소수점과 음수 변수를 Double 값으로 파싱해 저장하도록 수정했습니다.</li>
-          <li>주문 수량 입력의 최솟값과 최댓값이 모두 999로 설정돼 입력값이 고정되던 오류를 수정했습니다.</li>
-          <li>지표 검색에 취소 동작을 추가하고, 검색어 삭제 버튼을 눌러도 키보드가 유지되도록 터치 영역 처리를 수정했습니다.</li>
-          <li>입력란의 배경과 글자색, 수치조회창의 글자색을 테마에 맞추고, 구분선 색상 리소스를 해석하지 못할 때 기본 색상을 적용하도록 수정했습니다.</li>
+          <li>키패드 입력 결과를 닫기 애니메이션과 분리하고 중복 전달을 막아, 지표 변수를 연속 편집할 때 일부 변경값이 저장되지 않던 오류를 수정했습니다.</li>
+          <li>이동평균선 설정 행을 다시 표시할 때 리스너 실행 순서를 조정하고 색상 선택 전 편집값을 모델에 반영해, 체크 상태와 입력값이 바뀌던 오류를 수정했습니다.</li>
         </ul>
       </section>
 
       <section class="career-section" data-career-section="easy-chart">
         <h2>EasyChart 화면과 설정</h2>
-        <p class="role">역할  Android 화면 개발, 편집 상태 관리, 기존 차트 엔진에 설정값 전달</p>
         <ul>
           <li>기존 PowerGraphics 차트 엔진을 활용해 종목, 주기와 차트 유형을 선택하는 간편 차트 화면 및 지표 설정 기능을 개발했습니다.</li>
-          <li>설정 탭의 편집 상태를 ViewModel과 LiveData로 공유하고 저장, 닫기와 초기화의 동작을 구분했습니다.</li>
-          <li>초기화 후 설정 화면에 머무르면서 차트와 지표 목록을 갱신하고, 재진입 시 설정 상태가 차트와 일치하도록 반영 흐름을 보완했습니다.</li>
-          <li>StateFlow와 DataStore로 테마의 원본값과 편집값을 구분하고 저장과 초기화에 맞춰 처리했습니다.</li>
+          <li>ViewModel과 LiveData로 설정 탭의 편집 상태를 공유하고, 저장과 초기화 및 재진입 시 차트와 설정 화면의 값이 일치하도록 보완했습니다.</li>
         </ul>
       </section>
 
       <section class="career-section" data-career-section="market-map">
         <h2>MarketMap 설정 화면</h2>
-        <p class="role">역할  Android 설정 화면 개발, 깊이별 편집값 관리, 기존 엔진에 설정값 전달</p>
         <ul>
-          <li>D-1/D-2 깊이와 카테고리, 표시 옵션 및 테두리 색상과 굵기를 편집하는 설정 화면을 개발했습니다.</li>
-          <li>깊이를 전환하기 전에 현재 색상과 굵기를 저장하고 새 깊이의 값을 표시해, 깊이를 오가며 편집한 값이 유지되도록 구현했습니다.</li>
-          <li>설정 로딩 중 Spinner 이벤트와 사용자 변경을 구분했습니다. 저장과 초기화 시 편집한 설정을 기존 엔진의 속성 반영 함수에 전달했습니다.</li>
+          <li>D-1/D-2 깊이와 카테고리, 표시 옵션을 편집하는 설정 화면을 개발했습니다.</li>
+          <li>깊이 전환 시 편집값을 보존하고 설정 로딩 이벤트와 사용자 변경을 구분해, 저장과 초기화 시 화면 상태와 기존 엔진 속성이 일치하도록 연결했습니다.</li>
         </ul>
       </section>
-    </div>
 
-    <div class="document-page" data-document-page="2">
       <section class="career-section" data-career-section="alert">
         <h2>Alert 감시설정과 그리드 UI</h2>
-        <p class="role">역할  Android 감시설정 화면 개발, 그리드 표시와 터치 동작 처리</p>
         <ul>
-          <li>감시 대상과 지표별 조건을 입력하는 화면을 개발하고, 목록의 추가와 삭제, 선택 상태, 한 번만 감시하는 옵션을 연결했습니다.</li>
-          <li>제목과 값 영역을 나눈 그리드와 셀 UI를 구성하고, 가로 스크롤과 병합 헤더, 빈 목록 안내를 적용했습니다.</li>
-          <li>셀 선택 표시와 롱클릭 설정 진입, 감시 조건 툴팁을 구현했습니다. 감시 대상과 알람 결과를 구분하는 표시 마크도 추가했습니다.</li>
-          <li>그리드를 갱신할 때 누르고 있던 셀이 다시 생성돼 롱클릭이 끊기는 문제를 수정했습니다. 터치 중에는 셀 재구성을 미루고 손을 뗀 뒤 반영하도록 처리했습니다.</li>
-          <li>제어 바를 접고 펼치는 동작과 감시목록 선택 UI를 구성하고, 라이트와 다크 테마에서 셀 배경과 강조 색상이 바뀌도록 처리했습니다.</li>
-        </ul>
-      </section>
-
-      <section class="career-section" data-career-section="api-docs">
-        <h2>차트 API 사용 문서와 샘플</h2>
-        <p class="role">역할  제공된 API의 사용 문서와 호출 예 작성</p>
-        <ul>
-          <li>제공된 차트 API의 함수별 인자와 반환값, 호출 순서와 상수값을 개발 매뉴얼에 정리했습니다.</li>
-          <li>폼차트와 폼그래프의 사용 예를 작성하고, 관심종목 3분할 차트의 프레임 구성과 함수 호출 순서를 샘플 매뉴얼에 설명했습니다.</li>
-          <li>API가 바뀔 때 개발 매뉴얼의 함수 설명과 샘플 호출 예를 함께 갱신했습니다.</li>
+          <li>감시 대상과 지표별 조건을 입력하는 화면을 개발하고, 감시목록의 추가와 삭제, 선택 상태 및 한 번만 감시하는 옵션을 연결했습니다.</li>
+          <li>가로 스크롤과 병합 헤더를 지원하는 그리드 및 셀 UI를 개발하고, 셀 선택 표시와 롱클릭 설정 진입, 감시 조건 툴팁을 구현했습니다.</li>
+          <li>그리드 갱신으로 롱클릭이 끊기던 문제를 터치 중 셀 재구성을 미루고 손을 뗀 뒤 반영하는 방식으로 수정했습니다.</li>
         </ul>
       </section>
 
       <section class="career-section" data-career-section="homepage">
         <h2>자사 반응형 홈페이지 개발</h2>
-        <p class="role">역할  React 기반 화면 개발, 공지 조회와 문의 폼 연동</p>
         <ul>
-          <li>React, Vite, SCSS로 회사와 제품 소개, 공지사항, 문의 화면과 공통 레이아웃을 갖춘 반응형 홈페이지를 개발했습니다.</li>
-          <li>Sanity 기반 공지 조회와 검색, 상세 콘텐츠를 연결해 홈페이지에서 공지를 탐색할 수 있도록 구현했습니다.</li>
-          <li>첨부파일을 포함한 문의 폼을 구현하고 Google Apps Script와 연동했습니다.</li>
+          <li>React, Vite, SCSS로 회사와 제품 소개, 공지사항, 문의 화면을 갖춘 반응형 홈페이지를 개발했습니다.</li>
+          <li>Sanity 기반 공지 조회와 검색, 상세 콘텐츠를 연결하고, 첨부파일 문의 폼을 Google Apps Script와 연동했습니다.</li>
+        </ul>
+      </section>
+
+      <section class="career-section" data-career-section="api-docs">
+        <h2>차트 API 사용 문서와 샘플</h2>
+        <ul>
+          <li>제공된 차트 API의 인자와 반환값, 호출 순서와 상수값을 개발 매뉴얼에 정리하고, 폼차트와 폼그래프 및 관심종목 3분할 차트의 호출 예를 샘플 매뉴얼에 작성했습니다.</li>
         </ul>
       </section>
     </div>
