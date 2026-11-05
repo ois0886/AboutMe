@@ -21,28 +21,38 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서의 LS 문제 해결, EasyChart, MarketMap, 홈페이지 기여가 일치한다', () => {
+  it('웹과 이력서의 경력 요약은 같은 다섯 항목으로 표시한다', () => {
+    render(<Career />)
+
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
       resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
     ).map((item) => normalizeText(item.textContent ?? ''))
 
+    const section = screen.getByRole('heading', { name: 'Career' }).closest('section')!
+    const webTasks = within(section).getAllByRole('listitem')
+      .map((item) => normalizeText(item.textContent ?? ''))
     const facts = [
-      ['LS증권', '연속 편집', '키패드 종료', '결과 전달', '소수점', '음수', '숫자 파싱'],
-      ['LS', '이동평균선', '체크 상태', 'Signal 기간', '테마', '매뉴얼'],
-      ['EasyChart', 'ViewModel', 'LiveData'],
-      ['MarketMap', '깊이', '카테고리', '편집값', '엔진 속성'],
-      ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '검색', '첨부파일'],
+      ['LS증권', '키패드 결과 전달', '숫자 파싱', '연속 편집값 누락', '소수점/음수', '이동평균선', '분석도구'],
+      ['EasyChart', '기존 차트 엔진', 'ViewModel', 'LiveData', '편집 상태', '초기화', '재진입'],
+      ['MarketMap', '설정 화면', '깊이 전환', '편집값', '로딩 이벤트', '사용자 변경', '엔진 속성'],
+      ['Alert', '감시설정 화면', '감시목록 관리', '그리드 UI', '병합 헤더', '셀 재구성', '롱클릭'],
+      ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '공지 조회와 검색', 'Google Apps Script', '첨부파일 문의 접수'],
     ]
-    expect(resumeTasks).toHaveLength(facts.length)
-    expect(careers[0].tasks.length).toBeGreaterThanOrEqual(facts.length)
+    expect(careers[0].summary).toHaveLength(5)
+    expect(webTasks).toEqual(careers[0].summary)
+    expect(resumeTasks).toEqual(webTasks)
     facts.forEach((keywords, index) => {
       keywords.forEach((keyword) => {
-        expect(careers[0].tasks[index]).toContain(keyword)
         expect(resumeTasks[index]).toContain(keyword)
       })
+      expect(resumeTasks[index]).not.toMatch(/[.!?]$/u)
     })
+    const role = `${careers[0].role} | ${careers[0].location}`
+    expect(within(section).getByText(role)).toBeInTheDocument()
+    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .meta')?.textContent).toBe(role)
+    expect(role).toContain('Software Engineer')
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
       expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API 구현|Script API 개발|3분할 API 구현|차트 엔진 개발|Java 변환|함수 호환 작업/)
@@ -63,25 +73,22 @@ describe('Career', () => {
     expect(documentation).not.toMatch(/Script API 구현|Script API 개발|Java 변환|함수 호환 작업|샘플 앱 개발/)
   })
 
-  it('웹 요약에는 기존 기여만 표시하고 제공받은 API의 구현으로 서술하지 않는다', () => {
+  it('웹 요약에는 Alert UI를 포함하고 제공받은 API의 구현으로 서술하지 않는다', () => {
     render(<Career />)
 
-    expect(screen.getByText(/LS증권.*키패드 종료 시 결과 전달.*연속 편집값 누락/)).toBeInTheDocument()
-    expect(screen.getByText(/EasyChart.*차트 화면과 지표 설정 기능/)).toBeInTheDocument()
-    expect(screen.getByText(/MarketMap 설정 화면.*깊이 전환 시 편집값 보존.*로딩 이벤트와 사용자 변경/)).toBeInTheDocument()
-    expect(screen.queryByText(/그리드|Grid Alert|PowerAlert|3분할 API 구현/)).not.toBeInTheDocument()
-    expect(screen.getByText(/React 기반 자사 반응형 홈페이지/)).toBeInTheDocument()
+    expect(screen.getByText(/Alert.*감시설정 화면.*그리드 UI.*롱클릭.*오류/)).toBeInTheDocument()
+    expect(screen.queryByText(/Script API 구현|API 개발|3분할 API 구현|차트 엔진 개발/)).not.toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
   })
 
-  it('웹에는 핵심 기여 네 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
+  it('웹에는 핵심 기여 다섯 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
     render(<Career />)
 
     const section = screen.getByRole('heading', { name: 'Career' }).closest('section')!
-    expect(within(section).getAllByRole('listitem')).toHaveLength(4)
-    expect(within(section).getByText(/ViewModel과 LiveData.*탭 간 편집 상태.*재진입/)).toBeInTheDocument()
-    expect(within(section).getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의/)).toBeInTheDocument()
+    expect(within(section).getAllByRole('listitem')).toHaveLength(5)
+    expect(within(section).getByText(/ViewModel과 LiveData.*편집 상태/)).toBeInTheDocument()
+    expect(within(section).getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의 접수/)).toBeInTheDocument()
     for (const task of careers[0].tasks) {
       expect(screen.queryByText(task)).not.toBeInTheDocument()
     }
