@@ -17,6 +17,7 @@
       --space-2: 6px;
       --space-3: 9px;
       --space-4: 14px;
+      --space-section: 15px;
     }
 
     @page {
@@ -58,7 +59,7 @@
     }
 
     section {
-      margin-bottom: var(--space-3);
+      margin-bottom: var(--space-section);
     }
 
     .activity-section {
@@ -99,7 +100,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: var(--space-4);
-      margin-bottom: var(--space-2);
+      margin-bottom: 5px;
       padding-bottom: var(--space-1);
       border-bottom: 1px solid #d1d5db;
       break-after: avoid;
@@ -135,7 +136,7 @@
 
     .skills-list {
       display: grid;
-      gap: 5px;
+      gap: var(--space-1);
       margin: 0;
     }
 
@@ -163,6 +164,7 @@
     }
 
     .contact-section {
+      margin-bottom: var(--space-3);
       font-size: var(--font-meta);
     }
 
@@ -190,7 +192,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: var(--space-4);
-      margin-bottom: var(--space-1);
+      margin-bottom: 2px;
       break-inside: avoid;
       page-break-inside: avoid;
     }
@@ -221,7 +223,7 @@
     .career-item {
       break-inside: avoid;
       page-break-inside: avoid;
-      margin-bottom: var(--space-3);
+      margin-bottom: 7px;
     }
 
     .one-line {
