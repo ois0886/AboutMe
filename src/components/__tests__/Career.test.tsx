@@ -36,7 +36,7 @@ describe('Career', () => {
       ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '검색', '첨부파일'],
     ]
     expect(resumeTasks).toHaveLength(facts.length)
-    expect(careers[0].tasks).toHaveLength(facts.length)
+    expect(careers[0].tasks.length).toBeGreaterThanOrEqual(facts.length)
     facts.forEach((keywords, index) => {
       keywords.forEach((keyword) => {
         expect(careers[0].tasks[index]).toContain(keyword)
@@ -45,11 +45,25 @@ describe('Career', () => {
     })
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
-      expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API|그리드|Grid Alert|PowerAlert|3분할 API 구현|차트 엔진 개발/)
+      expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API 구현|Script API 개발|3분할 API 구현|차트 엔진 개발|Java 변환|함수 호환 작업/)
     }
   })
 
-  it('검증된 기여를 표시하고 미완성 그리드와 제공받은 API 구현은 제외한다', () => {
+  it('문서용 상세 기여에는 Alert UI와 제공된 Script API의 사용 문서를 구분해 보관한다', () => {
+    const alert = careers[0].tasks.find((task) => task.startsWith('Alert의'))!
+    const documentation = careers[0].tasks.find((task) => task.startsWith('제공된 Script API'))!
+
+    for (const fact of ['감시설정 화면', '그리드 UI', '롱클릭', '툴팁', '셀 재구성', '테마']) {
+      expect(alert).toContain(fact)
+    }
+    for (const fact of ['인자와 반환값', '호출 순서', '개발 매뉴얼', '샘플 매뉴얼', '3분할']) {
+      expect(documentation).toContain(fact)
+    }
+    expect(alert).not.toMatch(/데이터 연동|실시간 수신|데이터 가공|열 설정/)
+    expect(documentation).not.toMatch(/Script API 구현|Script API 개발|Java 변환|함수 호환 작업|샘플 앱 개발/)
+  })
+
+  it('웹 요약에는 기존 기여만 표시하고 제공받은 API의 구현으로 서술하지 않는다', () => {
     render(<Career />)
 
     expect(screen.getByText(/LS증권.*키패드 종료 시 결과 전달.*연속 편집값 누락/)).toBeInTheDocument()
