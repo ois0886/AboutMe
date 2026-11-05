@@ -24,7 +24,11 @@ describe('경력기술서', () => {
     expect(sections.map((section) => ({
       title: section.querySelector('h2')?.textContent,
       role: section.querySelector('.role')?.textContent,
-      items: Array.from(section.querySelectorAll('li'), (item) => item.textContent),
+      items: Array.from(section.querySelectorAll('li')).flatMap((item) =>
+        item.matches('.problem-solving')
+          ? Array.from(item.querySelectorAll('[data-preserved-item]'), (paragraph) => paragraph.textContent)
+          : [item.textContent],
+      ),
     }))).toEqual(preserved.sections)
   })
 
@@ -33,7 +37,18 @@ describe('경력기술서', () => {
     expect(document.querySelectorAll('h1')).toHaveLength(1)
     expect(document.querySelectorAll('h2')).toHaveLength(4)
     expect(document.querySelector('h3, h4, h5, h6, li ul, li ol')).toBeNull()
-    expect(document.querySelectorAll('.career-section > ul > li')).toHaveLength(19)
+    expect(document.querySelectorAll('.career-section > ul > li')).toHaveLength(17)
+  })
+
+  it('LS증권 키패드 오류의 문제와 해결, 결과는 한 목록 항목으로 묶는다', () => {
+    const document = readCareerDocument()
+    const group = document.querySelector('.career-section:first-of-type > ul > li.problem-solving')!
+    expect(document.querySelectorAll('.problem-solving')).toHaveLength(1)
+    expect(Array.from(group.querySelectorAll('p'), (paragraph) => paragraph.textContent))
+      .toEqual(preserved.sections[0].items.slice(0, 3))
+    expect(Array.from(group.querySelectorAll('strong'), (label) => label.textContent))
+      .toEqual(['문제:', '해결:', '결과:'])
+    expect(group.nextElementSibling?.textContent).toBe(preserved.sections[0].items[3])
   })
 
   it('HTML과 PDF를 최상단에 두고 이전 Word 폴더를 제거한다', () => {

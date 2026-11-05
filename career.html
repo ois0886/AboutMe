@@ -7,7 +7,7 @@
   <style>
     @page {
       size: A4;
-      margin: 16mm 18mm;
+      margin: 9mm 12mm;
     }
 
     * {
@@ -19,8 +19,8 @@
       color: #111827;
       background: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
-      font-size: 11pt;
-      line-height: 1.55;
+      font-size: 10pt;
+      line-height: 1.4;
       word-break: keep-all;
       overflow-wrap: anywhere;
       orphans: 3;
@@ -28,7 +28,7 @@
     }
 
     main {
-      width: 174mm;
+      width: 186mm;
       max-width: 100%;
       margin: 0 auto;
     }
@@ -40,22 +40,12 @@
       margin: 0;
     }
 
-    .document-page {
-      break-after: page;
-      page-break-after: always;
-    }
-
-    .document-page:last-child {
-      break-after: auto;
-      page-break-after: auto;
-    }
-
     .document-header {
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
 
     .eyebrow {
-      margin-bottom: 6px;
+      margin-bottom: 3px;
       color: #374151;
       font-size: 9pt;
       font-weight: 700;
@@ -63,9 +53,9 @@
     }
 
     h1 {
-      margin-bottom: 14px;
+      margin-bottom: 8px;
       color: #111827;
-      font-size: 24pt;
+      font-size: 20pt;
       line-height: 1.25;
     }
 
@@ -73,7 +63,7 @@
     .period,
     .as-of {
       color: #374151;
-      font-size: 10pt;
+      font-size: 9.25pt;
     }
 
     .company {
@@ -81,12 +71,18 @@
       font-weight: 700;
     }
 
+    .dates {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
     .intro {
-      margin-top: 16px;
+      margin-top: 10px;
     }
 
     .career-section {
-      margin-bottom: 24px;
+      margin-bottom: 14px;
       break-inside: avoid;
       page-break-inside: avoid;
     }
@@ -96,24 +92,24 @@
     }
 
     h2 {
-      margin-bottom: 8px;
-      font-size: 14pt;
+      margin-bottom: 5px;
+      font-size: 12pt;
       line-height: 1.3;
       break-after: avoid;
       page-break-after: avoid;
     }
 
     .role {
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       color: #4b5563;
-      font-size: 10pt;
+      font-size: 9.25pt;
       break-after: avoid;
       page-break-after: avoid;
     }
 
     ul {
       display: grid;
-      gap: 8px;
+      gap: 5px;
       padding-left: 18px;
       list-style-type: disc;
     }
@@ -121,6 +117,17 @@
     li {
       break-inside: avoid;
       page-break-inside: avoid;
+    }
+
+    .problem-solving {
+      margin-bottom: 3px;
+      padding: 5px 8px;
+      border-left: 2px solid #9ca3af;
+      background: #f8fafc;
+    }
+
+    .problem-solving p + p {
+      margin-top: 3px;
     }
 
     @media screen {
@@ -136,7 +143,7 @@
       .document-page {
         min-height: 297mm;
         margin-bottom: 24px;
-        padding: 16mm 18mm;
+        padding: 9mm 12mm;
         background: #ffffff;
       }
     }
@@ -149,8 +156,10 @@
         <p class="eyebrow" data-source-header>ANDROID DEVELOPER</p>
         <h1 data-source-header>오인성 경력기술서</h1>
         <p class="company" data-source-header>(주)차트연구소 / Android Developer / 연구원/정규직 / 서울시 강서구</p>
-        <p class="period" data-source-header>재직 기간: 2026.02.09 ~ 재직 중</p>
-        <p class="as-of" data-source-header>작성 기준일: 2026.10.21</p>
+        <div class="dates">
+          <p class="period" data-source-header>재직 기간: 2026.02.09 ~ 재직 중</p>
+          <p class="as-of" data-source-header>작성 기준일: 2026.10.21</p>
+        </div>
         <p class="intro" data-source-header>PowerGraphics Android의 차트 화면과 지표 설정을 개발하고, LS증권 차트 라이브러리의 입력 저장 오류와 설정 상태를 보완했습니다.</p>
       </header>
 
@@ -158,9 +167,11 @@
         <h2>LS증권 Android 차트 라이브러리</h2>
         <p class="role">역할  입력 저장과 지표 설정 오류 수정, 분석도구 속성 반영, 테마 예외 대응, 매뉴얼 작성</p>
         <ul>
-          <li>문제: 여러 지표 변수를 연속 편집할 때 일부 변경값이 누락됐습니다. 키패드의 입력 결과를 닫기 애니메이션 완료 콜백에서 전달하던 흐름을 보완해야 했습니다.</li>
-          <li>해결: 입력 결과 전달을 애니메이션 완료 시점에서 분리하고 결과 전달 여부를 관리해 취소와 종료 과정의 중복 전달을 방지했습니다.</li>
-          <li>결과: 연속 편집한 지표 변수의 변경값이 누락되던 오류를 수정했습니다.</li>
+          <li class="problem-solving">
+            <p data-preserved-item><strong>문제:</strong> 여러 지표 변수를 연속 편집할 때 일부 변경값이 누락됐습니다. 키패드의 입력 결과를 닫기 애니메이션 완료 콜백에서 전달하던 흐름을 보완해야 했습니다.</p>
+            <p data-preserved-item><strong>해결:</strong> 입력 결과 전달을 애니메이션 완료 시점에서 분리하고 결과 전달 여부를 관리해 취소와 종료 과정의 중복 전달을 방지했습니다.</p>
+            <p data-preserved-item><strong>결과:</strong> 연속 편집한 지표 변수의 변경값이 누락되던 오류를 수정했습니다.</p>
+          </li>
           <li>문서화: API 사용 방법과 관심종목 3분할 차트 예제를 포함한 개발 및 샘플 매뉴얼을 작성하고 갱신했습니다.</li>
           <li>이동평균선 설정 행을 다시 바인딩하기 전에 체크박스와 Spinner 리스너를 해제하고 모델 상태를 적용한 뒤 다시 연결했습니다. 색상 선택 전에 입력값을 모델에 반영해 체크 상태와 편집값이 유지되도록 수정했습니다.</li>
           <li>Signal 기간 및 이평 설정 항목의 목록 인덱스와 엔진 파라미터 대응을 보완했습니다.</li>
@@ -169,9 +180,6 @@
           <li>숫자 문자열 검사에 막히던 소수점과 음수 변수를 Double 값으로 파싱해 저장하도록 수정했습니다.</li>
         </ul>
       </section>
-    </div>
-
-    <div class="document-page">
       <section class="career-section">
         <h2>EasyChart 차트 화면과 지표 설정</h2>
         <p class="role">역할  Android 화면 개발, 편집 상태 관리, 기존 차트 엔진 연동</p>
