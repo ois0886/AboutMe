@@ -37,7 +37,7 @@
 |---------|-------------|
 | About | Profile & introduction (Email / GitHub / Blog / LinkedIn) |
 | Career | Work experience timeline with auto-calculated total career |
-| Skills | Android & Kotlin, Backend & Frontend, AI Agent, Communication |
+| Skills | Android & Kotlin, Backend, Frontend, AI Agent, Communication |
 | Education | Education history with GPA & course grades |
 | Awards & Certificates | 2 awards, 5 certificates (image toggle) |
 | Activity | Studies, presentations, mentoring (photo toggle) |

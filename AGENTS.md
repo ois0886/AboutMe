@@ -32,7 +32,7 @@ src/
     Header          # 고정 헤더 (섹션 네비게이션 + 모바일 드로어 + 다크모드 토글)
     About           # 프로필 사진 + 기본 정보(Email/GitHub/Blog/LinkedIn) + 자기소개
     Career          # 경력 (차트연구소) + 총 경력 자동 계산
-    Skills          # 기술 스택 (Android & Kotlin, Backend & Frontend, AI Agent, Communication)
+    Skills          # 기술 스택 (Android & Kotlin, Backend, Frontend, AI Agent, Communication)
     Education       # 교육 이력 (SSAFY, 코드프레소, 한성대) + GPA + 주요 과목 성적
     Awards          # 수상 2건 + 자격증 5건 (이미지 토글)
     Activity        # 활동 이력 (스터디, 발표, 멘토링 등 — 사진 토글)
