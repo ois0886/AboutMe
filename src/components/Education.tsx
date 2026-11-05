@@ -67,7 +67,7 @@ function Education() {
 
   return (
     <section id="education" className="section reveal" ref={ref}>
-      <h2 className="section__title">Education</h2>
+      <h2 className="section__title" aria-label="Education">Education</h2>
       <div className={styles.timeline}>
         {educations.map((edu) => (
           <div key={edu.title} className={styles.card}>

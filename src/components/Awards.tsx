@@ -98,7 +98,7 @@ function Awards() {
 
   return (
     <section id="awards" className="section reveal" ref={ref}>
-      <h2 className="section__title">Awards & Certificates</h2>
+      <h2 className="section__title" aria-label="Awards & Certificates">Awards & Certificates</h2>
 
       <h3 className={styles.groupTitle}>Awards</h3>
       <div className={styles.list}>

@@ -56,7 +56,7 @@ function Skills() {
 
   return (
     <section id="skills" className="section reveal" ref={ref}>
-      <h2 className="section__title">Skills</h2>
+      <h2 className="section__title" aria-label="Skills">Skills</h2>
       <div className={styles.grid}>
         {skills.map((group) => (
           <div key={group.category} className={styles.card}>

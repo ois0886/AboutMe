@@ -36,7 +36,7 @@ function OpenSource() {
 
   return (
     <section id="opensource" className="section reveal" ref={ref}>
-      <h2 className="section__title">Open Source</h2>
+      <h2 className="section__title" aria-label="Open Source">Open Source</h2>
       <p className={styles.subtitle}>라이브러리 선택 시 GitHub 저장소로 이동</p>
       <div className={styles.grid}>
         {openSourceProjects.map((project) => {

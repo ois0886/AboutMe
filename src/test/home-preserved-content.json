@@ -1,0 +1,802 @@
+{
+  "baseline": "365629c",
+  "date": "2026-11-05T12:00:00+09:00",
+  "sections": [
+    {
+      "id": "about",
+      "text": "AboutSoftware EngineerInfoEmail. superohinsung@naver.comGitHub. github.com/ois0886Blog. superohinsung.tistory.comLinkedIn. www.linkedin.com/in/인성-오Introduction사용자 경험과 유지보수성을 고민하며, 구현을 넘어 고객 문제를 안정적인 제품 흐름으로 풀어내는 개발자를 지향합니다.다양한 조회와 실시간 데이터의 연동을 검증하며 서비스 간 데이터 흐름과 안정성에 대한 이해를 넓혀가고 있습니다.팀의 성장에 기여하기 위해 코드 리뷰와 AI 기반 개발 흐름 개선을 적극적으로 활용하고, 테스트 가능한 구조와 읽기 쉬운 코드를 작성하려 노력합니다.학습한 내용과 문제 해결 과정을 블로그에 기록하며, 부족했던 부분을 재현 가능한 지식으로 정리해 다음 프로젝트의 기준으로 발전시키고 있습니다.의견을 제시할 때는 감이 아닌 근거를 바탕으로 소통하며, 더 나은 방향을 함께 찾는 협업을 지향합니다.",
+      "textSegments": [
+        "About",
+        "Software Engineer",
+        "Info",
+        "Email.",
+        "superohinsung@naver.com",
+        "GitHub.",
+        "github.com/ois0886",
+        "Blog.",
+        "superohinsung.tistory.com",
+        "LinkedIn.",
+        "www.linkedin.com/in/인성-오",
+        "Introduction",
+        "사용자 경험과 유지보수성을 고민하며, 구현을 넘어",
+        "고객 문제를 안정적인 제품 흐름",
+        "으로 풀어내는 개발자를 지향합니다.",
+        "다양한 조회와 실시간 데이터의 연동을 검증하며",
+        "서비스 간 데이터 흐름과 안정성",
+        "에 대한 이해를 넓혀가고 있습니다.",
+        "팀의 성장에 기여하기 위해",
+        "코드 리뷰",
+        "와",
+        "AI 기반 개발 흐름 개선",
+        "을 적극적으로 활용하고,",
+        "테스트 가능한 구조와 읽기 쉬운 코드",
+        "를 작성하려 노력합니다.",
+        "학습한 내용과 문제 해결 과정을",
+        "블로그",
+        "에 기록하며, 부족했던 부분을",
+        "재현 가능한 지식",
+        "으로 정리해 다음 프로젝트의 기준으로 발전시키고 있습니다.",
+        "의견을 제시할 때는",
+        "감이 아닌 근거",
+        "를 바탕으로 소통하며, 더 나은 방향을 함께 찾는",
+        "협업",
+        "을 지향합니다."
+      ],
+      "headings": [
+        "About",
+        "Info",
+        "Introduction"
+      ],
+      "emphasis": [
+        "고객 문제를 안정적인 제품 흐름",
+        "서비스 간 데이터 흐름과 안정성",
+        "코드 리뷰",
+        "AI 기반 개발 흐름 개선",
+        "테스트 가능한 구조와 읽기 쉬운 코드",
+        "블로그",
+        "재현 가능한 지식",
+        "감이 아닌 근거",
+        "협업"
+      ],
+      "links": [
+        {
+          "text": "superohinsung@naver.com",
+          "href": "mailto:superohinsung@naver.com"
+        },
+        {
+          "text": "github.com/ois0886",
+          "href": "https://github.com/ois0886"
+        },
+        {
+          "text": "superohinsung.tistory.com",
+          "href": "https://superohinsung.tistory.com"
+        },
+        {
+          "text": "www.linkedin.com/in/인성-오",
+          "href": "https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4"
+        }
+      ],
+      "images": [
+        {
+          "src": "screenshot/profile.jpg",
+          "alt": "프로필 사진"
+        }
+      ]
+    },
+    {
+      "id": "career",
+      "text": "Career총 경력 8개월(주)차트연구소Software Engineer | 연구원/정규직 | 서울시 강서구2026.02.09 ~ 재직 중LS증권 차트 라이브러리의 키패드 결과 전달과 숫자 파싱을 보완해 연속 편집값 누락과 소수점/음수 저장 오류 해결, 이동평균선 체크 상태와 Signal 설정 및 분석도구 속성 반영 보완기존 차트 엔진을 활용한 EasyChart 화면과 지표 설정 개발, ViewModel과 LiveData로 탭 간 편집 상태를 공유하고 저장, 초기화와 재진입 시 차트와 설정 화면의 값이 일치하도록 처리MarketMap의 깊이, 카테고리와 테두리 속성 설정 화면 개발, 깊이 전환 시 편집값을 보존하고 로딩 이벤트와 사용자 변경을 구분해 저장 및 초기화 시 엔진 속성 반영Alert의 지표별 감시설정 화면과 감시목록 관리, 가로 스크롤과 병합 헤더를 지원하는 그리드 UI 개발, 터치 중 셀 재구성을 미뤄 화면 갱신 시 롱클릭이 끊기던 오류 수정React, Vite, SCSS로 회사와 제품 소개, 공지사항, 문의 화면을 갖춘 자사 반응형 홈페이지 개발, Sanity 기반 공지 조회와 검색 및 Google Apps Script를 통한 첨부파일 문의 접수 연동",
+      "textSegments": [
+        "Career",
+        "총 경력",
+        "8개월",
+        "(주)차트연구소",
+        "Software Engineer | 연구원/정규직",
+        "| 서울시 강서구",
+        "2026.02.09 ~ 재직 중",
+        "LS증권 차트 라이브러리의 키패드 결과 전달과 숫자 파싱을 보완해 연속 편집값 누락과 소수점/음수 저장 오류 해결, 이동평균선 체크 상태와 Signal 설정 및 분석도구 속성 반영 보완",
+        "기존 차트 엔진을 활용한 EasyChart 화면과 지표 설정 개발, ViewModel과 LiveData로 탭 간 편집 상태를 공유하고 저장, 초기화와 재진입 시 차트와 설정 화면의 값이 일치하도록 처리",
+        "MarketMap의 깊이, 카테고리와 테두리 속성 설정 화면 개발, 깊이 전환 시 편집값을 보존하고 로딩 이벤트와 사용자 변경을 구분해 저장 및 초기화 시 엔진 속성 반영",
+        "Alert의 지표별 감시설정 화면과 감시목록 관리, 가로 스크롤과 병합 헤더를 지원하는 그리드 UI 개발, 터치 중 셀 재구성을 미뤄 화면 갱신 시 롱클릭이 끊기던 오류 수정",
+        "React, Vite, SCSS로 회사와 제품 소개, 공지사항, 문의 화면을 갖춘 자사 반응형 홈페이지 개발, Sanity 기반 공지 조회와 검색 및 Google Apps Script를 통한 첨부파일 문의 접수 연동"
+      ],
+      "headings": [
+        "Career",
+        "(주)차트연구소"
+      ],
+      "emphasis": [],
+      "links": [],
+      "images": []
+    },
+    {
+      "id": "skills",
+      "text": "SkillsAndroid & KotlinJetpack Compose 화면 개발, 시계열 차트와 GitHub 잔디 형태의 UI 컴포넌트 직접 구현멀티 모듈, Clean Architecture, MVVM, MVI를 적용해 화면과 상태 처리, 데이터 접근의 책임 분리Coroutines 병렬 호출로 로딩 시간 약 56% 단축, 요청별 예외 처리로 일부 실패에도 성공한 데이터를 표시하는 비동기 처리 구현Room 로컬 동기화와 검색으로 응답시간 83% 이상 단축, 반복적인 목록 API 호출을 줄이는 데이터 조회 흐름 구현Paging3로 스크롤에 따라 필요한 데이터를 페이지 단위로 불러와, 초기 로딩과 메모리 부담을 줄이는 목록 구현JUnit5와 MockK로 ViewModel의 상태 변화와 비즈니스 로직을 단위 테스트로 검증Flow와 StateFlow를 통한 화면 상태 전달과 사용자 입력에 따른 이벤트 흐름 관리Gradle Convention Plugin으로 공통 build-logic을 구성해 모듈마다 반복되던 빌드 설정을 한곳에서 관리Compose UI 라이브러리 개발 및 Maven Central 배포BackendSpring Boot REST API 설계, 컨트롤러와 서비스, 데이터 접근 계층 분리MyBatis와 MySQL을 활용한 SQL 매핑, 조인, 페이지 조회와 검색 조건 처리함께 반영해야 하는 데이터 변경의 트랜잭션 처리, 입력 검증과 예외 처리 구현공통 응답 형식과 오류 응답, 페이지 조회 규칙 정의 및 클라이언트 연동FrontendReact, TypeScript, Vue 3와 Vite 화면 및 라우팅 구성, 상태 관리와 재사용 컴포넌트 분리AI Agent기능 구현, 리팩토링, 테스트 작성과 문서화에 Codex와 Claude Code 활용독립적인 작업을 여러 에이전트에 분배하고, 결과 통합 후 코드 리뷰와 테스트로 검증계획, 구현, 검증 단계별 필요 자료와 완료 기준 정의코드 구조와 작성 규칙을 문서화해 AI 도구에 작업 맥락 전달코드 리뷰, 테스트 생성과 리팩토링 후보 탐색 등 반복 작업 자동화자동 테스트와 검토 결과를 다음 수정에 반영CommunicationJira, GitHub를 통한 이슈 관리와 개발 진행 상황 공유, Figma와 Slack을 통한 디자인 협업과 커뮤니케이션코드 리뷰에서 설계 의도와 변경 이유 설명, 팀의 코드 작성 규칙 조율",
+      "textSegments": [
+        "Skills",
+        "Android & Kotlin",
+        "Jetpack Compose 화면 개발, 시계열 차트와 GitHub 잔디 형태의 UI 컴포넌트 직접 구현",
+        "멀티 모듈, Clean Architecture, MVVM, MVI를 적용해 화면과 상태 처리, 데이터 접근의 책임 분리",
+        "Coroutines 병렬 호출로 로딩 시간 약 56% 단축, 요청별 예외 처리로 일부 실패에도 성공한 데이터를 표시하는 비동기 처리 구현",
+        "Room 로컬 동기화와 검색으로 응답시간 83% 이상 단축, 반복적인 목록 API 호출을 줄이는 데이터 조회 흐름 구현",
+        "Paging3로 스크롤에 따라 필요한 데이터를 페이지 단위로 불러와, 초기 로딩과 메모리 부담을 줄이는 목록 구현",
+        "JUnit5와 MockK로 ViewModel의 상태 변화와 비즈니스 로직을 단위 테스트로 검증",
+        "Flow와 StateFlow를 통한 화면 상태 전달과 사용자 입력에 따른 이벤트 흐름 관리",
+        "Gradle Convention Plugin으로 공통 build-logic을 구성해 모듈마다 반복되던 빌드 설정을 한곳에서 관리",
+        "Compose UI 라이브러리 개발 및 Maven Central 배포",
+        "Backend",
+        "Spring Boot REST API 설계, 컨트롤러와 서비스, 데이터 접근 계층 분리",
+        "MyBatis와 MySQL을 활용한 SQL 매핑, 조인, 페이지 조회와 검색 조건 처리",
+        "함께 반영해야 하는 데이터 변경의 트랜잭션 처리, 입력 검증과 예외 처리 구현",
+        "공통 응답 형식과 오류 응답, 페이지 조회 규칙 정의 및 클라이언트 연동",
+        "Frontend",
+        "React, TypeScript, Vue 3와 Vite 화면 및 라우팅 구성, 상태 관리와 재사용 컴포넌트 분리",
+        "AI Agent",
+        "기능 구현, 리팩토링, 테스트 작성과 문서화에 Codex와 Claude Code 활용",
+        "독립적인 작업을 여러 에이전트에 분배하고, 결과 통합 후 코드 리뷰와 테스트로 검증",
+        "계획, 구현, 검증 단계별 필요 자료와 완료 기준 정의",
+        "코드 구조와 작성 규칙을 문서화해 AI 도구에 작업 맥락 전달",
+        "코드 리뷰, 테스트 생성과 리팩토링 후보 탐색 등 반복 작업 자동화",
+        "자동 테스트와 검토 결과를 다음 수정에 반영",
+        "Communication",
+        "Jira, GitHub를 통한 이슈 관리와 개발 진행 상황 공유, Figma와 Slack을 통한 디자인 협업과 커뮤니케이션",
+        "코드 리뷰에서 설계 의도와 변경 이유 설명, 팀의 코드 작성 규칙 조율"
+      ],
+      "headings": [
+        "Skills",
+        "Android & Kotlin",
+        "Backend",
+        "Frontend",
+        "AI Agent",
+        "Communication"
+      ],
+      "emphasis": [],
+      "links": [],
+      "images": []
+    },
+    {
+      "id": "education",
+      "text": "Education삼성 청년 AI SW 아카데미 13기 Mobile Track2025.01.20 ~ 2025.12.11삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 이수1학기 Java, Spring Boot, Vue.js, HTML, CSS, JavaScript, Flutter, Kotlin과 Android 학습2학기 팀 프로젝트 기반 서비스 기획과 개발, 결과 발표전현직 개발자 멘토링을 통한 프로젝트 진행CS와 Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)GitHub교착상태Jetpack Compose Recomposition인텐트 및 인텐트 필터고정 소수점 vs 부동 소수점Gson vs Moshi vs kotlinx.serialization주식회사 코드프레소 웹 개발 기초완성2023.10 ~ 2023.11Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 이수수료증 접기한성대학교 컴퓨터공학과 졸업2018.03 ~ 2024.02모바일소프트웨어 트랙 / 빅데이터 트랙GPA3.18 / 4.5데이터 마이닝A+자료구조A알고리즘A설계패턴A웹프로그래밍 기초A데이터통신A컴퓨터 프로그래밍A객체지향언어2B+빅데이터 기초B+소프트웨어공학B+",
+      "textSegments": [
+        "Education",
+        "삼성 청년 AI SW 아카데미 13기",
+        "Mobile Track",
+        "2025.01.20 ~ 2025.12.11",
+        "삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 이수",
+        "1학기 Java, Spring Boot, Vue.js, HTML, CSS, JavaScript, Flutter, Kotlin과 Android 학습",
+        "2학기 팀 프로젝트 기반 서비스 기획과 개발, 결과 발표",
+        "전현직 개발자 멘토링을 통한 프로젝트 진행",
+        "CS와 Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)",
+        "GitHub",
+        "교착상태",
+        "Jetpack Compose Recomposition",
+        "인텐트 및 인텐트 필터",
+        "고정 소수점 vs 부동 소수점",
+        "Gson vs Moshi vs kotlinx.serialization",
+        "주식회사 코드프레소 웹 개발 기초완성",
+        "2023.10 ~ 2023.11",
+        "Java, SQL, Spring Boot, Git 등 웹 개발 기초 비대면 교육 이수",
+        "수료증 접기",
+        "한성대학교 컴퓨터공학과 졸업",
+        "2018.03 ~ 2024.02",
+        "모바일소프트웨어 트랙 / 빅데이터 트랙",
+        "GPA",
+        "3.18 / 4.5",
+        "데이터 마이닝",
+        "A+",
+        "자료구조",
+        "A",
+        "알고리즘",
+        "A",
+        "설계패턴",
+        "A",
+        "웹프로그래밍 기초",
+        "A",
+        "데이터통신",
+        "A",
+        "컴퓨터 프로그래밍",
+        "A",
+        "객체지향언어2",
+        "B+",
+        "빅데이터 기초",
+        "B+",
+        "소프트웨어공학",
+        "B+"
+      ],
+      "headings": [
+        "Education",
+        "삼성 청년 AI SW 아카데미 13기 Mobile Track",
+        "주식회사 코드프레소 웹 개발 기초완성",
+        "한성대학교 컴퓨터공학과 졸업"
+      ],
+      "emphasis": [],
+      "links": [
+        {
+          "text": "GitHub",
+          "href": "https://github.com/Kotlin-Android-Study-with-SSAFY"
+        },
+        {
+          "text": "교착상태",
+          "href": "https://superohinsung.tistory.com/73"
+        },
+        {
+          "text": "Jetpack Compose Recomposition",
+          "href": "https://superohinsung.tistory.com/380"
+        },
+        {
+          "text": "인텐트 및 인텐트 필터",
+          "href": "https://superohinsung.tistory.com/100"
+        },
+        {
+          "text": "고정 소수점 vs 부동 소수점",
+          "href": "https://superohinsung.tistory.com/378"
+        },
+        {
+          "text": "Gson vs Moshi vs kotlinx.serialization",
+          "href": "https://superohinsung.tistory.com/399"
+        }
+      ],
+      "images": [
+        {
+          "src": "screenshot/codepresso-certificate.png",
+          "alt": "주식회사 코드프레소 웹 개발 기초완성 수료증"
+        }
+      ]
+    },
+    {
+      "id": "awards",
+      "text": "Awards & CertificatesAwardsSSAFY 자율 프로젝트 우수상삼성전자2025.11.202025-23-050154수상증접기SSAFY 공통 프로젝트 우수상삼성전자2025.08.182025-23-050065수상증접기CertificatesClaude Code in ActionAnthropic2026.04.23po6dwyvk5zs7자격증접기SQLD한국데이터산업진흥원2026.03.27SQLD-060003832자격증접기정보처리기사한국산업인력공단2024.12.1124203011265G자격증접기ADsP한국데이터산업진흥원2024.11.29ADsP-043007180자격증접기한국사능력검정시험 3급국사편찬위원회2021.11.0556-336465자격증접기Language test",
+      "textSegments": [
+        "Awards & Certificates",
+        "Awards",
+        "SSAFY 자율 프로젝트 우수상",
+        "삼성전자",
+        "2025.11.20",
+        "2025-23-050154",
+        "수상증접기",
+        "SSAFY 공통 프로젝트 우수상",
+        "삼성전자",
+        "2025.08.18",
+        "2025-23-050065",
+        "수상증접기",
+        "Certificates",
+        "Claude Code in Action",
+        "Anthropic",
+        "2026.04.23",
+        "po6dwyvk5zs7",
+        "자격증접기",
+        "SQLD",
+        "한국데이터산업진흥원",
+        "2026.03.27",
+        "SQLD-060003832",
+        "자격증접기",
+        "정보처리기사",
+        "한국산업인력공단",
+        "2024.12.11",
+        "24203011265G",
+        "자격증접기",
+        "ADsP",
+        "한국데이터산업진흥원",
+        "2024.11.29",
+        "ADsP-043007180",
+        "자격증접기",
+        "한국사능력검정시험 3급",
+        "국사편찬위원회",
+        "2021.11.05",
+        "56-336465",
+        "자격증접기",
+        "Language test"
+      ],
+      "headings": [
+        "Awards & Certificates",
+        "Awards",
+        "SSAFY 자율 프로젝트 우수상",
+        "SSAFY 공통 프로젝트 우수상",
+        "Certificates",
+        "Claude Code in Action",
+        "SQLD",
+        "정보처리기사",
+        "ADsP",
+        "한국사능력검정시험 3급",
+        "Language test"
+      ],
+      "emphasis": [
+        "SSAFY 자율 프로젝트 우수상",
+        "SSAFY 공통 프로젝트 우수상",
+        "Claude Code in Action",
+        "SQLD",
+        "정보처리기사",
+        "ADsP",
+        "한국사능력검정시험 3급"
+      ],
+      "links": [],
+      "images": [
+        {
+          "src": "screenshot/자율프로젝트우수상.png",
+          "alt": "SSAFY 자율 프로젝트 우수상"
+        },
+        {
+          "src": "screenshot/공통프로젝트우수상.png",
+          "alt": "SSAFY 공통 프로젝트 우수상"
+        },
+        {
+          "src": "screenshot/claude in action.png",
+          "alt": "Claude Code in Action"
+        },
+        {
+          "src": "screenshot/sqld.png",
+          "alt": "SQLD"
+        },
+        {
+          "src": "screenshot/정보처리기사.png",
+          "alt": "정보처리기사"
+        },
+        {
+          "src": "screenshot/ADSP.png",
+          "alt": "ADsP"
+        },
+        {
+          "src": "screenshot/korean-history-certificate.png",
+          "alt": "한국사능력검정시험 3급"
+        }
+      ]
+    },
+    {
+      "id": "activity",
+      "text": "Activity교내발표2023.07한성대학교 LBT 지식 나눔 프로젝트 — \"알고리즘을 공부하는 방법\" 발표재학생이 직접 고른 주제로 온오프라인에서 90분간 강의하는 프로그램 참여알고리즘 공부를 시작하기 어려워하는 후배들을 위한 학습 방법 발표직접 공부한 방법 설명, 코딩 테스트의 난이도와 자주 나오는 문제 유형 소개사진 접기교내조교2023.01 ~ 2023.02한성대학교 새싹 SW교육 캠프 조교고등학생 대상 실습과 팀 프로젝트 중심 SW 교육 프로그램한성대학교 주최 캠프 조교로 선발되어 고등학생 Python 실습 지원교내멘토2022.09 ~ 2023.09한성대학교 전공 소모임 안드로이드 멘토교내 전공 소모임 Android 멘토로 1년간 활동MVVM과 MVI, Activity와 Fragment 등 설명 및 관련 내용 블로그 기록MVI 패턴 정리커스텀 뷰View, ViewGroup, XML Layout클린 아키텍처 설정안드로이드 4대 컴포넌트교내동아리2022.06 ~ 2023.12한성대학교 교내 전공동아리 DC&M컴퓨터공학부 전공 동아리 DC&M 활동알고리즘 스터디 주최 및 참여 (2023.06 ~ 2023.12)(주)PickNumber 산학 협력 프로젝트에서 전국 업체 예약 및 위치 서비스 앱 개발 (2023.01 ~ 2023.06)동적 계획법재귀0-1 BFSLIS, LDS교내소모임2022.06 ~ 2023.12한성대학교 교내 전공 소모임 POCS전공 소모임 스터디와 프로젝트 참여교내동아리2019.03 ~ 2019.12한성대학교 교내 PIG 사진동아리 부회장 활동매년 전시회와 매주 야외 촬영을 진행하는 사진동아리부회장으로 1년간 동아리 운영사진 접기",
+      "textSegments": [
+        "Activity",
+        "교내",
+        "발표",
+        "2023.07",
+        "한성대학교 LBT 지식 나눔 프로젝트 — \"알고리즘을 공부하는 방법\" 발표",
+        "재학생이 직접 고른 주제로 온오프라인에서 90분간 강의하는 프로그램 참여",
+        "알고리즘 공부를 시작하기 어려워하는 후배들을 위한 학습 방법 발표",
+        "직접 공부한 방법 설명, 코딩 테스트의 난이도와 자주 나오는 문제 유형 소개",
+        "사진 접기",
+        "교내",
+        "조교",
+        "2023.01 ~ 2023.02",
+        "한성대학교 새싹 SW교육 캠프 조교",
+        "고등학생 대상 실습과 팀 프로젝트 중심 SW 교육 프로그램",
+        "한성대학교 주최 캠프 조교로 선발되어 고등학생 Python 실습 지원",
+        "교내",
+        "멘토",
+        "2022.09 ~ 2023.09",
+        "한성대학교 전공 소모임 안드로이드 멘토",
+        "교내 전공 소모임 Android 멘토로 1년간 활동",
+        "MVVM과 MVI, Activity와 Fragment 등 설명 및 관련 내용 블로그 기록",
+        "MVI 패턴 정리",
+        "커스텀 뷰",
+        "View, ViewGroup, XML Layout",
+        "클린 아키텍처 설정",
+        "안드로이드 4대 컴포넌트",
+        "교내",
+        "동아리",
+        "2022.06 ~ 2023.12",
+        "한성대학교 교내 전공동아리 DC&M",
+        "컴퓨터공학부 전공 동아리 DC&M 활동",
+        "알고리즘 스터디 주최 및 참여 (2023.06 ~ 2023.12)",
+        "(주)PickNumber 산학 협력 프로젝트에서 전국 업체 예약 및 위치 서비스 앱 개발 (2023.01 ~ 2023.06)",
+        "동적 계획법",
+        "재귀",
+        "0-1 BFS",
+        "LIS, LDS",
+        "교내",
+        "소모임",
+        "2022.06 ~ 2023.12",
+        "한성대학교 교내 전공 소모임 POCS",
+        "전공 소모임 스터디와 프로젝트 참여",
+        "교내",
+        "동아리",
+        "2019.03 ~ 2019.12",
+        "한성대학교 교내 PIG 사진동아리 부회장 활동",
+        "매년 전시회와 매주 야외 촬영을 진행하는 사진동아리",
+        "부회장으로 1년간 동아리 운영",
+        "사진 접기"
+      ],
+      "headings": [
+        "Activity",
+        "한성대학교 LBT 지식 나눔 프로젝트 — \"알고리즘을 공부하는 방법\" 발표",
+        "한성대학교 새싹 SW교육 캠프 조교",
+        "한성대학교 전공 소모임 안드로이드 멘토",
+        "한성대학교 교내 전공동아리 DC&M",
+        "한성대학교 교내 전공 소모임 POCS",
+        "한성대학교 교내 PIG 사진동아리 부회장 활동"
+      ],
+      "emphasis": [
+        "한성대학교 LBT 지식 나눔 프로젝트 — \"알고리즘을 공부하는 방법\" 발표",
+        "한성대학교 새싹 SW교육 캠프 조교",
+        "한성대학교 전공 소모임 안드로이드 멘토",
+        "한성대학교 교내 전공동아리 DC&M",
+        "한성대학교 교내 전공 소모임 POCS",
+        "한성대학교 교내 PIG 사진동아리 부회장 활동"
+      ],
+      "links": [
+        {
+          "text": "MVI 패턴 정리",
+          "href": "https://superohinsung.tistory.com/148"
+        },
+        {
+          "text": "커스텀 뷰",
+          "href": "https://superohinsung.tistory.com/36"
+        },
+        {
+          "text": "View, ViewGroup, XML Layout",
+          "href": "https://superohinsung.tistory.com/228"
+        },
+        {
+          "text": "클린 아키텍처 설정",
+          "href": "https://superohinsung.tistory.com/101"
+        },
+        {
+          "text": "안드로이드 4대 컴포넌트",
+          "href": "https://superohinsung.tistory.com/54"
+        },
+        {
+          "text": "동적 계획법",
+          "href": "https://superohinsung.tistory.com/198"
+        },
+        {
+          "text": "재귀",
+          "href": "https://superohinsung.tistory.com/186"
+        },
+        {
+          "text": "0-1 BFS",
+          "href": "https://superohinsung.tistory.com/162"
+        },
+        {
+          "text": "LIS, LDS",
+          "href": "https://superohinsung.tistory.com/145"
+        }
+      ],
+      "images": [
+        {
+          "src": "screenshot/lbt.png",
+          "alt": "한성대학교 LBT 지식 나눔 프로젝트 — \"알고리즘을 공부하는 방법\" 발표"
+        },
+        {
+          "src": "screenshot/pig.png",
+          "alt": "한성대학교 교내 PIG 사진동아리 부회장 활동"
+        }
+      ]
+    },
+    {
+      "id": "blog",
+      "text": "Blogsuperohinsung.tistory.com인성의 개발 공부 노트2021년부터 Kotlin, Android, CS와 알고리즘을 공부하며 220개 이상의 글 작성Compose 렌더링과 리컴포지션, MVVM과 MVI, 네트워크 및 직렬화 라이브러리의 학습과 비교 내용 기록Android 시리즈Compose UI, 인텐트와 4대 컴포넌트, 멀티 모듈 등 Android 개발 내용 정리Kotlin 시리즈코루틴과 컬렉션, 람다 등 Kotlin 문법과 라이브러리 사용법 정리CS 시리즈교착상태와 동기화, 페이징 등 운영체제 개념과 자료구조, 동적 계획법, 그래프 탐색 정리",
+      "textSegments": [
+        "Blog",
+        "superohinsung.tistory.com",
+        "인성의 개발 공부 노트",
+        "2021년부터 Kotlin, Android, CS와 알고리즘을 공부하며",
+        "220개 이상의 글",
+        "작성",
+        "Compose 렌더링과 리컴포지션, MVVM과 MVI, 네트워크 및 직렬화 라이브러리의 학습과 비교 내용 기록",
+        "Android 시리즈",
+        "Compose UI, 인텐트와 4대 컴포넌트, 멀티 모듈 등 Android 개발 내용 정리",
+        "Kotlin 시리즈",
+        "코루틴과 컬렉션, 람다 등 Kotlin 문법과 라이브러리 사용법 정리",
+        "CS 시리즈",
+        "교착상태와 동기화, 페이징 등 운영체제 개념과 자료구조, 동적 계획법, 그래프 탐색 정리"
+      ],
+      "headings": [
+        "Blog",
+        "Android 시리즈",
+        "Kotlin 시리즈",
+        "CS 시리즈"
+      ],
+      "emphasis": [
+        "220개 이상의 글"
+      ],
+      "links": [
+        {
+          "text": "superohinsung.tistory.com",
+          "href": "https://superohinsung.tistory.com"
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "projects",
+      "text": "Projects프로젝트 선택 시 상세페이지로 이동한길졸업 - Android2026.10.26 ~ 진행 중초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱KotlinJetpack ComposeRoomCoroutinesFlowMapLibrePleos SDK내눈 키오스크 - Android2025.10.10 ~ 2025.11.20고령층의 건강 측정과 결과 확인, 측정 결과에 맞는 광고를 제공하는 헬스케어 키오스크상용 키오스크 화면의 Compose 통일, Route, Screen, Component 역할 분리Activity Context와 Singleton의 보유 범위 조정, Listener 해제 지점 정리기능과 계층별 패키지 분리, 반복 UI의 공통 컴포넌트화로 중복 수정 범위 축소KotlinAndroid JetpackJetpack ComposeViewModelCoroutineFlow모리, Mo-Re - Android2025.08.25 ~ 2025.09.29서버 자원 사용량 차트와 AI 분석 리포트로 상태를 파악하는 Android 모니터링 앱기능별 모듈과 Convention Plugin을 구성해 공통 Gradle 설정을 한곳에서 관리Jetpack Compose로 서버 메트릭을 표시하는 시계열 차트 직접 구현6개 API 병렬 호출로 로딩 시간 약 356ms에서 156ms로 단축 (약 56% 단축)KotlinJetpack ComposeOrbit MVIHiltRetrofit2OkHttp3Navigation3DataStoreCoroutinesFlowGlim - Android2025.07.07 ~ 2025.08.18마음에 남은 글귀를 짧은 이미지 콘텐츠로 만들고 공유하는 Android 앱Orbit MVI로 입력 검증과 상태 변경을 ViewModel에 모아 UI 없이 검증 가능한 구조 구성DataStore와 인증 모듈에서 토큰 저장, 재발급 실패와 로그아웃 사유 공통 처리Channel 기반 Navigator로 화면 이동 요청, 전용 Composable로 백스택 처리 분리KotlinJetpack ComposeHiltOrbit MVICoroutineRetrofit3CoilFirebase MessagingDataStoreNavigationMockKTurbineJUnit주점부리 - Backend & Frontend2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15주류 상품 검색과 주문, 스탬프 적립 및 상품과 주문 관리 화면을 제공하는 웹 서비스주문과 상품 주문 수, 스탬프 적립 결과 검증 및 실패 시 전체 변경 롤백주문 20건의 상세 조회 쿼리를 20회에서 1회로 축소, 상세 조회 쿼리 수 95% 감소사용자, 상품, 주문, 댓글, 매장 API와 고객 및 관리자 화면 구현JavaSpring Boot 3MyBatisMySQLREST APIVue 3VitePiniaVue RouterDocker ComposeQuiz Cafe - Android2025.04 ~ 2025.06CS와 개발 지식을 퀴즈로 학습하고 문제집과 학습 기록을 관리하는 Android 앱메인 화면과 마이페이지 개발을 통한 1차 MVP 완성전체 화면의 Compose 구현과 재사용 가능한 공통 UI 개발UiState, Intent, SideEffect로 상태와 이벤트를 분리하는 MVI 구조 직접 적용KotlinJetpack ComposeHiltMVICoroutineRetrofit2RoomDataStoreGoogle AuthNavigationKtlintDear My Diary - Android2024.07 ~ 2024.08사진과 메모 기반 AI 일기, 감정 이모지와 캘린더를 제공하는 한성대학교와 Qualcomm의 산학협력 프로젝트FP16 GPT-2의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합이미지 분류 키워드, 음성 메모와 사용자 취향을 조합한 일기 생성 흐름 구현음성 입력의 감정 결과를 이모지로 변환하고 사용자별 선택 상태 저장 및 복원KotlinXMLGPT-2TensorFlow LiteViewModelStateFlowCoroutinesHiltRetrofitRoomDidimdol - Android2023.01 ~ 2023.06주변 업체 검색, 지도 위치 확인과 온라인 예약을 제공하는 Android 앱Android 팀 리드로 검색, 지도와 예약 기능 연결Room 기반 로컬 검색으로 업체 목록 응답시간을 3~5초에서 0.5초 이하로 단축검색된 업체에만 Direction5 API를 호출하고 거리순 정렬 결과 표시KotlinHiltMVVMCoroutinesRetrofit2RoomStateFlowNaver Maps APIDirection5 APIEncryptedSharedPreferencesBong # - Android2022.12 ~ 2023.06대학생의 재능 교환과 거래 채팅을 통한 일정 조율을 지원하는 Android 앱팀장 및 Android 개발 담당, 앱 전체 화면과 API 연동 단독 구현presentation, domain, data 모듈과 33개 UseCase로 화면, 도메인 규칙과 데이터 접근 분리WebSocket 1:1 거래 채팅 구현, 연결과 해제 및 메시지 전송의 데이터 계층 통합KotlinHiltMVVMClean ArchitectureCoroutinesPaging3Retrofit2GlideWebSocketStateFlowListAdapterPOCS - Android2022.06 ~ 2022.09한성대학교 전공 소모임 POCS 회원의 스터디 모집과 정보 공유를 위한 커뮤니티 앱스터디, 커뮤니티와 프로필 기능 개발기존 XML 화면의 70% 이상을 Jetpack Compose로 전환Paging3로 게시글을 페이지 단위로 불러와 초기 전체 데이터 로딩 방지KotlinJetpack ComposeHiltMVVMClean ArchitectureCoroutinesPaging3Retrofit2GlideMarkwonJUnit4Espresso",
+      "textSegments": [
+        "Projects",
+        "프로젝트 선택 시 상세페이지로 이동",
+        "한길졸업 - Android",
+        "2026.10.26 ~ 진행 중",
+        "초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱",
+        "Kotlin",
+        "Jetpack Compose",
+        "Room",
+        "Coroutines",
+        "Flow",
+        "MapLibre",
+        "Pleos SDK",
+        "내눈 키오스크 - Android",
+        "2025.10.10 ~ 2025.11.20",
+        "고령층의 건강 측정과 결과 확인, 측정 결과에 맞는 광고를 제공하는 헬스케어 키오스크",
+        "상용 키오스크 화면의 Compose 통일, Route, Screen, Component 역할 분리",
+        "Activity Context와 Singleton의 보유 범위 조정, Listener 해제 지점 정리",
+        "기능과 계층별 패키지 분리, 반복 UI의 공통 컴포넌트화로 중복 수정 범위 축소",
+        "Kotlin",
+        "Android Jetpack",
+        "Jetpack Compose",
+        "ViewModel",
+        "Coroutine",
+        "Flow",
+        "모리, Mo-Re - Android",
+        "2025.08.25 ~ 2025.09.29",
+        "서버 자원 사용량 차트와 AI 분석 리포트로 상태를 파악하는 Android 모니터링 앱",
+        "기능별 모듈과 Convention Plugin을 구성해 공통 Gradle 설정을 한곳에서 관리",
+        "Jetpack Compose로 서버 메트릭을 표시하는 시계열 차트 직접 구현",
+        "6개 API 병렬 호출로 로딩 시간",
+        "약 356ms에서 156ms로 단축",
+        "(약 56% 단축)",
+        "Kotlin",
+        "Jetpack Compose",
+        "Orbit MVI",
+        "Hilt",
+        "Retrofit2",
+        "OkHttp3",
+        "Navigation3",
+        "DataStore",
+        "Coroutines",
+        "Flow",
+        "Glim - Android",
+        "2025.07.07 ~ 2025.08.18",
+        "마음에 남은 글귀를 짧은 이미지 콘텐츠로 만들고 공유하는 Android 앱",
+        "Orbit MVI로 입력 검증과 상태 변경을 ViewModel에 모아 UI 없이 검증 가능한 구조 구성",
+        "DataStore와 인증 모듈에서 토큰 저장, 재발급 실패와 로그아웃 사유 공통 처리",
+        "Channel 기반 Navigator로 화면 이동 요청, 전용 Composable로 백스택 처리 분리",
+        "Kotlin",
+        "Jetpack Compose",
+        "Hilt",
+        "Orbit MVI",
+        "Coroutine",
+        "Retrofit3",
+        "Coil",
+        "Firebase Messaging",
+        "DataStore",
+        "Navigation",
+        "MockK",
+        "Turbine",
+        "JUnit",
+        "주점부리 - Backend & Frontend",
+        "2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15",
+        "주류 상품 검색과 주문, 스탬프 적립 및 상품과 주문 관리 화면을 제공하는 웹 서비스",
+        "주문과 상품 주문 수, 스탬프 적립 결과 검증 및 실패 시 전체 변경 롤백",
+        "주문 20건의 상세 조회 쿼리를",
+        "20회에서 1회로 축소",
+        ", 상세 조회 쿼리 수 95% 감소",
+        "사용자, 상품, 주문, 댓글, 매장 API와 고객 및 관리자 화면 구현",
+        "Java",
+        "Spring Boot 3",
+        "MyBatis",
+        "MySQL",
+        "REST API",
+        "Vue 3",
+        "Vite",
+        "Pinia",
+        "Vue Router",
+        "Docker Compose",
+        "Quiz Cafe - Android",
+        "2025.04 ~ 2025.06",
+        "CS와 개발 지식을 퀴즈로 학습하고 문제집과 학습 기록을 관리하는 Android 앱",
+        "메인 화면과 마이페이지 개발을 통한 1차 MVP 완성",
+        "전체 화면의 Compose 구현과 재사용 가능한 공통 UI 개발",
+        "UiState, Intent, SideEffect로 상태와 이벤트를 분리하는 MVI 구조 직접 적용",
+        "Kotlin",
+        "Jetpack Compose",
+        "Hilt",
+        "MVI",
+        "Coroutine",
+        "Retrofit2",
+        "Room",
+        "DataStore",
+        "Google Auth",
+        "Navigation",
+        "Ktlint",
+        "Dear My Diary - Android",
+        "2024.07 ~ 2024.08",
+        "사진과 메모 기반 AI 일기, 감정 이모지와 캘린더를 제공하는 한성대학교와 Qualcomm의 산학협력 프로젝트",
+        "FP16 GPT-2의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합",
+        "이미지 분류 키워드, 음성 메모와 사용자 취향을 조합한 일기 생성 흐름 구현",
+        "음성 입력의 감정 결과를 이모지로 변환하고 사용자별 선택 상태 저장 및 복원",
+        "Kotlin",
+        "XML",
+        "GPT-2",
+        "TensorFlow Lite",
+        "ViewModel",
+        "StateFlow",
+        "Coroutines",
+        "Hilt",
+        "Retrofit",
+        "Room",
+        "Didimdol - Android",
+        "2023.01 ~ 2023.06",
+        "주변 업체 검색, 지도 위치 확인과 온라인 예약을 제공하는 Android 앱",
+        "Android 팀 리드로 검색, 지도와 예약 기능 연결",
+        "Room 기반 로컬 검색으로 업체 목록 응답시간을",
+        "3~5초에서 0.5초 이하로 단축",
+        "검색된 업체에만 Direction5 API를 호출하고 거리순 정렬 결과 표시",
+        "Kotlin",
+        "Hilt",
+        "MVVM",
+        "Coroutines",
+        "Retrofit2",
+        "Room",
+        "StateFlow",
+        "Naver Maps API",
+        "Direction5 API",
+        "EncryptedSharedPreferences",
+        "Bong # - Android",
+        "2022.12 ~ 2023.06",
+        "대학생의 재능 교환과 거래 채팅을 통한 일정 조율을 지원하는 Android 앱",
+        "팀장 및 Android 개발 담당, 앱 전체 화면과 API 연동 단독 구현",
+        "presentation, domain, data 모듈과 33개 UseCase로 화면, 도메인 규칙과 데이터 접근 분리",
+        "WebSocket 1:1 거래 채팅 구현, 연결과 해제 및 메시지 전송의 데이터 계층 통합",
+        "Kotlin",
+        "Hilt",
+        "MVVM",
+        "Clean Architecture",
+        "Coroutines",
+        "Paging3",
+        "Retrofit2",
+        "Glide",
+        "WebSocket",
+        "StateFlow",
+        "ListAdapter",
+        "POCS - Android",
+        "2022.06 ~ 2022.09",
+        "한성대학교 전공 소모임 POCS 회원의 스터디 모집과 정보 공유를 위한 커뮤니티 앱",
+        "스터디, 커뮤니티와 프로필 기능 개발",
+        "기존 XML 화면의",
+        "70% 이상을 Jetpack Compose로 전환",
+        "Paging3로 게시글을 페이지 단위로 불러와 초기 전체 데이터 로딩 방지",
+        "Kotlin",
+        "Jetpack Compose",
+        "Hilt",
+        "MVVM",
+        "Clean Architecture",
+        "Coroutines",
+        "Paging3",
+        "Retrofit2",
+        "Glide",
+        "Markwon",
+        "JUnit4",
+        "Espresso"
+      ],
+      "headings": [
+        "Projects",
+        "한길졸업 - Android",
+        "내눈 키오스크 - Android",
+        "모리, Mo-Re - Android",
+        "Glim - Android",
+        "주점부리 - Backend & Frontend",
+        "Quiz Cafe - Android",
+        "Dear My Diary - Android",
+        "Didimdol - Android",
+        "Bong # - Android",
+        "POCS - Android"
+      ],
+      "emphasis": [
+        "약 356ms에서 156ms로 단축",
+        "20회에서 1회로 축소",
+        "3~5초에서 0.5초 이하로 단축",
+        "70% 이상을 Jetpack Compose로 전환"
+      ],
+      "links": [
+        {
+          "text": "한길졸업 - Android2026.10.26 ~ 진행 중초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱KotlinJetpack ComposeRoomCoroutinesFlowMapLibrePleos SDK",
+          "href": "/projects/hangil"
+        },
+        {
+          "text": "내눈 키오스크 - Android2025.10.10 ~ 2025.11.20고령층의 건강 측정과 결과 확인, 측정 결과에 맞는 광고를 제공하는 헬스케어 키오스크상용 키오스크 화면의 Compose 통일, Route, Screen, Component 역할 분리Activity Context와 Singleton의 보유 범위 조정, Listener 해제 지점 정리기능과 계층별 패키지 분리, 반복 UI의 공통 컴포넌트화로 중복 수정 범위 축소KotlinAndroid JetpackJetpack ComposeViewModelCoroutineFlow",
+          "href": "/projects/naenun-kiosk"
+        },
+        {
+          "text": "모리, Mo-Re - Android2025.08.25 ~ 2025.09.29서버 자원 사용량 차트와 AI 분석 리포트로 상태를 파악하는 Android 모니터링 앱기능별 모듈과 Convention Plugin을 구성해 공통 Gradle 설정을 한곳에서 관리Jetpack Compose로 서버 메트릭을 표시하는 시계열 차트 직접 구현6개 API 병렬 호출로 로딩 시간 약 356ms에서 156ms로 단축 (약 56% 단축)KotlinJetpack ComposeOrbit MVIHiltRetrofit2OkHttp3Navigation3DataStoreCoroutinesFlow",
+          "href": "/projects/mo-re"
+        },
+        {
+          "text": "Glim - Android2025.07.07 ~ 2025.08.18마음에 남은 글귀를 짧은 이미지 콘텐츠로 만들고 공유하는 Android 앱Orbit MVI로 입력 검증과 상태 변경을 ViewModel에 모아 UI 없이 검증 가능한 구조 구성DataStore와 인증 모듈에서 토큰 저장, 재발급 실패와 로그아웃 사유 공통 처리Channel 기반 Navigator로 화면 이동 요청, 전용 Composable로 백스택 처리 분리KotlinJetpack ComposeHiltOrbit MVICoroutineRetrofit3CoilFirebase MessagingDataStoreNavigationMockKTurbineJUnit",
+          "href": "/projects/glim"
+        },
+        {
+          "text": "주점부리 - Backend & Frontend2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15주류 상품 검색과 주문, 스탬프 적립 및 상품과 주문 관리 화면을 제공하는 웹 서비스주문과 상품 주문 수, 스탬프 적립 결과 검증 및 실패 시 전체 변경 롤백주문 20건의 상세 조회 쿼리를 20회에서 1회로 축소, 상세 조회 쿼리 수 95% 감소사용자, 상품, 주문, 댓글, 매장 API와 고객 및 관리자 화면 구현JavaSpring Boot 3MyBatisMySQLREST APIVue 3VitePiniaVue RouterDocker Compose",
+          "href": "/projects/pubburi"
+        },
+        {
+          "text": "Quiz Cafe - Android2025.04 ~ 2025.06CS와 개발 지식을 퀴즈로 학습하고 문제집과 학습 기록을 관리하는 Android 앱메인 화면과 마이페이지 개발을 통한 1차 MVP 완성전체 화면의 Compose 구현과 재사용 가능한 공통 UI 개발UiState, Intent, SideEffect로 상태와 이벤트를 분리하는 MVI 구조 직접 적용KotlinJetpack ComposeHiltMVICoroutineRetrofit2RoomDataStoreGoogle AuthNavigationKtlint",
+          "href": "/projects/quiz-cafe"
+        },
+        {
+          "text": "Dear My Diary - Android2024.07 ~ 2024.08사진과 메모 기반 AI 일기, 감정 이모지와 캘린더를 제공하는 한성대학교와 Qualcomm의 산학협력 프로젝트FP16 GPT-2의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합이미지 분류 키워드, 음성 메모와 사용자 취향을 조합한 일기 생성 흐름 구현음성 입력의 감정 결과를 이모지로 변환하고 사용자별 선택 상태 저장 및 복원KotlinXMLGPT-2TensorFlow LiteViewModelStateFlowCoroutinesHiltRetrofitRoom",
+          "href": "/projects/dear-my-diary"
+        },
+        {
+          "text": "Didimdol - Android2023.01 ~ 2023.06주변 업체 검색, 지도 위치 확인과 온라인 예약을 제공하는 Android 앱Android 팀 리드로 검색, 지도와 예약 기능 연결Room 기반 로컬 검색으로 업체 목록 응답시간을 3~5초에서 0.5초 이하로 단축검색된 업체에만 Direction5 API를 호출하고 거리순 정렬 결과 표시KotlinHiltMVVMCoroutinesRetrofit2RoomStateFlowNaver Maps APIDirection5 APIEncryptedSharedPreferences",
+          "href": "/projects/didimdol"
+        },
+        {
+          "text": "Bong # - Android2022.12 ~ 2023.06대학생의 재능 교환과 거래 채팅을 통한 일정 조율을 지원하는 Android 앱팀장 및 Android 개발 담당, 앱 전체 화면과 API 연동 단독 구현presentation, domain, data 모듈과 33개 UseCase로 화면, 도메인 규칙과 데이터 접근 분리WebSocket 1:1 거래 채팅 구현, 연결과 해제 및 메시지 전송의 데이터 계층 통합KotlinHiltMVVMClean ArchitectureCoroutinesPaging3Retrofit2GlideWebSocketStateFlowListAdapter",
+          "href": "/projects/bong"
+        },
+        {
+          "text": "POCS - Android2022.06 ~ 2022.09한성대학교 전공 소모임 POCS 회원의 스터디 모집과 정보 공유를 위한 커뮤니티 앱스터디, 커뮤니티와 프로필 기능 개발기존 XML 화면의 70% 이상을 Jetpack Compose로 전환Paging3로 게시글을 페이지 단위로 불러와 초기 전체 데이터 로딩 방지KotlinJetpack ComposeHiltMVVMClean ArchitectureCoroutinesPaging3Retrofit2GlideMarkwonJUnit4Espresso",
+          "href": "/projects/pocs"
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "opensource",
+      "text": "Open Source라이브러리 선택 시 GitHub 저장소로 이동Compose-Chart2026.02 ~ 2026.03 (Android 1인)Canvas API로 선, 막대, 도넛, 원형, 게이지, 레이더 차트를 구현한 Jetpack Compose 라이브러리. Maven Central v1.3.2 배포KotlinJetpack ComposeCanvas APICompose-Git-Grass2026.02 (Android 1인)Compose 기본 요소로 GitHub 잔디 형태의 UI를 구현한 라이브러리. Maven Central v1.2.0 배포KotlinJetpack Compose",
+      "textSegments": [
+        "Open Source",
+        "라이브러리 선택 시 GitHub 저장소로 이동",
+        "Compose-Chart",
+        "2026.02 ~ 2026.03 (Android 1인)",
+        "Canvas API로 선, 막대, 도넛, 원형, 게이지, 레이더 차트를 구현한 Jetpack Compose 라이브러리. Maven Central v1.3.2 배포",
+        "Kotlin",
+        "Jetpack Compose",
+        "Canvas API",
+        "Compose-Git-Grass",
+        "2026.02 (Android 1인)",
+        "Compose 기본 요소로 GitHub 잔디 형태의 UI를 구현한 라이브러리. Maven Central v1.2.0 배포",
+        "Kotlin",
+        "Jetpack Compose"
+      ],
+      "headings": [
+        "Open Source",
+        "Compose-Chart",
+        "Compose-Git-Grass"
+      ],
+      "emphasis": [],
+      "links": [
+        {
+          "text": "Compose-Chart2026.02 ~ 2026.03 (Android 1인)Canvas API로 선, 막대, 도넛, 원형, 게이지, 레이더 차트를 구현한 Jetpack Compose 라이브러리. Maven Central v1.3.2 배포KotlinJetpack ComposeCanvas API",
+          "href": "https://github.com/ois0886/compose-chart"
+        },
+        {
+          "text": "Compose-Git-Grass2026.02 (Android 1인)Compose 기본 요소로 GitHub 잔디 형태의 UI를 구현한 라이브러리. Maven Central v1.2.0 배포KotlinJetpack Compose",
+          "href": "https://github.com/ois0886/compose-git-grass"
+        }
+      ],
+      "images": [
+        {
+          "src": "screenshot/chart.png",
+          "alt": "Compose-Chart"
+        },
+        {
+          "src": "screenshot/Grass1.png",
+          "alt": "Compose-Git-Grass"
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "text": "Contact포트폴리오를 방문해 주셔서 감사합니다.EmailGitHub",
+      "textSegments": [
+        "Contact",
+        "포트폴리오를 방문해 주셔서 감사합니다.",
+        "Email",
+        "GitHub"
+      ],
+      "headings": [
+        "Contact"
+      ],
+      "emphasis": [],
+      "links": [
+        {
+          "text": "Email",
+          "href": "mailto:superohinsung@naver.com"
+        },
+        {
+          "text": "GitHub",
+          "href": "https://github.com/ois0886"
+        }
+      ],
+      "images": []
+    }
+  ]
+}

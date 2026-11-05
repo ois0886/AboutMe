@@ -29,8 +29,8 @@
 
 ## Sections
 
-홈 섹션 순서: About → Career → Skills → Education → Awards → Activity → Blog → Projects → Open Source → Contact
-(Career / Education / Activity / Projects / Contact 는 `sectionAlt` 교차 배경)
+홈 섹션 순서: About → Career → Projects → Open Source → Skills → Education → Awards → Activity → Blog → Contact
+경력과 프로젝트, 공개 배포물을 먼저 배치하고 헤더의 주요 링크와 전체 목차로 이동합니다.
 
 | Section | Description |
 |---------|-------------|
@@ -66,7 +66,8 @@
 | `bong` | Bong # | 8 (2 cols) | 2 | 8 |
 | `pocs` | POCS (Play Store 배포) | 4 (3 cols) | 2 | 6 |
 
-상세 페이지 구성: 헤더 → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights → 담당 역할 및 기여 → 문제 해결(이미지와 구현 설명 포함) → 스크린샷 → 프로젝트 회고 (내용이 비어 있는 섹션은 렌더링하지 않음)
+상세 페이지 구성: 헤더 → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights → 담당 역할 및 기여 → 문제 해결(이미지와 구현 설명 포함) → 이미지 → 프로젝트 회고 (내용이 비어 있는 섹션은 렌더링하지 않음)
+데스크톱에서는 고정 목차, 모바일에서는 접을 수 있는 목차를 제공합니다. 설명 이미지와 스크린샷은 확대 보기에서 화면에 맞추거나 원본 크기로 확인할 수 있습니다.
 
 ## Content Sync Rule
 
@@ -82,30 +83,43 @@
 ## Features
 
 - Light / Dark mode toggle, theme persisted in `localStorage` and applied before first paint (`main.tsx`)
-- Active section navigation and accessible mobile drawer
+- Shared header with primary section links, a full contents menu, and a keyboard skip link
 - Scroll reveal animations with `prefers-reduced-motion` support
 - Scroll position restore on back navigation (`sessionStorage` + `no-transition` to avoid flicker)
 - Alternating section bands and responsive timeline / card layouts
 - Project detail pages with problem-solving visuals, implementation explanations, insights
+- Sticky desktop / collapsible mobile project contents and an accessible image viewer
 - Rich text emphasis in project copy via `rich()` / `strong()` helpers
-- Responsive media cards and screenshot galleries (2 / 3 column grids)
+- Responsive project rows and screenshot galleries (2 / 3 column grids)
 - Keyboard focus states and 44px mobile touch targets
 
 ## Design System
 
 CSS 변수는 `src/styles/global.css`에 정의되어 있고, 다크 모드는 `[data-theme='dark']`로 토글합니다.
+Pretendard Variable v1.3.9를 `public/fonts/`에서 직접 제공하며, 원본 SIL Open Font License를 함께 보관합니다. 글꼴 원본은 [Pretendard 공식 저장소](https://github.com/orioncactus/pretendard/tree/v1.3.9)에서 확인할 수 있습니다.
 
 | Token | Light | Dark |
 |-------|-------|------|
-| `--color-primary` | `#46627f` | `#9cb3c9` |
-| `--color-primary-strong` | `#172b40` | `#e4ebf2` |
-| `--color-bg` | `#f6f7f9` | `#0b1220` |
-| `--color-bg-secondary` | `#eef2f6` | `#111b2b` |
-| `--color-bg-card` | `#ffffff` | `#162235` |
-| `--color-text` | `#172033` | `#f1f5f9` |
+| `--color-primary` | `#24615b` | `#a7d7cc` |
+| `--color-primary-strong` | `#182d31` | `#f2f3ee` |
+| `--color-bg` | `#f7f5ef` | `#101c20` |
+| `--color-bg-secondary` | `#eef0e9` | `#142328` |
+| `--color-bg-card` | `#fffefa` | `#192a2f` |
+| `--color-text` | `#182d31` | `#f2f3ee` |
 
-- **Layout:** `--max-width: 1120px`, `--radius-card: 16px`, 데스크톱 그리드 / 모바일 단일 컬럼
+- **Layout:** 최대 폭 1240px, 상세 본문 읽기 폭 720px, 헤더 높이 데스크톱 72px / 모바일 64px
+- **Typography:** 기본 본문 18px / 줄 높이 1.8, Pretendard Variable
 - **Motion:** 절제된 스크롤 리빌과 hover 피드백, reduced motion 환경에서 자동 최소화
+
+디자인 판단에 참고한 자료와 적용 방향입니다.
+
+| Reference | Application |
+|-----------|-------------|
+| [스타벅스 코리아 공식 사이트](https://www.starbucks.co.kr/index.do/), [토스 공식 사이트](https://toss.im/) | 브랜드 색과 여백, 정보 위계의 시각 참고 |
+| [Tuch 외, 시각적 복잡성과 첫인상](https://research.google/pubs/the-role-of-visual-complexity-and-prototypicality-regarding-first-impression-of-websites-working-towards-understanding-aesthetic-judgments/) | 장식 밀도를 줄이고 일관된 구획과 여백으로 첫 화면 구성 |
+| [NN/g, Layer-Cake Scanning](https://www.nngroup.com/articles/layer-cake-pattern-scanning/) | 제목과 구획을 분명히 하고 경력, 프로젝트, 공개 배포물 우선 배치 |
+| [Don Norman, The Design of Everyday Things](https://www.hachettebookgroup.com/titles/don-norman/the-design-of-everyday-things/9780465050659/) | 조작 가능성을 드러내고 이동과 확대 보기의 상태를 분명히 표시 |
+| [W3C, WCAG 2.2](https://www.w3.org/TR/WCAG22/) | 키보드 탐색, 포커스 표시, 명도 대비와 조작 영역 확인 |
 
 ## Getting Started
 
@@ -138,6 +152,7 @@ Vitest + React Testing Library 기반으로 컴포넌트와 데이터, 라우팅
 
 - `src/components/__tests__/` — Career(총 경력 계산), Header(네비게이션과 테마), OpenSource, Projects
 - `src/data/__tests__/` — projects 데이터 무결성, 문제 해결 이미지와 정적 문서 검증
+- `src/test/*-preserved-content.json` — 리디자인 전 홈과 프로젝트 원문 기준값, 승인된 세 문장 삭제 외의 내용 보존 검증
 - `src/hooks/__tests__/` — useScrollReveal
 - `src/pages/__tests__/` — ProjectDetail 렌더링
 

@@ -1,11 +1,16 @@
 import { render, screen, within } from '@testing-library/react'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { MemoryRouter } from 'react-router-dom'
 import About from '../About'
+
+function renderAbout() {
+  return render(<MemoryRouter><About /></MemoryRouter>)
+}
 
 describe('About', () => {
   it('프로필과 검색 및 공유 메타데이터에 Software Engineer를 표시한다', () => {
-    render(<About />)
+    renderAbout()
     expect(screen.getByText('Software Engineer')).toBeInTheDocument()
 
     const document = new DOMParser().parseFromString(
@@ -22,7 +27,7 @@ describe('About', () => {
   })
 
   it('웹 Introduction은 기존 문구와 항목 순서, 강조를 보존한다', () => {
-    render(<About />)
+    renderAbout()
 
     const introduction = screen.getByRole('heading', { name: 'Introduction' }).parentElement!
     const webItems = within(introduction).getAllByRole('listitem')
@@ -43,5 +48,15 @@ describe('About', () => {
         ['블로그', '재현 가능한 지식'],
         ['감이 아닌 근거', '협업'],
       ])
+  })
+
+  it('기존 이름과 직무, 프로젝트와 연락처 이동 버튼을 표시한다', () => {
+    renderAbout()
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Oh In Seong' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '프로젝트 보기' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '연락하기' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '프로필 사진' }))
+      .toHaveAttribute('src', 'screenshot/profile.jpg')
   })
 })

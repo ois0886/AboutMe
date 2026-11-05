@@ -152,7 +152,7 @@ function Activity() {
 
   return (
     <section id="activity" className="section reveal" ref={ref}>
-      <h2 className="section__title">Activity</h2>
+      <h2 className="section__title" aria-label="Activity">Activity</h2>
       <div className={styles.list}>
         {activities.map((activity) => (
           <ActivityCard key={activity.title} activity={activity} />

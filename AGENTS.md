@@ -28,7 +28,8 @@
 ```
 src/
   components/       # 페이지 섹션 컴포넌트 (각 컴포넌트별 .tsx + .module.css)
-    Header          # 고정 헤더 (섹션 네비게이션 + 모바일 드로어 + 다크모드 토글)
+    Header          # 홈과 상세 공용 고정 헤더 (주요 섹션 링크 + 전체 목차 + 테마 토글)
+    ImageViewer     # 상세 이미지 확대, 화면 맞춤과 원본 크기 보기
     About           # 프로필 사진 + 기본 정보(Email/GitHub/Blog/LinkedIn) + 자기소개
     Career          # 경력 (차트연구소) + 총 경력 자동 계산
     Skills          # 기술 스택 (Android & Kotlin, Backend, Frontend, AI Agent, Communication)
@@ -55,10 +56,12 @@ src/
     global.css      # CSS 변수, 글로벌 스타일, 다크모드 변수, 섹션 교차 스타일
   test/
     setup.ts        # Vitest 셋업 (jest-dom)
+    *-preserved-content.json # 리디자인 전 홈과 프로젝트 콘텐츠 기준값
   App.tsx           # 라우팅 + 섹션 교차 배경(Section 래퍼) + 스크롤 복원(ScrollToTop)
   main.tsx          # 엔트리 포인트 (HashRouter)
 public/
   screenshot/       # 이미지 파일 (프로필, 수상증, 자격증, 활동 사진, 프로젝트 스크린샷)
+  fonts/            # Pretendard Variable v1.3.9와 SIL Open Font License
 ```
 
 ## 라우팅
@@ -73,16 +76,19 @@ public/
 
 ## 섹션 순서 (홈)
 
-Header → About → Career(alt) → Skills → Education(alt) → Awards → Activity(alt) → Blog → Projects(alt) → OpenSource → Contact(alt) → Footer
+Header → About → Career(alt) → Projects → OpenSource(alt) → Skills → Education(alt) → Awards → Activity(alt) → Blog → Contact → Footer
 
-(alt) = `sectionAlt` 교차 배경 적용 섹션
+`(alt)`는 `sectionAlt` 교차 배경을 적용한 섹션입니다. 헤더의 주요 링크와 전체 목차는 이 순서를 따릅니다.
 
 ## 테마
 
-- **라이트 모드**: 스틸 블루 계열 (`--color-primary: #46627f`), 배경 `#f6f7f9`, 보조배경 `#eef2f6`, 카드 `#ffffff`
-- **다크 모드**: 밝은 블루그레이 (`--color-primary: #9cb3c9`), 배경 `#0b1220`, 보조배경 `#111b2b`, 카드 `#162235`
+- **라이트 모드**: 딥 틸 계열 (`--color-primary: #24615b`), 배경 `#f7f5ef`, 보조배경 `#eef0e9`, 카드 `#fffefa`
+- **다크 모드**: 민트 계열 (`--color-primary: #a7d7cc`), 배경 `#101c20`, 보조배경 `#142328`, 카드 `#192a2f`
 - CSS 변수 기반 (`[data-theme='dark']`) — localStorage에 테마 저장
 - 헤더에 다크모드 토글 버튼
+- Pretendard Variable v1.3.9를 `public/fonts/`에서 제공하며 원본 OFL 라이선스 보관
+- 최대 레이아웃 폭 1240px, 상세 본문 읽기 폭 720px, 고정 헤더 높이 데스크톱 72px / 모바일 64px
+- 기본 본문 글자 크기 18px, 줄 높이 1.8, 카드 반경 20px
 - 섹션 교차 배경 (`sectionAlt` 클래스)
 - `prefers-reduced-motion: reduce` 대응, 스크롤 복원 시 `no-transition` 클래스로 깜빡임 방지
 
@@ -101,10 +107,12 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 
 ## 프로젝트 상세 페이지 구조
 
-헤더(제목, 설명, 기간/인원/역할, 기술 태그) → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights(+ insightImages) → 담당 역할 및 기여 → 문제 해결(문제/해결 방법/결과/생성형 이미지/구체적인 구현 설명/대체안, 복수 블록 시 번호 구분) → 스크린샷(첫 장 전체 폭 + 나머지 그리드 + 마지막 1장 단독) → 프로젝트 회고
+헤더(제목, 설명, 기간/인원/역할, 기술 태그) → 성과 및 결과 → 링크 → 프로젝트 개요 → 주요 요구사항 → Project Insights(+ insightImages) → 담당 역할 및 기여 → 문제 해결(문제/해결 방법/결과/생성형 이미지/구체적인 구현 설명/대체안, 복수 블록 시 번호 구분) → 이미지(첫 장 전체 폭 + 나머지 그리드 + 마지막 1장 단독) → 프로젝트 회고
 
 내용이 비어 있는 섹션은 렌더링하지 않습니다.
 한길졸업은 상단 기본 정보와 프로젝트 개요 두 문장만 유지하고, 카드 성과와 상세 하위 섹션의 데이터는 빈 배열로 둡니다.
+데스크톱 고정 목차와 모바일 접이식 목차는 실제 렌더링하는 섹션에만 연결합니다. 상세 이미지는 ImageViewer에서 화면 맞춤과 원본 크기 보기, 닫기와 키보드 탐색을 제공합니다.
+리디자인의 콘텐츠 기준은 `src/test/home-preserved-content.json`과 `src/test/projects-preserved-content.json`입니다. 프로젝트 데이터에서 승인된 공개 제한 안내 세 문장 삭제 외에는 원문, 강조, 링크, 이미지와 항목 순서를 유지합니다.
 
 ## 등록된 프로젝트
 
@@ -160,7 +168,7 @@ Header → About → Career(alt) → Skills → Education(alt) → Awards → Ac
 - 경력과 프로젝트 내용은 지원 직무에서 의미 있는 기여인지, 해결한 문제와 결과가 설득력 있게 드러나는지 판단해 선별합니다. 중요도가 낮은 세부 업무와 중복 설명은 줄입니다.
 - 코드 라인, 모듈, API, 데이터 유형 등의 규모 수치는 업무의 복잡도나 책임 범위를 설명할 때 사용해도 됩니다. 단순한 개수 증가를 품질이나 성능 개선으로 표현하지 않으며, 개선율(%)은 개선 전후 값이나 측정 자료로 확인 가능한 경우에만 사용합니다.
 - 들여쓰기: 2 spaces, 세미콜론 없음, 작은따옴표
-- 카드 스타일: border + `--radius-card` + `--shadow-card` + hover 효과 통일
+- 프로젝트와 오픈소스 카드: border + `--radius-card` + 절제된 shadow와 hover 효과 통일. 경력, 교육, 활동과 기술 목록은 선과 여백으로 구분
 - 이미지 토글: useState + 토글 버튼 패턴 (Activity, Awards에서 공통 사용)
 - 섹션 컴포넌트는 `useScrollReveal` 훅 + `section reveal` 클래스 사용
 - 데이터/컴포넌트를 변경하면 `src/**/__tests__`의 관련 테스트도 함께 갱신

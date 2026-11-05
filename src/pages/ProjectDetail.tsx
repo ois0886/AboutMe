@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
-import projects, { type RichText } from '../data/projects'
+import ImageViewer from '../components/ImageViewer'
+import projects, { type Project, type RichText } from '../data/projects'
 import styles from './ProjectDetail.module.css'
 
 function renderRichText(content: RichText): ReactNode {
@@ -19,17 +20,74 @@ function renderRichText(content: RichText): ReactNode {
 
 function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
-  const location = useLocation()
   const project = projects.find((p) => p.id === id)
 
   if (!project) {
     return (
-      <div className={styles.notFound}>
+      <main id="main-content" className={styles.notFound} tabIndex={-1}>
         <h2>프로젝트를 찾을 수 없습니다.</h2>
         <Link to="/" className={styles.backLink}>홈으로 돌아가기</Link>
-      </div>
+      </main>
     )
+  }
+
+  return <ProjectCaseStudy key={project.id} project={project} />
+}
+
+function ProjectCaseStudy({ project }: { project: Project }) {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const sections = useMemo(() => [
+    { id: 'project-achievements', label: '성과 및 결과', visible: project.achievements.length > 0 },
+    { id: 'project-links', label: '링크', visible: project.links.length > 0 },
+    { id: 'project-overview', label: '프로젝트 개요', visible: project.details.length > 0 },
+    { id: 'project-requirements', label: '주요 요구사항', visible: project.features.length > 0 },
+    { id: 'project-insights', label: 'Project Insights', visible: project.insights.length > 0 },
+    { id: 'project-contributions', label: '담당 역할 및 기여', visible: project.contributions.length > 0 },
+    { id: 'project-problems', label: '문제 해결', visible: project.problemSolvings.length > 0 },
+    { id: 'project-screenshots', label: project.imageSectionTitle ?? '스크린샷', visible: project.screenshots.length > 0 },
+    { id: 'project-retrospective', label: '프로젝트 회고', visible: project.retrospective.length > 0 },
+  ].filter((section) => section.visible), [project])
+  const [activeSection, setActiveSection] = useState(sections[0]?.id)
+  const [isTocOpen, setIsTocOpen] = useState(false)
+
+  useEffect(() => {
+    let frame = 0
+    const updateActiveSection = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80
+        const sectionOffset = headerHeight + (window.innerWidth <= 1000 ? 96 : 48)
+        let current = sections[0]?.id
+        for (const section of sections) {
+          const element = document.getElementById(section.id)
+          if (element && element.getBoundingClientRect().top <= sectionOffset) current = section.id
+        }
+        setActiveSection(current)
+      })
+    }
+
+    window.addEventListener('scroll', updateActiveSection, { passive: true })
+    window.addEventListener('resize', updateActiveSection)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', updateActiveSection)
+      window.removeEventListener('resize', updateActiveSection)
+    }
+  }, [sections])
+
+  const navigateToSection = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    event.preventDefault()
+    const section = document.getElementById(sectionId)
+    if (!section) return
+
+    section.focus({ preventScroll: true })
+    section.scrollIntoView?.({
+      block: 'start',
+      behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+    setActiveSection(sectionId)
+    setIsTocOpen(false)
   }
 
   const cols = project.screenshotColumns || 2
@@ -44,7 +102,14 @@ function ProjectDetail() {
     const description = project.screenshotDescriptions?.[src]
     return (
       <>
-        <img src={src} alt={description?.alt ?? project.title} className={styles.screenshot} />
+        <ImageViewer
+          key={src}
+          src={src}
+          alt={description?.alt ?? project.title}
+          className={styles.screenshot}
+          loading="lazy"
+          decoding="async"
+        />
         {description && <p className={styles.screenshotCaption}>{description.caption}</p>}
       </>
     )
@@ -65,7 +130,7 @@ function ProjectDetail() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.container}>
+      <main id="main-content" className={styles.container} tabIndex={-1}>
         <header className={styles.hero}>
           <a href="#" onClick={handleBack} className={styles.backLink}>← 돌아가기</a>
 
@@ -94,9 +159,41 @@ function ProjectDetail() {
           </div>
         </header>
 
-        <main className={styles.content}>
+        <div className={styles.detailLayout}>
+          <aside className={styles.toc}>
+            <nav aria-label="프로젝트 목차">
+              <p className={styles.tocCaption}>목차</p>
+              <button
+                type="button"
+                className={styles.tocToggle}
+                aria-expanded={isTocOpen}
+                aria-controls="project-toc-links"
+                onClick={() => setIsTocOpen((value) => !value)}
+              >
+                <span>목차</span>
+                <span aria-hidden="true">{isTocOpen ? '−' : '+'}</span>
+              </button>
+              <ul
+                id="project-toc-links"
+                className={`${styles.tocList} ${!isTocOpen ? styles.tocListCollapsed : ''}`}
+              >
+                {sections.map((section) => (
+                  <li key={section.id}>
+                    <a
+                      href={`#${location.pathname}#${section.id}`}
+                      aria-current={activeSection === section.id ? 'location' : undefined}
+                      onClick={(event) => navigateToSection(event, section.id)}
+                    >
+                      {section.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+          <div className={styles.content}>
           {project.achievements.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-achievements" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>성과 및 결과</h2>
             <ul className={styles.list}>
               {project.achievements.map((item) => (
@@ -109,7 +206,7 @@ function ProjectDetail() {
         )}
 
         {project.links.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-links" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>링크</h2>
             <div className={styles.links}>
               {project.links.map((link) => (
@@ -127,7 +224,7 @@ function ProjectDetail() {
           </section>
         )}
 
-        <section className={styles.section}>
+        <section id="project-overview" className={styles.section} tabIndex={-1}>
           <h2 className={styles.sectionTitle}>프로젝트 개요</h2>
           <ul className={styles.list}>
             {project.details.map((detail) => (
@@ -139,7 +236,7 @@ function ProjectDetail() {
         </section>
 
         {project.features.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-requirements" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>주요 요구사항</h2>
             <ul className={styles.list}>
               {project.features.map((feature) => (
@@ -152,7 +249,7 @@ function ProjectDetail() {
         )}
 
         {project.insights.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-insights" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>Project Insights</h2>
             <ul className={styles.list}>
               {project.insights.map((insight) => (
@@ -173,7 +270,7 @@ function ProjectDetail() {
                 {project.insightImages.map((img) => (
                   <div key={img} className={styles.screenshotFull} style={{ marginBottom: '16px' }}>
                     <div className={styles.screenshotWrap}>
-                      <img src={img} alt="Insight" className={styles.screenshot} />
+                      <ImageViewer src={img} alt="Insight" className={styles.screenshot} loading="lazy" decoding="async" />
                     </div>
                   </div>
                 ))}
@@ -183,7 +280,7 @@ function ProjectDetail() {
         )}
 
         {project.contributions.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-contributions" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>담당 역할 및 기여</h2>
             <ul className={styles.list}>
               {project.contributions.map((item) => (
@@ -196,7 +293,7 @@ function ProjectDetail() {
         )}
 
         {project.problemSolvings.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-problems" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>문제 해결</h2>
             {project.problemSolvings.map((ps, psIdx) => (
               <div key={psIdx} className={styles.psGroup}>
@@ -230,9 +327,10 @@ function ProjectDetail() {
                   </ul>
                 </div>
                 <div className={styles.psBlock}>
-                  <h3 className={styles.psLabel}>구체적인 구현 설명</h3>
+                  <h3 className={styles.psLabel}>이미지</h3>
                   <figure className={styles.implementationVisual}>
-                    <img
+                    <ImageViewer
+                      key={ps.visual.src}
                       src={ps.visual.src}
                       alt={ps.visual.alt}
                       width={1672}
@@ -243,9 +341,9 @@ function ProjectDetail() {
                   </figure>
                   {ps.implementation.map((block, idx) => (
                     <div key={idx} className={styles.implBlock}>
-                      <blockquote className={styles.implDescription}>
+                      <p className={styles.implDescription}>
                         {block.description}
-                      </blockquote>
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -265,7 +363,7 @@ function ProjectDetail() {
         )}
 
         {topScreenshots.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-screenshots" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>{project.imageSectionTitle ?? '스크린샷'}</h2>
             {topScreenshots[0] && (
               <div className={styles.screenshotFull}>
@@ -308,7 +406,7 @@ function ProjectDetail() {
         )}
 
           {project.retrospective.length > 0 && (
-          <section className={styles.section}>
+          <section id="project-retrospective" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>프로젝트 회고</h2>
             <ul className={styles.list}>
               {project.retrospective.map((item) => (
@@ -319,8 +417,9 @@ function ProjectDetail() {
             </ul>
           </section>
           )}
-        </main>
-      </div>
+          </div>
+        </div>
+      </main>
     </div>
   )
 }

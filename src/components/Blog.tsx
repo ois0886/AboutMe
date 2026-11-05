@@ -21,7 +21,7 @@ function Blog() {
 
   return (
     <section id="blog" className="section reveal" ref={ref}>
-      <h2 className="section__title">Blog</h2>
+      <h2 className="section__title" aria-label="Blog">Blog</h2>
       <div className={styles.intro}>
         <a
           href="https://superohinsung.tistory.com"

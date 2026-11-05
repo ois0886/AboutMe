@@ -23,10 +23,10 @@ function Projects() {
 
   return (
     <section id="projects" className="section reveal" ref={ref}>
-      <h2 className="section__title">Projects</h2>
+      <h2 className="section__title" aria-label="Projects">Projects</h2>
       <p className={styles.subtitle}>프로젝트 선택 시 상세페이지로 이동</p>
       <div className={styles.grid}>
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <Link
             key={project.id}
             to={`/projects/${project.id}`}
@@ -36,9 +36,10 @@ function Projects() {
           >
             <div
               className={styles.thumbnail}
-              style={project.thumbnail ? { backgroundImage: `url(${project.thumbnail})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+              style={project.thumbnail ? { backgroundImage: `url(${project.thumbnail})` } : undefined}
             />
             <div className={styles.info}>
+              <span className={styles.index} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               <h3 className={styles.title}>{project.title}</h3>
               <p className={styles.period}>{project.period}</p>
               <p className={styles.description}>{project.cardSummary.description}</p>
@@ -61,6 +62,7 @@ function Projects() {
                   </li>
                 ))}
               </ul>
+              <span className={styles.readMore} aria-hidden="true">자세히 보기 <span>↗</span></span>
             </div>
           </Link>
         ))}

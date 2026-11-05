@@ -1,5 +1,5 @@
-import { render, screen, within } from '@testing-library/react'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { fireEvent, render, screen, within } from '@testing-library/react'
+import { Link, MemoryRouter, Route, Routes } from 'react-router-dom'
 import ProjectDetail from '../ProjectDetail'
 import projects from '../../data/projects'
 
@@ -24,7 +24,8 @@ describe('ProjectDetail', () => {
     expect(screen.getByText('Android 앱 설계, 구현 및 검증')).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent))
       .toEqual(['프로젝트 개요'])
-    expect(within(screen.getByRole('main')).getAllByRole('listitem').map((item) => item.textContent))
+    const overview = screen.getByRole('heading', { name: '프로젝트 개요' }).closest('section')!
+    expect(within(overview).getAllByRole('listitem').map((item) => item.textContent))
       .toEqual(project.details)
     expect(screen.queryByRole('link', { name: 'GitHub' })).not.toBeInTheDocument()
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
@@ -36,6 +37,8 @@ describe('ProjectDetail', () => {
     (project) => {
       const { container } = renderProjectDetail(project.id)
       expect(container.querySelector('pre, code')).toBeNull()
+      expect(screen.queryByRole('heading', { name: '구체적인 구현 설명' })).not.toBeInTheDocument()
+      expect(screen.getAllByRole('heading', { name: '이미지' })).toHaveLength(project.problemSolvings.length)
       project.problemSolvings.forEach((ps) => {
         expect(screen.getByRole('img', { name: ps.visual.alt }))
           .toHaveAttribute('src', ps.visual.src)
@@ -43,6 +46,15 @@ describe('ProjectDetail', () => {
           expect(screen.getByText(block.description)).toBeInTheDocument()
         })
       })
+      expect(screen.getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
+        ...(project.insights.length > 0 ? project.insightImages ?? [] : []),
+        ...project.problemSolvings.map((ps) => ps.visual.src),
+        ...project.screenshots,
+      ])
+      expect(container.querySelectorAll('[class*="implDescription"]')).toHaveLength(
+        project.problemSolvings.reduce((count, ps) => count + ps.implementation.length, 0),
+      )
+      expect(container.querySelector('blockquote')).toBeNull()
     },
   )
 
@@ -103,6 +115,74 @@ describe('ProjectDetail', () => {
   it('돌아가기 링크가 존재한다', () => {
     renderProjectDetail(firstProject.id)
     expect(screen.getByText('← 돌아가기')).toBeInTheDocument()
+  })
+
+  it('목차는 표시된 섹션만 기존 순서와 제목으로 연결한다', () => {
+    renderProjectDetail('glim')
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    const headings = screen.getAllByRole('heading', { level: 2 })
+    expect(toc.getAllByRole('link').map((link) => link.textContent))
+      .toEqual(headings.map((heading) => heading.textContent))
+    toc.getAllByRole('link').forEach((link, index) => {
+      const section = headings[index].closest('section')!
+      expect(link).toHaveAttribute('href', `#/projects/glim#${section.id}`)
+      expect(section).toHaveAttribute('tabindex', '-1')
+    })
+    expect(toc.getAllByRole('link')[0]).toHaveAttribute('aria-current', 'location')
+    expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content')
+    expect(screen.getByRole('main')).toContainElement(screen.getByRole('heading', { level: 1 }))
+    expect(screen.getByRole('heading', { level: 1 }).closest('header')?.closest('main'))
+      .toBe(screen.getByRole('main'))
+  })
+
+  it('접을 수 있는 목차에서 선택한 섹션으로 포커스를 옮기고 현재 위치를 표시한다', () => {
+    renderProjectDetail('glim')
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    const toggle = toc.getByRole('button', { name: '목차' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(toggle)
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    fireEvent.click(toc.getByRole('link', { name: '문제 해결' }))
+    expect(document.getElementById('project-problems')).toHaveFocus()
+    expect(toc.getByRole('link', { name: '문제 해결' })).toHaveAttribute('aria-current', 'location')
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('다른 프로젝트로 직접 이동하면 목차의 펼침 상태와 현재 위치가 초기화된다', () => {
+    render(
+      <MemoryRouter initialEntries={['/projects/glim']}>
+        <Link to="/projects/hangil">한길졸업으로 이동</Link>
+        <Routes>
+          <Route path="/projects/:id" element={<ProjectDetail />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: '목차' }))
+    fireEvent.click(screen.getByRole('link', { name: '한길졸업으로 이동' }))
+    expect(screen.getByRole('button', { name: '목차' })).toHaveAttribute('aria-expanded', 'false')
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    expect(toc.getAllByRole('link')).toHaveLength(1)
+    expect(toc.getByRole('link', { name: '프로젝트 개요' })).toHaveAttribute('aria-current', 'location')
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+  })
+
+  it('스크롤에 따라 목차의 현재 섹션을 갱신한다', () => {
+    renderProjectDetail('glim')
+    const headings = screen.getAllByRole('heading', { level: 2 })
+    headings.forEach((heading) => {
+      const section = heading.closest('section')!
+      vi.spyOn(section, 'getBoundingClientRect').mockReturnValue({
+        top: section.id === 'project-problems' ? 100 : 500,
+      } as DOMRect)
+    })
+    const requestFrame = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
+      callback(0)
+      return 1
+    })
+    fireEvent.scroll(window)
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    expect(toc.getByRole('link', { name: '문제 해결' })).toHaveAttribute('aria-current', 'location')
+    requestFrame.mockRestore()
   })
 
   it('강조 세그먼트와 성과, 구현 설명이 프로젝트 상세에 유지된다', () => {

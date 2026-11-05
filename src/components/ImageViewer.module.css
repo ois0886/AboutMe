@@ -1,0 +1,151 @@
+.trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: zoom-in;
+  font: inherit;
+  text-align: left;
+}
+
+.expandHint {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-card);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.dialog {
+  position: fixed;
+  inset: 24px;
+  width: min(1280px, calc(100vw - 48px));
+  height: min(960px, calc(100dvh - 48px));
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-card);
+  color: var(--color-text);
+  background-color: var(--color-bg-card);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+}
+
+.dialog::backdrop {
+  background-color: rgba(6, 22, 18, 0.76);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 76px;
+  gap: 20px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.controls button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  color: var(--color-text);
+  background-color: var(--color-bg-card);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+.controls button:hover,
+.controls button[aria-pressed='true'] {
+  background-color: var(--color-primary-light);
+}
+
+.viewport {
+  height: calc(100% - 76px);
+  padding: 24px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.viewport:focus-visible {
+  outline-offset: -4px;
+}
+
+.dialog .fullImage {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.dialog .originalSize .fullImage {
+  max-width: none;
+  max-height: none;
+}
+
+@media (max-width: 640px) {
+  .dialog {
+    inset: 8px;
+    width: calc(100vw - 16px);
+    height: calc(100dvh - 16px);
+  }
+
+  .toolbar {
+    min-height: 76px;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 0.78rem;
+  }
+
+  .controls {
+    gap: 6px;
+  }
+
+  .controls button {
+    padding: 8px;
+    font-size: 0.78rem;
+  }
+
+  .viewport {
+    padding: 12px;
+  }
+}

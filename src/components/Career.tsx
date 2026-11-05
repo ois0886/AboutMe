@@ -8,7 +8,7 @@ function Career() {
   return (
     <section id="career" className="section reveal" ref={ref}>
       <div>
-        <h2 className="section__title">Career</h2>
+      <h2 className="section__title" aria-label="Career">Career</h2>
         <p className={styles.totalCareer}>총 경력 {getTotalCareer()}</p>
         <div className={styles.list}>
           {careers.map((career) => (
