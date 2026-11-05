@@ -6,7 +6,7 @@
     "links": []
   },
   "Skills": {
-    "text": "Skills Backend Java, Spring Boot, MyBatis, MySQL, REST API Frontend React, TypeScript, Vue 3, Vite Android Kotlin, Java, Compose, XML, Coroutines, Flow, MVVM, MVI, 멀티 모듈, Room, Paging3, JUnit5, MockK AI agent Codex, Claude Code etc GitHub, Jira, Figma, Slack",
+    "text": "Skills Backend Java, Spring Boot, MyBatis, MySQL, REST API Frontend React, TypeScript, Vue 3, Vite Android Kotlin, Java, Compose, XML, Coroutines, Flow, MVVM, MVI, 멀티 모듈, Room, Paging3, JUnit5, MockK AI agent Codex, Claude Code / 작업 분리와 병렬화, 구현, 테스트, 리뷰, 문서화 자동화 ETC GitHub, Jira, Figma, Slack",
     "emphasis": [],
     "items": 0,
     "links": []
@@ -24,7 +24,7 @@
     "links": []
   },
   "Certificates": {
-    "text": "Certificates SQLD | 한국데이터산업진흥원 | SQLD-0600038322026.03 정보처리기사 | 한국산업인력공단 | 24203011265G2024.12 ADsP | 한국데이터산업진흥원 | ADsP-0430071802024.11",
+    "text": "Certificates Claude Code in Action | Anthropic | po6dwyvk5zs72026.04 SQLD | 한국데이터산업진흥원 | SQLD-0600038322026.03 정보처리기사 | 한국산업인력공단 | 24203011265G2024.12 ADsP | 한국데이터산업진흥원 | ADsP-0430071802024.11",
     "emphasis": [],
     "items": 0,
     "links": []
