@@ -33,7 +33,7 @@ describe('경력기술서', () => {
     expect(document.querySelectorAll('h1')).toHaveLength(1)
     expect(document.querySelectorAll('h2')).toHaveLength(6)
     expect(document.querySelector('h3, h4, h5, h6, li ul, li ol, li p, li strong')).toBeNull()
-    expect(document.querySelectorAll('.career-section > ul > li')).toHaveLength(12)
+    expect(document.querySelectorAll('.career-section > ul > li')).toHaveLength(17)
     const pages = Array.from(document.querySelectorAll('[data-document-page]'))
     expect(pages).toHaveLength(1)
     expect(pages.map((page) => Array.from(page.querySelectorAll('h2'), (heading) => heading.textContent)))
@@ -83,11 +83,11 @@ describe('경력기술서', () => {
     const ls = document.querySelector('[data-career-section="ls-chart"]')!.textContent!
     const source = careers[0].tasks.join(' ')
 
-    for (const fact of ['키패드', '연속 편집', '이동평균선', '체크 상태', '편집값']) {
+    for (const fact of ['키패드', '연속 편집', '이동평균선', '체크 상태', '편집값', 'Signal', '추세선', '심볼', '소수점과 음수']) {
       expect(ls).toContain(fact)
       expect(source).toContain(fact)
     }
-    expect(ls).not.toMatch(/999|검색어 삭제|6으로 되돌아가던|수치조회창|테마|Double|심볼/)
+    expect(ls).not.toMatch(/999|검색어 삭제|6으로 되돌아가던|수치조회창|테마|Double/)
   })
 
   it('HTML과 PDF를 최상단에 두고 이전 Word 폴더를 제거한다', () => {
