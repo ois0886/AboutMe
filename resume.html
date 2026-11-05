@@ -61,23 +61,10 @@
       margin-bottom: var(--space-3);
     }
 
-    .project {
-      break-inside: avoid;
-      page-break-inside: avoid;
-      margin-bottom: var(--space-3);
-    }
-
     .blog-section,
     .activity-section {
       break-inside: avoid;
       page-break-inside: avoid;
-    }
-
-    .project-description {
-      margin-bottom: var(--space-1);
-      color: #374151;
-      font-size: var(--font-body);
-      font-weight: 600;
     }
 
     h1,
@@ -206,14 +193,6 @@
       white-space: nowrap;
     }
 
-    .link-row {
-      margin-bottom: var(--space-1);
-      color: #374151;
-      font-size: var(--font-meta);
-      font-weight: 600;
-      line-height: var(--line-body);
-    }
-
     strong {
       font-weight: 800;
     }
@@ -267,7 +246,7 @@
 </head>
 <body>
   <main>
-    <div class="resume-page" data-resume-page="1" style="break-after: auto; page-break-after: auto;">
+    <div class="resume-page" data-resume-page="1">
     <header class="resume-header">
       <h1>Oh InSeong(오인성)</h1>
       <p class="headline">Android Developer</p>
@@ -285,21 +264,8 @@
 
     <section>
       <div class="section-heading">
-        <h2>Introduction</h2>
-      </div>
-      <ul>
-        <li>사용자 경험과 유지보수성을 고민하며, 구현을 넘어 <strong>고객 문제를 안정적인 제품 흐름</strong>으로 풀어내는 개발자를 지향합니다.</li>
-        <li>다양한 조회와 실시간 데이터의 연동을 검증하며 <strong>서비스 간 데이터 흐름과 안정성</strong>에 대한 이해를 넓혀가고 있습니다.</li>
-        <li>팀의 성장에 기여하기 위해 <strong>코드 리뷰</strong>와 <strong>AI 기반 개발 흐름 개선</strong>을 적극적으로 활용하고, <strong>테스트 가능한 구조와 읽기 쉬운 코드</strong>를 작성하려 노력합니다.</li>
-        <li>학습한 내용과 문제 해결 과정을 <strong>블로그</strong>에 기록하며, 부족했던 부분을 <strong>재현 가능한 지식</strong>으로 정리해 다음 프로젝트의 기준으로 발전시키고 있습니다.</li>
-        <li>의견을 제시할 때는 <strong>감이 아닌 근거</strong>를 바탕으로 소통하며, 더 나은 방향을 함께 찾는 <strong>협업</strong>을 지향합니다.</li>
-      </ul>
-    </section>
-
-    <section>
-      <div class="section-heading">
         <h2>Career</h2>
-        <span class="right-meta">총 경력 8개월</span>
+        <span class="right-meta" data-career-as-of="2026-11-05">총 경력 8개월</span>
       </div>
       <div class="career-item" data-career-id="chartlab">
         <div class="row-title">
@@ -316,71 +282,6 @@
         </ul>
       </div>
     </section>
-
-    <section class="project-section">
-      <div class="section-heading">
-        <h2>Project</h2>
-      </div>
-      <div class="project" data-project-id="hangil">
-        <div class="row-title">
-          <h3>한길졸업 - Android</h3>
-          <span class="right-meta">2026.10.26 ~ 진행 중</span>
-        </div>
-        <p class="project-description">초보 운전자의 연습 준비와 기록을 돕는 Pleos 앱 / Android 앱 설계, 구현 및 검증</p>
-        <p class="link-row">GitHub. <a href="https://github.com/HanGilLab/Android">https://github.com/HanGilLab/Android</a></p>
-        <ul>
-          <li>현대자동차그룹 차량용 앱 개발 공모전 출품작</li>
-          <li>Kotlin, Compose 멀티 모듈 설계, Vehicle SDK 상태와 주차/UX 제한 기반 상세 조작 잠금 연동</li>
-          <li>MapLibre 지도 오류 복구, Room 세션 저장과 복원, DB 마이그레이션 검증</li>
-        </ul>
-      </div>
-
-      <div class="project" data-project-id="naenun-kiosk">
-        <div class="row-title">
-          <h3>내눈 키오스크 - Android</h3>
-          <span class="right-meta">2025.10 ~ 2025.11</span>
-        </div>
-        <p class="project-description">생체정보 통합 플랫폼을 통해 고령층의 건강 측정과 관리, 광고 연계를 지원하는 스마트 헬스케어 키오스크 서비스 / 기업연계 프로젝트 특성상 코드 반출 불가</p>
-        <ul>
-          <li><strong>상용 키오스크 앱</strong>의 XML과 Compose 혼용 UI를 Compose 중심 구조로 정리하고 Route-Screen-Component 책임 분리</li>
-          <li>Activity Context 참조, Listener 미해제, Singleton 참조 구조를 개선해 장시간 실행 환경의 메모리 누수 위험 요소 제거</li>
-          <li>기능과 계층 기준 패키지 재편과 공통 UI 컴포넌트 분리로 수정 영향 범위와 중복 수정 비용 감소</li>
-          <li><strong>SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상</strong></li>
-        </ul>
-      </div>
-
-      <div class="project" data-project-id="mo-re">
-        <div class="row-title">
-          <h3>모리, Mo-Re - Android</h3>
-          <span class="right-meta">2025.08 ~ 2025.09</span>
-        </div>
-        <p class="project-description">누구나 쉽게 이해할 수 있는 서버 리포트를 제공하여 서비스 상태와 성능을 시각화하고 관리와 운영 효율성을 높이는 앱 서비스 / 코드 반출 불가</p>
-        <ul>
-          <li><strong>멀티 모듈 아키텍처</strong> 설계 및 <strong>Convention Plugin 기반 Build-logic</strong> 구축</li>
-          <li><strong>Custom Compose UI</strong>로 시계열 차트(LineChart) 구현</li>
-          <li><strong>Kotlin Coroutine async/await</strong>를 활용한 6개 API 비동기 처리로 <strong>데이터 로딩 시간 56% 단축</strong></li>
-        </ul>
-      </div>
-      <div class="project" data-project-id="glim">
-        <div class="row-title">
-          <h3>Glim - Android</h3>
-          <span class="right-meta">2025.07 ~ 2025.08</span>
-        </div>
-        <p class="project-description">글귀를 공유하며, 숏츠(글림으로 명명) 폼으로 다른 사람들과 공유하는 앱</p>
-        <p class="link-row">GitHub. <a href="https://github.com/ois0886/Glim">https://github.com/ois0886/Glim</a></p>
-        <ul>
-          <li><strong>Orbit MVI</strong> 패턴 적용을 통한 예측 가능한 상태 관리 및 테스트 용이성 향상 아키텍처 설계</li>
-          <li><strong>Kotlin Coroutine</strong>과 <strong>DataStore</strong>를 활용한 Session, Refresh Token 관리 시스템 구현</li>
-          <li><strong>Channel 기반 Navigator</strong> 패턴 도입으로 Screen과 Navigation 로직 완전 분리</li>
-          <li><strong>JUnit, MockK 기반 ViewModelTest를 130+ 케이스</strong> 구현으로 안정적인 단위 테스트 구축</li>
-          <li>GitHub 잔디밭 디자인을 모티브로, 사용자가 업로드한 글림(글귀)을 <strong>잔디밭 형태의 Custom Compose UI 컴포넌트</strong>로 구현</li>
-          <li><strong>SSAFY 13기 구미캠퍼스 공통 프로젝트 우수상 수상</strong></li>
-        </ul>
-      </div>
-    </section>
-    </div>
-
-    <div class="resume-page" data-resume-page="2">
 
     <section>
       <div class="section-heading">
@@ -405,10 +306,6 @@
         </div>
         <ul>
           <li>삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램</li>
-          <li>1학기 학습 과정에서 Java, SpringBoot, Vue.js, Html, CSS, Javascript, Flutter, Kotlin, Android 강의 수강 및 학습</li>
-          <li>2학기 프로젝트 과정에서 팀 프로젝트 기반 서비스 기획, 개발, 발표 경험</li>
-          <li>전현직 개발자 멘토링 및 프로젝트 프로세스 경험</li>
-          <li>CS와 Android 스터디 주최 및 운영 (2025.02 ~ 2025.06)</li>
         </ul>
       </div>
       <div class="education-item">

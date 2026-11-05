@@ -81,15 +81,18 @@ describe('Career', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const careerSection = resumeDocument.querySelector('[data-career-id="chartlab"]')?.closest('section')
+    const totalCareerElement = careerSection?.querySelector('.section-heading .right-meta')
+    const asOf = totalCareerElement?.getAttribute('data-career-as-of')
+    expect(asOf).toMatch(/^\d{4}-\d{2}-\d{2}$/)
     vi.useFakeTimers()
     try {
       // 정적 이력서의 경력 갱신 시점으로 고정해 웹 자동 계산과 비교한다.
-      vi.setSystemTime(new Date(2026, 9, 9, 12))
+      vi.setSystemTime(new Date(`${asOf}T12:00:00+09:00`))
       render(<Career />)
 
       const totalCareer = `총 경력 ${getTotalCareer()}`
       expect(screen.getByText(totalCareer)).toBeInTheDocument()
-      expect(careerSection?.querySelector('.section-heading .right-meta')?.textContent)
+      expect(totalCareerElement?.textContent)
         .toBe(totalCareer)
     } finally {
       vi.useRealTimers()

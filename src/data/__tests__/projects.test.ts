@@ -49,20 +49,12 @@ describe('projects 데이터 무결성', () => {
   })
 
   it.each([
-    ['naenun-kiosk', '2025.10.10 ~ 2025.11.20', '2025.10 ~ 2025.11'],
-    ['mo-re', '2025.08.25 ~ 2025.09.29', '2025.08 ~ 2025.09'],
-    ['glim', '2025.07.07 ~ 2025.08.18', '2025.07 ~ 2025.08'],
-  ])('%s의 개발 기간은 웹에서 일 단위, 이력서에서 월 단위로 표시한다', (id, period, resumePeriod) => {
+    ['naenun-kiosk', '2025.10.10 ~ 2025.11.20'],
+    ['mo-re', '2025.08.25 ~ 2025.09.29'],
+    ['glim', '2025.07.07 ~ 2025.08.18'],
+  ])('%s의 개발 기간은 웹에서 일 단위로 표시한다', (id, period) => {
     const project = projects.find((item) => item.id === id)!
     expect(project.period).toBe(period)
-
-    const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
-    const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
-    const resumePeriodElement = resumeDocument.querySelector(
-      `[data-project-id="${id}"] .right-meta`,
-    )
-    expect(normalizeText(resumePeriodElement?.textContent ?? '')).toBe(resumePeriod)
-    expect(resumePeriodElement?.querySelector('br')).toBeNull()
   })
 
   it('주점부리의 웹 개발 기간은 일 단위로 표시한다', () => {
@@ -130,48 +122,32 @@ describe('projects 데이터 무결성', () => {
     expect(project.problemSolvings).toHaveLength(3)
     const webText = JSON.stringify(project)
     expect(webText).not.toMatch(/상용 운영|출품 완료|후속 작업|남은 범위|공개 전 점검|근거 링크|진행 중인 프로젝트/)
-    for (const file of ['resume.html', 'portfolio.html']) {
-      const document = new DOMParser().parseFromString(readFileSync(resolve(process.cwd(), file), 'utf8'), 'text/html')
-      const section = document.querySelector('[data-project-id="hangil"]')!
-      expect(section).not.toBeNull()
-      expect(section.querySelector('h3, h2')?.textContent).toBe('한길졸업' + (file === 'resume.html' ? ' - Android' : ''))
-      const text = normalizeText(section.textContent ?? '')
-      for (const fact of ['2026.10.26 ~ 진행 중', 'Android 앱 설계, 구현 및 검증', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
-        expect(text, `${file}: ${fact}`).toContain(fact)
-        expect(webText, `web: ${fact}`).toContain(fact)
-      }
-      if (file === 'portfolio.html') {
-        expect(section.querySelector('a[href="https://github.com/HanGilLab/Android"]')?.textContent)
-          .toBe('https://github.com/HanGilLab/Android')
-        expect(text).toContain('1명: Android 1명')
-        expect(section.querySelector('.info-card:nth-child(1) a')).toBeNull()
-        expect(section.querySelector('.info-card:nth-child(2) a')?.getAttribute('href'))
-          .toBe('https://github.com/HanGilLab/Android')
-        expect(text).toContain('주차 상태와 UX 제한 해제')
-        expect(section.querySelector('.overview-grid .shot-panel img')?.getAttribute('src'))
-          .toBe('public/screenshot/hangil-home.png')
-        expect(Array.from(section.querySelectorAll('.info-card > h3'), (item) => item.textContent))
-          .toEqual(['서비스 소개', '배경', '핵심 기여', '기술 스택'])
-        expect(Array.from(section.querySelectorAll('.tag-list .tag'), (item) => item.textContent))
-          .toEqual(project.tech)
-      } else {
-        expect(text).not.toContain('1인 개인 프로젝트')
-        const rightMeta = section.querySelector('.row-title .right-meta')
-        expect(rightMeta?.textContent).toBe('2026.10.26 ~ 진행 중')
-        expect(rightMeta?.querySelector('a, br')).toBeNull()
-        expect(section.querySelector('.project-description + .link-row')?.textContent)
-          .toBe('GitHub. https://github.com/HanGilLab/Android')
-        expect(section.querySelector('.link-row a')?.getAttribute('href'))
-          .toBe('https://github.com/HanGilLab/Android')
-        expect(section.querySelector('.project-description + .link-row + ul')).not.toBeNull()
-        expect(section.querySelector('ul > li:first-child')?.textContent)
-          .toBe('현대자동차그룹 차량용 앱 개발 공모전 출품작')
-        expect(webText).toContain('현대자동차그룹 차량용 앱 개발 공모전')
-        expect(text).toContain('주차/UX')
-        expect(section.querySelectorAll('ul > li')).toHaveLength(3)
-      }
-      expect(text).not.toMatch(/notion\.so|app\.notion|상용 운영|출품 완료|남은 범위|후속 작업|공개 전 점검|진행 중인 프로젝트/)
+    const document = new DOMParser().parseFromString(
+      readFileSync(resolve(process.cwd(), 'portfolio.html'), 'utf8'),
+      'text/html',
+    )
+    const section = document.querySelector('[data-project-id="hangil"]')!
+    expect(section).not.toBeNull()
+    expect(section.querySelector('h3, h2')?.textContent).toBe('한길졸업')
+    const text = normalizeText(section.textContent ?? '')
+    for (const fact of ['2026.10.26 ~ 진행 중', 'Android 앱 설계, 구현 및 검증', 'MapLibre', 'Room', 'DB 마이그레이션', 'Pleos']) {
+      expect(text, `portfolio.html: ${fact}`).toContain(fact)
+      expect(webText, `web: ${fact}`).toContain(fact)
     }
+    expect(section.querySelector('a[href="https://github.com/HanGilLab/Android"]')?.textContent)
+      .toBe('https://github.com/HanGilLab/Android')
+    expect(text).toContain('1명: Android 1명')
+    expect(section.querySelector('.info-card:nth-child(1) a')).toBeNull()
+    expect(section.querySelector('.info-card:nth-child(2) a')?.getAttribute('href'))
+      .toBe('https://github.com/HanGilLab/Android')
+    expect(text).toContain('주차 상태와 UX 제한 해제')
+    expect(section.querySelector('.overview-grid .shot-panel img')?.getAttribute('src'))
+      .toBe('public/screenshot/hangil-home.png')
+    expect(Array.from(section.querySelectorAll('.info-card > h3'), (item) => item.textContent))
+      .toEqual(['서비스 소개', '배경', '핵심 기여', '기술 스택'])
+    expect(Array.from(section.querySelectorAll('.tag-list .tag'), (item) => item.textContent))
+      .toEqual(project.tech)
+    expect(text).not.toMatch(/notion\.so|app\.notion|상용 운영|출품 완료|남은 범위|후속 작업|공개 전 점검|진행 중인 프로젝트/)
   })
 
   it('한길졸업 상세 사례는 웹과 PDF에서 같은 세 가지 문제와 검증 범위를 설명한다', () => {
@@ -324,68 +300,13 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('이력서는 각 프로젝트를 요약하고 핵심 수치와 기술은 웹에 근거한다', () => {
+  it('이력서는 프로젝트 섹션과 개별 프로젝트 소개를 제외한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
-    const resumeProjects = Array.from(resumeDocument.querySelectorAll('[data-project-id]'))
-    expect(resumeProjects.map((item) => item.getAttribute('data-project-id')))
-      .toEqual(['hangil', 'naenun-kiosk', 'mo-re', 'glim'])
-
-    const projectFacts: Record<string, string[]> = {
-      'naenun-kiosk': ['Compose', 'Route', 'Screen', 'Component', 'Activity Context', 'Listener', 'Singleton', '우수상'],
-      'mo-re': ['6개', 'API', '56%', 'Convention Plugin'],
-      glim: ['Orbit MVI', 'DataStore', 'Channel', 'Navigator', '130', 'MockK', '잔디', '우수상'],
-      hangil: ['Pleos', 'UX 제한', 'MapLibre', 'Room', 'DB 마이그레이션'],
-    }
-    const projectSummaries: Record<string, { items: number; emphasis: string[] }> = {
-      hangil: { items: 3, emphasis: [] },
-      'naenun-kiosk': {
-        items: 4,
-        emphasis: ['상용 키오스크 앱', 'SSAFY 13기 구미캠퍼스 자율 프로젝트 우수상 수상'],
-      },
-      'mo-re': {
-        items: 3,
-        emphasis: [
-          '멀티 모듈 아키텍처', 'Convention Plugin 기반 Build-logic', 'Custom Compose UI',
-          'Kotlin Coroutine async/await', '데이터 로딩 시간 56% 단축',
-        ],
-      },
-      glim: {
-        items: 6,
-        emphasis: [
-          'Orbit MVI', 'Kotlin Coroutine', 'DataStore', 'Channel 기반 Navigator',
-          'JUnit, MockK 기반 ViewModelTest를 130+ 케이스', '잔디밭 형태의 Custom Compose UI 컴포넌트',
-          'SSAFY 13기 구미캠퍼스 공통 프로젝트 우수상 수상',
-        ],
-      },
-    }
-
-    resumeProjects.forEach((item) => {
-      const project = projects.find((project) => project.id === item.getAttribute('data-project-id'))!
-      const resumeText = normalizeText(item.textContent ?? '')
-      const webText = [
-        ...project.details, ...project.contributions, ...project.achievements,
-        ...project.problemSolvings.flatMap((problem) => [
-          ...problem.problem, ...problem.solution, ...problem.result,
-          ...problem.implementation.map((block) => block.description),
-        ]),
-      ].map(richTextToText).join(' ')
-
-      expect(item.querySelector('.project-description')?.textContent).toBeTruthy()
-      expect(item.querySelectorAll('ul > li')).toHaveLength(projectSummaries[project.id].items)
-      expect(Array.from(item.querySelectorAll('strong'), (element) => element.textContent))
-        .toEqual(projectSummaries[project.id].emphasis)
-      for (const text of item.querySelectorAll('.project-description, ul > li')) {
-        expect(text.textContent).not.toMatch(/(?:습니다|합니다|입니다|됩니다)(?:[.!?]|\s|$)/u)
-        expect(text.textContent).not.toMatch(/[.!?]$/u)
-      }
-      expect(item.querySelector('.project-context')).toBeNull()
-      projectFacts[project.id].forEach((fact) => {
-        expect(resumeText, project.id).toContain(fact)
-        expect(webText, project.id).toContain(fact)
-      })
-    })
+    expect(resumeDocument.querySelector('.project-section, [data-project-id]')).toBeNull()
+    expect(resumeDocument.body.textContent).not.toMatch(/한길졸업|내눈 키오스크|모리, Mo-Re|Glim/)
+    expect(resumeDocument.querySelector('a[href*="HanGilLab/Android"], a[href$="/Glim"]')).toBeNull()
   })
 
   it('이력서는 병역사항을 제외하고 상단에 웹 포트폴리오 링크를 제공한다', () => {
@@ -397,47 +318,29 @@ describe('projects 데이터 무결성', () => {
       .not.toBeNull()
   })
 
-  it('이력서는 기존 내용을 보존하고 Project 섹션을 최신순으로 배치한다', () => {
+  it('이력서는 자기소개와 프로젝트를 제외하고 경력부터 연속해서 배치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
 
     const pages = Array.from(resumeDocument.querySelectorAll('[data-resume-page]'))
-    expect(pages.map((page) => page.getAttribute('data-resume-page'))).toEqual(['1', '2'])
+    expect(pages.map((page) => page.getAttribute('data-resume-page'))).toEqual(['1'])
     expect(pages.map((page) => Array.from(page.querySelectorAll('h2'), (heading) => heading.textContent)))
       .toEqual([
-        ['Introduction', 'Career', 'Project'],
-        ['Skills', 'Education', 'Blog', 'Awards', 'Certificates', 'Activity'],
+        ['Career', 'Skills', 'Education', 'Blog', 'Awards', 'Certificates', 'Activity'],
       ])
-    expect(pages.map((page) => Array.from(page.querySelectorAll('[data-project-id]'), (project) => project.getAttribute('data-project-id'))))
-      .toEqual([['hangil', 'naenun-kiosk', 'mo-re', 'glim'], []])
     expect(pages[0].querySelector('[data-career-id="chartlab"]')).not.toBeNull()
-    expect(Array.from(pages[1].children)).toEqual(Array.from(pages[1].querySelectorAll('section')))
-    expect(resumeDocument.body.textContent).not.toMatch(/Compose-Chart|Compose-Git-Grass|Open Source/)
+    expect(resumeDocument.body.textContent).not.toMatch(/Introduction|개발자를 지향합니다|재현 가능한 지식|Compose-Chart|Compose-Git-Grass|Open Source/)
   })
 
-  it('이력서의 프로젝트는 인쇄할 때 페이지 중간에서 나누지 않는다', () => {
+  it('이력서의 SSAFY 교육은 프로그램 소개만 표시한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
-    const stylesheet = document.createElement('style')
-    stylesheet.textContent = resumeDocument.querySelector('style')?.textContent ?? ''
-    document.head.append(stylesheet)
+    const education = Array.from(resumeDocument.querySelectorAll('.education-item'))
+      .find((item) => item.querySelector('h3')?.textContent?.includes('삼성 청년 AI SW 아카데미'))!
 
-    try {
-      const projectRule = Array.from(stylesheet.sheet?.cssRules ?? [])
-        .find((rule): rule is CSSStyleRule => 'selectorText' in rule && rule.selectorText === '.project')
-      expect(projectRule).toBeDefined()
-
-      for (const property of ['break-inside', 'page-break-inside']) {
-        expect(projectRule?.style.getPropertyValue(property), property).toBe('avoid')
-        resumeDocument.querySelectorAll<HTMLElement>('[data-project-id]').forEach((project) => {
-          const effectiveValue = project.style.getPropertyValue(property)
-            || projectRule?.style.getPropertyValue(property)
-          expect(effectiveValue, `${project.dataset.projectId}: ${property}`).toBe('avoid')
-        })
-      }
-    } finally {
-      stylesheet.remove()
-    }
+    expect(education.querySelector('.right-meta')?.textContent).toBe('2025.01 ~ 2025.12')
+    expect(Array.from(education.querySelectorAll('li'), (item) => item.textContent))
+      .toEqual(['삼성전자 주관 1년 과정 소프트웨어 개발자 양성 교육 프로그램'])
   })
 
   it('웹과 정적 문서의 텍스트 소스에는 중앙점을 사용하지 않는다', () => {
