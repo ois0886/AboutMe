@@ -94,7 +94,7 @@ Header → About → Career(alt) → Projects → OpenSource(alt) → Skills →
 
 ## 프로젝트 데이터 구조 (projects.ts)
 
-- `Project`: id, title, description, cardSummary(description, achievements[]), thumbnail, tech, period, team, role, details, features, contributions, problemSolvings[], insights[], insightImages?[], achievements, retrospective, links, screenshots, screenshotColumns?, hasBottomScreenshot?
+- `Project`: id, title, description, cardSummary(description, achievements[]), thumbnail, tech, period, team?, role, details, features, contributions, problemSolvings[], insights[], insightImages?[], achievements, retrospective, links, screenshots, screenshotColumns?, hasBottomScreenshot?
 - `ProblemSolving`: problem[], solution[], result[], visual, implementation[], alternatives[] — 각 문제해결 블록이 독립적
 - `visual`: src, alt — 각 문제 해결을 설명하는 생성형 이미지와 대체 텍스트
 - `ImplementationBlock`: description — 기존 구현 설명을 유지하며 코드와 언어 필드는 사용하지 않음
@@ -111,6 +111,7 @@ Header → About → Career(alt) → Projects → OpenSource(alt) → Skills →
 
 내용이 비어 있는 섹션은 렌더링하지 않습니다.
 한길졸업은 상단 기본 정보와 프로젝트 개요 두 문장만 유지하고, 카드 성과와 상세 하위 섹션의 데이터는 빈 배열로 둡니다.
+주점부리는 상단 기본 정보와 프로젝트 개요 두 문장, Pubburi GitHub 조직 링크를 유지합니다.
 데스크톱 고정 목차와 모바일 접이식 목차는 실제 렌더링하는 섹션에만 연결합니다. 상세 이미지는 ImageViewer에서 화면 맞춤과 원본 크기 보기, 닫기와 키보드 탐색을 제공합니다.
 리디자인의 콘텐츠 기준은 `src/test/home-preserved-content.json`과 `src/test/projects-preserved-content.json`입니다. 프로젝트 데이터에서 승인된 공개 제한 안내 세 문장 삭제 외에는 원문, 강조, 링크, 이미지와 항목 순서를 유지합니다.
 
@@ -122,7 +123,7 @@ Header → About → Career(alt) → Projects → OpenSource(alt) → Skills →
 | `naenun-kiosk` | 내눈 키오스크 | 8장(2열) | 3 | - | Figma |
 | `mo-re` | 모리, Mo-Re | 14장(3열) | 2 | 7 | Figma |
 | `glim` | Glim | 8장(3열) | 3 | 6 | GitHub, Figma |
-| `pubburi` | 주점부리 | 3장(2열) | 2 | - | Backend & Frontend 프로젝트, GitHub |
+| `pubburi` | 주점부리 | - | - | - | 기본 정보, 프로젝트 개요와 GitHub 조직 링크 제공 |
 | `quiz-cafe` | Quiz Cafe | 1장 | 2 | 6 | GitHub, Figma |
 | `dear-my-diary` | Dear My Diary | 4장(2열) | 3 | - | Qualcomm 산학협력, Android 팀장, 온디바이스 AI 통합 |
 | `didimdol` | Didimdol | 2장 | 2 | 5 | Android |

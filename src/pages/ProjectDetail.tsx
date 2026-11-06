@@ -142,10 +142,12 @@ function ProjectCaseStudy({ project }: { project: Project }) {
               <span className={styles.metaLabel}>기간</span>
               <span>{project.period}</span>
             </div>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>팀 구성</span>
-              <span>{project.team}</span>
-            </div>
+            {project.team && (
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>팀 구성</span>
+                <span>{project.team}</span>
+              </div>
+            )}
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>역할</span>
               <span>{project.role}</span>

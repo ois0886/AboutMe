@@ -32,7 +32,7 @@ describe('ProjectDetail', () => {
     expect(container.querySelector('pre, code')).toBeNull()
   })
 
-  it.each(projects.filter((project) => project.id !== 'hangil'))(
+  it.each(projects.filter((project) => project.problemSolvings.length > 0))(
     '$id는 코드 없이 문제 해결 이미지와 기존 구현 설명을 표시한다',
     (project) => {
       const { container } = renderProjectDetail(project.id)
@@ -91,7 +91,7 @@ describe('ProjectDetail', () => {
   it('유효한 프로젝트 ID로 접근하면 기간, 팀 구성, 역할이 렌더링된다', () => {
     renderProjectDetail(firstProject.id)
     expect(screen.getByText(firstProject.period)).toBeInTheDocument()
-    expect(screen.getByText(firstProject.team)).toBeInTheDocument()
+    expect(screen.getByText(firstProject.team!)).toBeInTheDocument()
     expect(screen.getByText(firstProject.role)).toBeInTheDocument()
   })
 
@@ -202,19 +202,23 @@ describe('ProjectDetail', () => {
       .toHaveAttribute('src', 'screenshot/more-parallel-api-visual.png')
   })
 
-  it('주점부리 프로젝트 상세가 정상 렌더링된다', () => {
-    const { container } = renderProjectDetail('pubburi')
+  it('주점부리는 진행 중인 프로젝트의 기본 정보, GitHub 링크와 개요를 표시한다', () => {
+    renderProjectDetail('pubburi')
+    const project = projects.find((item) => item.id === 'pubburi')!
 
     expect(
-      screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Frontend' }),
+      screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Frontend & Recommendation' }),
     ).toBeInTheDocument()
-    expect(
-      screen.getByText('2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15'),
-    ).toBeInTheDocument()
-    expect(screen.getByText('Backend & Frontend 개발')).toBeInTheDocument()
-    expect(container.textContent).toContain('상세 조회 쿼리 수가 95% 감소했습니다')
-    expect(screen.getAllByText('20회에서 1회로 줄였습니다')).toHaveLength(2)
-    expect(screen.getByText(/주문 생성 중 한 단계라도 실패하면 전체 변경을 되돌려/)).toBeInTheDocument()
+    expect(screen.getByText('2026.10.31 ~ 진행 중')).toBeInTheDocument()
+    expect(screen.getByText('Backend & Frontend & Recommendation 개발')).toBeInTheDocument()
+    expect(screen.queryByText('팀 구성')).not.toBeInTheDocument()
+    expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent))
+      .toEqual(['링크', '프로젝트 개요'])
+    const overview = screen.getByRole('heading', { name: '프로젝트 개요' }).closest('section')!
+    expect(within(overview).getAllByRole('listitem').map((item) => item.textContent))
+      .toEqual(project.details)
+    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Pubburi')
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
 
   it('Dear My Diary는 모델 통합과 입력 구성, 감정 후처리를 설명하고 비공개 링크를 숨긴다', () => {

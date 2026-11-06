@@ -25,7 +25,6 @@ describe('projects 데이터 무결성', () => {
       expect(project.description).toBeTruthy()
       expect(project.tech.length).toBeGreaterThan(0)
       expect(project.period).toBeTruthy()
-      expect(project.team).toBeTruthy()
       expect(project.role).toBeTruthy()
     })
   })
@@ -57,9 +56,19 @@ describe('projects 데이터 무결성', () => {
     expect(project.period).toBe(period)
   })
 
-  it('주점부리의 웹 개발 기간은 일 단위로 표시한다', () => {
-    expect(projects.find((project) => project.id === 'pubburi')?.period)
-      .toBe('2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15')
+  it('주점부리는 현재 조직 기준의 기본 정보, 개요와 GitHub 링크를 보관한다', () => {
+    const project = projects.find((item) => item.id === 'pubburi')!
+
+    expect(project.period).toBe('2026.10.31 ~ 진행 중')
+    expect(project.team).toBeUndefined()
+    expect(project.thumbnail).toBe('screenshot/pubburi-logo.webp')
+    expect(project.details).toHaveLength(2)
+    expect(project.links).toEqual([{ label: 'GitHub', url: 'https://github.com/Pubburi' }])
+    for (const items of [project.cardSummary.achievements, project.features, project.contributions,
+      project.problemSolvings, project.insights, project.achievements, project.retrospective,
+      project.screenshots]) {
+      expect(items).toEqual([])
+    }
   })
 
   it('한길졸업은 기본 정보와 소개 두 문장만 보관한다', () => {
@@ -83,8 +92,8 @@ describe('projects 데이터 무결성', () => {
     expect(project.imageSectionTitle).toBeUndefined()
   })
 
-  it('소개만 제공하는 한길졸업을 제외한 프로젝트에는 스크린샷이 있다', () => {
-    projects.filter((project) => project.id !== 'hangil').forEach((project) => {
+  it('한길졸업과 주점부리를 제외한 프로젝트에는 스크린샷이 있다', () => {
+    projects.filter((project) => !['hangil', 'pubburi'].includes(project.id)).forEach((project) => {
       expect(project.screenshots.length).toBeGreaterThan(0)
     })
   })
@@ -112,11 +121,11 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('21개 문제 해결에 실제 PNG 이미지와 대체 텍스트를 제공한다', () => {
+  it('19개 문제 해결에 실제 PNG 이미지와 대체 텍스트를 제공한다', () => {
     const visuals = projects.flatMap((project) => project.problemSolvings.map((ps) => ps.visual))
 
-    expect(visuals).toHaveLength(21)
-    expect(new Set(visuals.map((visual) => visual.src)).size).toBe(21)
+    expect(visuals).toHaveLength(19)
+    expect(new Set(visuals.map((visual) => visual.src)).size).toBe(19)
     visuals.forEach((visual) => {
       expect(visual.alt.trim(), visual.src).toBeTruthy()
       expect(visual.src).toMatch(/^screenshot\/.+\.png$/)
@@ -129,18 +138,10 @@ describe('projects 데이터 무결성', () => {
     ['naenun-kiosk', ['naenun-state-hoisting-visual.png', 'naenun-package-refactor-visual.png', 'naenun-memory-leak-visual.png']],
     ['mo-re', ['more-parallel-api-visual.png', 'more-build-logic-visual.png']],
     ['glim', ['glim-auth-flow-visual.png', 'glim-mvi-test-visual.png', 'glim-navigator-channel-visual.png']],
-    ['pubburi', ['pubburi-batch-query-visual.png', 'pubburi-transaction-visual.png']],
   ])('%s는 기존 생성형 이미지를 해당 문제 해결에 재사용한다', (id, filenames) => {
     const project = projects.find((item) => item.id === id)!
     expect(project.problemSolvings.map((ps) => ps.visual.src))
       .toEqual((filenames as string[]).map((filename) => `screenshot/${filename}`))
-  })
-
-  it('주점부리 문제 해결은 2개만 제공한다', () => {
-    const pubburi = projects.find((project) => project.id === 'pubburi')
-
-    expect(pubburi).toBeDefined()
-    expect(pubburi?.problemSolvings).toHaveLength(2)
   })
 
   it('Dear My Diary는 멘토를 포함한 팀 구성을 표시하고 비공개 링크를 노출하지 않는다', () => {

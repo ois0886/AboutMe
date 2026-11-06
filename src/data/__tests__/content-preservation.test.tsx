@@ -74,7 +74,7 @@ describe('리디자인 콘텐츠 보존', () => {
         ...ps.problem, ...ps.solution, ...ps.result, ...ps.alternatives,
         ...ps.implementation.map((block) => block.description),
       ]),
-    ]
+    ].filter((item) => item !== undefined)
     for (const item of content) {
       expect(text, project.id + ': ' + plainText(item)).toContain(compact(plainText(item)))
     }

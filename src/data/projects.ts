@@ -29,7 +29,7 @@ export interface Project {
   thumbnail: string | null
   tech: string[]
   period: string
-  team: string
+  team?: string
   role: string
   details: RichText[]
   features: RichText[]
@@ -572,144 +572,30 @@ const projects: Project[] = [
   },
   {
     id: 'pubburi',
-    title: '주점부리 - Backend & Frontend',
-    description:
-      '주류 상품을 찾고 주문하며 스탬프를 적립하는 웹 서비스입니다. 상품과 주문을 관리하는 관리자 화면도 제공합니다.',
+    title: '주점부리 - Backend & Frontend & Recommendation',
+    description: '취향에 맞는 주류를 찾고, 비교하고, 후기를 남길 수 있는 웹 서비스입니다.',
     cardSummary: {
-      description: '주류 상품 검색과 주문, 스탬프 적립 및 상품과 주문 관리 화면을 제공하는 웹 서비스',
-      achievements: [
-        '주문과 상품 주문 수, 스탬프 적립 결과 검증 및 실패 시 전체 변경 롤백',
-        rich('주문 20건의 상세 조회 쿼리를 ', strong('20회에서 1회로 축소'), ', 상세 조회 쿼리 수 95% 감소'),
-        '사용자, 상품, 주문, 댓글, 매장 API와 고객 및 관리자 화면 구현',
-      ],
+      description: '취향에 맞는 주류를 탐색하고 비교할 수 있는 웹 서비스',
+      achievements: [],
     },
-    thumbnail: 'screenshot/pubburi-home.png',
-    tech: [
-      'Java',
-      'Spring Boot 3',
-      'MyBatis',
-      'MySQL',
-      'REST API',
-      'Vue 3',
-      'Vite',
-      'Pinia',
-      'Vue Router',
-      'Docker Compose',
-    ],
-    period: '2025.05.12 ~ 2025.05.28 / 2026.07.01 ~ 2026.07.15',
-    team: '2명 (Backend & Frontend)',
-    role: 'Backend & Frontend 개발',
+    thumbnail: 'screenshot/pubburi-logo.webp',
+    tech: ['Java', 'Spring Boot', 'PostgreSQL', 'React', 'TypeScript', 'Python', 'FastAPI'],
+    period: '2026.10.31 ~ 진행 중',
+    role: 'Backend & Frontend & Recommendation 개발',
     details: [
-      'SSAFY 1학기 관통 프로젝트에서 학습한 Java, Spring Boot, MyBatis, MySQL, Vue로 주류 주문 서비스를 개발했습니다.',
-      '상품 검색부터 장바구니, 주문, 스탬프 적립까지 연결하고 댓글, 매장 조회와 관리자 기능을 구현했습니다.',
-      '백엔드는 Controller-Service-DAO 계층으로 나누고 프론트엔드는 Vue Router와 Pinia로 화면과 상태를 관리했습니다.',
-      '리팩토링 후 다른 사람이 실행하고 검증할 수 있도록 Docker Compose의 MySQL 환경과 API, 계층 구조, 성능 관련 문서를 공개 저장소에 정리했습니다.',
+      'Spring Boot 백엔드와 React 웹을 연동해 주종, 가격, 도수, 맛과 향으로 주류를 검색하고, 상품을 비교하거나 찜하고 후기를 남길 수 있도록 했습니다.',
+      'Python과 FastAPI 기반 추천 서비스에서 취향 설문, 찜, 후기를 바탕으로 주류를 추천하고 그 이유를 보여주는 기능을 개발하고 있습니다.',
     ],
-    features: [
-      '고객이 상품을 검색하고 상세 정보와 댓글을 확인한 뒤 장바구니에 담아 주문할 수 있어야 했습니다.',
-      '관리자가 상품, 매장, 주문, 댓글과 사용자를 관리할 수 있어야 했습니다.',
-      '세션 기반 로그인과 프로필, 주문 내역 조회, 스탬프 등급 계산을 지원해야 했습니다.',
-      '주문 생성과 상세 조회, 고객과 관리자의 주문 목록 페이지 조회, 완료와 삭제 API가 필요했습니다.',
-      '상품별 댓글을 등록, 수정, 삭제하고 목록을 페이지 단위로 볼 수 있어야 했습니다.',
-      '주문 수에 따른 인기 상품을 보여주고 상품 목록을 검색하거나 정렬할 수 있어야 했습니다.',
-    ],
-    contributions: [
-      'Spring Boot와 MyBatis XML Mapper로 사용자, 상품, 주문, 댓글, 매장 API를 구현했습니다.',
-      'ApiResponse와 PageResponse, 공통 예외 처리로 성공과 실패, 페이지 조회 응답 형식을 통일했습니다.',
-      'AccessGuard와 SessionUser로 로그인, 관리자, 본인 여부를 공통 검증하고 세션에 비밀번호가 남지 않도록 했습니다.',
-      '중복 상품 수량 합산, 주문 상세 일괄 저장, 상품 주문 수 증가와 스탬프 적립을 하나의 트랜잭션으로 묶고 각 처리 결과를 검증했습니다.',
-      'Vue Router와 Pinia로 인증, 장바구니, 상품 목록과 관리자 상태를 나누고 검색 조건을 URL 쿼리와 동기화했습니다.',
-      '고객용 상품 상태와 관리자용 상품 및 매장 상태를 분리하고 요청 진행 여부를 관리해 검색 조건 충돌과 중복 요청을 막았습니다.',
-      'Bootstrap을 제거하고 공통 UI, Vue 상태로 동작하는 이미지 슬라이드와 WebP 이미지로 화면을 정리했습니다.',
-    ],
-    problemSolvings: [
-      {
-        problem: [
-          '주문 목록 20건을 가져온 뒤 주문마다 상세 상품을 다시 조회해 상세 조회 쿼리가 20회 발생했습니다.',
-          'MyBatis의 중첩 조회를 그대로 사용하면 주문이 늘어날 때마다 상세 쿼리도 반복되는 N+1 문제가 있었습니다.',
-          '화면에서 사용하는 각 주문의 details 필드는 유지해야 해 API 응답 형식을 바꾸지 않고 조회 방식을 개선해야 했습니다.',
-        ],
-        solution: [
-          '주문 목록에서 ID를 모아 order_id의 IN 조건으로 상세 상품을 한 번에 조회했습니다.',
-          '서비스 계층에서 상세 상품을 orderId별로 묶어 각 OrderInfo의 details에 넣었습니다.',
-          '고객과 관리자의 주문 목록, 최근 주문 조회가 같은 attachDetails 처리를 사용하도록 구성했습니다.',
-        ],
-        result: [
-          rich('주문 20건 기준 상세 조회 쿼리를 ', strong('20회에서 1회로 줄였습니다'), '. 상세 조회 쿼리 수가 95% 감소했습니다.'),
-          '기존 응답 형식을 유지하면서 주문마다 상세 쿼리를 반복하던 구조를 없앴습니다.',
-          '고객과 관리자 목록 모두 같은 일괄 조회 로직으로 상세 데이터를 조합하도록 통일했습니다.',
-        ],
-        visual: {
-          src: 'screenshot/pubburi-batch-query-visual.png',
-          alt: '주문별 반복 상세 조회를 주문 ID 목록을 사용하는 일괄 조회로 바꾼 구조',
-        },
-        implementation: [
-          {
-            description:
-              '주문 ID 목록으로 상세 상품을 일괄 조회합니다. orderId별로 결과를 묶어 기존 OrderInfo.details에 넣습니다.',
-          },
-          {
-            description:
-              'MyBatis Mapper의 foreach로 주문 ID 목록을 IN 절에 전달해 주문 상세와 상품 정보를 한 번에 조회합니다.',
-          },
-        ],
-        alternatives: [
-          'MyBatis의 중첩 조회는 구현이 단순하지만 주문 건수만큼 쿼리가 늘어나므로 일괄 조회를 선택했습니다.',
-          '화면에서 상세 API를 병렬 호출하면 요청 수와 데이터 조합 코드가 늘어납니다. 백엔드에서 일괄 조회한 결과를 기존 응답에 담는 방식을 택했습니다.',
-        ],
-      },
-      {
-        problem: [
-          '주문을 만들 때 주문 상세 저장, 상품별 주문 수 증가와 스탬프 적립을 모두 처리해야 했습니다.',
-          '@Transactional이 있어도 DAO가 실패를 예외 대신 영향 행 0건으로 반환하면 일부 데이터만 저장될 수 있었습니다.',
-          '존재하지 않는 상품이나 상세 저장 실패를 놓치면 주문, 상품 주문 수와 스탬프의 값이 서로 맞지 않을 수 있었습니다.',
-        ],
-        solution: [
-          'OrderService의 주문 생성에 @Transactional을 적용하고 같은 상품의 수량을 합산해 주문 상세를 일괄 저장했습니다.',
-          '상품 주문 수, 주문 상세와 스탬프 저장 결과를 단계별로 검증하고 하나라도 실패하면 예외를 던져 전체 변경을 되돌렸습니다.',
-          '스탬프는 기존 값을 읽어 덮어쓰지 않고 stamps = stamps + quantity로 갱신했습니다. 존재하지 않는 상품은 후속 저장 전에 차단했습니다.',
-        ],
-        result: [
-          '주문 생성 중 한 단계라도 실패하면 전체 변경을 되돌려 일부 데이터만 저장되지 않도록 했습니다.',
-          '존재하지 않는 상품으로 주문했을 때 주문 상세와 스탬프 적립이 남지 않는지 테스트했습니다.',
-        ],
-        visual: {
-          src: 'screenshot/pubburi-transaction-visual.png',
-          alt: '주문 생성과 상품 주문 수, 스탬프 적립을 하나의 트랜잭션으로 묶고 실패 시 전체 롤백하는 흐름',
-        },
-        implementation: [
-          {
-            description:
-              'productId별 수량을 합산하고 저장 단계마다 영향 행을 확인합니다. 상품, 주문 상세와 스탬프 갱신 중 하나라도 반영되지 않으면 예외를 던져 트랜잭션 전체를 되돌립니다.',
-          },
-        ],
-        alternatives: [
-          '@Transactional만 적용하면 영향 행 0건을 실패로 판단하지 못하므로 DAO 반환값 검증을 함께 적용했습니다.',
-          '별도 보상 로직으로 실패를 복구하기보다 하나의 트랜잭션에서 결과를 검증하고 되돌리는 방식을 선택했습니다.',
-        ],
-      },
-    ],
+    features: [],
+    contributions: [],
+    problemSolvings: [],
     insights: [],
-    achievements: [
-      '주문과 상품 주문 수, 스탬프 적립 결과를 검증하고 실패하면 전체 변경을 되돌리도록 구성했습니다.',
-      rich('주문 20건의 상세 조회 쿼리를 ', strong('20회에서 1회로 줄였습니다'), '. 상세 조회 쿼리 수가 95% 감소했습니다.'),
-      '사용자, 상품, 주문, 댓글, 매장 API와 고객 및 관리자 화면을 구현했습니다.',
-      '공통 응답과 입력 검증, 예외 및 권한 처리 규칙을 API에 적용했습니다.',
-    ],
-    retrospective: [
-      '여러 테이블을 바꾸는 주문 흐름에서는 트랜잭션 경계뿐 아니라 어떤 반환값을 실패로 볼지 먼저 정해야 한다는 점을 배웠습니다.',
-      'Android 담당 팀원과 상품, 장바구니, 스탬프 응답을 맞추면서 필드명과 페이지 형식, 검증 오류 규칙을 코드와 문서로 합의했습니다.',
-      '다른 사람도 프로젝트를 실행하고 확인할 수 있도록 실행 환경, 초기 데이터와 검증 명령을 함께 남기는 일이 필요했습니다.',
-    ],
+    achievements: [],
+    retrospective: [],
     links: [
-      { label: 'GitHub', url: 'https://github.com/ois0886/Pubburi-Refactor' },
+      { label: 'GitHub', url: 'https://github.com/Pubburi' },
     ],
-    screenshots: [
-      'screenshot/pubburi-home.png',
-      'screenshot/pubburi-products.png',
-      'screenshot/pubburi-product-detail.png',
-    ],
-    hasBottomScreenshot: false,
+    screenshots: [],
   },
   {
     id: 'quiz-cafe',

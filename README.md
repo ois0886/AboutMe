@@ -50,6 +50,7 @@
 프로젝트 데이터는 `src/data/projects.ts` 한 곳에서 목록 카드와 상세 페이지가 함께 사용합니다.
 메인 카드는 `cardSummary`의 항목형 소개와 성과를 사용하고, 상세 페이지는 기존 `description`과 `achievements` 원문을 사용합니다.
 한길졸업은 기본 정보와 프로젝트 개요 두 문장만 제공하며, 카드 성과와 상세 하위 섹션은 비워 둡니다.
+주점부리는 기본 정보와 프로젝트 개요 두 문장, Pubburi GitHub 조직 링크를 제공합니다.
 그 외 프로젝트의 각 문제 해결은 `visual: { src, alt }` 생성형 이미지와 `implementation`의 `description` 설명으로 구성합니다. 코드 블록은 저장하거나 표시하지 않습니다.
 새 이미지의 생성 프롬프트와 검수 수정 기록은 [이미지 생성 기록](docs/project-visual-prompts.md)에 정리했습니다.
 
@@ -59,7 +60,7 @@
 | `naenun-kiosk` | 내눈 키오스크 | 8 (2 cols) | 3 | - |
 | `mo-re` | 모리, Mo-Re | 14 (3 cols) | 2 | 7 |
 | `glim` | Glim | 8 (3 cols) | 3 | 6 |
-| `pubburi` | 주점부리 (Backend & Frontend) | 3 (2 cols) | 2 | - |
+| `pubburi` | 주점부리 (Backend & Frontend & Recommendation) | - | - | - |
 | `quiz-cafe` | Quiz Cafe | 1 | 2 | 6 |
 | `dear-my-diary` | Dear My Diary (Android 팀장) | 4 (2 cols) | 3 | - |
 | `didimdol` | Didimdol | 2 | 2 | 5 |
