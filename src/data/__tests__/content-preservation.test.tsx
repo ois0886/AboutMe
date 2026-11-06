@@ -78,6 +78,12 @@ describe('리디자인 콘텐츠 보존', () => {
     for (const item of content) {
       expect(text, project.id + ': ' + plainText(item)).toContain(compact(plainText(item)))
     }
+    const emphasis = content.flatMap((item) => typeof item === 'string'
+      ? []
+      : item.filter((segment) => segment.strong).map((segment) => segment.text),
+    )
+    expect(Array.from(container.querySelectorAll('strong'), (item) => item.textContent).sort())
+      .toEqual(emphasis.sort())
     const images = Array.from(container.querySelectorAll('img'))
     expect(images.map((image) => image.getAttribute('src') + '\n' + image.getAttribute('alt')).sort()).toEqual([
       ...project.screenshots.map((src) => src + '\n' + (project.screenshotDescriptions?.[src]?.alt ?? project.title)),
@@ -119,7 +125,7 @@ describe('리디자인 콘텐츠 보존', () => {
           remaining = remaining.replace(segment, '')
         }
         const functionalLabels: Record<string, string[]> = {
-          about: ['Oh In Seong', '프로젝트 보기', '연락하기'],
+          about: ['Oh In Seong', 'Career', '프로젝트 보기', '연락하기'],
           projects: ['자세히 보기'],
         }
         for (const label of functionalLabels[original.id] ?? []) {
@@ -132,9 +138,11 @@ describe('리디자인 콘텐츠 보존', () => {
           expect(emphasis, original.id + ': 강조').toContain(text)
         }
         for (const link of original.links) {
-          expect(Array.from(section.querySelectorAll('a')).some((item) =>
-            item.getAttribute('href') === link.href && visibleText(item) === compact(link.text)),
-            original.id + ': ' + link.href).toBe(true)
+          const anchor = Array.from(section.querySelectorAll('a')).find((item) =>
+            item.getAttribute('href') === link.href
+            && visibleText(original.id === 'projects' ? item.closest('article') ?? item : item) === compact(link.text),
+          )
+          expect(anchor, original.id + ': ' + link.href).toBeDefined()
         }
         for (const image of original.images) {
           expect(Array.from(section.querySelectorAll('img')).some((item) =>

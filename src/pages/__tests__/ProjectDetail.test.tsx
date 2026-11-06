@@ -28,6 +28,7 @@ describe('ProjectDetail', () => {
     expect(within(overview).getAllByRole('listitem').map((item) => item.textContent))
       .toEqual(project.details)
     expect(screen.queryByRole('link', { name: 'GitHub' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('navigation', { name: '프로젝트 목차' })).not.toBeInTheDocument()
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
     expect(container.querySelector('pre, code')).toBeNull()
   })
@@ -47,8 +48,8 @@ describe('ProjectDetail', () => {
         })
       })
       expect(screen.getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
-        ...(project.insights.length > 0 ? project.insightImages ?? [] : []),
         ...project.problemSolvings.map((ps) => ps.visual.src),
+        ...(project.insights.length > 0 ? project.insightImages ?? [] : []),
         ...project.screenshots,
       ])
       expect(container.querySelectorAll('[class*="implDescription"]')).toHaveLength(
@@ -88,11 +89,10 @@ describe('ProjectDetail', () => {
     expect(screen.queryByText(firstProject.cardSummary.description)).not.toBeInTheDocument()
   })
 
-  it('유효한 프로젝트 ID로 접근하면 기간, 팀 구성, 역할이 렌더링된다', () => {
+  it('유효한 프로젝트 ID로 접근하면 역할, 기간, 팀 구성 순으로 표시한다', () => {
     renderProjectDetail(firstProject.id)
-    expect(screen.getByText(firstProject.period)).toBeInTheDocument()
-    expect(screen.getByText(firstProject.team!)).toBeInTheDocument()
-    expect(screen.getByText(firstProject.role)).toBeInTheDocument()
+    expect(screen.getAllByRole('definition').map((item) => item.textContent))
+      .toEqual([firstProject.role, firstProject.period, firstProject.team])
   })
 
   it('유효한 프로젝트 ID로 접근하면 기술 태그가 렌더링된다', () => {
@@ -117,15 +117,19 @@ describe('ProjectDetail', () => {
     expect(screen.getByText('← 돌아가기')).toBeInTheDocument()
   })
 
-  it('목차는 표시된 섹션만 기존 순서와 제목으로 연결한다', () => {
+  it('목차와 본문은 성과와 역할, 문제 해결을 앞세운 순서로 일치한다', () => {
     renderProjectDetail('glim')
     const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
     const headings = screen.getAllByRole('heading', { level: 2 })
+    expect(headings.map((heading) => heading.textContent)).toEqual([
+      '성과 및 결과', '프로젝트 개요', '담당 역할 및 기여', '링크', '문제 해결',
+      '주요 요구사항', 'Project Insights', '스크린샷', '프로젝트 회고',
+    ])
     expect(toc.getAllByRole('link').map((link) => link.textContent))
       .toEqual(headings.map((heading) => heading.textContent))
     toc.getAllByRole('link').forEach((link, index) => {
       const section = headings[index].closest('section')!
-      expect(link).toHaveAttribute('href', `#/projects/glim#${section.id}`)
+      expect(link).toHaveAttribute('href', `/projects/glim#${section.id}`)
       expect(section).toHaveAttribute('tabindex', '-1')
     })
     expect(toc.getAllByRole('link')[0]).toHaveAttribute('aria-current', 'location')
@@ -135,7 +139,7 @@ describe('ProjectDetail', () => {
       .toBe(screen.getByRole('main'))
   })
 
-  it('접을 수 있는 목차에서 선택한 섹션으로 포커스를 옮기고 현재 위치를 표시한다', () => {
+  it('접을 수 있는 목차는 섹션 선택 후 닫히고 현재 위치를 표시한다', () => {
     renderProjectDetail('glim')
     const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
     const toggle = toc.getByRole('button', { name: '목차' })
@@ -143,12 +147,22 @@ describe('ProjectDetail', () => {
     fireEvent.click(toggle)
     expect(toggle).toHaveAttribute('aria-expanded', 'true')
     fireEvent.click(toc.getByRole('link', { name: '문제 해결' }))
-    expect(document.getElementById('project-problems')).toHaveFocus()
     expect(toc.getByRole('link', { name: '문제 해결' })).toHaveAttribute('aria-current', 'location')
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('다른 프로젝트로 직접 이동하면 목차의 펼침 상태와 현재 위치가 초기화된다', () => {
+  it('키보드 포커스가 목차에서 본문으로 나가면 펼쳐진 목차를 닫는다', () => {
+    renderProjectDetail('mo-re')
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    const toggle = toc.getByRole('button', { name: '목차' })
+    fireEvent.click(toggle)
+    fireEvent.blur(toc.getByRole('link', { name: '프로젝트 회고' }), {
+      relatedTarget: screen.getByRole('link', { name: 'Figma' }),
+    })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('다른 프로젝트로 이동하면 본문 섹션이 하나인 상세에서 목차를 숨긴다', () => {
     render(
       <MemoryRouter initialEntries={['/projects/glim']}>
         <Link to="/projects/hangil">한길졸업으로 이동</Link>
@@ -159,10 +173,8 @@ describe('ProjectDetail', () => {
     )
     fireEvent.click(screen.getByRole('button', { name: '목차' }))
     fireEvent.click(screen.getByRole('link', { name: '한길졸업으로 이동' }))
-    expect(screen.getByRole('button', { name: '목차' })).toHaveAttribute('aria-expanded', 'false')
-    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
-    expect(toc.getAllByRole('link')).toHaveLength(1)
-    expect(toc.getByRole('link', { name: '프로젝트 개요' })).toHaveAttribute('aria-current', 'location')
+    expect(screen.queryByRole('navigation', { name: '프로젝트 목차' })).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '프로젝트 개요' })).toBeInTheDocument()
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
 
@@ -213,7 +225,7 @@ describe('ProjectDetail', () => {
     expect(screen.getByText('Backend & Frontend & Recommendation 개발')).toBeInTheDocument()
     expect(screen.queryByText('팀 구성')).not.toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent))
-      .toEqual(['링크', '프로젝트 개요'])
+      .toEqual(['프로젝트 개요', '링크'])
     const overview = screen.getByRole('heading', { name: '프로젝트 개요' }).closest('section')!
     expect(within(overview).getAllByRole('listitem').map((item) => item.textContent))
       .toEqual(project.details)

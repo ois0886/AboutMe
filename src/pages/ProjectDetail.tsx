@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type FocusEvent, type ReactNode } from 'react'
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
 import ImageViewer from '../components/ImageViewer'
 import projects, { type Project, type RichText } from '../data/projects'
@@ -39,31 +39,48 @@ function ProjectCaseStudy({ project }: { project: Project }) {
   const location = useLocation()
   const sections = useMemo(() => [
     { id: 'project-achievements', label: '성과 및 결과', visible: project.achievements.length > 0 },
-    { id: 'project-links', label: '링크', visible: project.links.length > 0 },
     { id: 'project-overview', label: '프로젝트 개요', visible: project.details.length > 0 },
+    { id: 'project-contributions', label: '담당 역할 및 기여', visible: project.contributions.length > 0 },
+    { id: 'project-links', label: '링크', visible: project.links.length > 0 },
+    { id: 'project-problems', label: '문제 해결', visible: project.problemSolvings.length > 0 },
     { id: 'project-requirements', label: '주요 요구사항', visible: project.features.length > 0 },
     { id: 'project-insights', label: 'Project Insights', visible: project.insights.length > 0 },
-    { id: 'project-contributions', label: '담당 역할 및 기여', visible: project.contributions.length > 0 },
-    { id: 'project-problems', label: '문제 해결', visible: project.problemSolvings.length > 0 },
     { id: 'project-screenshots', label: project.imageSectionTitle ?? '스크린샷', visible: project.screenshots.length > 0 },
     { id: 'project-retrospective', label: '프로젝트 회고', visible: project.retrospective.length > 0 },
   ].filter((section) => section.visible), [project])
-  const [activeSection, setActiveSection] = useState(sections[0]?.id)
-  const [isTocOpen, setIsTocOpen] = useState(false)
+  const hasToc = sections.length > 1
+  const [scrollSection, setScrollSection] = useState<{ locationKey: string; id: string }>()
+  const [tocLocationKey, setTocLocationKey] = useState<string | null>(null)
+  const isTocOpen = tocLocationKey === location.key
+  const sectionFromHash = sections.find((section) => `#${section.id}` === location.hash)?.id
+  const activeSection = scrollSection?.locationKey === location.key
+    ? scrollSection.id
+    : sectionFromHash ?? sections[0]?.id
 
   useEffect(() => {
+    if (!hasToc) return
+
     let frame = 0
     const updateActiveSection = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80
-        const sectionOffset = headerHeight + (window.innerWidth <= 1000 ? 96 : 48)
         let current = sections[0]?.id
         for (const section of sections) {
           const element = document.getElementById(section.id)
-          if (element && element.getBoundingClientRect().top <= sectionOffset) current = section.id
+          if (!element) continue
+          const offset = parseFloat(getComputedStyle(element).scrollMarginTop) || 128
+          if (element.getBoundingClientRect().top <= offset + 1) current = section.id
         }
-        setActiveSection(current)
+        const focusedSection = document.activeElement?.closest('section[id^="project-"]')
+        if (focusedSection) {
+          const { top, bottom } = focusedSection.getBoundingClientRect()
+          if (top >= 0 && top < window.innerHeight && bottom > top) current = focusedSection.id
+        }
+        if (current) setScrollSection((previous) =>
+          previous?.locationKey === location.key && previous.id === current
+            ? previous
+            : { locationKey: location.key, id: current },
+        )
       })
     }
 
@@ -74,21 +91,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
       window.removeEventListener('scroll', updateActiveSection)
       window.removeEventListener('resize', updateActiveSection)
     }
-  }, [sections])
-
-  const navigateToSection = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    event.preventDefault()
-    const section = document.getElementById(sectionId)
-    if (!section) return
-
-    section.focus({ preventScroll: true })
-    section.scrollIntoView?.({
-      block: 'start',
-      behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-    })
-    setActiveSection(sectionId)
-    setIsTocOpen(false)
-  }
+  }, [hasToc, location.key, sections])
 
   const cols = project.screenshotColumns || 2
   const showBottom = project.hasBottomScreenshot !== false && project.screenshots.length > 1
@@ -128,31 +131,44 @@ function ProjectCaseStudy({ project }: { project: Project }) {
     navigate('/')
   }
 
+  const revealFocusedControl = (event: FocusEvent<HTMLElement>) => {
+    const control = event.target
+    if (!event.currentTarget.contains(control) || !control.matches('a:focus-visible, button:focus-visible')) return
+
+    requestAnimationFrame(() => {
+      if (document.activeElement !== control) return
+      const offset = parseFloat(getComputedStyle(control).scrollMarginTop)
+      if (offset > 0 && control.getBoundingClientRect().top < offset - 1) {
+        control.scrollIntoView?.({ block: 'start', behavior: 'instant' })
+      }
+    })
+  }
+
   return (
     <div className={styles.page}>
-      <main id="main-content" className={styles.container} tabIndex={-1}>
+      <main id="main-content" className={styles.container} tabIndex={-1} onFocus={revealFocusedControl}>
         <header className={styles.hero}>
           <a href="#" onClick={handleBack} className={styles.backLink}>← 돌아가기</a>
 
           <h1 className={styles.title}>{project.title}</h1>
           <p className={styles.descriptionText}>{project.description}</p>
 
-          <div className={styles.meta}>
+          <dl className={styles.meta}>
             <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>기간</span>
-              <span>{project.period}</span>
+              <dt className={styles.metaLabel}>역할</dt>
+              <dd>{project.role}</dd>
+            </div>
+            <div className={styles.metaItem}>
+              <dt className={styles.metaLabel}>기간</dt>
+              <dd>{project.period}</dd>
             </div>
             {project.team && (
               <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>팀 구성</span>
-                <span>{project.team}</span>
+                <dt className={styles.metaLabel}>팀 구성</dt>
+                <dd>{project.team}</dd>
               </div>
             )}
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>역할</span>
-              <span>{project.role}</span>
-            </div>
-          </div>
+          </dl>
 
           <div className={styles.techList}>
             {project.tech.map((t) => (
@@ -161,44 +177,78 @@ function ProjectCaseStudy({ project }: { project: Project }) {
           </div>
         </header>
 
-        <div className={styles.detailLayout}>
-          <aside className={styles.toc}>
-            <nav aria-label="프로젝트 목차">
-              <p className={styles.tocCaption}>목차</p>
-              <button
-                type="button"
-                className={styles.tocToggle}
-                aria-expanded={isTocOpen}
-                aria-controls="project-toc-links"
-                onClick={() => setIsTocOpen((value) => !value)}
-              >
-                <span>목차</span>
-                <span aria-hidden="true">{isTocOpen ? '−' : '+'}</span>
-              </button>
-              <ul
-                id="project-toc-links"
-                className={`${styles.tocList} ${!isTocOpen ? styles.tocListCollapsed : ''}`}
-              >
-                {sections.map((section) => (
-                  <li key={section.id}>
-                    <a
-                      href={`#${location.pathname}#${section.id}`}
-                      aria-current={activeSection === section.id ? 'location' : undefined}
-                      onClick={(event) => navigateToSection(event, section.id)}
-                    >
-                      {section.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </aside>
+        <div className={hasToc ? styles.detailLayout : styles.detailWithoutToc}>
+          {hasToc && (
+            <aside
+              className={styles.toc}
+              onBlur={(event) => {
+                if (isTocOpen && !event.currentTarget.contains(event.relatedTarget)) setTocLocationKey(null)
+              }}
+            >
+              <nav aria-label="프로젝트 목차">
+                <p className={styles.tocCaption}>목차</p>
+                <button
+                  type="button"
+                  className={styles.tocToggle}
+                  aria-expanded={isTocOpen}
+                  aria-controls="project-toc-links"
+                  onClick={() => setTocLocationKey(isTocOpen ? null : location.key)}
+                >
+                  <span>목차</span>
+                  <span aria-hidden="true">{isTocOpen ? '−' : '+'}</span>
+                </button>
+                <ul
+                  id="project-toc-links"
+                  className={`${styles.tocList} ${!isTocOpen ? styles.tocListCollapsed : ''}`}
+                >
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <Link
+                        to={{ pathname: location.pathname, search: location.search, hash: `#${section.id}` }}
+                        replace
+                        state={location.state}
+                        aria-current={activeSection === section.id ? 'location' : undefined}
+                      >
+                        {section.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </aside>
+          )}
           <div className={styles.content}>
           {project.achievements.length > 0 && (
           <section id="project-achievements" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>성과 및 결과</h2>
             <ul className={styles.list}>
               {project.achievements.map((item) => (
+                <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
+                  {renderRichText(item)}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {project.details.length > 0 && (
+          <section id="project-overview" className={styles.section} tabIndex={-1}>
+            <h2 className={styles.sectionTitle}>프로젝트 개요</h2>
+            <ul className={styles.list}>
+              {project.details.map((detail) => (
+                <li key={typeof detail === 'string' ? detail : detail.map((segment) => segment.text).join('')} className={styles.listItem}>
+                  {renderRichText(detail)}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {project.contributions.length > 0 && (
+          <section id="project-contributions" className={styles.section} tabIndex={-1}>
+            <h2 className={styles.sectionTitle}>담당 역할 및 기여</h2>
+            <ul className={styles.list}>
+              {project.contributions.map((item) => (
                 <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
                   {renderRichText(item)}
                 </li>
@@ -223,74 +273,6 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                 </a>
               ))}
             </div>
-          </section>
-        )}
-
-        <section id="project-overview" className={styles.section} tabIndex={-1}>
-          <h2 className={styles.sectionTitle}>프로젝트 개요</h2>
-          <ul className={styles.list}>
-            {project.details.map((detail) => (
-              <li key={typeof detail === 'string' ? detail : detail.map((segment) => segment.text).join('')} className={styles.listItem}>
-                {renderRichText(detail)}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {project.features.length > 0 && (
-          <section id="project-requirements" className={styles.section} tabIndex={-1}>
-            <h2 className={styles.sectionTitle}>주요 요구사항</h2>
-            <ul className={styles.list}>
-              {project.features.map((feature) => (
-                <li key={typeof feature === 'string' ? feature : feature.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(feature)}
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {project.insights.length > 0 && (
-          <section id="project-insights" className={styles.section} tabIndex={-1}>
-            <h2 className={styles.sectionTitle}>Project Insights</h2>
-            <ul className={styles.list}>
-              {project.insights.map((insight) => (
-                <li key={insight.url} className={styles.listItem}>
-                  <a
-                    href={insight.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.insightLink}
-                  >
-                    {insight.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            {project.insightImages && project.insightImages.length > 0 && (
-              <div style={{ marginTop: '24px' }}>
-                {project.insightImages.map((img) => (
-                  <div key={img} className={styles.screenshotFull} style={{ marginBottom: '16px' }}>
-                    <div className={styles.screenshotWrap}>
-                      <ImageViewer src={img} alt="Insight" className={styles.screenshot} loading="lazy" decoding="async" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        )}
-
-        {project.contributions.length > 0 && (
-          <section id="project-contributions" className={styles.section} tabIndex={-1}>
-            <h2 className={styles.sectionTitle}>담당 역할 및 기여</h2>
-            <ul className={styles.list}>
-              {project.contributions.map((item) => (
-                <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(item)}
-                </li>
-              ))}
-            </ul>
           </section>
         )}
 
@@ -361,6 +343,50 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                 )}
               </div>
             ))}
+          </section>
+        )}
+
+        {project.features.length > 0 && (
+          <section id="project-requirements" className={styles.section} tabIndex={-1}>
+            <h2 className={styles.sectionTitle}>주요 요구사항</h2>
+            <ul className={styles.list}>
+              {project.features.map((feature) => (
+                <li key={typeof feature === 'string' ? feature : feature.map((segment) => segment.text).join('')} className={styles.listItem}>
+                  {renderRichText(feature)}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {project.insights.length > 0 && (
+          <section id="project-insights" className={styles.section} tabIndex={-1}>
+            <h2 className={styles.sectionTitle}>Project Insights</h2>
+            <ul className={styles.list}>
+              {project.insights.map((insight) => (
+                <li key={insight.url} className={styles.listItem}>
+                  <a
+                    href={insight.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.insightLink}
+                  >
+                    {insight.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            {project.insightImages && project.insightImages.length > 0 && (
+              <div style={{ marginTop: '24px' }}>
+                {project.insightImages.map((img) => (
+                  <div key={img} className={styles.screenshotFull} style={{ marginBottom: '16px' }}>
+                    <div className={styles.screenshotWrap}>
+                      <ImageViewer src={img} alt="Insight" className={styles.screenshot} loading="lazy" decoding="async" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
         )}
 

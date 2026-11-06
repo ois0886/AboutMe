@@ -33,20 +33,19 @@ function Projects() {
       <p className={styles.subtitle}>프로젝트 선택 시 상세페이지로 이동</p>
       <div className={styles.grid}>
         {projectsByStartDate.map((project, index) => (
-          <Link
-            key={project.id}
-            to={`/projects/${project.id}`}
-            state={{ fromPortfolio: true }}
-            onClick={() => sessionStorage.setItem('scrollY', String(window.scrollY))}
-            className={styles.card}
-          >
-            <div
-              className={styles.thumbnail}
-              style={project.thumbnail ? { backgroundImage: `url(${project.thumbnail})` } : undefined}
-            />
+          <article key={project.id} className={styles.card}>
             <div className={styles.info}>
               <span className={styles.index} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <h3 className={styles.title}>{project.title}</h3>
+              <h3 className={styles.title}>
+                <Link
+                  to={`/projects/${project.id}`}
+                  state={{ fromPortfolio: true }}
+                  onClick={() => sessionStorage.setItem('scrollY', String(window.scrollY))}
+                  className={styles.titleLink}
+                >
+                  {project.title}
+                </Link>
+              </h3>
               <p className={styles.period}>{project.period}</p>
               <p className={styles.description}>{project.cardSummary.description}</p>
               {project.cardSummary.achievements.length > 0 && (
@@ -70,7 +69,11 @@ function Projects() {
               </ul>
               <span className={styles.readMore} aria-hidden="true">자세히 보기 <span>↗</span></span>
             </div>
-          </Link>
+            <div
+              className={styles.thumbnail}
+              style={project.thumbnail ? { backgroundImage: `url(${project.thumbnail})` } : undefined}
+            />
+          </article>
         ))}
       </div>
     </section>

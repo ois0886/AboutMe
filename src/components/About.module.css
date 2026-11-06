@@ -76,6 +76,10 @@
   background: transparent;
 }
 
+.careerAction {
+  display: none;
+}
+
 .primaryAction:hover,
 .secondaryAction:hover {
   transform: translateY(-2px);
@@ -115,7 +119,7 @@
 
 .infoArea {
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.6fr);
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 0.82fr);
   gap: 72px;
   padding-top: 44px;
   border-top: 1px solid var(--color-border);
@@ -195,28 +199,45 @@
 
   .infoArea {
     gap: 40px;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.9fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .careerAction {
+    display: inline-flex;
   }
 }
 
 @media (max-width: 768px) {
   .about {
-    padding-top: calc(var(--header-height) + 40px);
+    padding-top: calc(var(--header-height) + 28px);
     padding-bottom: 72px;
   }
 
   .about > :global(.section__title) {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
   }
 
   .hero {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    padding-bottom: 40px;
+    grid-template-columns: minmax(0, 1fr) clamp(68px, 24vw, 144px);
+    grid-template-areas:
+      'identity portrait'
+      'actions actions';
+    gap: 16px;
+    padding-bottom: 28px;
+  }
+
+  .identity {
+    display: contents;
+  }
+
+  .identityText {
+    grid-area: identity;
   }
 
   .name {
-    font-size: clamp(3.25rem, 12vw, 5rem);
+    font-size: clamp(2.25rem, 10vw, 4rem);
   }
 
   .profileRole {
@@ -224,25 +245,31 @@
   }
 
   .actions {
-    margin-top: 28px;
+    grid-area: actions;
+    gap: 8px;
+    margin-top: 0;
   }
 
   .primaryAction, .secondaryAction {
     min-height: 48px;
-    gap: 18px;
-    padding: 12px 18px;
+    gap: 8px;
+    padding: 10px 12px;
     font-size: 0.875rem;
   }
 
   .profileArea {
-    width: 200px;
-    justify-self: end;
+    grid-area: portrait;
+    padding: 8px 8px 0 0;
+  }
+
+  .profileArea::before {
+    inset: 0 0 8px 8px;
   }
 
   .infoArea {
     grid-template-columns: 1fr;
-    gap: 40px;
-    padding-top: 32px;
+    gap: 32px;
+    padding-top: 24px;
   }
 
   .infoList {

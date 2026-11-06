@@ -50,10 +50,13 @@ describe('About', () => {
       ])
   })
 
-  it('기존 이름과 직무, 프로젝트와 연락처 이동 버튼을 표시한다', () => {
+  it('이름을 첫 제목으로 표시하고 소개, 연락처 정보 순서와 이동 버튼을 제공한다', () => {
     renderAbout()
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Oh In Seong' })).toBeInTheDocument()
+    expect(screen.getAllByRole('heading').map((heading) => [heading.tagName, heading.textContent]))
+      .toEqual([['H1', 'Oh In Seong'], ['H2', 'Introduction'], ['H2', 'Info']])
+    expect(screen.getByRole('region', { name: 'About' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Career' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '프로젝트 보기' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '연락하기' })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: '프로필 사진' }))

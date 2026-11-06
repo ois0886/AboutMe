@@ -7,13 +7,18 @@ function About() {
   const navigateToSection = useSectionNavigation()
 
   return (
-    <section id="about" className={`section reveal ${styles.about}`} ref={ref}>
-      <h2 className="section__title" aria-label="About">About</h2>
+    <section id="about" aria-labelledby="about-label" className={`section reveal ${styles.about}`} ref={ref}>
+      <p id="about-label" className="section__title">About</p>
       <div className={styles.hero}>
         <div className={styles.identity}>
-          <p className={styles.profileRole}>Software Engineer</p>
-          <h1 className={styles.name}>Oh In Seong</h1>
+          <div className={styles.identityText}>
+            <p className={styles.profileRole}>Software Engineer</p>
+            <h1 className={styles.name}>Oh In Seong</h1>
+          </div>
           <div className={styles.actions}>
+            <button className={`${styles.secondaryAction} ${styles.careerAction}`} onClick={() => navigateToSection('career')}>
+              Career <span aria-hidden="true">↗</span>
+            </button>
             <button className={styles.primaryAction} onClick={() => navigateToSection('projects')}>
               프로젝트 보기 <span aria-hidden="true">↗</span>
             </button>
@@ -30,22 +35,22 @@ function About() {
       </div>
       <div className={styles.infoArea}>
         <div className={styles.infoBlock}>
-          <h3 className={styles.subtitle}>Info</h3>
-          <ul className={styles.infoList}>
-            <li><span className={styles.label}>Email.</span> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></li>
-            <li><span className={styles.label}>GitHub.</span> <a href="https://github.com/ois0886" target="_blank" rel="noopener noreferrer">github.com/ois0886</a></li>
-            <li><span className={styles.label}>Blog.</span> <a href="https://superohinsung.tistory.com" target="_blank" rel="noopener noreferrer">superohinsung.tistory.com</a></li>
-            <li><span className={styles.label}>LinkedIn.</span> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/인성-오</a></li>
-          </ul>
-        </div>
-        <div className={styles.infoBlock}>
-          <h3 className={styles.subtitle}>Introduction</h3>
+          <h2 className={styles.subtitle}>Introduction</h2>
           <ul className={styles.introList}>
             <li>사용자 경험과 유지보수성을 고민하며, 구현을 넘어 <strong className={styles.emphasis}>고객 문제를 안정적인 제품 흐름</strong>으로 풀어내는 개발자를 지향합니다.</li>
             <li>다양한 조회와 실시간 데이터의 연동을 검증하며 <strong className={styles.emphasis}>서비스 간 데이터 흐름과 안정성</strong>에 대한 이해를 넓혀가고 있습니다.</li>
             <li>팀의 성장에 기여하기 위해 <strong className={styles.emphasis}>코드 리뷰</strong>와 <strong className={styles.emphasis}>AI 기반 개발 흐름 개선</strong>을 적극적으로 활용하고, <strong className={styles.emphasis}>테스트 가능한 구조와 읽기 쉬운 코드</strong>를 작성하려 노력합니다.</li>
             <li>학습한 내용과 문제 해결 과정을 <strong className={styles.emphasis}>블로그</strong>에 기록하며, 부족했던 부분을 <strong className={styles.emphasis}>재현 가능한 지식</strong>으로 정리해 다음 프로젝트의 기준으로 발전시키고 있습니다.</li>
             <li>의견을 제시할 때는 <strong className={styles.emphasis}>감이 아닌 근거</strong>를 바탕으로 소통하며, 더 나은 방향을 함께 찾는 <strong className={styles.emphasis}>협업</strong>을 지향합니다.</li>
+          </ul>
+        </div>
+        <div className={styles.infoBlock}>
+          <h2 className={styles.subtitle}>Info</h2>
+          <ul className={styles.infoList}>
+            <li><span className={styles.label}>Email.</span> <a href="mailto:superohinsung@naver.com">superohinsung@naver.com</a></li>
+            <li><span className={styles.label}>GitHub.</span> <a href="https://github.com/ois0886" target="_blank" rel="noopener noreferrer">github.com/ois0886</a></li>
+            <li><span className={styles.label}>Blog.</span> <a href="https://superohinsung.tistory.com" target="_blank" rel="noopener noreferrer">superohinsung.tistory.com</a></li>
+            <li><span className={styles.label}>LinkedIn.</span> <a href="https://www.linkedin.com/in/%EC%9D%B8%EC%84%B1-%EC%98%A4" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/인성-오</a></li>
           </ul>
         </div>
       </div>

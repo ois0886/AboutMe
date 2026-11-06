@@ -24,10 +24,10 @@ describe('Projects', () => {
     })
   })
 
-  it('프로젝트 카드 링크가 올바른 경로를 가진다', () => {
+  it('프로젝트 카드 링크는 제목을 이름으로 사용하며 상세 경로로 연결된다', () => {
     renderProjects()
     projects.forEach((project) => {
-      const link = screen.getByText(project.title).closest('a')
+      const link = screen.getByRole('link', { name: project.title })
       expect(link).toHaveAttribute('href', `/projects/${project.id}`)
     })
   })
@@ -36,12 +36,12 @@ describe('Projects', () => {
     renderProjects()
 
     projects.forEach((project) => {
-      const card = within(screen.getByText(project.title).closest('a')!)
+      const cardElement = screen.getByText(project.title).closest('article')!
+      const card = within(cardElement)
       expect(card.getByText(project.cardSummary.description)).toBeInTheDocument()
       expect(card.queryByText(project.description)).not.toBeInTheDocument()
 
-      const highlights = screen.getByText(project.title).closest('a')!
-        .querySelector('[class*="highlights"]')
+      const highlights = cardElement.querySelector('[class*="highlights"]')
       if (project.cardSummary.achievements.length === 0) {
         expect(highlights).toBeNull()
         return
@@ -72,7 +72,7 @@ describe('Projects', () => {
     renderProjects()
 
     projects.forEach((project) => {
-      const card = screen.getByText(project.title).closest('a')
+      const card = screen.getByText(project.title).closest('article')
       const achievementList = card?.querySelector('[class*="highlights"]')
 
       if (project.cardSummary.achievements.length === 0) {

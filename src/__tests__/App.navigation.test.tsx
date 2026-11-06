@@ -108,6 +108,38 @@ describe('포트폴리오 라우팅과 스크롤', () => {
     expect(document.documentElement).not.toHaveClass('no-transition')
   })
 
+  it('목차 섹션 주소로 직접 진입하면 해당 본문에 포커스하고 최상단 이동을 건너뛴다', () => {
+    renderApp(['/projects/mo-re#project-problems'])
+    expect(sectionScrolls).toEqual([{ id: 'project-problems', options: { behavior: 'instant', block: 'start' } }])
+    expect(document.getElementById('project-problems')).toHaveFocus()
+    expect(screen.getByRole('link', { name: '문제 해결' })).toHaveAttribute('aria-current', 'location')
+    flushFrames()
+    expect(scrollTo).not.toHaveBeenCalled()
+  })
+
+  it('잘못된 목차 주소와 현재 상세에 없는 섹션 주소는 상세 최상단으로 이동한다', () => {
+    renderApp(['/projects/hangil#project-problems'])
+    expect(sectionScrolls).toEqual([])
+    expect(screen.getByRole('main')).toHaveFocus()
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0)
+  })
+
+  it('목차에서 주소를 바꾼 후 돌아가면 한 번에 홈의 카드 위치를 복원한다', () => {
+    vi.stubGlobal('scrollY', 843)
+    renderApp()
+    fireEvent.click(screen.getByRole('link', { name: '모리, Mo-Re - Android' }))
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    fireEvent.click(toc.getByRole('button', { name: '목차' }))
+    fireEvent.click(toc.getByRole('link', { name: '문제 해결' }))
+    expect(JSON.parse(screen.getByTestId('route-location').textContent!)).toEqual({
+      pathname: '/projects/mo-re', hash: '#project-problems', state: { fromPortfolio: true },
+    })
+    expect(document.getElementById('project-problems')).toHaveFocus()
+    fireEvent.click(screen.getByRole('link', { name: '← 돌아가기' }))
+    expect(JSON.parse(screen.getByTestId('route-location').textContent!).pathname).toBe('/')
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 843)
+  })
+
   it('상세 헤더의 명시적인 섹션 이동이 저장 위치보다 우선하며 이동 의도를 소비한다', () => {
     sessionStorage.setItem('scrollY', '843')
     renderApp(['/projects/mo-re'])
@@ -152,6 +184,13 @@ describe('포트폴리오 라우팅과 스크롤', () => {
     vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true })))
     fireEvent.click(screen.getByRole('link', { name: 'Oh In Seong' }))
     expect(scrollTo).toHaveBeenLastCalledWith({ top: 0, behavior: 'instant' })
+  })
+
+  it('홈 첫 화면의 Career 바로가기는 전체 목차를 거치지 않고 경력으로 이동한다', () => {
+    renderApp()
+    fireEvent.click(screen.getByRole('button', { name: 'Career' }))
+    expect(scrolledElements[0]).toBe(document.querySelector('#career .section__title'))
+    expect(document.getElementById('career')).toHaveFocus()
   })
 
   it('홈 섹션 해시로 직접 진입하면 해당 위치로 이동한 뒤 해시를 제거한다', () => {

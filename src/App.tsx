@@ -62,7 +62,7 @@ function ScrollToTop() {
   }, [location, navigate])
 
   useLayoutEffect(() => {
-    const scrollWithoutAnimation = (top: number) => {
+    const scrollWithoutAnimation = (scroll: () => void) => {
       const root = document.documentElement
       const previousScrollBehavior = root.style.scrollBehavior
       let restoreFrame = 0
@@ -74,10 +74,10 @@ function ScrollToTop() {
 
       root.classList.add('no-transition')
       root.style.scrollBehavior = 'auto'
-      window.scrollTo(0, top)
+      scroll()
 
       const scrollFrame = requestAnimationFrame(() => {
-        window.scrollTo(0, top)
+        scroll()
         restoreFrame = requestAnimationFrame(cleanup)
       })
 
@@ -88,8 +88,21 @@ function ScrollToTop() {
       }
     }
 
-    if (location.pathname.startsWith('/projects/')) {
-      return scrollWithoutAnimation(0)
+    const isProjectDetail = location.pathname.startsWith('/projects/')
+    if ('scrollRestoration' in window.history) {
+      // The browser can otherwise restore an old detail scroll position after the section jump.
+      window.history.scrollRestoration = isProjectDetail ? 'manual' : 'auto'
+    }
+
+    if (isProjectDetail) {
+      const section = document.getElementById(location.hash.slice(1))
+      if (section?.matches('#main-content section[id^="project-"]')) {
+        section.focus({ preventScroll: true })
+        return scrollWithoutAnimation(() => section.scrollIntoView?.({ behavior: 'instant', block: 'start' }))
+      }
+
+      document.getElementById('main-content')?.focus({ preventScroll: true })
+      return scrollWithoutAnimation(() => window.scrollTo(0, 0))
     }
 
     if (location.pathname === '/') {
@@ -113,7 +126,7 @@ function ScrollToTop() {
         sessionStorage.removeItem('scrollY')
         document.querySelectorAll('.reveal').forEach((el) => el.classList.add('revealed'))
         const top = Number(saved)
-        return scrollWithoutAnimation(Number.isFinite(top) && top >= 0 ? top : 0)
+        return scrollWithoutAnimation(() => window.scrollTo(0, Number.isFinite(top) && top >= 0 ? top : 0))
       }
     }
   }, [location])
