@@ -12,7 +12,7 @@ function Career() {
         <p className={styles.totalCareer}>총 경력 {getTotalCareer()}</p>
         <div className={styles.list}>
           {careers.map((career) => (
-            <div key={career.company} className={styles.card}>
+            <article key={career.company} aria-label={career.company} className={styles.card}>
               <div className={styles.header}>
                 <div>
                   <h3 className={styles.company}>{career.company}</h3>
@@ -44,7 +44,7 @@ function Career() {
                   ))}
                 </div>
               )}
-            </div>
+            </article>
           ))}
         </div>
       </div>

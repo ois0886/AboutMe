@@ -15,10 +15,17 @@ describe('Career', () => {
     expect(screen.getByRole('heading', { level: 3, name: '(주)차트연구소' })).toBeInTheDocument()
   })
 
-  it('(주)PickNumber 경력은 렌더링되지 않는다', () => {
+  it('(주)픽넘버 경력에 직무, 계약 형태, 근무 기간과 Didimdol 기여를 표시한다', () => {
     render(<Career />)
 
-    expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
+    const card = within(screen.getByRole('article', { name: '(주)픽넘버' }))
+    expect(card.getByRole('heading', { level: 3, name: '(주)픽넘버' })).toBeInTheDocument()
+    expect(card.getByText('Android Developer | 산학협력 학부연구원/프리랜서(계약직) | 경기도, 재택근무')).toBeInTheDocument()
+    expect(card.getByText('2023.01.16 ~ 2023.06.15 (5개월)')).toBeInTheDocument()
+    expect(card.getByText('주요업무 : 업체 검색, 지도 및 예약 기능을 갖춘 Android 앱 개발')).toBeInTheDocument()
+    expect(card.getByText(/Didimdol.*Android 팀.*네이버 지도.*WebView 예약/)).toBeInTheDocument()
+    expect(card.getByText(/Room.*3~5초에서 0.5초 이하/)).toBeInTheDocument()
+    expect(card.getByText(/검색 결과에 포함된 업체에만 Direction5 API.*거리순/)).toBeInTheDocument()
   })
 
   it('웹과 이력서에 같은 주요업무와 경력 요약을 표시한다', () => {
@@ -30,8 +37,8 @@ describe('Career', () => {
       resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
     ).map((item) => normalizeText(item.textContent ?? ''))
 
-    const section = screen.getByRole('heading', { name: 'Career' }).closest('section')!
-    const webTasks = within(section).getAllByRole('listitem')
+    const chartlab = within(screen.getByRole('article', { name: '(주)차트연구소' }))
+    const webTasks = chartlab.getAllByRole('listitem')
       .map((item) => normalizeText(item.textContent ?? ''))
     const facts = [
       ['LS증권', '키패드 결과 전달', '숫자 파싱', '연속 편집값 누락', '소수점/음수', '이동평균선', '분석도구'],
@@ -50,11 +57,11 @@ describe('Career', () => {
       expect(resumeTasks[index]).not.toMatch(/[.!?]$/u)
     })
     const role = `${careers[0].role} | ${careers[0].location}`
-    expect(within(section).getByText(role)).toBeInTheDocument()
+    expect(chartlab.getByText(role)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .meta')?.textContent).toBe(role)
     expect(role).toBe('Android Developer | 연구원/정규직 | 서울시 강서구')
     const primaryDuty = '주요업무 : Android SDK 개발 및 고객사 납품'
-    expect(within(section).getByText(primaryDuty)).toBeInTheDocument()
+    expect(chartlab.getByText(primaryDuty)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(primaryDuty)
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
@@ -85,23 +92,24 @@ describe('Career', () => {
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
   })
 
-  it('웹에는 핵심 기여 다섯 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
+  it('차트연구소는 웹에 핵심 기여 다섯 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
     render(<Career />)
 
-    const section = screen.getByRole('heading', { name: 'Career' }).closest('section')!
-    expect(within(section).getAllByRole('listitem')).toHaveLength(5)
-    expect(within(section).getByText(/ViewModel과 LiveData.*편집 상태/)).toBeInTheDocument()
-    expect(within(section).getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의 접수/)).toBeInTheDocument()
+    const article = screen.getByRole('article', { name: '(주)차트연구소' })
+    const chartlab = within(article)
+    expect(chartlab.getAllByRole('listitem')).toHaveLength(5)
+    expect(chartlab.getByText(/ViewModel과 LiveData.*편집 상태/)).toBeInTheDocument()
+    expect(chartlab.getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의 접수/)).toBeInTheDocument()
     for (const task of careers[0].tasks) {
       expect(screen.queryByText(task)).not.toBeInTheDocument()
     }
     for (const problemSolving of careers[0].problemSolvings ?? []) {
       expect(screen.queryByText(problemSolving.title)).not.toBeInTheDocument()
     }
-    expect(section.querySelector('details')).toBeNull()
+    expect(article.querySelector('details')).toBeNull()
   })
 
-  it('이력서는 기준일 표기 없이 총 경력만 표시하고 웹 계산과 일치한다', () => {
+  it('이력서의 총 경력은 이력서에 수록된 차트연구소의 기간과 일치한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const careerSection = resumeDocument.querySelector('[data-career-id="chartlab"]')?.closest('section')
@@ -112,12 +120,8 @@ describe('Career', () => {
     try {
       // 정적 이력서의 경력 갱신 시점으로 고정해 웹 자동 계산과 비교한다.
       vi.setSystemTime(new Date(`${asOf}T12:00:00+09:00`))
-      render(<Career />)
-
-      const totalCareer = `총 경력 ${getTotalCareer()}`
-      expect(screen.getByText(totalCareer)).toBeInTheDocument()
       expect(totalCareerElement?.textContent)
-        .toBe(totalCareer)
+        .toBe(`총 경력 ${getTotalCareer([careers[0]])}`)
     } finally {
       vi.useRealTimers()
     }
@@ -231,59 +235,51 @@ describe('getTotalCareer', () => {
     ['입사 전', new Date(2026, 1, 8)],
     ['입사 당일', new Date(2026, 1, 9)],
     ['한 달을 채우기 전', new Date(2026, 2, 8)],
-  ])('%s에는 1개월 미만을 반환한다', (_, date) => {
+  ])('차트연구소만 계산하면 %s에 1개월 미만을 반환한다', (_, date) => {
     vi.setSystemTime(date)
-    expect(getTotalCareer()).toBe('1개월 미만')
+    expect(getTotalCareer([careers[0]])).toBe('1개월 미만')
   })
 
-  it('입사일로부터 한 달을 채우면 1개월을 반환한다', () => {
+  it('픽넘버 5개월과 차트연구소 첫 1개월을 합산한다', () => {
     vi.setSystemTime(new Date(2026, 2, 9))
-    expect(getTotalCareer()).toBe('1개월')
+    expect(getTotalCareer()).toBe('6개월')
   })
 
   it('완전히 경과한 개월 수만 반환하고 남은 일수는 올림하지 않는다', () => {
     vi.setSystemTime(new Date(2026, 4, 15)) // (주)차트연구소 3개월 6일
-    expect(getTotalCareer()).toBe('3개월')
+    expect(getTotalCareer()).toBe('8개월')
   })
 
   it('달이 바뀌어도 입사일에 도달하기 전에는 개월 수가 늘어나지 않는다', () => {
     vi.setSystemTime(new Date(2026, 6, 1)) // (주)차트연구소 4개월 22일
-    expect(getTotalCareer()).toBe('4개월')
-  })
-
-  it.each([
-    [8, '6개월'],
-    [9, '7개월'],
-    [18, '7개월'],
-    [28, '7개월'],
-  ])('2026년 9월 %i일 기준 경력은 %s이다', (day, expected) => {
-    vi.setSystemTime(new Date(2026, 8, day))
-    expect(getTotalCareer()).toBe(expected)
-  })
-
-  it.each([
-    [6, '7개월'],
-    [8, '7개월'],
-    [9, '8개월'],
-  ])('2026년 10월 %i일 기준 경력은 %s이다', (day, expected) => {
-    vi.setSystemTime(new Date(2026, 9, day))
-    expect(getTotalCareer()).toBe(expected)
+    expect(getTotalCareer()).toBe('9개월')
   })
 
   it.each([
     [8, '11개월'],
     [9, '1년'],
-  ])('2027년 2월 %i일 기준으로 12개월을 채웠을 때만 연 단위로 표시한다', (day, expected) => {
-    vi.setSystemTime(new Date(2027, 1, day))
+    [18, '1년'],
+    [28, '1년'],
+  ])('2026년 9월 %i일 기준으로 12개월을 채웠을 때만 연 단위로 표시한다', (day, expected) => {
+    vi.setSystemTime(new Date(2026, 8, day))
     expect(getTotalCareer()).toBe(expected)
   })
 
-  it('1년 이상이면 "N년 M개월"을 반환한다', () => {
-    vi.setSystemTime(new Date(2027, 7, 15)) // (주)차트연구소 1년 6개월 6일
-    expect(getTotalCareer()).toBe('1년 6개월')
+  it.each([
+    [6, '1년'],
+    [8, '1년'],
+    [9, '1년 1개월'],
+  ])('2026년 10월 %i일 기준 경력은 %s이다', (day, expected) => {
+    vi.setSystemTime(new Date(2026, 9, day))
+    expect(getTotalCareer()).toBe(expected)
   })
 
-  it('Career 데이터에 (주)차트연구소만 등록되어 있다', () => {
-    expect(careers.map((career) => career.company)).toEqual(['(주)차트연구소'])
+  it('픽넘버의 마지막 근무일을 포함해 차트연구소 입사 전의 총 경력을 5개월로 계산한다', () => {
+    vi.setSystemTime(new Date(2026, 1, 8))
+    expect(getTotalCareer()).toBe('5개월')
+  })
+
+  it('Career 데이터는 최근 경력부터 표시한다', () => {
+    expect(careers.map((career) => career.company)).toEqual(['(주)차트연구소', '(주)픽넘버'])
   })
 })
