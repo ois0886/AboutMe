@@ -19,8 +19,9 @@ function readCareerDocument() {
 describe('경력기술서', () => {
   it('확인한 기여와 회사 정보, 기간 및 역할을 반영한다', () => {
     const document = readCareerDocument()
-    expect(Array.from(document.querySelectorAll('[data-source-header]'), (item) => item.textContent))
-      .toEqual(preserved.header)
+    const header = Array.from(document.querySelectorAll('[data-source-header]'), (item) => item.textContent)
+    expect(header).toEqual(preserved.header)
+    expect(header).toContain(careers[0].primaryDuty)
     const sections = Array.from(document.querySelectorAll('.career-section'))
     expect(sections.map((section) => ({
       title: section.querySelector('h2')?.textContent,

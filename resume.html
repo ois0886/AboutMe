@@ -123,6 +123,7 @@
     .subhead {
       margin-bottom: var(--space-1);
       color: #374151;
+      font-size: var(--font-meta);
       font-weight: 700;
     }
 
@@ -240,6 +241,12 @@
       margin-bottom: 0;
     }
 
+    @media print {
+      :root {
+        --space-section: 11px;
+      }
+    }
+
     @media screen {
       body {
         padding: 28px 20px;
@@ -290,7 +297,8 @@
           <h3>(주)차트연구소</h3>
           <span class="right-meta">2026.02.09 ~ 재직 중</span>
         </div>
-        <p class="meta">Software Engineer | 연구원/정규직 | 서울시 강서구</p>
+        <p class="meta">Android Developer | 연구원/정규직 | 서울시 강서구</p>
+        <p class="subhead">주요업무 : Android SDK 개발 및 고객사 납품</p>
         <ul>
           <li>LS증권 차트 라이브러리의 키패드 결과 전달과 숫자 파싱을 보완해 연속 편집값 누락과 소수점/음수 저장 오류 해결, 이동평균선 체크 상태와 Signal 설정 및 분석도구 속성 반영 보완</li>
           <li>기존 차트 엔진을 활용한 EasyChart 화면과 지표 설정 개발, ViewModel과 LiveData로 탭 간 편집 상태를 공유하고 저장, 초기화와 재진입 시 차트와 설정 화면의 값이 일치하도록 처리</li>

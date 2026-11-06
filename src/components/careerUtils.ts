@@ -3,6 +3,7 @@ type CareerEntry = {
   role: string
   periodLabel: string
   location?: string
+  primaryDuty?: string
   start: Date
   end?: Date
   tasks: string[]
@@ -22,8 +23,9 @@ type CareerEntry = {
 export const careers: CareerEntry[] = [
   {
     company: '(주)차트연구소',
-    role: 'Software Engineer | 연구원/정규직',
+    role: 'Android Developer | 연구원/정규직',
     location: '서울시 강서구',
+    primaryDuty: '주요업무 : Android SDK 개발 및 고객사 납품',
     periodLabel: '2026.02.09 ~ 재직 중',
     start: new Date(2026, 1, 9),
     summary: [

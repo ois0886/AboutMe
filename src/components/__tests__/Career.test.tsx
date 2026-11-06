@@ -21,7 +21,7 @@ describe('Career', () => {
     expect(screen.queryByRole('heading', { level: 3, name: '(주)PickNumber' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서의 경력 요약은 같은 다섯 항목으로 표시한다', () => {
+  it('웹과 이력서에 같은 주요업무와 경력 요약을 표시한다', () => {
     render(<Career />)
 
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
@@ -52,7 +52,10 @@ describe('Career', () => {
     const role = `${careers[0].role} | ${careers[0].location}`
     expect(within(section).getByText(role)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .meta')?.textContent).toBe(role)
-    expect(role).toContain('Software Engineer')
+    expect(role).toBe('Android Developer | 연구원/정규직 | 서울시 강서구')
+    const primaryDuty = '주요업무 : Android SDK 개발 및 고객사 납품'
+    expect(within(section).getByText(primaryDuty)).toBeInTheDocument()
+    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(primaryDuty)
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
       expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API 구현|Script API 개발|3분할 API 구현|차트 엔진 개발|Java 변환|함수 호환 작업/)
