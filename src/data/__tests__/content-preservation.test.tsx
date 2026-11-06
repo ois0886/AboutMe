@@ -108,6 +108,10 @@ describe('리디자인 콘텐츠 보존', () => {
       ])
       for (const original of homeBaseline.sections) {
         const section = sections.find((item) => item.id === original.id)!
+        if (original.id === 'projects') {
+          expect(Array.from(section.querySelectorAll('a'), (link) => link.getAttribute('href')))
+            .toEqual(original.links.map((link) => link.href))
+        }
         let remaining = visibleText(section)
         const segments = original.textSegments.map(compact).sort((a, b) => b.length - a.length)
         for (const segment of segments) {

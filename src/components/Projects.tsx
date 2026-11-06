@@ -4,6 +4,12 @@ import { useScrollReveal } from '../hooks/useScrollReveal'
 import projects, { type RichText } from '../data/projects'
 import styles from './Projects.module.css'
 
+const projectsByStartDate = [...projects].sort((left, right) => {
+  const [leftStart] = left.period.split(' ~ ')
+  const [rightStart] = right.period.split(' ~ ')
+  return rightStart.localeCompare(leftStart)
+})
+
 function renderRichText(content: RichText): ReactNode {
   if (typeof content === 'string') return content
 
@@ -26,7 +32,7 @@ function Projects() {
       <h2 className="section__title" aria-label="Projects">Projects</h2>
       <p className={styles.subtitle}>프로젝트 선택 시 상세페이지로 이동</p>
       <div className={styles.grid}>
-        {projects.map((project, index) => (
+        {projectsByStartDate.map((project, index) => (
           <Link
             key={project.id}
             to={`/projects/${project.id}`}
