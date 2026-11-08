@@ -29,15 +29,15 @@ describe('Skills', () => {
     )
     const groups = Array.from(resumeDocument.querySelectorAll('.skill-group'))
     expect(groups.map((group) => group.querySelector('.skill-category')?.textContent))
-      .toEqual(['Backend', 'Frontend', 'Android', 'AI agent', 'ETC'])
+      .toEqual(['Backend', 'Frontend', 'Android', 'AI Agent', 'Etc'])
     const technologies = (category: string) =>
       groups.find((group) => group.querySelector('.skill-category')?.textContent === category)!
         .querySelector('.skill-values')!.textContent!.split(', ')
     expect(technologies('Frontend')).toEqual(['React', 'TypeScript', 'Vue 3', 'Vite'])
-    expect(technologies('AI agent')).toEqual([
+    expect(technologies('AI Agent')).toEqual([
       'Codex', 'Claude Code / 작업 분리와 병렬화', '구현', '테스트', '리뷰', '문서화 자동화',
     ])
-    expect(technologies('ETC')).toEqual(['GitHub', 'Jira', 'Figma', 'Slack'])
+    expect(technologies('Etc')).toEqual(['GitHub', 'Jira', 'Figma', 'Slack'])
     expect(resumeDocument.querySelector('.skill-tag, .skill-tags')).toBeNull()
 
     const { container } = render(<Skills />)
