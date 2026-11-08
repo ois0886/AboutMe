@@ -20,7 +20,7 @@ function Career() {
                     {career.role}
                     {career.location && ` | ${career.location}`}
                   </p>
-                  {career.department && <p className={styles.role}>{career.department}</p>}
+                  {career.primaryDuty && <p className={styles.role}>{career.primaryDuty}</p>}
                 </div>
                 <span className={styles.period}>{career.periodLabel}</span>
               </div>

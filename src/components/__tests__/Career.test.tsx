@@ -1,5 +1,5 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
-import { existsSync, readFileSync } from 'node:fs'
+import { render, screen, within } from '@testing-library/react'
+import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import Activity from '../Activity'
 import Career from '../Career'
@@ -21,7 +21,7 @@ describe('Career', () => {
     expect(screen.queryByRole('article', { name: '(주)픽넘버' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서에 같은 부서와 네 가지 업무를 표시한다', () => {
+  it('웹과 이력서에 같은 주요업무와 경력 요약을 표시한다', () => {
     render(<Career />)
 
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
@@ -33,23 +33,28 @@ describe('Career', () => {
     const chartlab = within(screen.getByRole('article', { name: '(주)차트연구소' }))
     const webTasks = chartlab.getAllByRole('listitem')
       .map((item) => normalizeText(item.textContent ?? ''))
-    const expectedTasks = [
-      'Android UI 개발 및 고객사 납품, 유지보수',
-      '이지차트, 마켓맵, 그리드 UI 개발',
-      '기능 기획 및 설계, QA, 테스트 진행',
-      '자사 홈페이지 리팩토링',
+    const facts = [
+      ['LS증권', '키패드 결과 전달', '숫자 파싱', '연속 편집값 누락', '소수점/음수', '이동평균선', '분석도구'],
+      ['EasyChart', '기존 차트 엔진', 'ViewModel', 'LiveData', '편집 상태', '초기화', '재진입'],
+      ['MarketMap', '설정 화면', '깊이 전환', '편집값', '로딩 이벤트', '사용자 변경', '엔진 속성'],
+      ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '공지 조회와 검색', 'Google Apps Script', '첨부파일 문의 접수'],
     ]
-    expect(careers[0].summary).toEqual(expectedTasks)
-    expect(webTasks).toEqual(expectedTasks)
+    expect(careers[0].summary).toHaveLength(4)
+    expect(webTasks).toEqual(careers[0].summary)
     expect(resumeTasks).toEqual(webTasks)
+    facts.forEach((keywords, index) => {
+      keywords.forEach((keyword) => {
+        expect(resumeTasks[index]).toContain(keyword)
+      })
+      expect(resumeTasks[index]).not.toMatch(/[.!?]$/u)
+    })
     const role = `${careers[0].role} | ${careers[0].location}`
     expect(chartlab.getByText(role)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .meta')?.textContent).toBe(role)
     expect(role).toBe('Android Developer | 연구원/정규직 | 서울시 강서구')
-    const department = '모바일 개발부서'
-    expect(chartlab.getByText(department)).toBeInTheDocument()
-    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(department)
-    expect(chartlab.queryByText('주요업무 : Android SDK 개발 및 고객사 납품')).not.toBeInTheDocument()
+    const primaryDuty = '주요업무 : MTS Android UI 개발 및 고객사 유지보수 지원'
+    expect(chartlab.getByText(primaryDuty)).toBeInTheDocument()
+    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(primaryDuty)
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
       expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API 구현|Script API 개발|3분할 API 구현|차트 엔진 개발|Java 변환|함수 호환 작업/)
@@ -70,23 +75,24 @@ describe('Career', () => {
     expect(documentation).not.toMatch(/Script API 구현|Script API 개발|Java 변환|함수 호환 작업|샘플 앱 개발/)
   })
 
-  it('웹 요약에는 모바일 UI 업무를 표시하고 제공받은 API의 구현으로 서술하지 않는다', () => {
+  it('웹과 이력서 요약에서 Alert UI를 제외하고 제공받은 API의 구현으로 서술하지 않는다', () => {
     render(<Career />)
 
-    expect(screen.getByText('이지차트, 마켓맵, 그리드 UI 개발')).toBeInTheDocument()
+    expect(screen.queryByText(/Alert.*감시설정 화면.*그리드 UI.*롱클릭.*오류/)).not.toBeInTheDocument()
+    expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/Alert.*감시설정 화면/)
     expect(screen.queryByText(/Script API 구현|API 개발|3분할 API 구현|차트 엔진 개발/)).not.toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
   })
 
-  it('차트연구소는 웹에 업무 네 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
+  it('차트연구소는 웹에 핵심 기여 네 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
     render(<Career />)
 
     const article = screen.getByRole('article', { name: '(주)차트연구소' })
     const chartlab = within(article)
     expect(chartlab.getAllByRole('listitem')).toHaveLength(4)
-    expect(chartlab.getByText('기능 기획 및 설계, QA, 테스트 진행')).toBeInTheDocument()
-    expect(chartlab.getByText('자사 홈페이지 리팩토링')).toBeInTheDocument()
+    expect(chartlab.getByText(/ViewModel과 LiveData.*편집 상태/)).toBeInTheDocument()
+    expect(chartlab.getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의 접수/)).toBeInTheDocument()
     for (const task of careers[0].tasks) {
       expect(screen.queryByText(task)).not.toBeInTheDocument()
     }
@@ -164,29 +170,28 @@ describe('Activity', () => {
 })
 
 describe('Education', () => {
-  it('코드프레소 교육 카드에서만 수료증을 펼치고 접을 수 있다', () => {
-    render(<Education />)
+  it('웹과 이력서에서 코드프레소 교육과 수료증을 제거하고 나머지 교육을 유지한다', () => {
+    const { container } = render(<Education />)
+    const resumeDocument = new DOMParser().parseFromString(
+      readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8'),
+      'text/html',
+    )
+    const resumeEducation = Array.from(resumeDocument.querySelectorAll('section'))
+      .find((section) => section.querySelector('h2')?.textContent === 'Education')!
+    const expectedHeadings = [
+      '삼성 청년 AI SW 아카데미 13기 Mobile Track',
+      '한성대학교 컴퓨터공학과 졸업',
+    ]
 
-    const heading = screen.getByRole('heading', { name: '주식회사 코드프레소 웹 개발 기초완성' })
-    const card = within(heading.closest('div')!.parentElement!.parentElement!)
-    const imageName = '주식회사 코드프레소 웹 개발 기초완성 수료증'
-    const button = card.getByRole('button', { name: '수료증 보기' })
-
-    expect(screen.getAllByRole('button', { name: '수료증 보기' })).toHaveLength(1)
-    expect(button).toHaveAttribute('aria-expanded', 'false')
-    expect(screen.queryByRole('img', { name: imageName })).not.toBeInTheDocument()
-
-    fireEvent.click(button)
-
-    const image = card.getByRole('img', { name: imageName })
-    expect(card.getByRole('button', { name: '수료증 접기' })).toHaveAttribute('aria-expanded', 'true')
-    expect(image).toHaveAttribute('src', 'screenshot/codepresso-certificate.png')
-    expect(existsSync(resolve(process.cwd(), 'public', image.getAttribute('src')!))).toBe(true)
-
-    fireEvent.click(card.getByRole('button', { name: '수료증 접기' }))
-
-    expect(card.getByRole('button', { name: '수료증 보기' })).toHaveAttribute('aria-expanded', 'false')
-    expect(screen.queryByRole('img', { name: imageName })).not.toBeInTheDocument()
+    expect(screen.getAllByRole('heading', { level: 3 }).map((heading) => normalizeText(heading.textContent ?? '')))
+      .toEqual(expectedHeadings)
+    expect(Array.from(resumeEducation.querySelectorAll('h3'), (heading) => normalizeText(heading.textContent ?? '')))
+      .toEqual(expectedHeadings)
+    for (const education of [container, resumeEducation]) {
+      expect(education.textContent).not.toMatch(/코드프레소|웹 개발 기초완성|웹 개발 기초 비대면 교육/)
+      expect(education.querySelector('img[src*="codepresso"], img[alt*="코드프레소"]')).toBeNull()
+    }
+    expect(screen.queryByRole('button', { name: /수료증/ })).not.toBeInTheDocument()
   })
 
   it('SSAFY 스터디 내용과 링크를 교육 이력으로 옮기고 독립 활동 카드를 제거한다', () => {
