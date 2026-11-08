@@ -67,20 +67,6 @@ export const careers: CareerEntry[] = [
       },
     ],
   },
-  {
-    company: '(주)픽넘버',
-    role: 'Android Developer | 산학협력 학부연구원/프리랜서(계약직)',
-    location: '경기도, 재택근무',
-    primaryDuty: '주요업무 : 업체 검색, 지도 및 예약 기능을 갖춘 Android 앱 개발',
-    periodLabel: '2023.01.16 ~ 2023.06.15 (5개월)',
-    start: new Date(2023, 0, 16),
-    end: new Date(2023, 5, 15),
-    tasks: [
-      '한성대학교 DC&M 산학협력 프로젝트 Didimdol에서 Android 팀을 이끌고 업체 검색, 네이버 지도 위치 확인, WebView 예약을 연결',
-      '업체 데이터를 Room에 동기화하고 로컬에서 검색해 업체 목록 검색 응답시간을 3~5초에서 0.5초 이하로 단축',
-      '검색 결과에 포함된 업체에만 Direction5 API를 호출해 거리와 소요 시간을 계산하고 거리순으로 표시',
-    ],
-  },
 ]
 
 function getCareerMonths(start: Date, end: Date) {

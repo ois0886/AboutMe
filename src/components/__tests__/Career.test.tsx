@@ -15,17 +15,10 @@ describe('Career', () => {
     expect(screen.getByRole('heading', { level: 3, name: '(주)차트연구소' })).toBeInTheDocument()
   })
 
-  it('(주)픽넘버 경력에 직무, 계약 형태, 근무 기간과 Didimdol 기여를 표시한다', () => {
+  it('(주)픽넘버를 경력에 표시하지 않는다', () => {
     render(<Career />)
 
-    const card = within(screen.getByRole('article', { name: '(주)픽넘버' }))
-    expect(card.getByRole('heading', { level: 3, name: '(주)픽넘버' })).toBeInTheDocument()
-    expect(card.getByText('Android Developer | 산학협력 학부연구원/프리랜서(계약직) | 경기도, 재택근무')).toBeInTheDocument()
-    expect(card.getByText('2023.01.16 ~ 2023.06.15 (5개월)')).toBeInTheDocument()
-    expect(card.getByText('주요업무 : 업체 검색, 지도 및 예약 기능을 갖춘 Android 앱 개발')).toBeInTheDocument()
-    expect(card.getByText(/Didimdol.*Android 팀.*네이버 지도.*WebView 예약/)).toBeInTheDocument()
-    expect(card.getByText(/Room.*3~5초에서 0.5초 이하/)).toBeInTheDocument()
-    expect(card.getByText(/검색 결과에 포함된 업체에만 Direction5 API.*거리순/)).toBeInTheDocument()
+    expect(screen.queryByRole('article', { name: '(주)픽넘버' })).not.toBeInTheDocument()
   })
 
   it('웹과 이력서에 같은 주요업무와 경력 요약을 표시한다', () => {
@@ -240,46 +233,46 @@ describe('getTotalCareer', () => {
     expect(getTotalCareer([careers[0]])).toBe('1개월 미만')
   })
 
-  it('픽넘버 5개월과 차트연구소 첫 1개월을 합산한다', () => {
+  it('차트연구소 입사일로부터 한 달을 채우면 1개월을 반환한다', () => {
     vi.setSystemTime(new Date(2026, 2, 9))
-    expect(getTotalCareer()).toBe('6개월')
+    expect(getTotalCareer()).toBe('1개월')
   })
 
   it('완전히 경과한 개월 수만 반환하고 남은 일수는 올림하지 않는다', () => {
     vi.setSystemTime(new Date(2026, 4, 15)) // (주)차트연구소 3개월 6일
-    expect(getTotalCareer()).toBe('8개월')
+    expect(getTotalCareer()).toBe('3개월')
   })
 
   it('달이 바뀌어도 입사일에 도달하기 전에는 개월 수가 늘어나지 않는다', () => {
     vi.setSystemTime(new Date(2026, 6, 1)) // (주)차트연구소 4개월 22일
-    expect(getTotalCareer()).toBe('9개월')
+    expect(getTotalCareer()).toBe('4개월')
   })
 
   it.each([
-    [8, '11개월'],
-    [9, '1년'],
-    [18, '1년'],
-    [28, '1년'],
-  ])('2026년 9월 %i일 기준으로 12개월을 채웠을 때만 연 단위로 표시한다', (day, expected) => {
+    [8, '6개월'],
+    [9, '7개월'],
+    [18, '7개월'],
+    [28, '7개월'],
+  ])('2026년 9월 %i일 기준 경력은 %s이다', (day, expected) => {
     vi.setSystemTime(new Date(2026, 8, day))
     expect(getTotalCareer()).toBe(expected)
   })
 
   it.each([
-    [6, '1년'],
-    [8, '1년'],
-    [9, '1년 1개월'],
+    [6, '7개월'],
+    [8, '7개월'],
+    [9, '8개월'],
   ])('2026년 10월 %i일 기준 경력은 %s이다', (day, expected) => {
     vi.setSystemTime(new Date(2026, 9, day))
     expect(getTotalCareer()).toBe(expected)
   })
 
-  it('픽넘버의 마지막 근무일을 포함해 차트연구소 입사 전의 총 경력을 5개월로 계산한다', () => {
+  it('차트연구소 입사 전에는 1개월 미만을 반환한다', () => {
     vi.setSystemTime(new Date(2026, 1, 8))
-    expect(getTotalCareer()).toBe('5개월')
+    expect(getTotalCareer()).toBe('1개월 미만')
   })
 
-  it('Career 데이터는 최근 경력부터 표시한다', () => {
-    expect(careers.map((career) => career.company)).toEqual(['(주)차트연구소', '(주)픽넘버'])
+  it('총 경력 계산 대상에는 차트연구소만 포함한다', () => {
+    expect(careers.map((career) => career.company)).toEqual(['(주)차트연구소'])
   })
 })
