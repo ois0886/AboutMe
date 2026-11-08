@@ -3,6 +3,7 @@ type CareerEntry = {
   role: string
   periodLabel: string
   location?: string
+  department?: string
   primaryDuty?: string
   start: Date
   end?: Date
@@ -25,15 +26,15 @@ export const careers: CareerEntry[] = [
     company: '(주)차트연구소',
     role: 'Android Developer | 연구원/정규직',
     location: '서울시 강서구',
+    department: '모바일 개발부서',
     primaryDuty: '주요업무 : Android SDK 개발 및 고객사 납품',
     periodLabel: '2026.02.09 ~ 재직 중',
     start: new Date(2026, 1, 9),
     summary: [
-      'LS증권 차트 라이브러리의 키패드 결과 전달과 숫자 파싱을 보완해 연속 편집값 누락과 소수점/음수 저장 오류 해결, 이동평균선 체크 상태와 Signal 설정 및 분석도구 속성 반영 보완',
-      '기존 차트 엔진을 활용한 EasyChart 화면과 지표 설정 개발, ViewModel과 LiveData로 탭 간 편집 상태를 공유하고 저장, 초기화와 재진입 시 차트와 설정 화면의 값이 일치하도록 처리',
-      'MarketMap의 깊이, 카테고리와 테두리 속성 설정 화면 개발, 깊이 전환 시 편집값을 보존하고 로딩 이벤트와 사용자 변경을 구분해 저장 및 초기화 시 엔진 속성 반영',
-      'Alert의 지표별 감시설정 화면과 감시목록 관리, 가로 스크롤과 병합 헤더를 지원하는 그리드 UI 개발, 터치 중 셀 재구성을 미뤄 화면 갱신 시 롱클릭이 끊기던 오류 수정',
-      'React, Vite, SCSS로 회사와 제품 소개, 공지사항, 문의 화면을 갖춘 자사 반응형 홈페이지 개발, Sanity 기반 공지 조회와 검색 및 Google Apps Script를 통한 첨부파일 문의 접수 연동',
+      'Android UI 개발 및 고객사 납품, 유지보수',
+      '이지차트, 마켓맵, 그리드 UI 개발',
+      '기능 기획 및 설계, QA, 테스트 진행',
+      '자사 홈페이지 리팩토링',
     ],
     // 문서의 상세 기여도 웹 포트폴리오 원천 데이터에 보관하고 화면에는 요약만 표시한다.
     tasks: [

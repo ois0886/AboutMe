@@ -21,7 +21,7 @@ describe('Career', () => {
     expect(screen.queryByRole('article', { name: '(주)픽넘버' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서에 같은 주요업무와 경력 요약을 표시한다', () => {
+  it('웹과 이력서에 같은 부서와 네 가지 업무를 표시한다', () => {
     render(<Career />)
 
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
@@ -33,29 +33,23 @@ describe('Career', () => {
     const chartlab = within(screen.getByRole('article', { name: '(주)차트연구소' }))
     const webTasks = chartlab.getAllByRole('listitem')
       .map((item) => normalizeText(item.textContent ?? ''))
-    const facts = [
-      ['LS증권', '키패드 결과 전달', '숫자 파싱', '연속 편집값 누락', '소수점/음수', '이동평균선', '분석도구'],
-      ['EasyChart', '기존 차트 엔진', 'ViewModel', 'LiveData', '편집 상태', '초기화', '재진입'],
-      ['MarketMap', '설정 화면', '깊이 전환', '편집값', '로딩 이벤트', '사용자 변경', '엔진 속성'],
-      ['Alert', '감시설정 화면', '감시목록 관리', '그리드 UI', '병합 헤더', '셀 재구성', '롱클릭'],
-      ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '공지 조회와 검색', 'Google Apps Script', '첨부파일 문의 접수'],
+    const expectedTasks = [
+      'Android UI 개발 및 고객사 납품, 유지보수',
+      '이지차트, 마켓맵, 그리드 UI 개발',
+      '기능 기획 및 설계, QA, 테스트 진행',
+      '자사 홈페이지 리팩토링',
     ]
-    expect(careers[0].summary).toHaveLength(5)
-    expect(webTasks).toEqual(careers[0].summary)
+    expect(careers[0].summary).toEqual(expectedTasks)
+    expect(webTasks).toEqual(expectedTasks)
     expect(resumeTasks).toEqual(webTasks)
-    facts.forEach((keywords, index) => {
-      keywords.forEach((keyword) => {
-        expect(resumeTasks[index]).toContain(keyword)
-      })
-      expect(resumeTasks[index]).not.toMatch(/[.!?]$/u)
-    })
     const role = `${careers[0].role} | ${careers[0].location}`
     expect(chartlab.getByText(role)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .meta')?.textContent).toBe(role)
     expect(role).toBe('Android Developer | 연구원/정규직 | 서울시 강서구')
-    const primaryDuty = '주요업무 : Android SDK 개발 및 고객사 납품'
-    expect(chartlab.getByText(primaryDuty)).toBeInTheDocument()
-    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(primaryDuty)
+    const department = '모바일 개발부서'
+    expect(chartlab.getByText(department)).toBeInTheDocument()
+    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(department)
+    expect(chartlab.queryByText('주요업무 : Android SDK 개발 및 고객사 납품')).not.toBeInTheDocument()
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
       expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API 구현|Script API 개발|3분할 API 구현|차트 엔진 개발|Java 변환|함수 호환 작업/)
@@ -76,23 +70,23 @@ describe('Career', () => {
     expect(documentation).not.toMatch(/Script API 구현|Script API 개발|Java 변환|함수 호환 작업|샘플 앱 개발/)
   })
 
-  it('웹 요약에는 Alert UI를 포함하고 제공받은 API의 구현으로 서술하지 않는다', () => {
+  it('웹 요약에는 모바일 UI 업무를 표시하고 제공받은 API의 구현으로 서술하지 않는다', () => {
     render(<Career />)
 
-    expect(screen.getByText(/Alert.*감시설정 화면.*그리드 UI.*롱클릭.*오류/)).toBeInTheDocument()
+    expect(screen.getByText('이지차트, 마켓맵, 그리드 UI 개발')).toBeInTheDocument()
     expect(screen.queryByText(/Script API 구현|API 개발|3분할 API 구현|차트 엔진 개발/)).not.toBeInTheDocument()
     expect(screen.queryByText(/삼성증권.*PPT/)).not.toBeInTheDocument()
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
   })
 
-  it('차트연구소는 웹에 핵심 기여 다섯 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
+  it('차트연구소는 웹에 업무 네 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
     render(<Career />)
 
     const article = screen.getByRole('article', { name: '(주)차트연구소' })
     const chartlab = within(article)
-    expect(chartlab.getAllByRole('listitem')).toHaveLength(5)
-    expect(chartlab.getByText(/ViewModel과 LiveData.*편집 상태/)).toBeInTheDocument()
-    expect(chartlab.getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의 접수/)).toBeInTheDocument()
+    expect(chartlab.getAllByRole('listitem')).toHaveLength(4)
+    expect(chartlab.getByText('기능 기획 및 설계, QA, 테스트 진행')).toBeInTheDocument()
+    expect(chartlab.getByText('자사 홈페이지 리팩토링')).toBeInTheDocument()
     for (const task of careers[0].tasks) {
       expect(screen.queryByText(task)).not.toBeInTheDocument()
     }
