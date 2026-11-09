@@ -22,7 +22,7 @@ describe('Career', () => {
     expect(screen.queryByRole('article', { name: '(주)픽넘버' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서에 같은 주요업무와 경력 요약을 표시한다', () => {
+  it('웹과 이력서에 같은 부서, 주요업무와 경력 요약을 표시한다', () => {
     render(<Career />)
 
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
@@ -52,7 +52,7 @@ describe('Career', () => {
     const role = `${careers[0].role} | ${careers[0].location}`
     expect(chartlab.getByText(role)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .meta')?.textContent).toBe(role)
-    expect(role).toBe('Android Developer | 연구원/정규직 | 서울시 강서구')
+    expect(role).toBe('Android Developer | 모바일개발부서 | 연구원/정규직 | 서울시 강서구')
     const primaryDuty = '주요업무 : MTS Android UI 개발 및 고객사 유지보수 지원'
     expect(chartlab.getByText(primaryDuty)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(primaryDuty)
