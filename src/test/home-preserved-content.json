@@ -48,15 +48,10 @@
         "Introduction"
       ],
       "emphasis": [
-        "고객 문제를 안정적인 제품 흐름",
-        "서비스 간 데이터 흐름과 안정성",
-        "코드 리뷰",
-        "AI 기반 개발 흐름 개선",
-        "테스트 가능한 구조와 읽기 쉬운 코드",
-        "블로그",
-        "재현 가능한 지식",
-        "감이 아닌 근거",
-        "협업"
+        "안정적인 제품 흐름",
+        "데이터 흐름과 안정성",
+        "테스트 가능한 구조",
+        "재현 가능한 지식"
       ],
       "links": [
         {
@@ -104,16 +99,20 @@
         "Career",
         "(주)차트연구소"
       ],
-      "emphasis": [],
+      "emphasis": [
+        "LS증권 차트 라이브러리",
+        "EasyChart 화면과 지표 설정",
+        "MarketMap"
+      ],
       "links": [],
       "images": []
     },
     {
       "id": "skills",
-      "text": "SkillsAndroid & KotlinJetpack Compose 화면 개발, 시계열 차트와 GitHub 잔디 형태의 UI 컴포넌트 직접 구현멀티 모듈, Clean Architecture, MVVM, MVI를 적용해 화면과 상태 처리, 데이터 접근의 책임 분리Coroutines 병렬 호출로 로딩 시간 약 56% 단축, 요청별 예외 처리로 일부 실패에도 성공한 데이터를 표시하는 비동기 처리 구현Room 로컬 동기화와 검색으로 응답시간 83% 이상 단축, 반복적인 목록 API 호출을 줄이는 데이터 조회 흐름 구현Paging3로 스크롤에 따라 필요한 데이터를 페이지 단위로 불러와, 초기 로딩과 메모리 부담을 줄이는 목록 구현JUnit5와 MockK로 ViewModel의 상태 변화와 비즈니스 로직을 단위 테스트로 검증Flow와 StateFlow를 통한 화면 상태 전달과 사용자 입력에 따른 이벤트 흐름 관리Gradle Convention Plugin으로 공통 build-logic을 구성해 모듈마다 반복되던 빌드 설정을 한곳에서 관리Compose UI 라이브러리 개발 및 Maven Central 배포BackendSpring Boot REST API 설계, 컨트롤러와 서비스, 데이터 접근 계층 분리MyBatis와 MySQL을 활용한 SQL 매핑, 조인, 페이지 조회와 검색 조건 처리함께 반영해야 하는 데이터 변경의 트랜잭션 처리, 입력 검증과 예외 처리 구현공통 응답 형식과 오류 응답, 페이지 조회 규칙 정의 및 클라이언트 연동FrontendReact, TypeScript, Vue 3와 Vite 화면 및 라우팅 구성, 상태 관리와 재사용 컴포넌트 분리AI Agent기능 구현, 리팩토링, 테스트 작성과 문서화에 Codex와 Claude Code 활용독립적인 작업을 여러 에이전트에 분배하고, 결과 통합 후 코드 리뷰와 테스트로 검증계획, 구현, 검증 단계별 필요 자료와 완료 기준 정의코드 구조와 작성 규칙을 문서화해 AI 도구에 작업 맥락 전달코드 리뷰, 테스트 생성과 리팩토링 후보 탐색 등 반복 작업 자동화자동 테스트와 검토 결과를 다음 수정에 반영CommunicationJira, GitHub를 통한 이슈 관리와 개발 진행 상황 공유, Figma와 Slack을 통한 디자인 협업과 커뮤니케이션코드 리뷰에서 설계 의도와 변경 이유 설명, 팀의 코드 작성 규칙 조율",
+      "text": "SkillsAndroidJetpack Compose 화면 개발, 시계열 차트와 GitHub 잔디 형태의 UI 컴포넌트 직접 구현멀티 모듈, Clean Architecture, MVVM, MVI를 적용해 화면과 상태 처리, 데이터 접근의 책임 분리Coroutines 병렬 호출로 로딩 시간 약 56% 단축, 요청별 예외 처리로 일부 실패에도 성공한 데이터를 표시하는 비동기 처리 구현Room 로컬 동기화와 검색으로 응답시간 83% 이상 단축, 반복적인 목록 API 호출을 줄이는 데이터 조회 흐름 구현Paging3로 스크롤에 따라 필요한 데이터를 페이지 단위로 불러와, 초기 로딩과 메모리 부담을 줄이는 목록 구현JUnit5와 MockK로 ViewModel의 상태 변화와 비즈니스 로직을 단위 테스트로 검증Flow와 StateFlow를 통한 화면 상태 전달과 사용자 입력에 따른 이벤트 흐름 관리Gradle Convention Plugin으로 공통 build-logic을 구성해 모듈마다 반복되던 빌드 설정을 한곳에서 관리Compose UI 라이브러리 개발 및 Maven Central 배포BackendSpring Boot REST API 설계, 컨트롤러와 서비스, 데이터 접근 계층 분리MyBatis와 MySQL을 활용한 SQL 매핑, 조인, 페이지 조회와 검색 조건 처리함께 반영해야 하는 데이터 변경의 트랜잭션 처리, 입력 검증과 예외 처리 구현공통 응답 형식과 오류 응답, 페이지 조회 규칙 정의 및 클라이언트 연동FrontendReact, TypeScript, Vue 3와 Vite 화면 및 라우팅 구성, 상태 관리와 재사용 컴포넌트 분리AI Agent기능 구현, 리팩토링, 테스트 작성과 문서화에 Codex와 Claude Code 활용독립적인 작업을 여러 에이전트에 분배하고, 결과 통합 후 코드 리뷰와 테스트로 검증계획, 구현, 검증 단계별 필요 자료와 완료 기준 정의코드 구조와 작성 규칙을 문서화해 AI 도구에 작업 맥락 전달코드 리뷰, 테스트 생성과 리팩토링 후보 탐색 등 반복 작업 자동화자동 테스트와 검토 결과를 다음 수정에 반영CommunicationJira, GitHub를 통한 이슈 관리와 개발 진행 상황 공유, Figma와 Slack을 통한 디자인 협업과 커뮤니케이션코드 리뷰에서 설계 의도와 변경 이유 설명, 팀의 코드 작성 규칙 조율",
       "textSegments": [
         "Skills",
-        "Android & Kotlin",
+        "Android",
         "Jetpack Compose 화면 개발, 시계열 차트와 GitHub 잔디 형태의 UI 컴포넌트 직접 구현",
         "멀티 모듈, Clean Architecture, MVVM, MVI를 적용해 화면과 상태 처리, 데이터 접근의 책임 분리",
         "Coroutines 병렬 호출로 로딩 시간 약 56% 단축, 요청별 예외 처리로 일부 실패에도 성공한 데이터를 표시하는 비동기 처리 구현",
@@ -143,13 +142,21 @@
       ],
       "headings": [
         "Skills",
-        "Android & Kotlin",
+        "Android",
         "Backend",
         "Frontend",
         "AI Agent",
         "Communication"
       ],
-      "emphasis": [],
+      "emphasis": [
+        "Jetpack Compose",
+        "로딩 시간 약 56% 단축",
+        "응답시간 83% 이상 단축",
+        "Spring Boot REST API",
+        "React, TypeScript",
+        "Codex와 Claude Code",
+        "코드 리뷰"
+      ],
       "links": [],
       "images": []
     },
@@ -661,8 +668,13 @@
         "POCS - Android"
       ],
       "emphasis": [
+        "Compose 통일",
         "약 356ms에서 156ms로 단축",
+        "Orbit MVI",
+        "MVI 구조 직접 적용",
+        "FP16 GPT-2",
         "3~5초에서 0.5초 이하로 단축",
+        "WebSocket 1:1 거래 채팅",
         "70% 이상을 Jetpack Compose로 전환"
       ],
       "links": [
@@ -732,7 +744,10 @@
         "Compose-Chart",
         "Compose-Git-Grass"
       ],
-      "emphasis": [],
+      "emphasis": [
+        "Maven Central",
+        "Maven Central"
+      ],
       "links": [
         {
           "text": "Compose-Chart2026.02 ~ 2026.03 (Android 1인)Canvas API로 선, 막대, 도넛, 원형, 게이지, 레이더 차트를 구현한 Jetpack Compose 라이브러리. Maven Central v1.3.2 배포KotlinJetpack ComposeCanvas API",

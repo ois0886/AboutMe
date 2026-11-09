@@ -4,11 +4,11 @@ import { resolve } from 'node:path'
 import Skills from '../Skills'
 
 describe('Skills', () => {
-  it('Backend와 Frontend를 별도 카드로 나누고 기존 문구를 보존한다', () => {
+  it('Android 분류와 별도의 Backend, Frontend 카드를 표시하고 본문을 보존한다', () => {
     render(<Skills />)
 
     expect(screen.getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent))
-      .toEqual(['Android & Kotlin', 'Backend', 'Frontend', 'AI Agent', 'Communication'])
+      .toEqual(['Android', 'Backend', 'Frontend', 'AI Agent', 'Communication'])
     const backend = screen.getByRole('heading', { name: 'Backend' }).parentElement!
     const frontend = screen.getByRole('heading', { name: 'Frontend' }).parentElement!
     expect(within(backend).getAllByRole('listitem').map((item) => item.textContent))
@@ -63,7 +63,7 @@ describe('Skills', () => {
     expect(matchedItems[0]).toHaveTextContent(`약 ${parallelReduction}% 단축`)
     expect(matchedItems[1]).toHaveTextContent(`${localReductionLowerBound}% 이상 단축`)
     expect(matchedItems[2]).not.toHaveTextContent(/%/)
-    const androidSkills = screen.getByRole('heading', { name: 'Android & Kotlin' }).parentElement!
+    const androidSkills = screen.getByRole('heading', { name: 'Android' }).parentElement!
     expect(androidSkills).not.toHaveTextContent(/Mo-Re|Didimdol|POCS|356ms|156ms|3~5초|0\.5초/)
   })
 })

@@ -1,22 +1,9 @@
-import { useEffect, useMemo, useState, type FocusEvent, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type FocusEvent } from 'react'
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
 import ImageViewer from '../components/ImageViewer'
-import projects, { type Project, type RichText } from '../data/projects'
+import projects, { type Project } from '../data/projects'
+import { plainText, renderRichText } from '../utils/richText'
 import styles from './ProjectDetail.module.css'
-
-function renderRichText(content: RichText): ReactNode {
-  if (typeof content === 'string') return content
-
-  return content.map((segment, index) =>
-    segment.strong ? (
-      <strong key={`${segment.text}-${index}`} className={styles.emphasis}>
-        {segment.text}
-      </strong>
-    ) : (
-      <span key={`${segment.text}-${index}`}>{segment.text}</span>
-    ),
-  )
-}
 
 function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
@@ -223,8 +210,8 @@ function ProjectCaseStudy({ project }: { project: Project }) {
             <h2 className={styles.sectionTitle}>성과 및 결과</h2>
             <ul className={styles.list}>
               {project.achievements.map((item) => (
-                <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(item)}
+                <li key={plainText(item)} className={styles.listItem}>
+                  {renderRichText(item, styles.emphasis)}
                 </li>
               ))}
             </ul>
@@ -236,8 +223,8 @@ function ProjectCaseStudy({ project }: { project: Project }) {
             <h2 className={styles.sectionTitle}>프로젝트 개요</h2>
             <ul className={styles.list}>
               {project.details.map((detail) => (
-                <li key={typeof detail === 'string' ? detail : detail.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(detail)}
+                <li key={plainText(detail)} className={styles.listItem}>
+                  {renderRichText(detail, styles.emphasis)}
                 </li>
               ))}
             </ul>
@@ -249,8 +236,8 @@ function ProjectCaseStudy({ project }: { project: Project }) {
             <h2 className={styles.sectionTitle}>담당 역할 및 기여</h2>
             <ul className={styles.list}>
               {project.contributions.map((item) => (
-                <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(item)}
+                <li key={plainText(item)} className={styles.listItem}>
+                  {renderRichText(item, styles.emphasis)}
                 </li>
               ))}
             </ul>
@@ -304,8 +291,8 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                   <h3 className={styles.psLabel}>결과</h3>
                   <ul className={styles.list}>
                     {ps.result.map((item) => (
-                      <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
-                        {renderRichText(item)}
+                      <li key={plainText(item)} className={styles.listItem}>
+                        {renderRichText(item, styles.emphasis)}
                       </li>
                     ))}
                   </ul>
@@ -351,8 +338,8 @@ function ProjectCaseStudy({ project }: { project: Project }) {
             <h2 className={styles.sectionTitle}>주요 요구사항</h2>
             <ul className={styles.list}>
               {project.features.map((feature) => (
-                <li key={typeof feature === 'string' ? feature : feature.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(feature)}
+                <li key={plainText(feature)} className={styles.listItem}>
+                  {renderRichText(feature, styles.emphasis)}
                 </li>
               ))}
             </ul>
@@ -438,8 +425,8 @@ function ProjectCaseStudy({ project }: { project: Project }) {
             <h2 className={styles.sectionTitle}>프로젝트 회고</h2>
             <ul className={styles.list}>
               {project.retrospective.map((item) => (
-                <li key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')} className={styles.listItem}>
-                  {renderRichText(item)}
+                <li key={plainText(item)} className={styles.listItem}>
+                  {renderRichText(item, styles.emphasis)}
                 </li>
               ))}
             </ul>

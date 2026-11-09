@@ -1,13 +1,9 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import projects from '../projects'
+import { plainText } from '../../utils/richText'
 
 const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim()
-
-const richTextToText = (item: (typeof projects)[number]['achievements'][number]) =>
-  typeof item === 'string'
-    ? item
-    : item.map((segment) => segment.text).join('')
 
 const preservedResumeSections = JSON.parse(
   readFileSync(resolve(process.cwd(), 'src/test/resume-preserved-sections.json'), 'utf8'),
@@ -39,8 +35,8 @@ describe('projects 데이터 무결성', () => {
       expect(project.cardSummary.description).toBeTruthy()
       expect(project.cardSummary.achievements).toHaveLength(Math.min(project.achievements.length, 3))
       project.achievements.slice(0, 3).forEach((item, index) => {
-        const numbers = richTextToText(item).match(/\d+(?:\.\d+)?/g) ?? []
-        const cardNumbers = richTextToText(project.cardSummary.achievements[index])
+        const numbers = plainText(item).match(/\d+(?:\.\d+)?/g) ?? []
+        const cardNumbers = plainText(project.cardSummary.achievements[index])
           .match(/\d+(?:\.\d+)?/g) ?? []
         expect(cardNumbers, project.id).toEqual(numbers)
       })
@@ -78,7 +74,7 @@ describe('projects 데이터 무결성', () => {
     expect(project.team).toBe('1명 (개인 프로젝트)')
     expect(project.role).toBe('Android 앱 설계, 구현 및 검증')
     expect(project.thumbnail).toBe('screenshot/hangil-guide.svg')
-    expect(project.details).toEqual([
+    expect(project.details.map(plainText)).toEqual([
       '초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.',
       '현대자동차그룹 차량용 앱 개발 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다.',
     ])

@@ -4,7 +4,8 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import App from '../../App'
 import ProjectDetail from '../../pages/ProjectDetail'
-import projects, { type Project, type RichText } from '../projects'
+import projects, { type Project } from '../projects'
+import { plainText } from '../../utils/richText'
 
 type HomeSectionContent = {
   id: string
@@ -24,10 +25,6 @@ const homeBaseline = readBaseline<{ date: string; sections: HomeSectionContent[]
 )
 
 const compact = (text: string) => text.replace(/\s+/g, '')
-const plainText = (text: RichText) => typeof text === 'string'
-  ? text
-  : text.map((segment) => segment.text).join('')
-
 const visibleText = (element: Element) => {
   const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT)
   const segments: string[] = []
@@ -97,7 +94,7 @@ describe('리디자인 콘텐츠 보존', () => {
     expect(container.querySelector('pre, code')).toBeNull()
   })
 
-  it('홈은 새 섹션 순서에서도 기존 문구, 강조, 링크와 펼친 이미지를 보존한다', () => {
+  it('홈은 기준 문구, 핵심 강조, 링크와 펼친 이미지를 표시한다', () => {
     vi.useFakeTimers({ toFake: ['Date'] })
     vi.setSystemTime(new Date(homeBaseline.date))
     sessionStorage.clear()
@@ -134,9 +131,7 @@ describe('리디자인 콘텐츠 보존', () => {
         expect(remaining, original.id + ': 승인하지 않은 새 문구').toBe('')
 
         const emphasis = Array.from(section.querySelectorAll('strong'), (item) => compact(item.textContent ?? ''))
-        for (const text of original.emphasis.map(compact)) {
-          expect(emphasis, original.id + ': 강조').toContain(text)
-        }
+        expect(emphasis, original.id + ': 강조').toEqual(original.emphasis.map(compact))
         for (const link of original.links) {
           const anchor = Array.from(section.querySelectorAll('a')).find((item) =>
             item.getAttribute('href') === link.href

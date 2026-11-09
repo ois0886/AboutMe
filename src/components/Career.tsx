@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { plainText, renderRichText } from '../utils/richText'
 import { careers, getTotalCareer } from './careerUtils'
 import styles from './Career.module.css'
 
@@ -26,7 +27,7 @@ function Career() {
               </div>
               <ul className={styles.tasks}>
                 {(career.summary ?? career.tasks).map((task) => (
-                  <li key={task} className={styles.task}>{task}</li>
+                  <li key={plainText(task)} className={styles.task}>{renderRichText(task, styles.emphasis)}</li>
                 ))}
               </ul>
               {career.links && career.links.length > 0 && (

@@ -22,7 +22,18 @@
     "role": "Android 앱 설계, 구현 및 검증",
     "details": [
       "초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.",
-      "현대자동차그룹 차량용 앱 개발 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다."
+      [
+        {
+          "text": "현대자동차그룹 차량용 앱 개발 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 "
+        },
+        {
+          "text": "Pleos 환경",
+          "strong": true
+        },
+        {
+          "text": "에서 화면 동작을 검증했습니다."
+        }
+      ]
     ],
     "features": [],
     "contributions": [],
@@ -40,7 +51,18 @@
     "cardSummary": {
       "description": "고령층의 건강 측정과 결과 확인, 측정 결과에 맞는 광고를 제공하는 헬스케어 키오스크",
       "achievements": [
-        "상용 키오스크 화면의 Compose 통일, Route, Screen, Component 역할 분리",
+        [
+          {
+            "text": "상용 키오스크 화면의 "
+          },
+          {
+            "text": "Compose 통일",
+            "strong": true
+          },
+          {
+            "text": ", Route, Screen, Component 역할 분리"
+          }
+        ],
         "Activity Context와 Singleton의 보유 범위 조정, Listener 해제 지점 정리",
         "기능과 계층별 패키지 분리, 반복 UI의 공통 컴포넌트화로 중복 수정 범위 축소"
       ]
@@ -178,7 +200,18 @@
     ],
     "insights": [],
     "achievements": [
-      "상용 키오스크의 화면을 Compose로 통일하고 Route, Screen, Component의 역할을 나눴습니다.",
+      [
+        {
+          "text": "상용 키오스크의 "
+        },
+        {
+          "text": "화면을 Compose로 통일",
+          "strong": true
+        },
+        {
+          "text": "하고 Route, Screen, Component의 역할을 나눴습니다."
+        }
+      ],
       "Activity Context와 Singleton의 보유 범위를 조정하고 Listener 해제 지점을 정리했습니다.",
       "패키지를 기능과 계층별로 나누고 반복되는 UI를 공통 컴포넌트로 옮겨 중복 수정 범위를 줄였습니다.",
       [
@@ -449,7 +482,15 @@
     "cardSummary": {
       "description": "마음에 남은 글귀를 짧은 이미지 콘텐츠로 만들고 공유하는 Android 앱",
       "achievements": [
-        "Orbit MVI로 입력 검증과 상태 변경을 ViewModel에 모아 UI 없이 검증 가능한 구조 구성",
+        [
+          {
+            "text": "Orbit MVI",
+            "strong": true
+          },
+          {
+            "text": "로 입력 검증과 상태 변경을 ViewModel에 모아 UI 없이 검증 가능한 구조 구성"
+          }
+        ],
         "DataStore와 인증 모듈에서 토큰 저장, 재발급 실패와 로그아웃 사유 공통 처리",
         "Channel 기반 Navigator로 화면 이동 요청, 전용 Composable로 백스택 처리 분리"
       ]
@@ -713,7 +754,18 @@
     "role": "Backend & Frontend & Recommendation 개발",
     "details": [
       "Spring Boot 백엔드와 React 웹을 연동해 주종, 가격, 도수, 맛과 향으로 주류를 검색하고, 상품을 비교하거나 찜하고 후기를 남길 수 있도록 했습니다.",
-      "Python과 FastAPI 기반 추천 서비스에서 취향 설문, 찜, 후기를 바탕으로 주류를 추천하고 그 이유를 보여주는 기능을 개발하고 있습니다."
+      [
+        {
+          "text": "Python과 "
+        },
+        {
+          "text": "FastAPI 기반 추천 서비스",
+          "strong": true
+        },
+        {
+          "text": "에서 취향 설문, 찜, 후기를 바탕으로 주류를 추천하고 그 이유를 보여주는 기능을 개발하고 있습니다."
+        }
+      ]
     ],
     "features": [],
     "contributions": [],
@@ -738,7 +790,15 @@
       "achievements": [
         "메인 화면과 마이페이지 개발을 통한 1차 MVP 완성",
         "전체 화면의 Compose 구현과 재사용 가능한 공통 UI 개발",
-        "UiState, Intent, SideEffect로 상태와 이벤트를 분리하는 MVI 구조 직접 적용"
+        [
+          {
+            "text": "UiState, Intent, SideEffect로 상태와 이벤트를 분리하는 "
+          },
+          {
+            "text": "MVI 구조 직접 적용",
+            "strong": true
+          }
+        ]
       ]
     },
     "thumbnail": "screenshot/QuizCafe1.png",
@@ -875,7 +935,18 @@
     "achievements": [
       "메인 화면과 마이페이지를 맡아 1차 MVP를 완성했습니다.",
       "모든 화면을 Compose로 구현하고 재사용할 수 있는 공통 UI를 만들었습니다.",
-      "UiState, Intent, SideEffect로 상태와 이벤트를 나누는 MVI 구조를 직접 적용했습니다.",
+      [
+        {
+          "text": "UiState, Intent, SideEffect로 상태와 이벤트를 나누는 "
+        },
+        {
+          "text": "MVI 구조",
+          "strong": true
+        },
+        {
+          "text": "를 직접 적용했습니다."
+        }
+      ],
       "DataStore 기반 자동 로그인과 세션 관리, Retrofit과 Coroutines 기반 비동기 통신과 예외 처리를 구현했습니다."
     ],
     "retrospective": [
@@ -904,7 +975,15 @@
     "cardSummary": {
       "description": "사진과 메모 기반 AI 일기, 감정 이모지와 캘린더를 제공하는 한성대학교와 Qualcomm의 산학협력 프로젝트",
       "achievements": [
-        "FP16 GPT-2의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합",
+        [
+          {
+            "text": "FP16 GPT-2",
+            "strong": true
+          },
+          {
+            "text": "의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합"
+          }
+        ],
         "이미지 분류 키워드, 음성 메모와 사용자 취향을 조합한 일기 생성 흐름 구현",
         "음성 입력의 감정 결과를 이모지로 변환하고 사용자별 선택 상태 저장 및 복원"
       ]
@@ -1039,7 +1118,15 @@
     ],
     "insights": [],
     "achievements": [
-      "FP16 GPT-2의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합했습니다.",
+      [
+        {
+          "text": "FP16 GPT-2",
+          "strong": true
+        },
+        {
+          "text": "의 모델 로딩, BPE 토큰화와 반복 추론을 Android 앱에 통합했습니다."
+        }
+      ],
       "이미지 분류 키워드, 음성 메모와 사용자 취향을 조합한 일기 생성 흐름을 구현했습니다.",
       "음성 입력의 감정 결과를 이모지로 변환하고 사용자별 선택 상태를 저장하고 복원하도록 연결했습니다."
     ],
@@ -1266,7 +1353,15 @@
       "achievements": [
         "팀장 및 Android 개발 담당, 앱 전체 화면과 API 연동 단독 구현",
         "presentation, domain, data 모듈과 33개 UseCase로 화면, 도메인 규칙과 데이터 접근 분리",
-        "WebSocket 1:1 거래 채팅 구현, 연결과 해제 및 메시지 전송의 데이터 계층 통합"
+        [
+          {
+            "text": "WebSocket 1:1 거래 채팅",
+            "strong": true
+          },
+          {
+            "text": " 구현, 연결과 해제 및 메시지 전송의 데이터 계층 통합"
+          }
+        ]
       ]
     },
     "thumbnail": "screenshot/Bong1.png",
@@ -1420,7 +1515,18 @@
     "achievements": [
       "팀장을 맡고 Android 앱의 전체 화면과 API 연동을 혼자 구현했습니다.",
       "presentation, domain, data 모듈과 33개 UseCase로 화면, 도메인 규칙과 데이터 접근을 나눴습니다.",
-      "WebSocket으로 1:1 거래 채팅을 구현하고 연결, 해제와 메시지 전송을 데이터 계층에 모았습니다.",
+      [
+        {
+          "text": "WebSocket으로 "
+        },
+        {
+          "text": "1:1 거래 채팅",
+          "strong": true
+        },
+        {
+          "text": "을 구현하고 연결, 해제와 메시지 전송을 데이터 계층에 모았습니다."
+        }
+      ],
       "발신자에 따라 메시지 UI를 구분하고 ListAdapter와 DiffUtil로 목록 변경을 반영했습니다.",
       "인증 토큰을 암호화해 저장하고 Interceptor에서 요청의 인증 헤더를 추가했습니다."
     ],

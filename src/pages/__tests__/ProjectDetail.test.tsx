@@ -2,6 +2,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { Link, MemoryRouter, Route, Routes } from 'react-router-dom'
 import ProjectDetail from '../ProjectDetail'
 import projects from '../../data/projects'
+import { plainText } from '../../utils/richText'
 
 function renderProjectDetail(id: string) {
   return render(
@@ -26,7 +27,7 @@ describe('ProjectDetail', () => {
       .toEqual(['프로젝트 개요'])
     const overview = screen.getByRole('heading', { name: '프로젝트 개요' }).closest('section')!
     expect(within(overview).getAllByRole('listitem').map((item) => item.textContent))
-      .toEqual(project.details)
+      .toEqual(project.details.map(plainText))
     expect(screen.queryByRole('link', { name: 'GitHub' })).not.toBeInTheDocument()
     expect(screen.queryByRole('navigation', { name: '프로젝트 목차' })).not.toBeInTheDocument()
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
@@ -228,7 +229,7 @@ describe('ProjectDetail', () => {
       .toEqual(['프로젝트 개요', '링크'])
     const overview = screen.getByRole('heading', { name: '프로젝트 개요' }).closest('section')!
     expect(within(overview).getAllByRole('listitem').map((item) => item.textContent))
-      .toEqual(project.details)
+      .toEqual(project.details.map(plainText))
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Pubburi')
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })

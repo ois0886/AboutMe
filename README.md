@@ -36,7 +36,7 @@
 |---------|-------------|
 | About | Profile & introduction (Email / GitHub / Blog / LinkedIn) |
 | Career | Work experience timeline with auto-calculated total career |
-| Skills | Android & Kotlin, Backend, Frontend, AI Agent, Communication |
+| Skills | Android, Backend, Frontend, AI Agent, Communication |
 | Education | Education history with GPA & course grades |
 | Awards & Certificates | 2 awards, 5 certificates (image toggle) |
 | Activity | Studies, presentations, mentoring (photo toggle) |
@@ -91,7 +91,7 @@
 - Alternating section bands and responsive timeline / card layouts
 - Project detail pages with problem-solving visuals, implementation explanations, insights
 - Sticky desktop / collapsible mobile project contents and an accessible image viewer
-- Rich text emphasis in project copy via `rich()` / `strong()` helpers
+- Rich text emphasis via shared `rich()` / `strong()` helpers
 - Responsive project rows and screenshot galleries (2 / 3 column grids)
 - Keyboard focus states and 44px mobile touch targets
 

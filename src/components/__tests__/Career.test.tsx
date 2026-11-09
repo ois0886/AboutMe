@@ -5,6 +5,7 @@ import Activity from '../Activity'
 import Career from '../Career'
 import Education from '../Education'
 import { careers, getTotalCareer } from '../careerUtils'
+import { plainText } from '../../utils/richText'
 
 const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim()
 
@@ -40,7 +41,7 @@ describe('Career', () => {
       ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '공지 조회와 검색', 'Google Apps Script', '첨부파일 문의 접수'],
     ]
     expect(careers[0].summary).toHaveLength(4)
-    expect(webTasks).toEqual(careers[0].summary)
+    expect(webTasks).toEqual(careers[0].summary?.map(plainText))
     expect(resumeTasks).toEqual(webTasks)
     facts.forEach((keywords, index) => {
       keywords.forEach((keyword) => {

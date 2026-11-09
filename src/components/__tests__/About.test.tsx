@@ -26,7 +26,7 @@ describe('About', () => {
     }
   })
 
-  it('웹 Introduction은 기존 문구와 항목 순서, 강조를 보존한다', () => {
+  it('웹 Introduction은 기존 문구와 순서를 보존하고 핵심 구절만 강조한다', () => {
     renderAbout()
 
     const introduction = screen.getByRole('heading', { name: 'Introduction' }).parentElement!
@@ -42,11 +42,11 @@ describe('About', () => {
       ])
     expect(webItems.map((item) => Array.from(item.querySelectorAll('strong'), (emphasis) => emphasis.textContent)))
       .toEqual([
-        ['고객 문제를 안정적인 제품 흐름'],
-        ['서비스 간 데이터 흐름과 안정성'],
-        ['코드 리뷰', 'AI 기반 개발 흐름 개선', '테스트 가능한 구조와 읽기 쉬운 코드'],
-        ['블로그', '재현 가능한 지식'],
-        ['감이 아닌 근거', '협업'],
+        ['안정적인 제품 흐름'],
+        ['데이터 흐름과 안정성'],
+        ['테스트 가능한 구조'],
+        ['재현 가능한 지식'],
+        [],
       ])
   })
 

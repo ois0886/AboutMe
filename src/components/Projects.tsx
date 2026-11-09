@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import projects, { type RichText } from '../data/projects'
+import projects from '../data/projects'
+import { plainText, renderRichText } from '../utils/richText'
 import styles from './Projects.module.css'
 
 const projectsByStartDate = [...projects].sort((left, right) => {
@@ -9,20 +9,6 @@ const projectsByStartDate = [...projects].sort((left, right) => {
   const [rightStart] = right.period.split(' ~ ')
   return rightStart.localeCompare(leftStart)
 })
-
-function renderRichText(content: RichText): ReactNode {
-  if (typeof content === 'string') return content
-
-  return content.map((segment, index) =>
-    segment.strong ? (
-      <strong key={`${segment.text}-${index}`} className={styles.emphasis}>
-        {segment.text}
-      </strong>
-    ) : (
-      <span key={`${segment.text}-${index}`}>{segment.text}</span>
-    ),
-  )
-}
 
 function Projects() {
   const ref = useScrollReveal<HTMLElement>()
@@ -52,10 +38,10 @@ function Projects() {
                 <ul className={styles.highlights}>
                   {project.cardSummary.achievements.slice(0, 3).map((item) => (
                     <li
-                      key={typeof item === 'string' ? item : item.map((segment) => segment.text).join('')}
+                      key={plainText(item)}
                       className={styles.highlight}
                     >
-                      {renderRichText(item)}
+                      {renderRichText(item, styles.emphasis)}
                     </li>
                   ))}
                 </ul>
