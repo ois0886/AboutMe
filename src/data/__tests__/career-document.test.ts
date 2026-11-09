@@ -21,7 +21,9 @@ describe('경력기술서', () => {
     const document = readCareerDocument()
     const header = Array.from(document.querySelectorAll('[data-source-header]'), (item) => item.textContent)
     expect(header).toEqual(preserved.header)
-    expect(header).toContain(careers[0].primaryDuty)
+    const { company, role, location, primaryDuty } = careers[0]
+    expect(header).toContain([company, ...role.split(' | '), location].join(' / '))
+    expect(header).toContain(primaryDuty)
     const sections = Array.from(document.querySelectorAll('.career-section'))
     expect(sections.map((section) => ({
       title: section.querySelector('h2')?.textContent,
