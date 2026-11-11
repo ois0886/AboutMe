@@ -5,15 +5,15 @@ import Activity from '../Activity'
 import Career from '../Career'
 import Education from '../Education'
 import { careers, getTotalCareer } from '../careerUtils'
-import { plainText } from '../../utils/richText'
 
 const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim()
 
 describe('Career', () => {
-  it('(주)차트연구소 경력이 렌더링된다', () => {
+  it('회사명을 중소기업으로 표시한다', () => {
     render(<Career />)
 
-    expect(screen.getByRole('heading', { level: 3, name: '(주)차트연구소' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: '중소기업' })).toBeInTheDocument()
+    expect(screen.queryByText('(주)차트연구소')).not.toBeInTheDocument()
   })
 
   it('(주)픽넘버를 경력에 표시하지 않는다', () => {
@@ -22,27 +22,20 @@ describe('Career', () => {
     expect(screen.queryByRole('article', { name: '(주)픽넘버' })).not.toBeInTheDocument()
   })
 
-  it('웹과 이력서에 같은 부서, 주요업무와 경력 요약을 표시한다', () => {
-    render(<Career />)
-
+  it('이력서에 기존 부서, 주요업무와 경력 요약을 유지한다', () => {
     const resumeHtml = readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')
     const resumeDocument = new DOMParser().parseFromString(resumeHtml, 'text/html')
     const resumeTasks = Array.from(
       resumeDocument.querySelectorAll('[data-career-id="chartlab"] > ul > li'),
     ).map((item) => normalizeText(item.textContent ?? ''))
 
-    const chartlab = within(screen.getByRole('article', { name: '(주)차트연구소' }))
-    const webTasks = chartlab.getAllByRole('listitem')
-      .map((item) => normalizeText(item.textContent ?? ''))
     const facts = [
       ['LS증권', '키패드 결과 전달', '숫자 파싱', '연속 편집값 누락', '소수점/음수', '이동평균선', '분석도구'],
       ['EasyChart', '기존 차트 엔진', 'ViewModel', 'LiveData', '편집 상태', '초기화', '재진입'],
       ['MarketMap', '설정 화면', '깊이 전환', '편집값', '로딩 이벤트', '사용자 변경', '엔진 속성'],
       ['React', 'Vite', 'SCSS', '홈페이지', 'Sanity', '공지 조회와 검색', 'Google Apps Script', '첨부파일 문의 접수'],
     ]
-    expect(careers[0].summary).toHaveLength(4)
-    expect(webTasks).toEqual(careers[0].summary?.map(plainText))
-    expect(resumeTasks).toEqual(webTasks)
+    expect(resumeTasks).toHaveLength(4)
     facts.forEach((keywords, index) => {
       keywords.forEach((keyword) => {
         expect(resumeTasks[index]).toContain(keyword)
@@ -50,12 +43,10 @@ describe('Career', () => {
       expect(resumeTasks[index]).not.toMatch(/[.!?]$/u)
     })
     const role = `${careers[0].role} | ${careers[0].location}`
-    expect(chartlab.getByText(role)).toBeInTheDocument()
     expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .meta')?.textContent).toBe(role)
     expect(role).toBe('Android Developer | 모바일개발부서 | 연구원/정규직 | 서울시 강서구')
-    const primaryDuty = '주요업무 : MTS Android UI 개발 및 고객사 유지보수 지원'
-    expect(chartlab.getByText(primaryDuty)).toBeInTheDocument()
-    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent).toBe(primaryDuty)
+    expect(resumeDocument.querySelector('[data-career-id="chartlab"] > .subhead')?.textContent)
+      .toBe('주요업무 : MTS Android UI 개발 및 고객사 유지보수 지원')
 
     for (const tasks of [careers[0].tasks, resumeTasks]) {
       expect(tasks.join(' ')).not.toMatch(/조회 61종|실시간 21종|Script API 구현|Script API 개발|3분할 API 구현|차트 엔진 개발|Java 변환|함수 호환 작업/)
@@ -86,14 +77,17 @@ describe('Career', () => {
     expect(readFileSync(resolve(process.cwd(), 'resume.html'), 'utf8')).not.toMatch(/삼성증권.*PPT/)
   })
 
-  it('차트연구소는 웹에 핵심 기여 네 항목만 표시하고 문서용 상세 설명은 노출하지 않는다', () => {
+  it('웹 경력에는 직무 정보와 요약 두 항목을 표시한다', () => {
     render(<Career />)
 
-    const article = screen.getByRole('article', { name: '(주)차트연구소' })
-    const chartlab = within(article)
-    expect(chartlab.getAllByRole('listitem')).toHaveLength(4)
-    expect(chartlab.getByText(/ViewModel과 LiveData.*편집 상태/)).toBeInTheDocument()
-    expect(chartlab.getByText(/Sanity.*공지 조회와 검색.*Google Apps Script.*첨부파일 문의 접수/)).toBeInTheDocument()
+    const article = screen.getByRole('article', { name: '중소기업' })
+    const entry = within(article)
+    expect(entry.getByText('Android Developer | 모바일개발부서 | 연구원/정규직 | 서울시 강서구')).toBeInTheDocument()
+    expect(entry.getAllByRole('listitem').map((item) => item.textContent)).toEqual([
+      'MTS Android UI 개발 및 고객사 유지보수 지원',
+      '회사 홈페이지 React, Vite, SCSS로 반응형 웹페이지 리팩토링',
+    ])
+    expect(entry.queryByText(/주요업무/)).not.toBeInTheDocument()
     for (const task of careers[0].tasks) {
       expect(screen.queryByText(task)).not.toBeInTheDocument()
     }

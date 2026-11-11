@@ -13,15 +13,14 @@ function Career() {
         <p className={styles.totalCareer}>총 경력 {getTotalCareer()}</p>
         <div className={styles.list}>
           {careers.map((career) => (
-            <article key={career.company} aria-label={career.company} className={styles.card}>
+            <article key={career.company} aria-label={career.displayCompany ?? career.company} className={styles.card}>
               <div className={styles.header}>
                 <div>
-                  <h3 className={styles.company}>{career.company}</h3>
+                  <h3 className={styles.company}>{career.displayCompany ?? career.company}</h3>
                   <p className={styles.role}>
                     {career.role}
                     {career.location && ` | ${career.location}`}
                   </p>
-                  {career.primaryDuty && <p className={styles.role}>{career.primaryDuty}</p>}
                 </div>
                 <span className={styles.period}>{career.periodLabel}</span>
               </div>
