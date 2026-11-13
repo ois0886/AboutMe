@@ -151,3 +151,31 @@ Edit only the lower-right output wiring of this exact infographic. Preserve all 
 ```text
 Edit only the bottom-left memo input routing of this exact infographic. Preserve all other text, title, imagery, colors, prompt stack, ordering, and main arrows unchanged. Correct input routing: "음성 메모" microphone goes through "SpeechRecognizer", then to the "메모" text card. "직접 입력" pencil is already text and MUST bypass SpeechRecognizer and connect directly to the "메모" text card through a separate clear curved arrow. Remove the plus symbol joining voice and direct input before SpeechRecognizer, and remove the arrow from direct-input pencil into SpeechRecognizer. Move the direct input pencil slightly lower if necessary to draw a clear separate route under SpeechRecognizer to the 메모 card, with a visible arrowhead at memo. Do not suggest direct input needs speech recognition. No new labels, no other changes.
 ```
+
+## 한길졸업 문제 해결 이미지
+
+2026-11-13에 내장 `image_gen`으로 1672 x 941 PNG 3장을 생성했습니다. 한글 라벨과 처리 흐름을 Android 구현과 대조했습니다.
+
+### hangil-session-query-visual.png
+
+파일: `public/screenshot/hangil-session-query-visual.png`
+
+```text
+Create one standalone polished wide landscape 16:9 image for the Korean Android engineering portfolio project 한길졸업. Cream off-white background, dark navy typography and outlines, muted teal arrows and highlights, subtle physical shadows, a professional editorial technical infographic with simple dimensional objects, strong hierarchy, safe generous margins and legible on mobile. Use only the exact Korean labels explicitly requested, correctly spelled, each once. No metrics, no code, no watermark, no logos, no tiny text, no middle-dot punctuation. Title “필요한 연습만 조회”. Left third, heading “변경 전”: a tall drawer of many session cards passes the whole stack through one document-conversion device. Right two-thirds, heading “변경 후”: a single Room drawer (label “Room”) supplies two independent paths, an upper one with one selected session card labeled “복습 세션”, and a lower one with a small group of candidate cards labeled “활성 후보”. Place muted teal arrows clearly from Room to each, and do not join the two paths. Use a subtle dividing line, high contrast labels. This is about narrowing what is read and converted, not caching, and do not imply full SQL index coverage.
+```
+
+### hangil-location-write-visual.png
+
+파일: `public/screenshot/hangil-location-write-visual.png`
+
+```text
+Create one standalone polished wide landscape 16:9 image for the Korean Android engineering portfolio project 한길졸업. Cream off-white background, dark navy typography and outlines, muted teal arrows and highlights, subtle physical shadows, a professional editorial technical infographic with simple dimensional objects, strong hierarchy, safe generous margins and legible on mobile. Use only the exact Korean labels explicitly requested, correctly spelled, each once. No metrics, no code, no watermark, no logos, no tiny text, no middle-dot punctuation. Title “위치 표본 저장”. Left: stack of recorded point cards goes to a database inspection gate labeled “SQL 검증”. Middle: gate branches with two clearly separate arrows, top to a card labeled “마지막 표본” (one highlighted sample), bottom to a card labeled “전체 검증” (a stack and small magnifier). Both paths converge on a final icon showing a new point being appended, labeled “표본 추가”. Show that older rows are still checked before the last row is selected. Use teal for the primary path and muted navy for fallback, with 5 large labels total and an uncluttered layout.
+```
+
+### hangil-review-map-visual.png
+
+파일: `public/screenshot/hangil-review-map-visual.png`
+
+```text
+Create one standalone polished wide landscape 16:9 image for the Korean Android engineering portfolio project 한길졸업. Cream off-white background, dark navy typography and outlines, muted teal arrows and highlights, subtle physical shadows, a professional editorial technical infographic with simple dimensional objects, strong hierarchy, safe generous margins and legible on mobile. Use only the exact Korean labels explicitly requested, correctly spelled, each once. No metrics, no code, no watermark, no logos, no tiny text, no middle-dot punctuation. Title “복습 지도 첫 렌더”. Show two visibly parallel paths beginning at the same point on the left. Top path shows simplified point and polyline graphics labeled “도형 계산”. Bottom path shows a plain blank map pane labeled “지도 초기화”. The two paths meet at one screen with route layers and framing guides labeled “레이어 적용”. One last rightward arrow leads to a crisp map screen with a completed path and check mark labeled “첫 프레임”. Use readable spacious text. Keep the map abstract, with no street labels, real addresses, logos or speeds.
+```

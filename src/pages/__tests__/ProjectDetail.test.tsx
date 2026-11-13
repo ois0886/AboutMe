@@ -17,21 +17,30 @@ function renderProjectDetail(id: string) {
 describe('ProjectDetail', () => {
   const firstProject = projects[0]
 
-  it('한길졸업은 상단 기본 정보와 프로젝트 개요만 표시한다', () => {
+  it('한길졸업은 목차, 문제 해결 이미지와 시연 화면을 표시한다', () => {
     const { container } = renderProjectDetail('hangil')
-    const project = projects.find((item) => item.id === 'hangil')!
-    expect(screen.getByText('2026.10.26 ~ 진행 중')).toBeInTheDocument()
-    expect(screen.getByText('1명 (개인 프로젝트)')).toBeInTheDocument()
-    expect(screen.getByText('Android 앱 설계, 구현 및 검증')).toBeInTheDocument()
-    expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent))
-      .toEqual(['프로젝트 개요'])
-    const overview = screen.getByRole('heading', { name: '프로젝트 개요' }).closest('section')!
-    expect(within(overview).getAllByRole('listitem').map((item) => item.textContent))
-      .toEqual(project.details.map(plainText))
-    expect(screen.queryByRole('link', { name: 'GitHub' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('navigation', { name: '프로젝트 목차' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    expect(screen.getByText('2026.10.26 ~ 2026.11.13')).toBeInTheDocument()
+    const headings = [
+      '성과 및 결과', '프로젝트 개요', '담당 역할 및 기여', '링크', '문제 해결', '주요 요구사항', '스크린샷',
+    ]
+    expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual(headings)
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    expect(toc.getAllByRole('link').map((link) => link.textContent)).toEqual(headings)
+    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/HanGilLab/Android')
+    expect(screen.getByRole('link', { name: 'Pleos 시연 영상 (1분 57초)' })).toHaveAttribute('href',
+      'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e')
+    const problems = within(screen.getByRole('heading', { name: '문제 해결' }).closest('section')!)
+    expect(problems.getAllByRole('img')).toHaveLength(3)
     expect(container.querySelector('pre, code')).toBeNull()
+    const gallery = screen.getByRole('heading', { name: '스크린샷' }).closest('section')!
+    expect(within(gallery).getAllByRole('img')).toHaveLength(6)
+    expect(gallery.querySelector('[class*="screenshotFull"] img'))
+      .toHaveAttribute('src', 'screenshot/hangil-pleos-home.png')
+    expect(gallery.querySelector('[class*="screenshots"] img'))
+      .toHaveAttribute('src', 'screenshot/hangil-pleos-next-practice-saved.png')
+    expect(Array.from(gallery.querySelectorAll('[class*="screenshotRows"] > div'), (row) => row.children.length))
+      .toEqual([2, 2])
+    expect(gallery.querySelectorAll('[class*="screenshotCaption"]')).toHaveLength(6)
   })
 
   it.each(projects.filter((project) => project.problemSolvings.length > 0))(
@@ -163,7 +172,7 @@ describe('ProjectDetail', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('다른 프로젝트로 이동하면 본문 섹션이 하나인 상세에서 목차를 숨긴다', () => {
+  it('다른 프로젝트로 이동하면 열려 있던 목차를 닫고 새 섹션을 표시한다', () => {
     render(
       <MemoryRouter initialEntries={['/projects/glim']}>
         <Link to="/projects/hangil">한길졸업으로 이동</Link>
@@ -174,9 +183,10 @@ describe('ProjectDetail', () => {
     )
     fireEvent.click(screen.getByRole('button', { name: '목차' }))
     fireEvent.click(screen.getByRole('link', { name: '한길졸업으로 이동' }))
-    expect(screen.queryByRole('navigation', { name: '프로젝트 목차' })).not.toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: '프로젝트 개요' })).toBeInTheDocument()
-    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
+    expect(toc.getByRole('button', { name: '목차' })).toHaveAttribute('aria-expanded', 'false')
+    expect(toc.getByRole('link', { name: '문제 해결' })).toHaveAttribute('href', '/projects/hangil#project-problems')
+    expect(toc.queryByRole('link', { name: 'Project Insights' })).not.toBeInTheDocument()
   })
 
   it('스크롤에 따라 목차의 현재 섹션을 갱신한다', () => {

@@ -38,7 +38,7 @@ const visibleText = (element: Element) => {
 }
 
 describe('리디자인 콘텐츠 보존', () => {
-  it('프로젝트 데이터는 승인된 세 문장 삭제 외의 모든 원문과 이미지, 링크를 보존한다', () => {
+  it('프로젝트 데이터는 승인된 변경을 반영하고 다른 원문과 이미지, 링크를 보존한다', () => {
     const expected = structuredClone(projectBaseline)
     const disclosure = '코드 반출이 허용되지 않아 공개 가능한 구현 구조와 문제 해결 과정을 정리했습니다.'
     for (const id of ['naenun-kiosk', 'mo-re']) {

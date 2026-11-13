@@ -48,28 +48,149 @@ const projects: Project[] = [
   {
     id: 'hangil',
     title: '한길졸업 - Android',
-    description: '초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱입니다.',
+    description: '운전이 오랜만인 면허 소지자가 자주 가는 길을 연습하고, 차량 기록을 복습해 다음 과제를 정할 수 있는 Pleos 차량용 앱입니다.',
     cardSummary: {
-      description: '초보 운전자의 목표와 코스 준비, 연습 기록을 돕는 Pleos 차량용 앱',
-      achievements: [],
+      description: '운전이 오랜만인 면허 소지자의 생활 경로 연습을 돕는 Pleos 차량용 앱',
+      achievements: [
+        '주차 확인을 거치는 연습 준비, 차량 기록, 복습 흐름 구현',
+        rich('Room 복습 조회 첫 응답 ', strong('93.36ms → 8.07ms'), ' (Pleos 에뮬레이터)'),
+        rich('MapLibre 복습 지도 첫 렌더 ', strong('255.74ms → 166.78ms'), ' (Pleos 에뮬레이터)'),
+      ],
     },
     thumbnail: 'screenshot/hangil-guide.svg',
-    tech: ['Kotlin', 'Jetpack Compose', 'Room', 'Coroutines', 'Flow', 'MapLibre', 'Pleos SDK'],
-    period: '2026.10.26 ~ 진행 중',
+    tech: ['Kotlin', 'Jetpack Compose', 'Room', 'Coroutines', 'Flow', 'Hilt', 'MapLibre', 'Pleos SDK'],
+    period: '2026.10.26 ~ 2026.11.13',
     team: '1명 (개인 프로젝트)',
-    role: 'Android 앱 설계, 구현 및 검증',
+    role: '서비스 기획, UI 디자인, Android 개발 및 검증',
     details: [
-      '초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.',
-      rich('현대자동차그룹 차량용 앱 개발 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 ', strong('Pleos 환경'), '에서 화면 동작을 검증했습니다.'),
+      '운전이 오랜만인 면허 소지자가 주차 중 연습 목표와 코스를 고르고, 연습을 마친 뒤 차량 기록과 메모를 확인해 다음 과제를 정할 수 있도록 개발했습니다.',
+      '현대자동차그룹 차량용 앱 개발 공모전 출품을 준비하며 서비스 기획부터 UI 디자인, Android 구현과 Pleos 에뮬레이터 검증까지 혼자 맡았습니다.',
     ],
-    features: [],
-    contributions: [],
-    problemSolvings: [],
+    features: [
+      '기어가 P이고 차량에서 화면 조작을 허용할 때 준비, 복습과 상세 조작을 열 수 있어야 합니다.',
+      '목표, 코스와 과제를 저장하고, 판교를 거쳐 양재까지 가는 시연 코스의 경유지와 도착지를 Pleos 기본 내비게이션으로 전달할 수 있어야 합니다.',
+      '연습 시작과 종료 시각, 기어, 방향지시등, 브레이크를 기록하고 사용자가 켠 경우 위치 표본을 저장할 수 있어야 합니다.',
+      '지난 연습의 차량 기록과 위치 표본을 확인하고 메모를 남길 수 있어야 합니다. 복습할 도로 구간은 다음 과제와 함께 저장할 수 있어야 합니다.',
+    ],
+    contributions: [
+      '목표 선택부터 연습 종료 후 다음 과제 저장까지 화면 흐름을 설계하고 Jetpack Compose로 구현했습니다.',
+      'Pleos SDK 차량 상태와 Android Automotive의 화면 조작 제한을 연결해 주차 상태에서만 준비와 복습을 열도록 구현했습니다.',
+      '화면은 도메인 인터페이스를 사용하도록 구성하고, 앱에서 Hilt로 Room 저장소와 Pleos 차량 어댑터를 연결했습니다.',
+      'Pleos 에뮬레이터에서 차량 관찰 기록과 다음 과제 저장까지 시연하고, Room 조회 및 저장과 MapLibre 첫 렌더의 전후 시간을 측정했습니다.',
+    ],
+    problemSolvings: [
+      {
+        problem: [
+          '복습 화면과 전면 차량 기록은 각각 연습 한 건이 필요했지만, Room에서 전체 이력을 불러와 모든 행의 도로 JSON을 변환한 뒤 필요한 기록을 골랐습니다. 종료 이력이 쌓일수록 첫 응답이 느려졌습니다.',
+        ],
+        solution: [
+          '복습은 세션 ID로 지정된 원본 한 건을 읽고, 전면 차량 기록은 종료 시각과 활성 슬롯을 기준으로 활성 후보만 읽도록 조회를 나눴습니다.',
+        ],
+        result: [
+          rich('합성 도로를 가진 종료 이력 128건을 넣었을 때 복습의 저장소 첫 응답 중앙값은 ', strong('93.36ms에서 8.07ms로 91.4% 감소'), '했습니다. p95는 128.51ms에서 11.78ms로 줄었고, 활성 연습의 첫 응답 중앙값은 96.46ms에서 8.03ms로 줄었습니다.'),
+          'Pleos API 34 에뮬레이터의 디버그 빌드에서 예열 후 전후 각 80회 측정했습니다. 측정 범위는 새 구독에서 저장소가 첫 값을 반환할 때까지입니다.',
+        ],
+        visual: {
+          src: 'screenshot/hangil-session-query-visual.png',
+          alt: '전체 이력을 변환하던 조회를 Room에서 지정 복습 세션과 활성 후보를 각각 읽는 방식으로 바꾼 흐름',
+        },
+        implementation: [
+          { description: '복습은 기존 세션 ID 인덱스를 사용합니다. 전면 차량 기록은 종료 시각이 비었거나 활성 슬롯이 남아 있는 행을 읽습니다. 저장 원본이 손상되었거나 활성 후보가 둘 이상이면 읽기 오류를 반환합니다.' },
+        ],
+        alternatives: [
+          '전체 이력을 캐시에 보관하면 기록을 교체하거나 삭제할 때 캐시도 맞춰야 합니다. 사용처별 조회를 적용해 활성 후보 조건에서 SQLite가 테이블을 훑더라도 관련 행만 Kotlin 객체로 변환하도록 했습니다.',
+        ],
+      },
+      {
+        problem: [
+          '새 위치 표본의 순번과 직전 수신 시각을 확인할 때마다 같은 연습의 모든 표본을 Kotlin 객체로 변환하고 실행별로 다시 묶었습니다. 표본이 쌓일수록 쓰기 트랜잭션이 길어졌습니다.',
+        ],
+        solution: [
+          '기존 행의 자료형, 수신 시각과 순번을 SQL에서 확인하고, 검증을 통과하면 현재 기록 실행의 마지막 표본만 Kotlin 객체로 변환하도록 바꿨습니다. SQL에서 판단하기 어려운 데이터는 전체 검증으로 넘겼습니다.',
+        ],
+        result: [
+          rich('SQL 검증을 통과한 합성 표본이 1,023개 쌓인 실행에서 새 표본 추가부터 커밋까지 중앙값은 ', strong('23.69ms에서 9.18ms로 61.3% 감소'), '했습니다. p95는 33.36ms에서 13.18ms로 줄었습니다.'),
+          'Pleos API 34 에뮬레이터의 디버그 빌드에서 전후 APK를 번갈아 실행해 예열 후 각각 80회 측정했습니다.',
+        ],
+        visual: {
+          src: 'screenshot/hangil-location-write-visual.png',
+          alt: 'SQL 검증 뒤 마지막 표본 조회 또는 전체 검증을 거쳐 새 위치 표본을 추가하는 흐름',
+        },
+        implementation: [
+          { description: '마지막 표본의 수신 시각과 순번을 읽어 다음 표본을 검증합니다. 표본 추가와 커밋 직전의 기록 권한 확인을 같은 트랜잭션에서 처리해 권한이 바뀌면 쓰기를 되돌립니다.' },
+        ],
+        alternatives: [
+          '마지막 행만 읽으면 앞서 저장된 행의 손상이나 순번 누락을 놓칠 수 있습니다. 기존 행을 계속 검사하면서 매번 모든 행을 객체로 변환하는 비용을 줄였습니다.',
+        ],
+      },
+      {
+        problem: [
+          '복습 지도를 열 때 Compose와 MapLibre 콜백에서 위치 점, 수신 순서대로 이은 선, 카메라 범위를 준비했습니다. 표본이 많은 연습에서는 도형 계산과 화면 작업이 메인 스레드에 몰렸습니다.',
+        ],
+        solution: [
+          '같은 저장 기록을 바탕으로 도형을 백그라운드에서 계산하는 동안 MapLibre 지도를 초기화합니다. 두 작업이 끝나면 메인 스레드에서 현재 화면과 주차 허용 상태를 확인하고 레이어와 카메라를 적용합니다.',
+        ],
+        result: [
+          rich('합성 표본 1,024개와 로컬 지도 배경에서 첫 렌더 완료 중앙값은 ', strong('255.74ms에서 166.78ms로 34.8% 감소'), '했습니다. 메인 스레드 CPU 시간의 중앙값은 81.95ms에서 65.22ms로 줄었습니다.'),
+          'Pleos API 34 에뮬레이터의 디버그 빌드에서 전후 APK를 번갈아 실행해 예열 후 각각 80회 측정했습니다. 첫 렌더 시간의 전후 사분위 범위는 겹쳤습니다.',
+        ],
+        visual: {
+          src: 'screenshot/hangil-review-map-visual.png',
+          alt: '도형 계산과 지도 초기화를 동시에 시작한 뒤 레이어 적용과 첫 프레임 완료로 합치는 흐름',
+        },
+        implementation: [
+          { description: '지도에 점과 선을 올리고 카메라 범위를 맞춘 뒤, 현재 요청의 프레임이 완전히 그려졌다는 콜백을 받아 준비 완료로 전환합니다.' },
+        ],
+        alternatives: [
+          '도형을 먼저 계산하고 지도를 시작하는 초기 방식에서는 표본이 적을 때도 지도가 계산 완료를 기다렸습니다. 두 작업을 동시에 시작하고 지도 수명은 복습 화면에 묶었습니다.',
+        ],
+      },
+    ],
     insights: [],
-    achievements: [],
+    achievements: [
+      '주차 확인부터 연습 준비, 차량 상태 기록, 종료 후 복습과 다음 과제 저장까지 연결하고 Pleos 에뮬레이터에서 시연했습니다.',
+      rich('Room에서 지정한 연습만 조회해 복습 기록의 첫 응답 중앙값을 ', strong('93.36ms에서 8.07ms로'), ' 줄였습니다 (Pleos 에뮬레이터).'),
+      rich('MapLibre 초기화와 도형 계산을 병렬로 진행해 복습 지도 첫 렌더 완료 중앙값을 ', strong('255.74ms에서 166.78ms로'), ' 줄였습니다 (Pleos 에뮬레이터).'),
+    ],
     retrospective: [],
-    links: [],
-    screenshots: [],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/HanGilLab/Android' },
+      { label: 'Pleos 시연 영상 (1분 57초)', url: 'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e' },
+    ],
+    screenshots: [
+      'screenshot/hangil-pleos-home.png',
+      'screenshot/hangil-pleos-task.png',
+      'screenshot/hangil-pleos-recording.png',
+      'screenshot/hangil-pleos-practice-finished.png',
+      'screenshot/hangil-pleos-vehicle-review.png',
+      'screenshot/hangil-pleos-next-practice-saved.png',
+    ],
+    screenshotDescriptions: {
+      'screenshot/hangil-pleos-home.png': {
+        alt: '첫 연습 준비 버튼이 표시된 한길졸업 홈',
+        caption: 'Pleos 에뮬레이터 홈에서 첫 연습을 준비합니다.',
+      },
+      'screenshot/hangil-pleos-task.png': {
+        alt: '시연 코스에서 오늘의 연습 과제를 선택하는 화면',
+        caption: '시연 코스에서 이번 연습의 과제를 고릅니다.',
+      },
+      'screenshot/hangil-pleos-recording.png': {
+        alt: '진행 중인 연습과 차량 상태 기록 안내가 표시된 화면',
+        caption: '연습 중에는 차량 상태 기록 안내를 확인할 수 있습니다.',
+      },
+      'screenshot/hangil-pleos-practice-finished.png': {
+        alt: '연습을 마친 뒤 복습을 여는 버튼이 표시된 화면',
+        caption: '연습을 마치면 저장한 기록의 복습으로 이동합니다.',
+      },
+      'screenshot/hangil-pleos-vehicle-review.png': {
+        alt: '시연 코스와 Pleos SDK 차량 관찰 기록이 구분된 복습 화면',
+        caption: '복습 화면에서 시연 코스와 SDK로 관찰한 차량 기록의 출처를 구분합니다.',
+      },
+      'screenshot/hangil-pleos-next-practice-saved.png': {
+        alt: '다음 연습 과제를 저장한 뒤 돌아온 한길졸업 홈',
+        caption: '복습 후 저장한 다음 과제를 홈에서 확인합니다.',
+      },
+    },
   },
   {
     id: 'naenun-kiosk',

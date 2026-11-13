@@ -108,8 +108,8 @@ describe('포트폴리오 라우팅과 스크롤', () => {
     expect(document.documentElement).not.toHaveClass('no-transition')
   })
 
-  it('목차 섹션 주소로 직접 진입하면 해당 본문에 포커스하고 최상단 이동을 건너뛴다', () => {
-    renderApp(['/projects/mo-re#project-problems'])
+  it.each(['mo-re', 'hangil'])('%s의 문제 해결 주소로 직접 진입하면 해당 본문에 포커스한다', (id) => {
+    renderApp([`/projects/${id}#project-problems`])
     expect(sectionScrolls).toEqual([{ id: 'project-problems', options: { behavior: 'instant', block: 'start' } }])
     expect(document.getElementById('project-problems')).toHaveFocus()
     expect(screen.getByRole('link', { name: '문제 해결' })).toHaveAttribute('aria-current', 'location')
@@ -117,8 +117,8 @@ describe('포트폴리오 라우팅과 스크롤', () => {
     expect(scrollTo).not.toHaveBeenCalled()
   })
 
-  it('잘못된 목차 주소와 현재 상세에 없는 섹션 주소는 상세 최상단으로 이동한다', () => {
-    renderApp(['/projects/hangil#project-problems'])
+  it.each(['project-insights', 'project-unknown'])('%s가 없으면 상세 최상단으로 이동한다', (section) => {
+    renderApp([`/projects/hangil#${section}`])
     expect(sectionScrolls).toEqual([])
     expect(screen.getByRole('main')).toHaveFocus()
     expect(scrollTo).toHaveBeenLastCalledWith(0, 0)

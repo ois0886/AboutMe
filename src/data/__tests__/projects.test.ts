@@ -44,6 +44,7 @@ describe('projects 데이터 무결성', () => {
   })
 
   it.each([
+    ['hangil', '2026.10.26 ~ 2026.11.13'],
     ['naenun-kiosk', '2025.10.10 ~ 2025.11.20'],
     ['mo-re', '2025.08.25 ~ 2025.09.29'],
     ['glim', '2025.07.07 ~ 2025.08.18'],
@@ -67,29 +68,30 @@ describe('projects 데이터 무결성', () => {
     }
   })
 
-  it('한길졸업은 기본 정보와 소개 두 문장만 보관한다', () => {
+  it('한길졸업은 공개 저장소, 시연 영상과 설명이 있는 화면 6장을 제공한다', () => {
     const project = projects.find((item) => item.id === 'hangil')!
-    expect(project.period).toBe('2026.10.26 ~ 진행 중')
-    expect(projects[0].id).toBe('hangil')
-    expect(project.team).toBe('1명 (개인 프로젝트)')
-    expect(project.role).toBe('Android 앱 설계, 구현 및 검증')
-    expect(project.thumbnail).toBe('screenshot/hangil-guide.svg')
-    expect(project.details.map(plainText)).toEqual([
-      '초보 운전자가 목표와 시연 코스를 준비하고 주차 화면에서 연습을 시작하거나 종료할 수 있도록 개발했습니다.',
-      '현대자동차그룹 차량용 앱 개발 공모전 출품 준비를 위한 1인 개인 프로젝트로, Kotlin과 Compose로 차량 상태, 지도, 연습 기록을 연결하고 Pleos 환경에서 화면 동작을 검증했습니다.',
+    expect(project.links.map(({ url }) => url)).toEqual([
+      'https://github.com/HanGilLab/Android',
+      'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e',
     ])
-    for (const items of [project.cardSummary.achievements, project.features, project.contributions,
-      project.problemSolvings, project.insights, project.achievements, project.retrospective,
-      project.links, project.screenshots]) {
-      expect(items).toEqual([])
+    expect(project.screenshots).toEqual([
+      'screenshot/hangil-pleos-home.png',
+      'screenshot/hangil-pleos-task.png',
+      'screenshot/hangil-pleos-recording.png',
+      'screenshot/hangil-pleos-practice-finished.png',
+      'screenshot/hangil-pleos-vehicle-review.png',
+      'screenshot/hangil-pleos-next-practice-saved.png',
+    ])
+    for (const src of project.screenshots) {
+      expect(project.screenshotDescriptions?.[src]?.alt.trim(), src).toBeTruthy()
+      expect(project.screenshotDescriptions?.[src]?.caption.trim(), src).toBeTruthy()
+      expect(readFileSync(resolve(process.cwd(), 'public', src)).subarray(0, 8), src)
+        .toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
     }
-    expect(project.insightImages).toBeUndefined()
-    expect(project.screenshotDescriptions).toBeUndefined()
-    expect(project.imageSectionTitle).toBeUndefined()
   })
 
-  it('한길졸업과 주점부리를 제외한 프로젝트에는 스크린샷이 있다', () => {
-    projects.filter((project) => !['hangil', 'pubburi'].includes(project.id)).forEach((project) => {
+  it('주점부리를 제외한 프로젝트에는 스크린샷이 있다', () => {
+    projects.filter((project) => project.id !== 'pubburi').forEach((project) => {
       expect(project.screenshots.length).toBeGreaterThan(0)
     })
   })
@@ -117,11 +119,11 @@ describe('projects 데이터 무결성', () => {
     })
   })
 
-  it('19개 문제 해결에 실제 PNG 이미지와 대체 텍스트를 제공한다', () => {
+  it('22개 문제 해결에 실제 PNG 이미지와 대체 텍스트를 제공한다', () => {
     const visuals = projects.flatMap((project) => project.problemSolvings.map((ps) => ps.visual))
 
-    expect(visuals).toHaveLength(19)
-    expect(new Set(visuals.map((visual) => visual.src)).size).toBe(19)
+    expect(visuals).toHaveLength(22)
+    expect(new Set(visuals.map((visual) => visual.src)).size).toBe(22)
     visuals.forEach((visual) => {
       expect(visual.alt.trim(), visual.src).toBeTruthy()
       expect(visual.src).toMatch(/^screenshot\/.+\.png$/)

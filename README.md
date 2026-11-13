@@ -49,15 +49,15 @@
 
 프로젝트 데이터는 `src/data/projects.ts` 한 곳에서 목록 카드와 상세 페이지가 함께 사용합니다.
 홈의 프로젝트 카드는 시작일이 최신인 순서대로 표시합니다.
-메인 카드는 `cardSummary`의 항목형 소개와 성과를 사용하고, 상세 페이지는 기존 `description`과 `achievements` 원문을 사용합니다.
-한길졸업은 기본 정보와 프로젝트 개요 두 문장만 제공하며, 카드 성과와 상세 하위 섹션은 비워 둡니다.
+메인 카드는 `cardSummary`의 항목형 소개와 성과를 사용하고, 상세 페이지는 `description`과 `achievements`를 사용합니다.
+한길졸업은 [Android 저장소](https://github.com/HanGilLab/Android)를 바탕으로 Pleos 차량용 앱의 구현과 측정 결과를 소개합니다. 상세에는 시연 영상과 에뮬레이터 화면 6장을 제공합니다.
 주점부리는 기본 정보와 프로젝트 개요 두 문장, Pubburi GitHub 조직 링크를 제공합니다.
-그 외 프로젝트의 각 문제 해결은 `visual: { src, alt }` 생성형 이미지와 `implementation`의 `description` 설명으로 구성합니다. 코드 블록은 저장하거나 표시하지 않습니다.
+각 문제 해결은 `visual: { src, alt }` 생성형 이미지와 `implementation`의 `description` 설명으로 구성합니다. 구현은 문장으로 설명합니다.
 새 이미지의 생성 프롬프트와 검수 수정 기록은 [이미지 생성 기록](docs/project-visual-prompts.md)에 정리했습니다.
 
 | id | Title | Screenshots | Problem Solving | Insights |
 |----|-------|-------------|-----------------|----------|
-| `hangil` | 한길졸업 | - | - | - |
+| `hangil` | 한길졸업 | 6 (2 cols) | 3 | - |
 | `naenun-kiosk` | 내눈 키오스크 | 8 (2 cols) | 3 | - |
 | `mo-re` | 모리, Mo-Re | 14 (3 cols) | 2 | 7 |
 | `glim` | Glim | 8 (3 cols) | 3 | 6 |
