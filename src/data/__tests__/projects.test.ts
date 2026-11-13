@@ -70,6 +70,7 @@ describe('projects 데이터 무결성', () => {
 
   it('한길졸업은 공개 저장소, 시연 영상과 설명이 있는 화면 6장을 제공한다', () => {
     const project = projects.find((item) => item.id === 'hangil')!
+    expect(project.thumbnail).toBe('screenshot/hangil-pleos-next-practice-saved.png')
     expect(project.links.map(({ url }) => url)).toEqual([
       'https://github.com/HanGilLab/Android',
       'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e',

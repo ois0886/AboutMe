@@ -52,12 +52,12 @@ const projects: Project[] = [
     cardSummary: {
       description: '운전이 오랜만인 면허 소지자의 생활 경로 연습을 돕는 Pleos 차량용 앱',
       achievements: [
-        '주차 확인을 거치는 연습 준비, 차량 기록, 복습 흐름 구현',
-        rich('Room 복습 조회 첫 응답 ', strong('93.36ms → 8.07ms'), ' (Pleos 에뮬레이터)'),
-        rich('MapLibre 복습 지도 첫 렌더 ', strong('255.74ms → 166.78ms'), ' (Pleos 에뮬레이터)'),
+        'Pleos SDK로 기어, 방향지시등, 브레이크를 기록하고 주차 중 연습 준비, 복습, 다음 과제 저장 흐름 구현',
+        rich('Room에서 선택한 연습만 조회해 전체 이력 변환을 없애고, 복습 첫 응답 중앙값을 ', strong('93.36ms에서 8.07ms로 단축')),
+        rich('MapLibre 초기화와 지도 도형 계산을 동시에 실행해 첫 렌더 완료 중앙값을 ', strong('255.74ms에서 166.78ms로 단축')),
       ],
     },
-    thumbnail: 'screenshot/hangil-guide.svg',
+    thumbnail: 'screenshot/hangil-pleos-next-practice-saved.png',
     tech: ['Kotlin', 'Jetpack Compose', 'Room', 'Coroutines', 'Flow', 'Hilt', 'MapLibre', 'Pleos SDK'],
     period: '2026.10.26 ~ 2026.11.13',
     team: '1명 (개인 프로젝트)',
