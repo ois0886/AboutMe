@@ -29,6 +29,7 @@ export interface Project {
   team?: string
   role: string
   details: RichText[]
+  overviewUrl?: string
   features: RichText[]
   contributions: RichText[]
   problemSolvings: ProblemSolving[]
@@ -58,7 +59,7 @@ const projects: Project[] = [
       ],
     },
     thumbnail: 'screenshot/hangil-pleos-next-practice-saved.png',
-    tech: ['Kotlin', 'Jetpack Compose', 'Room', 'Coroutines', 'Flow', 'Hilt', 'MapLibre', 'Pleos SDK'],
+    tech: ['Kotlin', 'Jetpack Compose', 'Coroutines', 'Hilt', 'Room', 'MapLibre', 'Pleos Vehicle SDK', 'FusedLocation', 'NaviHelper'],
     period: '2026.10.26 ~ 2026.11.13',
     team: '1명 (개인 프로젝트)',
     role: '서비스 기획, UI 디자인, Android 개발 및 검증',
@@ -66,6 +67,7 @@ const projects: Project[] = [
       '운전이 오랜만인 면허 소지자가 주차 중 연습 목표와 코스를 고르고, 연습을 마친 뒤 차량 기록과 메모를 확인해 다음 과제를 정할 수 있도록 개발했습니다.',
       '현대자동차그룹 차량용 앱 개발 공모전 출품을 준비하며 서비스 기획부터 UI 디자인, Android 구현과 Pleos 에뮬레이터 검증까지 혼자 맡았습니다.',
     ],
+    overviewUrl: 'https://appdevchallenge.auto-hmg.io/',
     features: [
       '기어가 P이고 차량에서 화면 조작을 허용할 때 준비, 복습과 상세 조작을 열 수 있어야 합니다.',
       '목표, 코스와 과제를 저장하고, 판교를 거쳐 양재까지 가는 시연 코스의 경유지와 도착지를 Pleos 기본 내비게이션으로 전달할 수 있어야 합니다.',

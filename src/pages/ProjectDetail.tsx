@@ -24,9 +24,10 @@ function ProjectDetail() {
 function ProjectCaseStudy({ project }: { project: Project }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const hasOverview = project.details.length > 0 || Boolean(project.overviewUrl)
   const sections = useMemo(() => [
     { id: 'project-achievements', label: '성과 및 결과', visible: project.achievements.length > 0 },
-    { id: 'project-overview', label: '프로젝트 개요', visible: project.details.length > 0 },
+    { id: 'project-overview', label: '프로젝트 개요', visible: hasOverview },
     { id: 'project-contributions', label: '담당 역할 및 기여', visible: project.contributions.length > 0 },
     { id: 'project-links', label: '링크', visible: project.links.length > 0 },
     { id: 'project-problems', label: '문제 해결', visible: project.problemSolvings.length > 0 },
@@ -34,7 +35,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
     { id: 'project-insights', label: 'Project Insights', visible: project.insights.length > 0 },
     { id: 'project-screenshots', label: project.imageSectionTitle ?? '스크린샷', visible: project.screenshots.length > 0 },
     { id: 'project-retrospective', label: '프로젝트 회고', visible: project.retrospective.length > 0 },
-  ].filter((section) => section.visible), [project])
+  ].filter((section) => section.visible), [project, hasOverview])
   const hasToc = sections.length > 1
   const [scrollSection, setScrollSection] = useState<{ locationKey: string; id: string }>()
   const [tocLocationKey, setTocLocationKey] = useState<string | null>(null)
@@ -218,7 +219,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
           </section>
         )}
 
-        {project.details.length > 0 && (
+        {hasOverview && (
           <section id="project-overview" className={styles.section} tabIndex={-1}>
             <h2 className={styles.sectionTitle}>프로젝트 개요</h2>
             <ul className={styles.list}>
@@ -227,6 +228,13 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                   {renderRichText(detail, styles.emphasis)}
                 </li>
               ))}
+              {project.overviewUrl && (
+                <li className={styles.listItem}>
+                  <a href={project.overviewUrl} target="_blank" rel="noopener noreferrer" className={styles.textLink}>
+                    {project.overviewUrl}
+                  </a>
+                </li>
+              )}
             </ul>
           </section>
         )}
@@ -356,7 +364,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                     href={insight.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={styles.insightLink}
+                    className={styles.textLink}
                   >
                     {insight.title}
                   </a>

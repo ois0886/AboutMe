@@ -298,7 +298,7 @@
   background-color: var(--color-primary-light);
 }
 
-.insightLink {
+.textLink {
   color: var(--color-primary);
   font-weight: 550;
   text-decoration: underline;
@@ -306,7 +306,7 @@
   text-underline-offset: 4px;
 }
 
-.insightLink:hover {
+.textLink:hover {
   text-decoration-color: currentColor;
 }
 

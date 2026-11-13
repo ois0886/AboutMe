@@ -26,6 +26,9 @@ describe('ProjectDetail', () => {
     expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual(headings)
     const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
     expect(toc.getAllByRole('link').map((link) => link.textContent)).toEqual(headings)
+    const overview = within(screen.getByRole('heading', { name: '프로젝트 개요' }).closest('section')!)
+    const challengeUrl = 'https://appdevchallenge.auto-hmg.io/'
+    expect(overview.getByRole('link', { name: challengeUrl })).toHaveAttribute('href', challengeUrl)
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/HanGilLab/Android')
     expect(screen.getByRole('link', { name: 'Pleos 시연 영상 (1분 57초)' })).toHaveAttribute('href',
       'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e')
