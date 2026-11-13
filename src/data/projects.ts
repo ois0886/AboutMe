@@ -137,8 +137,8 @@ const projects: Project[] = [
           'Pleos API 34 에뮬레이터의 디버그 빌드에서 전후 APK를 번갈아 실행해 예열 후 각각 80회 측정했습니다. 첫 렌더 시간의 전후 사분위 범위는 겹쳤습니다.',
         ],
         visual: {
-          src: 'screenshot/hangil-review-map-visual.png',
-          alt: '도형 계산과 지도 초기화를 동시에 시작한 뒤 레이어 적용과 첫 프레임 완료로 합치는 흐름',
+          src: 'screenshot/hangil-vehicle-review-map-visual.png',
+          alt: '도형 계산과 지도 초기화를 동시에 진행한 뒤 차량용 디스플레이에 지도 레이어를 적용하고 첫 프레임을 그리는 흐름',
         },
         implementation: [
           { description: '지도에 점과 선을 올리고 카메라 범위를 맞춘 뒤, 현재 요청의 프레임이 완전히 그려졌다는 콜백을 받아 준비 완료로 전환합니다.' },
