@@ -112,7 +112,7 @@ Header → About → Career(alt) → Projects → OpenSource(alt) → Skills →
 
 내용이 비어 있는 섹션은 렌더링하지 않습니다.
 한길졸업은 1인 Pleos 차량용 앱의 주요 기능과 기여, 에뮬레이터에서 측정한 문제 해결 3건, 시연 영상과 화면 6장을 제공합니다.
-주점부리는 상단 기본 정보와 프로젝트 개요 두 문장, Pubburi GitHub 조직 링크를 유지합니다.
+주점부리는 상단 기본 정보와 프로젝트 개요, Pubburi GitHub 조직 링크를 유지합니다.
 본문 섹션이 둘 이상이면 데스크톱 고정 목차와 모바일 접이식 목차를 제공합니다. 상세 이미지는 ImageViewer에서 화면 맞춤과 원본 크기 보기, 닫기와 키보드 탐색을 제공합니다.
 리디자인 이후의 콘텐츠 기준은 `src/test/home-preserved-content.json`과 `src/test/projects-preserved-content.json`입니다. 승인된 콘텐츠 변경을 해당 프로젝트의 기준에 반영하고, 나머지 원문, 강조, 링크, 이미지와 섹션 내 항목 순서를 유지합니다.
 

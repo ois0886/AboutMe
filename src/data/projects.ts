@@ -685,19 +685,18 @@ const projects: Project[] = [
   },
   {
     id: 'pubburi',
-    title: '주점부리 - Backend & Frontend & Recommendation',
+    title: '주점부리 - Backend & Frontend',
     description: '취향에 맞는 주류를 찾고, 비교하고, 후기를 남길 수 있는 웹 서비스입니다.',
     cardSummary: {
       description: '취향에 맞는 주류를 탐색하고 비교할 수 있는 웹 서비스',
       achievements: [],
     },
     thumbnail: 'screenshot/pubburi-logo.webp',
-    tech: ['Java', 'Spring Boot', 'PostgreSQL', 'React', 'TypeScript', 'Python', 'FastAPI'],
+    tech: ['Java', 'Spring Boot', 'PostgreSQL', 'React', 'TypeScript'],
     period: '2026.10.31 ~ 진행 중',
-    role: 'Backend & Frontend & Recommendation 개발',
+    role: 'Backend & Frontend 개발',
     details: [
       'Spring Boot 백엔드와 React 웹을 연동해 주종, 가격, 도수, 맛과 향으로 주류를 검색하고, 상품을 비교하거나 찜하고 후기를 남길 수 있도록 했습니다.',
-      rich('Python과 ', strong('FastAPI 기반 추천 서비스'), '에서 취향 설문, 찜, 후기를 바탕으로 주류를 추천하고 그 이유를 보여주는 기능을 개발하고 있습니다.'),
     ],
     features: [],
     contributions: [],

@@ -59,7 +59,8 @@ describe('projects 데이터 무결성', () => {
     expect(project.period).toBe('2026.10.31 ~ 진행 중')
     expect(project.team).toBeUndefined()
     expect(project.thumbnail).toBe('screenshot/pubburi-logo.webp')
-    expect(project.details).toHaveLength(2)
+    expect(project.tech).toEqual(['Java', 'Spring Boot', 'PostgreSQL', 'React', 'TypeScript'])
+    expect(project.details).toHaveLength(1)
     expect(project.links).toEqual([{ label: 'GitHub', url: 'https://github.com/Pubburi' }])
     for (const items of [project.cardSummary.achievements, project.features, project.contributions,
       project.problemSolvings, project.insights, project.achievements, project.retrospective,

@@ -233,10 +233,10 @@ describe('ProjectDetail', () => {
     const project = projects.find((item) => item.id === 'pubburi')!
 
     expect(
-      screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Frontend & Recommendation' }),
+      screen.getByRole('heading', { level: 1, name: '주점부리 - Backend & Frontend' }),
     ).toBeInTheDocument()
     expect(screen.getByText('2026.10.31 ~ 진행 중')).toBeInTheDocument()
-    expect(screen.getByText('Backend & Frontend & Recommendation 개발')).toBeInTheDocument()
+    expect(screen.getByText('Backend & Frontend 개발')).toBeInTheDocument()
     expect(screen.queryByText('팀 구성')).not.toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent))
       .toEqual(['프로젝트 개요', '링크'])
