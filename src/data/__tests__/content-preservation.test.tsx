@@ -46,12 +46,6 @@ describe('리디자인 콘텐츠 보존', () => {
       expect(project.details.filter((item) => item === disclosure)).toHaveLength(1)
       project.details = project.details.filter((item) => item !== disclosure)
     }
-    const implementation = expected.find((item) => item.id === 'naenun-kiosk')!
-      .problemSolvings[1].implementation[0]
-    const prefix = '실제 코드를 공개할 수 없어 패키지 구조로 설명합니다. '
-    expect(implementation.description.startsWith(prefix)).toBe(true)
-    implementation.description = implementation.description.slice(prefix.length)
-
     expect(projects).toEqual(expected)
   })
 

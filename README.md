@@ -154,7 +154,7 @@ Vitest + React Testing Library 기반으로 컴포넌트와 데이터, 라우팅
 
 - `src/components/__tests__/` — Career(총 경력 계산), Header(네비게이션과 테마), OpenSource, Projects
 - `src/data/__tests__/` — projects 데이터 무결성, 문제 해결 이미지와 정적 문서 검증
-- `src/test/*-preserved-content.json` — 리디자인 전 홈과 프로젝트 원문 기준값, 승인된 세 문장 삭제 외의 내용 보존 검증
+- `src/test/*-preserved-content.json` — 홈과 프로젝트의 기준 문구를 보관하고 승인된 변경을 반영해 콘텐츠 보존 검증
 - `src/hooks/__tests__/` — useScrollReveal
 - `src/pages/__tests__/` — ProjectDetail 렌더링
 

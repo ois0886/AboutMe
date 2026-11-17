@@ -47,7 +47,7 @@ describe('ProjectDetail', () => {
   })
 
   it.each(projects.filter((project) => project.problemSolvings.length > 0))(
-    '$id는 코드 없이 문제 해결 이미지와 기존 구현 설명을 표시한다',
+    '$id는 코드 없이 문제 해결 이미지와 구현 설명을 표시한다',
     (project) => {
       const { container } = renderProjectDetail(project.id)
       expect(container.querySelector('pre, code')).toBeNull()
@@ -222,7 +222,9 @@ describe('ProjectDetail', () => {
       ),
     ).toBe(true)
 
-    expect(screen.getByText(/supervisorScope 안에서 6개 API를 async로 호출하고/))
+    expect(screen.getByText(/6개 API에 동시에 요청.*supervisorScope.*async/))
+      .toBeInTheDocument()
+    expect(screen.getByText(/runCatching으로 실패한 지표의 이름과 원인을 로그에 남기고, 그 응답만 null로 처리/))
       .toBeInTheDocument()
     expect(screen.getByRole('img', { name: /6개 API/ }))
       .toHaveAttribute('src', 'screenshot/more-parallel-api-visual.png')
@@ -253,15 +255,17 @@ describe('ProjectDetail', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Dear My Diary - Android' }))
       .toBeInTheDocument()
     expect(screen.getByText('Android 팀장 / 온디바이스 AI 기능 개발 및 앱 통합')).toBeInTheDocument()
-    expect(screen.getByText(/초기 feature 모듈에 있던 QA 코드는/))
+    expect(screen.getByText(/질의응답 코드는 주어진 본문에서 답에 해당하는 구간을 찾는 방식/))
       .toBeInTheDocument()
-    expect(screen.getByText(/감정 후보를 찾지 못한 분기에서도 로딩 상태를 종료하도록/))
+    expect(screen.getByText(/감정 단어가 없는 응답에도 로딩을 끝내고 기본 이모지를 표시/))
       .toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 3, name: '3' })).toBeInTheDocument()
     expect(screen.getByText(/Qualcomm 재직자 멘토의 멘토링을 받으며/)).toBeInTheDocument()
-    expect(screen.getByText(/모델과 사전을 준비한 뒤 tokenizer와 Interpreter를 초기화합니다/))
+    expect(screen.getByText(/모델에는 최근 64개 토큰을 넘기고/))
       .toBeInTheDocument()
-    expect(screen.getByText(/미리 정의한 감정 단어를 생성 결과에서 찾습니다/))
+    expect(screen.getByText(/첫 번째 사진 라벨, 선택한 사용자 정보 하나를 넣고 메모를 마지막에/))
+      .toBeInTheDocument()
+    expect(screen.getByText(/대소문자를 무시하는 단어 경계 정규식으로 응답에 감정 이름이 독립된 단어로 등장하는지/))
       .toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: '링크' })).not.toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: '프로젝트 회고' })).not.toBeInTheDocument()
