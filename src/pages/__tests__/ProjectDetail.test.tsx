@@ -17,11 +17,11 @@ function renderProjectDetail(id: string) {
 describe('ProjectDetail', () => {
   const firstProject = projects[0]
 
-  it('한길졸업은 목차, 문제 해결 이미지와 시연 화면을 표시한다', () => {
+  it('한길졸업은 목차, 문제 해결 이미지와 시연 화면, 회고를 표시한다', () => {
     const { container } = renderProjectDetail('hangil')
     expect(screen.getByText('2026.10.26 ~ 2026.11.13')).toBeInTheDocument()
     const headings = [
-      '성과 및 결과', '프로젝트 개요', '담당 역할 및 기여', '링크', '문제 해결', '주요 요구사항', '스크린샷',
+      '성과 및 결과', '프로젝트 개요', '담당 역할 및 기여', '링크', '문제 해결', '주요 요구사항', '스크린샷', '프로젝트 회고',
     ]
     expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual(headings)
     const toc = within(screen.getByRole('navigation', { name: '프로젝트 목차' }))
@@ -44,6 +44,11 @@ describe('ProjectDetail', () => {
     expect(Array.from(gallery.querySelectorAll('[class*="screenshotRows"] > div'), (row) => row.children.length))
       .toEqual([2, 2])
     expect(gallery.querySelectorAll('[class*="screenshotCaption"]')).toHaveLength(6)
+    expect(toc.getByRole('link', { name: '프로젝트 회고' }))
+      .toHaveAttribute('href', '/projects/hangil#project-retrospective')
+    const retrospective = screen.getByRole('heading', { name: '프로젝트 회고' }).closest('section')!
+    expect(retrospective).toHaveAttribute('id', 'project-retrospective')
+    expect(within(retrospective).getAllByRole('listitem')).toHaveLength(3)
   })
 
   it.each(projects.filter((project) => project.problemSolvings.length > 0))(
