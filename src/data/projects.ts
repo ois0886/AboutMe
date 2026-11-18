@@ -59,7 +59,7 @@ const projects: Project[] = [
       ],
     },
     thumbnail: 'screenshot/hangil-pleos-next-practice-saved.png',
-    tech: ['Kotlin', 'Jetpack Compose', 'Coroutines', 'Hilt', 'Room', 'MapLibre', 'Pleos Vehicle SDK', 'FusedLocation', 'NaviHelper'],
+    tech: ['Kotlin', 'Jetpack Compose', 'Coroutines', 'Hilt', 'Room', 'MapLibre', 'Pleos Vehicle SDK', 'FusedLocation', 'NaviHelper', 'Codex'],
     period: '2026.10.26 ~ 2026.11.13',
     team: '1명 (개인 프로젝트)',
     role: '서비스 기획, UI 디자인, Android 개발 및 검증',
@@ -78,6 +78,7 @@ const projects: Project[] = [
       '목표 선택부터 연습 종료 후 다음 과제 저장까지 화면 흐름을 설계하고 Jetpack Compose로 구현했습니다.',
       'Pleos SDK 차량 상태와 Android Automotive의 화면 조작 제한을 연결해 주차 상태에서만 준비와 복습을 열도록 구현했습니다.',
       '화면은 도메인 인터페이스를 사용하도록 구성하고, 앱에서 Hilt로 Room 저장소와 Pleos 차량 어댑터를 연결했습니다.',
+      rich('작업별 완료 기준과 모듈 의존 규칙, 차량 조작 제한을 AI 작업 지침에 정리하고, ', strong('Codex 2시간 예약 자동화'), '로 기능 구현, 테스트와 PR 작업을 이어가도록 구성했습니다. ', strong('Codex Code Review'), ' 지적 사항을 수정한 뒤 관련 테스트로 재검증했습니다.'),
       'Pleos 에뮬레이터에서 차량 관찰 기록과 다음 과제 저장까지 시연하고, Room 조회 및 저장과 MapLibre 첫 렌더의 전후 시간을 측정했습니다.',
     ],
     problemSolvings: [
