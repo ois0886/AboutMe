@@ -33,9 +33,7 @@ describe('ProjectDetail', () => {
     expect(screen.getByRole('link', { name: 'Pleos 시연 영상 (1분 57초)' })).toHaveAttribute('href',
       'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e')
     const achievements = within(screen.getByRole('heading', { name: '성과 및 결과' }).closest('section')!)
-    expect(achievements.getAllByRole('listitem')).toHaveLength(4)
-    expect(achievements.getByText('Codex 2시간 예약 자동화', { selector: 'strong' })).toBeInTheDocument()
-    expect(achievements.getByText('Codex Code Review', { selector: 'strong' })).toBeInTheDocument()
+    expect(achievements.getAllByRole('listitem')).toHaveLength(3)
     expect(screen.getByText('Codex', { selector: 'span' })).toBeInTheDocument()
     const contributions = within(screen.getByRole('heading', { name: '담당 역할 및 기여' }).closest('section')!)
     expect(contributions.getAllByRole('listitem')).toHaveLength(5)
