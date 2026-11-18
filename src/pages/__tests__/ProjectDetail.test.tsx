@@ -32,6 +32,10 @@ describe('ProjectDetail', () => {
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/HanGilLab/Android')
     expect(screen.getByRole('link', { name: 'Pleos 시연 영상 (1분 57초)' })).toHaveAttribute('href',
       'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e')
+    const achievements = within(screen.getByRole('heading', { name: '성과 및 결과' }).closest('section')!)
+    expect(achievements.getAllByRole('listitem')).toHaveLength(4)
+    expect(achievements.getByText('Codex 2시간 예약 자동화', { selector: 'strong' })).toBeInTheDocument()
+    expect(achievements.getByText('Codex Code Review', { selector: 'strong' })).toBeInTheDocument()
     const problems = within(screen.getByRole('heading', { name: '문제 해결' }).closest('section')!)
     expect(problems.getAllByRole('img')).toHaveLength(3)
     expect(container.querySelector('pre, code')).toBeNull()
