@@ -36,7 +36,7 @@ function Projects() {
               <p className={styles.description}>{project.cardSummary.description}</p>
               {project.cardSummary.achievements.length > 0 && (
                 <ul className={styles.highlights}>
-                  {project.cardSummary.achievements.slice(0, 3).map((item) => (
+                  {project.cardSummary.achievements.slice(0, 4).map((item) => (
                     <li
                       key={plainText(item)}
                       className={styles.highlight}

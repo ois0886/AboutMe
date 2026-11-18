@@ -30,10 +30,12 @@ describe('projects 데이터 무결성', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('카드 요약은 기존 표시 항목 수와 성과 수치를 유지한다', () => {
+  it('카드 요약은 기존 성과 수치를 유지하고 한길졸업에 AI 활용을 추가한다', () => {
     projects.forEach((project) => {
       expect(project.cardSummary.description).toBeTruthy()
-      expect(project.cardSummary.achievements).toHaveLength(Math.min(project.achievements.length, 3))
+      expect(project.cardSummary.achievements).toHaveLength(
+        project.id === 'hangil' ? 4 : Math.min(project.achievements.length, 3),
+      )
       project.achievements.slice(0, 3).forEach((item, index) => {
         const numbers = plainText(item).match(/\d+(?:\.\d+)?/g) ?? []
         const cardNumbers = plainText(project.cardSummary.achievements[index])

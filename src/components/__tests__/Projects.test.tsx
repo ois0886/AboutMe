@@ -48,10 +48,10 @@ describe('Projects', () => {
       }
       expect(highlights).not.toBeNull()
       expect(Array.from(highlights!.querySelectorAll('li'), (item) => item.textContent))
-        .toEqual(project.cardSummary.achievements.slice(0, 3).map((item) =>
+        .toEqual(project.cardSummary.achievements.slice(0, 4).map((item) =>
           typeof item === 'string' ? item : item.map((segment) => segment.text).join(''),
         ))
-      const emphasizedText = project.cardSummary.achievements.slice(0, 3)
+      const emphasizedText = project.cardSummary.achievements.slice(0, 4)
         .flatMap((item) => typeof item === 'string' ? [] : item.filter((segment) => segment.strong))
         .map((segment) => segment.text)
       expect(Array.from(highlights!.querySelectorAll('strong'), (item) => item.textContent))
@@ -68,7 +68,7 @@ describe('Projects', () => {
     })
   })
 
-  it('프로젝트 카드는 성과를 최대 3개만 표시한다', () => {
+  it('프로젝트 카드는 한길졸업의 AI 활용을 포함해 성과를 최대 4개까지 표시한다', () => {
     renderProjects()
 
     projects.forEach((project) => {
@@ -82,7 +82,7 @@ describe('Projects', () => {
       }
 
       expect(achievementList?.querySelectorAll('li')).toHaveLength(
-        Math.min(project.cardSummary.achievements.length, 3),
+        Math.min(project.cardSummary.achievements.length, 4),
       )
     })
   })
