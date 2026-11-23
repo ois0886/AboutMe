@@ -33,8 +33,8 @@ describe('ProjectDetail', () => {
     expect(screen.getByRole('link', { name: 'Pleos 시연 영상 (1분 57초)' })).toHaveAttribute('href',
       'https://github.com/user-attachments/assets/0e64d5e8-d067-486d-baa3-100aca1bc36e')
     const achievements = within(screen.getByRole('heading', { name: '성과 및 결과' }).closest('section')!)
-    expect(achievements.getByText(/Pleos API 34 에뮬레이터에서 디버그 빌드로 측정/))
-      .toHaveTextContent('실행마다 10회 예열한 뒤 변경 전후 각각 80회 측정')
+    expect(achievements.getByText(/Android API 34 환경에서 디버그 빌드/))
+      .toHaveTextContent('실행할 때마다 10회 예열한 뒤 변경 전후 각각 80회 측정')
     expect(screen.getByText('Codex', { selector: 'span' })).toBeInTheDocument()
     const contributions = within(screen.getByRole('heading', { name: '담당 역할 및 기여' }).closest('section')!)
     expect(contributions.getAllByRole('listitem')).toHaveLength(5)

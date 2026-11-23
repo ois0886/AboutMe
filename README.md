@@ -50,7 +50,7 @@
 프로젝트 데이터는 `src/data/projects.ts` 한 곳에서 목록 카드와 상세 페이지가 함께 사용합니다.
 홈의 프로젝트 카드는 시작일이 최신인 순서대로 표시합니다.
 메인 카드는 `cardSummary`의 항목형 소개와 성과를 사용하고, 상세 페이지는 `description`과 `achievements`를 사용합니다.
-한길졸업은 [Android 저장소](https://github.com/HanGilLab/Android)를 바탕으로 Pleos 차량용 앱의 구현과 측정 결과를 소개합니다. 상세에는 시연 영상과 에뮬레이터 화면 6장을 제공합니다.
+한길졸업은 [Android 저장소](https://github.com/HanGilLab/Android)를 바탕으로 Pleos 차량용 앱의 구현과 측정 결과를 소개합니다. 상세에는 시연 영상과 앱 화면 6장을 제공합니다.
 주점부리는 기본 정보와 프로젝트 개요, Pubburi GitHub 조직 링크를 제공합니다.
 각 문제 해결은 `visual: { src, alt }` 생성형 이미지와 `implementation`의 `description` 설명으로 구성합니다. 구현은 문장으로 설명합니다.
 새 이미지의 생성 프롬프트와 검수 수정 기록은 [이미지 생성 기록](docs/project-visual-prompts.md)에 정리했습니다.
