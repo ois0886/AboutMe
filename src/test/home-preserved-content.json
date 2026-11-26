@@ -789,10 +789,9 @@
     },
     {
       "id": "contact",
-      "text": "Contact포트폴리오를 방문해 주셔서 감사합니다.EmailGitHub",
+      "text": "ContactEmailGitHub",
       "textSegments": [
         "Contact",
-        "포트폴리오를 방문해 주셔서 감사합니다.",
         "Email",
         "GitHub"
       ],
