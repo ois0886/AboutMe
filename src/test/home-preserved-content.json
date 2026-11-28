@@ -247,7 +247,7 @@
     },
     {
       "id": "awards",
-      "text": "Awards & CertificatesAwardsSSAFY 자율 프로젝트 우수상삼성전자2025.11.202025-23-050154수상증접기SSAFY 공통 프로젝트 우수상삼성전자2025.08.182025-23-050065수상증접기CertificatesClaude Code in ActionAnthropic2026.04.23po6dwyvk5zs7자격증접기SQLD한국데이터산업진흥원2026.03.27SQLD-060003832자격증접기정보처리기사한국산업인력공단2024.12.1124203011265G자격증접기ADsP한국데이터산업진흥원2024.11.29ADsP-043007180자격증접기한국사능력검정시험 3급국사편찬위원회2021.11.0556-336465자격증접기Language test",
+      "text": "Awards & CertificatesAwardsSSAFY 자율 프로젝트 우수상삼성전자2025.11.202025-23-050154수상증접기SSAFY 공통 프로젝트 우수상삼성전자2025.08.182025-23-050065수상증접기Certificates한국사능력검정시험 2급국사편찬위원회2026.12.11Claude Code in ActionAnthropic2026.04.23po6dwyvk5zs7자격증접기SQLD한국데이터산업진흥원2026.03.27SQLD-060003832자격증접기정보처리기사한국산업인력공단2024.12.1124203011265G자격증접기ADsP한국데이터산업진흥원2024.11.29ADsP-043007180자격증접기Language test",
       "textSegments": [
         "Awards & Certificates",
         "Awards",
@@ -262,6 +262,9 @@
         "2025-23-050065",
         "수상증접기",
         "Certificates",
+        "한국사능력검정시험 2급",
+        "국사편찬위원회",
+        "2026.12.11",
         "Claude Code in Action",
         "Anthropic",
         "2026.04.23",
@@ -282,11 +285,6 @@
         "2024.11.29",
         "ADsP-043007180",
         "자격증접기",
-        "한국사능력검정시험 3급",
-        "국사편찬위원회",
-        "2021.11.05",
-        "56-336465",
-        "자격증접기",
         "Language test"
       ],
       "headings": [
@@ -295,21 +293,21 @@
         "SSAFY 자율 프로젝트 우수상",
         "SSAFY 공통 프로젝트 우수상",
         "Certificates",
+        "한국사능력검정시험 2급",
         "Claude Code in Action",
         "SQLD",
         "정보처리기사",
         "ADsP",
-        "한국사능력검정시험 3급",
         "Language test"
       ],
       "emphasis": [
         "SSAFY 자율 프로젝트 우수상",
         "SSAFY 공통 프로젝트 우수상",
+        "한국사능력검정시험 2급",
         "Claude Code in Action",
         "SQLD",
         "정보처리기사",
-        "ADsP",
-        "한국사능력검정시험 3급"
+        "ADsP"
       ],
       "links": [],
       "images": [
@@ -336,10 +334,6 @@
         {
           "src": "screenshot/ADSP.png",
           "alt": "ADsP"
-        },
-        {
-          "src": "screenshot/korean-history-certificate.png",
-          "alt": "한국사능력검정시험 3급"
         }
       ]
     },

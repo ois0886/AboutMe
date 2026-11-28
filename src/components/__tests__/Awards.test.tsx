@@ -1,9 +1,19 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import Awards from '../Awards'
 
 describe('Awards', () => {
+  it('가장 최근 자격인 한국사 2급은 발표일과 함께 표시하고 합격증 버튼은 숨긴다', () => {
+    render(<Awards />)
+    const list = screen.getByRole('heading', { name: 'Certificates' }).nextElementSibling!
+    const card = within(list.firstElementChild as HTMLElement)
+
+    expect(card.getByRole('heading', { name: '한국사능력검정시험 2급' })).toBeInTheDocument()
+    expect(card.getByText('2026.12.11')).toBeInTheDocument()
+    expect(card.queryByRole('button')).toBeNull()
+  })
+
   it('이력서의 Claude Code in Action 수료 정보는 웹과 일치한다', () => {
     render(<Awards />)
     const card = screen.getByRole('heading', { name: 'Claude Code in Action' }).parentElement!.parentElement!

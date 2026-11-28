@@ -2,6 +2,14 @@ import { useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import styles from './Awards.module.css'
 
+type AwardItem = {
+  title: string
+  date: string
+  org: string
+  id?: string
+  image?: string
+}
+
 const awards = [
   {
     title: 'SSAFY 자율 프로젝트 우수상',
@@ -19,7 +27,12 @@ const awards = [
   },
 ]
 
-const certificates = [
+const certificates: AwardItem[] = [
+  {
+    title: '한국사능력검정시험 2급',
+    date: '2026.12.11',
+    org: '국사편찬위원회',
+  },
   {
     title: 'Claude Code in Action',
     date: '2026.04.23',
@@ -48,16 +61,9 @@ const certificates = [
     id: 'ADsP-043007180',
     image: 'screenshot/ADSP.png',
   },
-  {
-    title: '한국사능력검정시험 3급',
-    date: '2021.11.05',
-    org: '국사편찬위원회',
-    id: '56-336465',
-    image: 'screenshot/korean-history-certificate.png',
-  },
 ]
 
-function AwardCard({ item, toggleLabel }: { item: typeof awards[number]; toggleLabel: [string, string] }) {
+function AwardCard({ item, toggleLabel }: { item: AwardItem; toggleLabel: [string, string] }) {
   const [imageOpen, setImageOpen] = useState(false)
 
   return (
@@ -69,7 +75,7 @@ function AwardCard({ item, toggleLabel }: { item: typeof awards[number]; toggleL
         </div>
         <div className={styles.right}>
           <p className={styles.date}>{item.date}</p>
-          <p className={styles.id}>{item.id}</p>
+          {item.id && <p className={styles.id}>{item.id}</p>}
         </div>
       </div>
       {item.image && (
@@ -110,7 +116,7 @@ function Awards() {
       <h3 className={`${styles.groupTitle} ${styles.groupTitleMargin}`}>Certificates</h3>
       <div className={styles.list}>
         {certificates.map((cert) => (
-          <AwardCard key={cert.id} item={cert} toggleLabel={['자격증보기', '자격증접기']} />
+          <AwardCard key={cert.title} item={cert} toggleLabel={['자격증보기', '자격증접기']} />
         ))}
       </div>
 
